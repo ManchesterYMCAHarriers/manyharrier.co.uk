@@ -2,10 +2,59 @@ backend:
   name: git-gateway
   branch: master
 
+publish_mode: editorial_workflow
+
 media_folder: static/img
 public_folder: /img
 
+site_url: https://manyharrier.co.uk
+logo_url: https://alpha.manyharrier.co.uk/img/logo.svg
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+
 collections:
+  - name: "alerts"
+    label: "Alerts"
+    folder: "src/pages/alerts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - label: "Template Key"
+        name: "templateKey"
+        widget: "hidden"
+        default: "alert"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Publish Date"
+        name: "publishdate"
+        widget: "datetime"
+        required: false
+      - label: "Expiry Date"
+        name: "expirydate"
+        widget: "datetime"
+        required: false
+      - label: "RAG Status"
+        name: "ragstatus"
+        widget: "select"
+        options:
+          - label: "Red"
+            value: "red"
+          - label: "Amber"
+            value: "amber"
+          - label: "Green"
+            value: "green"
+      - label: "Headline"
+        name: "headline"
+        widget: "string"
+        pattern: ['.{,300}', "Must have no more than 300 characters"]
+      - label: "Detail"
+        name: "detail"
+        widget: "markdown"
+        required: false
   - name: "blog"
     label: "Blog"
     folder: "src/pages/blog"
@@ -18,7 +67,6 @@ collections:
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Tags", name: "tags", widget: "list"}
-
   - name: "pages"
     label: "Pages"
     files:
