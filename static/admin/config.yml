@@ -16,45 +16,6 @@ slug:
   sanitize_replacement: "_"
 
 collections:
-  - name: "alerts"
-    label: "Alerts"
-    folder: "src/pages/alerts"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - label: "Template Key"
-        name: "templateKey"
-        widget: "hidden"
-        default: "alert"
-      - label: "Title"
-        name: "title"
-        widget: "string"
-      - label: "Publish Date"
-        name: "publishdate"
-        widget: "datetime"
-        required: false
-      - label: "Expiry Date"
-        name: "expirydate"
-        widget: "datetime"
-        required: false
-      - label: "RAG Status"
-        name: "ragstatus"
-        widget: "select"
-        options:
-          - label: "Red"
-            value: "red"
-          - label: "Amber"
-            value: "amber"
-          - label: "Green"
-            value: "green"
-      - label: "Headline"
-        name: "headline"
-        widget: "string"
-        pattern: ['.{,300}', "Must have no more than 300 characters"]
-      - label: "Detail"
-        name: "detail"
-        widget: "markdown"
-        required: false
   - name: "blog"
     label: "Blog"
     folder: "src/pages/blog"
@@ -67,6 +28,17 @@ collections:
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Tags", name: "tags", widget: "list"}
+  - name: "venues"
+    label: "Venues"
+    folder: "src/pages/venues"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "venue"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Address", name: "address", widget: "text"}
+      - {label: "Location", name: "location", widget: "map"}
+      - {label: "Information", name: "info", widget: "markdown"}
   - name: "pages"
     label: "Pages"
     files:
