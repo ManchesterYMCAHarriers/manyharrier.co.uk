@@ -37,7 +37,7 @@ export const VenueTemplate = ({
 VenueTemplate.propTypes = {
   address: PropTypes.string,
   contentComponent: PropTypes.func,
-  information: PropTypes.string,
+  information: PropTypes.node,
   location: PropTypes.object,
   title: PropTypes.string,
 }
@@ -67,7 +67,7 @@ Venue.propTypes = {
 export default Venue
 
 export const venueQuery = graphql`
-  query Venue($id: String!) {
+  query VenueByID($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html

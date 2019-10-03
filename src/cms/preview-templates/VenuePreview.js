@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { VenueTemplate } from '../../templates/venue'
 
 const VenuePreview = ({ entry, widgetFor }) => {
-
-
   return (
     <VenueTemplate
       title={entry.getIn(['data', 'title'])}

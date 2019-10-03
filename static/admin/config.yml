@@ -38,7 +38,7 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Address", name: "address", widget: "text"}
       - {label: "Location", name: "location", widget: "map"}
-      - {label: "Information", name: "info", widget: "markdown"}
+      - {label: "Information", name: "body", widget: "markdown"}
   - name: "pages"
     label: "Pages"
     files:
