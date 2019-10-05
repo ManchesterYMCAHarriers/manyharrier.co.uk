@@ -6,8 +6,9 @@ const EventPreview = ({ entry, widgetFor }) => {
   return (
     <EventTemplate
       title={entry.getIn(['data', 'title'])}
-      address={entry.getIn(['data', 'address'])}
-      location={entry.getIn(['data', 'location'])}
+      venue={entry.getIn(['data', 'venue'])}
+      startsAt={entry.getIn(['data', 'startsAt'])}
+      type={entry.getIn(['data', 'startsAt'])}
       information={widgetFor('body')}
     />
   )
