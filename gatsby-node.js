@@ -94,6 +94,8 @@ exports.sourceNodes = ({ actions }) => {
     type MarkdownRemarkFrontmatter {
       address: String
       location: String
+      startsAt: Date
+      type: String
     }
 
     type MarkdownRemark implements Node {
