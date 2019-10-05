@@ -46,7 +46,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "event"}
-      - {label: "Title", name: "title", widget: "string", pattern: "^20(19|2[0-9])-(0[1-9]|1[0-2])-(0[1-9]|12[0-9]|3[01]) (.*)"}
+      - {label: "Title", name: "title", widget: "string", pattern: "^20(19|2[0-9])-(0[1-9]|1[0-2])-(0[1-9]|12[0-9]|3[01])\\s(.*)"}
       - {label: "Venue", name: "venue", widget: "relation", collection: "venues", searchFields: ["title"], valueField: "title", displayField: "title"}
       - {label: "Type", name: "type", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"]}
       - {label: "Starts at", name: "startsAt", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ"}
