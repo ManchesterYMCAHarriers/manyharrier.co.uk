@@ -8,7 +8,7 @@ const EventPreview = ({ entry, widgetFor }) => {
       title={entry.getIn(['data', 'title'])}
       venue={entry.getIn(['data', 'venue'])}
       startsAt={entry.getIn(['data', 'startsAt'])}
-      type={entry.getIn(['data', 'startsAt'])}
+      type={entry.getIn(['data', 'type'])}
       information={widgetFor('body')}
     />
   )
