@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
-import Venue, {VenueTemplate} from "./venue";
+import {VenueTemplate} from "./venue";
 
 export const EventTemplate = ({
                                 contentComponent,
@@ -24,7 +24,7 @@ export const EventTemplate = ({
               {title}
             </h1>
             <h2>Venue</h2>
-            <VenueTemplate title={venue.title} address={venue.address} information={venue.information} location={venue.location} />
+            <VenueTemplate title={venue.frontmatter.title} address={venue.frontmatter.address} information={venue.information} location={venue.frontmatter.location} />
             <h2>Type</h2>
             <p>{type}</p>
             <h2>Starts at</h2>
@@ -70,7 +70,7 @@ Event.propTypes = {
   }),
 }
 
-export default Venue
+export default Event
 
 export const eventQuery = graphql`
   query EventByID($id: String!) {
@@ -81,6 +81,17 @@ export const eventQuery = graphql`
         title
         startsAt(formatString: "d MMM YYYY, HH:mm")
         type
+        venue {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            address
+            location
+            title
+          }
+        }
       }
     }
   }

@@ -1,15 +1,20 @@
-import CMS from 'netlify-cms'
+import CMS from 'netlify-cms-app'
+// import uploadcare from 'netlify-cms-media-library-uploadcare'
+// import cloudinary from 'netlify-cms-media-library-cloudinary'
 
 import AboutPagePreview from './preview-templates/AboutPagePreview'
 import BlogPostPreview from './preview-templates/BlogPostPreview'
-import EventPreview from './preview-templates/EventPreview'
+import EventPreview from "./preview-templates/EventPreview"
 import ProductPagePreview from './preview-templates/ProductPagePreview'
 import IndexPagePreview from './preview-templates/IndexPagePreview'
-import VenuePreview from './preview-templates/VenuePreview'
+import VenuePreview from "./preview-templates/VenuePreview"
+
+// CMS.registerMediaLibrary(uploadcare)
+// CMS.registerMediaLibrary(cloudinary)
 
 CMS.registerPreviewTemplate('index', IndexPagePreview)
 CMS.registerPreviewTemplate('about', AboutPagePreview)
+CMS.registerPreviewTemplate('products', ProductPagePreview)
 CMS.registerPreviewTemplate('blog', BlogPostPreview)
 CMS.registerPreviewTemplate('events', EventPreview)
-CMS.registerPreviewTemplate('products', ProductPagePreview)
 CMS.registerPreviewTemplate('venues', VenuePreview)

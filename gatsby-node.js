@@ -228,23 +228,3 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
   }
 }
-
-// exports.sourceNodes = ({ actions, getNodesByType }) => {
-//   // Add relations
-//   const markdownNodes = getNodesByType("MarkdownRemark")
-//     .forEach(node => {
-//       // Add venues
-//       if (node.frontmatter.venue) {
-//         const venueNode = getNodesByType("MarkdownRemark")
-//           .find(queryNode => queryNode.frontmatter.templateKey === "venue" && queryNode.frontmatter.title === node.frontmatter.venue)
-//
-//         if (venueNode) {
-//           createNodeField({
-//             node,
-//             name: "venue",
-//             value: venueNode.id,
-//           })
-//         }
-//       }
-//     })
-// }
