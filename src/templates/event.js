@@ -79,8 +79,8 @@ export const eventQuery = graphql`
       html
       frontmatter {
         title
-        address
-        location
+        startsAt(formatString: "d MMM YYYY, HH:mm")
+        type
       }
     }
   }

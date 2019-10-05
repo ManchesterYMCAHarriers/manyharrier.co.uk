@@ -4,11 +4,43 @@ const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
 
 exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions
-
-  return graphql(`
+  return Promise.all([
+    graphql(`
     {
-      allMarkdownRemark(limit: 1000) {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
+              eq: "blog-post"
+            }
+          }
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              tags
+              templateKey
+            }
+          }
+        }
+      }
+    }`),
+    graphql(`
+    {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
+              eq: "venue"
+            }
+          }
+        }
+      ) {
         edges {
           node {
             id
@@ -18,60 +50,169 @@ exports.createPages = ({ actions, graphql }) => {
             frontmatter {
               address
               location
-              tags
               templateKey
             }
           }
         }
       }
-    }
-  `).then(result => {
-    if (result.errors) {
-      result.errors.forEach(e => console.error(e.toString()))
-      return Promise.reject(result.errors)
-    }
-
-    const posts = result.data.allMarkdownRemark.edges
-
-    posts.forEach(edge => {
-      const id = edge.node.id
-      createPage({
-        path: edge.node.fields.slug,
-        tags: edge.node.frontmatter.tags,
-        component: path.resolve(
-          `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-        ),
-        // additional data can be passed via context
-        context: {
-          id,
-        },
-      })
-    })
-
-    // Tag pages:
-    let tags = []
-    // Iterate through each post, putting all found tags into `tags`
-    posts.forEach(edge => {
-      if (_.get(edge, `node.frontmatter.tags`)) {
-        tags = tags.concat(edge.node.frontmatter.tags)
+    }`),
+    graphql(`
+    {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
+              eq: "event"
+            }
+          }
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              startsAt
+              type
+              templateKey
+              venue {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  address
+                  location
+                  title
+                }
+              }
+            }
+          }
+        }
+      }
+    }`),
+  ]).then(results => {
+    const errors = []
+    results.forEach(result => {
+      if (result.errors) {
+        errors.push(...result.errors)
+        result.errors.forEach(e => console.error(e.toString()))
       }
     })
-    // Eliminate duplicate tags
-    tags = _.uniq(tags)
 
-    // Make tag pages
-    tags.forEach(tag => {
-      const tagPath = `/tags/${_.kebabCase(tag)}/`
+    if (errors.length > 0) {
+      return Promise.reject(errors)
+    }
 
-      createPage({
-        path: tagPath,
-        component: path.resolve(`src/templates/tags.js`),
-        context: {
-          tag,
-        },
-      })
+    const blogPosts = results[0]
+    const venues = results[1]
+    const events = results[2]
+
+    createBlogPosts(actions, blogPosts)
+    createVenues(actions, venues)
+    createEvents(actions, events)
+  })
+}
+
+function createBlogPosts(actions, blogPosts) {
+  const { createPage } = actions
+
+  blogPosts.data.allMarkdownRemark.edges.forEach(edge => {
+    const id = edge.node.id
+    createPage({
+      path: edge.node.fields.slug,
+      tags: edge.node.frontmatter.tags,
+      component: path.resolve(
+        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+      },
     })
   })
+
+  // Tag pages:
+  let tags = []
+  // Iterate through each post, putting all found tags into `tags`
+  blogPosts.data.allMarkdownRemark.edges.forEach(edge => {
+    if (_.get(edge, `node.frontmatter.tags`)) {
+      tags = tags.concat(edge.node.frontmatter.tags)
+    }
+  })
+  // Eliminate duplicate tags
+  tags = _.uniq(tags)
+
+  // Make tag pages
+  tags.forEach(tag => {
+    const tagPath = `/tags/${_.kebabCase(tag)}/`
+
+    createPage({
+      path: tagPath,
+      component: path.resolve(`src/templates/tags.js`),
+      context: {
+        tag,
+      },
+    })
+  })
+}
+
+function createVenues(actions, venues) {
+  const { createPage } = actions
+
+  venues.data.allMarkdownRemark.edges.forEach(edge => {
+    const id = edge.node.id
+    createPage({
+      path: edge.node.fields.slug,
+      component: path.resolve(
+        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+      },
+    })
+  })
+}
+
+
+function createEvents(actions, events) {
+  const { createPage } = actions
+
+  events.data.allMarkdownRemark.edges.forEach(edge => {
+    const id = edge.node.id
+    createPage({
+      path: edge.node.fields.slug,
+      component: path.resolve(
+        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+      },
+    })
+  })
+}
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
+  const typeDefs = [
+    "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
+    `type Frontmatter {
+      address: String!
+      events: [MarkdownRemark!]! @link(by: "frontmatter.venue.title", from: "venue") # events for venue
+      location: String!
+      startsAt: Date! @dateformat
+      templateKey: String
+      title: String
+      type: String!
+      venue: MarkdownRemark! @link(by: "frontmatter.title") # venue for event
+    }`,
+  ]
+
+  createTypes(typeDefs)
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -88,18 +229,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-exports.sourceNodes = ({ actions }) => {
-  const { createTypes } = actions
-  createTypes(`
-    type MarkdownRemarkFrontmatter {
-      address: String
-      location: String
-      startsAt: Date
-      type: String
-    }
-
-    type MarkdownRemark implements Node {
-      frontmatter: MarkdownRemarkFrontmatter
-    }
-  `)
-}
+// exports.sourceNodes = ({ actions, getNodesByType }) => {
+//   // Add relations
+//   const markdownNodes = getNodesByType("MarkdownRemark")
+//     .forEach(node => {
+//       // Add venues
+//       if (node.frontmatter.venue) {
+//         const venueNode = getNodesByType("MarkdownRemark")
+//           .find(queryNode => queryNode.frontmatter.templateKey === "venue" && queryNode.frontmatter.title === node.frontmatter.venue)
+//
+//         if (venueNode) {
+//           createNodeField({
+//             node,
+//             name: "venue",
+//             value: venueNode.id,
+//           })
+//         }
+//       }
+//     })
+// }
