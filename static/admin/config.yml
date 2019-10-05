@@ -41,7 +41,7 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Venue", name: "venue", widget: "relation", collection: "venues", searchFields: ["title"], valueField: "title", displayField: "title"}
       - {label: "Type", name: "type", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"]}
-      - {label: "Starts at", name: "startsAt", widget: "datetime", format: "YYYY-MM-DD HH:mmZ"}
+      - {label: "Starts at", name: "startsAt", widget: "datetime"}
       - {label: "Information", name: "body", widget: "markdown"}
   - name: "pages"
     label: "Pages"
