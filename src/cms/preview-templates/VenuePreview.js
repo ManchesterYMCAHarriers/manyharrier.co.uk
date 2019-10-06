@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { VenueTemplate } from '../../templates/venue'
 
 const VenuePreview = ({ entry, widgetFor }) => {
+  const location = JSON.parse(entry.getIn(['data', 'location']))
+  location.coordinates = location.coordinates.reverse()
+
   return (
     <VenueTemplate
       title={entry.getIn(['data', 'title'])}
       address={entry.getIn(['data', 'address'])}
-      location={JSON.parse(entry.getIn(['data', 'location']))}
+      location={location}
       information={widgetFor('body')}
     />
   )
