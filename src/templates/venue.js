@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
+import GoogleMapsStatic from "../components/GoogleMapsStatic"
 
 export const VenueTemplate = ({
                                 contentComponent,
@@ -22,7 +23,7 @@ export const VenueTemplate = ({
               {title}
             </h1>
             <p style={{ marginTop: "-1rem", whiteSpace: "pre"}}>{address}</p>
-            <img alt="Map of location" style={{ width: "100%", maxWidth: 640, maxHeight: 360 }} src={"https://maps.googleapis.com/maps/api/staticmap?center=&zoom=10&size=640x360&maptype=roadmap&markers=color:red%7C" + location.coordinates.join(",") + "&key=AIzaSyAeauL0GfQvmFPy9z0gSPjDqYMKgzDE3sc"} />
+            <GoogleMapsStatic altText={"Location of " + title} maxWidth={640} maxHeight={360} zoom={10} location={location} />
             <h2>Information</h2>
             <InformationContent content={information} />
           </div>

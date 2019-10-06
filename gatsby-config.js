@@ -3,6 +3,7 @@ module.exports = {
     title: 'Manchester YMCA Harriers',
     description:
       'Alpha',
+
   },
   plugins: [
     'gatsby-plugin-react-helmet',
