@@ -1,9 +1,10 @@
 const _ = require('lodash')
 const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
-const { fmImagesToRelative } = require('gatsby-remark-relative-images')
+const {createFilePath} = require('gatsby-source-filesystem')
+const {fmImagesToRelative} = require('gatsby-remark-relative-images')
+const Moment = require('moment')
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = ({actions, graphql}) => {
   return Promise.all([
     graphql(`
     {
@@ -46,10 +47,12 @@ exports.createPages = ({ actions, graphql }) => {
             id
             fields {
               slug
+              location {
+                coordinates
+              }
             }
             frontmatter {
               address
-              location
               templateKey
             }
           }
@@ -66,6 +69,13 @@ exports.createPages = ({ actions, graphql }) => {
             }
           }
         }
+        sort: {
+          order: ASC,
+          fields: [
+            frontmatter___startsAt,
+            frontmatter___title
+          ]
+        }
       ) {
         edges {
           node {
@@ -74,17 +84,21 @@ exports.createPages = ({ actions, graphql }) => {
               slug
             }
             frontmatter {
-              startsAt
+              startDate: startsAt(formatString: "Do MMMM YYYY")
+              startTime: startsAt(formatString: "h:mma")
               type
               templateKey
+              title
               venue {
                 id
                 fields {
                   slug
+                  location {
+                    coordinates
+                  }
                 }
                 frontmatter {
                   address
-                  location
                   title
                 }
               }
@@ -113,11 +127,12 @@ exports.createPages = ({ actions, graphql }) => {
     createBlogPosts(actions, blogPosts)
     createVenues(actions, venues)
     createEvents(actions, events)
+    createEventsCalendar(actions, events)
   })
 }
 
 function createBlogPosts(actions, blogPosts) {
-  const { createPage } = actions
+  const {createPage} = actions
 
   blogPosts.data.allMarkdownRemark.edges.forEach(edge => {
     const id = edge.node.id
@@ -160,7 +175,7 @@ function createBlogPosts(actions, blogPosts) {
 }
 
 function createVenues(actions, venues) {
-  const { createPage } = actions
+  const {createPage} = actions
 
   venues.data.allMarkdownRemark.edges.forEach(edge => {
     const id = edge.node.id
@@ -179,7 +194,7 @@ function createVenues(actions, venues) {
 
 
 function createEvents(actions, events) {
-  const { createPage } = actions
+  const {createPage} = actions
 
   events.data.allMarkdownRemark.edges.forEach(edge => {
     const id = edge.node.id
@@ -196,35 +211,79 @@ function createEvents(actions, events) {
   })
 }
 
-exports.createSchemaCustomization = ({ actions, schema }) => {
-  const { createTypes } = actions
-  const typeDefs = [
-    "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
-    `type Frontmatter {
+function createEventsCalendar(actions, result) {
+  const {createPage} = actions
+
+  const events = result.data.allMarkdownRemark.edges
+  const firstEventMoment = Moment.utc(events[0].node.frontmatter.startDate, "Do MMMM YYYY")
+  const lastEventMoment = Moment.utc(events[events.length - 1].node.frontmatter.startDate, "Do MMMM YYYY")
+  const monthsToGenerate = []
+
+  for (let date = firstEventMoment.clone().startOf('month'); date.isSameOrBefore(lastEventMoment); date.add(1, 'month')) {
+    monthsToGenerate.push(date.clone().startOf('month'))
+  }
+
+  monthsToGenerate.forEach(month => {
+    createPage({
+      path: `/events/` + month.format("MMMM-YYYY").toLowerCase(),
+      component: path.resolve(
+        `src/templates/events-calendar.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        events: events,
+        month: month,
+        firstMonth: firstEventMoment.clone().startOf('month'),
+        lastMonth: lastEventMoment.clone().startOf('month'),
+      },
+    })
+  })
+}
+
+  exports.createSchemaCustomization = ({actions, schema}) => {
+    const {createTypes} = actions
+    const typeDefs = [
+      `type MarkdownRemark implements Node { 
+      frontmatter: Frontmatter 
+    }`,
+      `type Frontmatter {
       address: String!
       events: [MarkdownRemark!]! @link(by: "frontmatter.venue.title", from: "venue") # events for venue
       location: String!
-      startsAt: Date! @dateformat
+      startsAt: Date! @dateformat(formatString: "YYYY-MM-DD HH:mm")
       templateKey: String
       title: String
       type: String!
       venue: MarkdownRemark! @link(by: "frontmatter.title") # venue for event
-    }`,
-  ]
+    }`
+    ]
 
-  createTypes(typeDefs)
-}
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-  fmImagesToRelative(node) // convert image paths for gatsby images
-
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
+    createTypes(typeDefs)
   }
-}
+
+  exports.onCreateNode = ({node, actions, getNode}) => {
+    const {createNodeField} = actions
+    fmImagesToRelative(node) // convert image paths for gatsby images
+
+    var value
+
+    if (node.internal.type === `MarkdownRemark`) {
+      value = createFilePath({node, getNode})
+      createNodeField({
+        name: `slug`,
+        node,
+        value,
+      })
+
+      // If we have a location, create it as a field
+      if (node.frontmatter.location) {
+        value = JSON.parse(node.frontmatter.location)
+        value.coordinates = value.coordinates.reverse()
+        createNodeField({
+          node,
+          name: "location",
+          value: value,
+        })
+      }
+    }
+  }

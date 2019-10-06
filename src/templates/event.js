@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import {graphql, Link} from 'gatsby'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
-import {VenueTemplate} from "./venue";
 
 export const EventTemplate = ({
                                 contentComponent,
                                 title,
                                 venue,
-                                type,
-                                startsAt,
+                                startDate,
+  startTime,
                                 information,
                               }) => {
   const InformationContent = contentComponent || Content
@@ -23,13 +22,13 @@ export const EventTemplate = ({
             <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
               {title}
             </h1>
-            <h2>Venue</h2>
-            <VenueTemplate title={venue.frontmatter.title} address={venue.frontmatter.address} information={venue.information} location={venue.frontmatter.location} />
-            <h2>Type</h2>
-            <p>{type}</p>
-            <h2>Starts at</h2>
-            <p>{startsAt}</p>
-            <h2>Information</h2>
+            <p className="is-size-4">
+              <Link to={venue.fields.slug} className="is-inline-tablet">{venue.frontmatter.title}</Link>
+              <div className="is-inline is-hidden-mobile">, </div>
+              <div className="is-inline-tablet">{startDate}</div>
+              <div className="is-inline is-hidden-mobile"> at </div>
+              <div className="is-inline-tablet">{startTime}</div>
+            </p>
             <InformationContent content={information} />
           </div>
         </div>
@@ -41,10 +40,11 @@ export const EventTemplate = ({
 EventTemplate.propTypes = {
   contentComponent: PropTypes.func,
   information: PropTypes.node,
-  startsAt: PropTypes.instanceOf(Date),
+  startDate: PropTypes.string,
+  startTime: PropTypes.string,
   type: PropTypes.string,
   title: PropTypes.string,
-  venue: PropTypes.node,
+  venue: PropTypes.object,
 }
 
 const Event = ({data}) => {
@@ -55,7 +55,8 @@ const Event = ({data}) => {
       <EventTemplate
         contentComponent={HTMLContent}
         information={event.html}
-        startsAt={event.frontmatter.startsAt}
+        startDate={event.frontmatter.startDate}
+        startTime={event.frontmatter.startTime}
         type={event.frontmatter.type}
         title={event.frontmatter.title}
         venue={event.frontmatter.venue}
@@ -79,16 +80,19 @@ export const eventQuery = graphql`
       html
       frontmatter {
         title
-        startsAt(formatString: "d MMM YYYY, HH:mm")
+        startDate: startsAt(formatString: "Do MMMM YYYY")
+        startTime: startsAt(formatString: "h:mma")
         type
         venue {
           id
           fields {
             slug
+            location {
+              coordinates
+            }
           }
           frontmatter {
             address
-            location
             title
           }
         }

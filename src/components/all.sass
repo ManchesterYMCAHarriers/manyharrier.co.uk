@@ -10,6 +10,9 @@ $primary-invert: $kaldi-red-invert
 $body-color: #333
 $black: #2b2523
 
+$navbar-height: 5rem
+$navbar-item-img-max-height: $navbar-height - 2rem
+
 .navbar .navbar-menu
   box-shadow:none !important
 
@@ -80,6 +83,7 @@ $black: #2b2523
   fill: currentColor
 .navbar-brand .navbar-item.logo
   padding: 0 1rem
+  width: $navbar-height
 footer.footer
   padding: 3rem 0rem 0rem
   background-color: transparent
@@ -122,9 +126,16 @@ $menu-label-color: $white-ter
   flex-basis: 35%;
   margin: 0 1.5em 0 0;
 
-
 @import "~bulma"
 
+// Events calendar
+.events-calendar-date
+  padding-left: 0
+  padding-bottom: 0
+
+  +desktop
+    padding-left: $box-padding
+    padding-bottom: $box-padding
 
 // responsiveness
 +tablet-only

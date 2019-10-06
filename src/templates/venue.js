@@ -21,10 +21,8 @@ export const VenueTemplate = ({
             <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
               {title}
             </h1>
-            <h2>Address</h2>
-            <p>{address}</p>
-            <h2>Location</h2>
-            <p>{location}</p>
+            <p style={{ marginTop: "-1rem", whiteSpace: "pre"}}>{address}</p>
+            <img alt="Map of location" style={{ width: "100%", maxWidth: 640, maxHeight: 360 }} src={"https://maps.googleapis.com/maps/api/staticmap?center=&zoom=10&size=640x360&maptype=roadmap&markers=color:red%7C" + location.coordinates.join(",") + "&key=AIzaSyAeauL0GfQvmFPy9z0gSPjDqYMKgzDE3sc"} />
             <h2>Information</h2>
             <InformationContent content={information} />
           </div>
@@ -51,7 +49,7 @@ const Venue = ({data}) => {
         contentComponent={HTMLContent}
         information={venue.html}
         address={venue.frontmatter.address}
-        location={venue.frontmatter.location}
+        location={venue.fields.location}
         title={venue.frontmatter.title}
       />
     </Layout>
@@ -71,10 +69,14 @@ export const venueQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
+      fields {
+        location {
+          coordinates
+        }
+      }
       frontmatter {
         title
         address
-        location
       }
     }
   }
