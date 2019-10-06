@@ -7,7 +7,7 @@ const VenuePreview = ({ entry, widgetFor }) => {
     <VenueTemplate
       title={entry.getIn(['data', 'title'])}
       address={entry.getIn(['data', 'address'])}
-      location={entry.getIn(['data', 'location'])}
+      location={JSON.parse(entry.getIn(['data', 'location']))}
       information={widgetFor('body')}
     />
   )
