@@ -16,6 +16,7 @@ export const EventTemplate = ({
                                 contentComponent,
                                 title,
                                 venue,
+                                session,
                                 startsAt,
                                 information,
                                 type,
@@ -49,6 +50,7 @@ EventTemplate.propTypes = {
   championship: PropTypes.object,
   contentComponent: PropTypes.func,
   information: PropTypes.node,
+  session: PropTypes.object,
   startsAt: PropTypes.instanceOf(Moment),
   terrain: PropTypes.string,
   type: PropTypes.string,
@@ -67,6 +69,7 @@ const Event = ({data}) => {
         championship={event.frontmatter.championship}
         contentComponent={HTMLContent}
         information={event.html}
+        session={event.frontmatter.session}
         startsAt={startsAt}
         terrain={event.frontmatter.terrain}
         title={event.frontmatter.title}
@@ -93,6 +96,15 @@ export const eventQuery = graphql`
       frontmatter {
         title
         championship {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
+        }
+        session {
           id
           fields {
             slug

@@ -189,7 +189,15 @@ exports.createPages = ({actions, graphql}) => {
                   title
                 }
               }
-              championshipName
+              session {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  title
+                }
+              }
               startsAt
               templateKey
               terrain
@@ -208,7 +216,6 @@ exports.createPages = ({actions, graphql}) => {
                   title
                 }
               }
-              venueName
             }
           }
         }

@@ -20,6 +20,7 @@ collections:
       - {label: "Type", name: "type", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"]}
       - {label: "Terrain", name: "terrain", widget: "select", options: ["Cross Country", "Fell", "Mixed", "Road", "Track", "Trail"]}
       - {label: "Championship", name: "championshipName", widget: "relation", collection: "championships", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "If the event is part of a championship, add it here"}
+      - {label: "Session", name: "sessionName", widget: "relation", collection: "sessions", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "If this event is a normal session, add it here"}
       - {label: "Information", name: "body", widget: "markdown", required: false, hint: "Additional information about the event."}
   - name: "venues"
     label: "Venues"
