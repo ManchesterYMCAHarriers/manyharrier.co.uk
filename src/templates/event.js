@@ -22,15 +22,22 @@ export const EventTemplate = ({
                                 type,
                                 terrain,
                                 championship,
+                                sessionContentComponent,
                               }) => {
   const InformationContent = contentComponent || Content
+  const SessionContent = sessionContentComponent || Content
 
   return (
     <StandardContentContainer>
       <PageTitle title={title} />
       <EventStartsAt startsAt={startsAt} />
       <EventLocation venue={venue} />
+      {information &&
       <InformationContent content={information} />
+      }
+      {session &&
+      <SessionContent content={session.html} />
+      }
       <div className="tags">
         {type &&
         <TagEventType tag={type} />
@@ -49,6 +56,7 @@ export const EventTemplate = ({
 EventTemplate.propTypes = {
   championship: PropTypes.object,
   contentComponent: PropTypes.func,
+  sessionContentComponent: PropTypes.func,
   information: PropTypes.node,
   session: PropTypes.object,
   startsAt: PropTypes.instanceOf(Moment),
@@ -68,6 +76,7 @@ const Event = ({data}) => {
       <EventTemplate
         championship={event.frontmatter.championship}
         contentComponent={HTMLContent}
+        sessionContentComponent={HTMLContent}
         information={event.html}
         session={event.frontmatter.session}
         startsAt={startsAt}
