@@ -50,7 +50,7 @@ collections:
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "session"}
       - {label: "Title", name: "title", widget: "string", hint: "The name of the session, e.g. 400m repeats"}
-      - {label: "Route", name: "route", widget: "map", type: "Polygon", hint: "A map of the route"}
+      - {label: "Route", name: "route", widget: "map", type: "LineString", hint: "A map of the route"}
       - {label: "Information", name: "body", widget: "markdown", hint: "Information about the session, e.g. duration, number of reps, route"}
   - name: "blog"
     label: "Blog"
