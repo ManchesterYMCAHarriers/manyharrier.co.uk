@@ -7,9 +7,11 @@ class EventsCalendarDay extends React.Component {
   render() {
     const {day, events} = this.props
 
-    const filteredEvents = events.filter(event => {
-      const eventDate = Moment.utc(event.node.frontmatter.startDate, "Do MMMM YYYY").startOf('day')
-      return day.isSame(eventDate)
+    const filteredEvents = events.map(event => {
+      event.node.frontmatter.startsAt = Moment.utc(event.node.frontmatter.startsAt)
+      return event
+    }).filter(event => {
+      return event.node.frontmatter.startsAt.clone().startOf('day').isSame(day)
     })
 
     if (filteredEvents.length === 0) {
@@ -34,7 +36,7 @@ class EventsCalendarDay extends React.Component {
                     style={{flexGrow: 1}}
               >
               <span
-                className="event-start-time has-text-weight-bold">{event.node.frontmatter.startTime}</span>
+                className="event-start-time has-text-weight-bold">{event.node.frontmatter.startsAt.format("h:mma")}</span>
                 <span> - </span>
                 <span
                   className="event-location has-text-weight-semibold">{event.node.frontmatter.venue.frontmatter.title}</span>

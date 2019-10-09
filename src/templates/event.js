@@ -1,47 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import {graphql} from 'gatsby'
+import Moment from 'moment'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
+import PageTitle from "../components/PageTitle";
+import TagEventType from "../components/TagEventType";
+import TagTerrain from "../components/TagTerrain";
+import TagChampionship from "../components/TagChampionship";
+import EventStartsAt from "../components/EventStartsAt";
+import EventLocation from "../components/EventLocation";
+import StandardContentContainer from "../components/StandardContentContainer";
 
 export const EventTemplate = ({
                                 contentComponent,
                                 title,
                                 venue,
-                                startDate,
-  startTime,
+                                startsAt,
                                 information,
+                                type,
+                                terrain,
+                                championship,
                               }) => {
   const InformationContent = contentComponent || Content
 
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
-            <p className="is-size-4">
-              <Link to={venue.fields.slug} className="is-inline-tablet">{venue.frontmatter.title}</Link>
-              <div className="is-inline is-hidden-mobile">, </div>
-              <div className="is-inline-tablet">{startDate}</div>
-              <div className="is-inline is-hidden-mobile"> at </div>
-              <div className="is-inline-tablet">{startTime}</div>
-            </p>
-            <InformationContent content={information} />
-          </div>
-        </div>
+    <StandardContentContainer>
+      <PageTitle title={title} />
+      <EventStartsAt startsAt={startsAt} />
+      <EventLocation venue={venue} />
+      <InformationContent content={information} />
+      <div className="tags">
+        {type &&
+        <TagEventType tag={type} />
+        }
+        {terrain &&
+        <TagTerrain tag={terrain} />
+        }
+        {championship &&
+        <TagChampionship tag={championship.frontmatter.title} />
+        }
       </div>
-    </section>
+    </StandardContentContainer>
   )
 }
 
 EventTemplate.propTypes = {
+  championship: PropTypes.object,
   contentComponent: PropTypes.func,
   information: PropTypes.node,
-  startDate: PropTypes.string,
-  startTime: PropTypes.string,
+  startsAt: PropTypes.instanceOf(Moment),
+  terrain: PropTypes.string,
   type: PropTypes.string,
   title: PropTypes.string,
   venue: PropTypes.object,
@@ -50,15 +59,18 @@ EventTemplate.propTypes = {
 const Event = ({data}) => {
   const {markdownRemark: event} = data
 
+  const startsAt = Moment.utc(event.frontmatter.startsAt)
+
   return (
     <Layout>
       <EventTemplate
+        championship={event.frontmatter.championship}
         contentComponent={HTMLContent}
         information={event.html}
-        startDate={event.frontmatter.startDate}
-        startTime={event.frontmatter.startTime}
-        type={event.frontmatter.type}
+        startsAt={startsAt}
+        terrain={event.frontmatter.terrain}
         title={event.frontmatter.title}
+        type={event.frontmatter.type}
         venue={event.frontmatter.venue}
       />
     </Layout>
@@ -80,8 +92,17 @@ export const eventQuery = graphql`
       html
       frontmatter {
         title
-        startDate: startsAt(formatString: "Do MMMM YYYY")
-        startTime: startsAt(formatString: "h:mma")
+        championship {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
+        }
+        startsAt
+        terrain
         type
         venue {
           id

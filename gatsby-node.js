@@ -65,6 +65,102 @@ exports.createPages = ({actions, graphql}) => {
         filter: {
           frontmatter: {
             templateKey: {
+              eq: "championship"
+            }
+          }
+        }
+        sort: {
+          order: ASC,
+          fields: [
+            frontmatter___title
+          ]
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              championshipEvents {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  startsAt
+                  title
+                  venue {
+                    id
+                    frontmatter {
+                      address
+                      title
+                    }
+                  }
+                }
+              }
+              templateKey
+              title
+            }
+          }
+        }
+      }
+    }`),
+    graphql(`
+    {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
+              eq: "session"
+            }
+          }
+        }
+        sort: {
+          order: ASC,
+          fields: [
+            frontmatter___title
+          ]
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              sessionEvents {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  startsAt
+                  title
+                  venue {
+                    id
+                    frontmatter {
+                      address
+                      title
+                    }
+                  }
+                }
+              }
+              templateKey
+              title
+            }
+          }
+        }
+      }
+    }`),
+    graphql(`
+    {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
               eq: "event"
             }
           }
@@ -84,11 +180,21 @@ exports.createPages = ({actions, graphql}) => {
               slug
             }
             frontmatter {
-              startDate: startsAt(formatString: "Do MMMM YYYY")
-              startTime: startsAt(formatString: "h:mma")
-              type
+              championship {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  title
+                }
+              }
+              championshipName
+              startsAt
               templateKey
+              terrain
               title
+              type
               venue {
                 id
                 fields {
@@ -102,6 +208,7 @@ exports.createPages = ({actions, graphql}) => {
                   title
                 }
               }
+              venueName
             }
           }
         }
@@ -122,10 +229,14 @@ exports.createPages = ({actions, graphql}) => {
 
     const blogPosts = results[0]
     const venues = results[1]
-    const events = results[2]
+    const championships = results[2]
+    const sessions = results[3]
+    const events = results[4]
 
     createBlogPosts(actions, blogPosts)
     createVenues(actions, venues)
+    createChampionships(actions, championships)
+    createSessions(actions, sessions)
     createEvents(actions, events)
     createEventsCalendar(actions, events)
   })
@@ -192,12 +303,50 @@ function createVenues(actions, venues) {
   })
 }
 
+function createChampionships(actions, championships) {
+  const {createPage} = actions
+
+  championships.data.allMarkdownRemark.edges.forEach(edge => {
+    const id = edge.node.id
+
+    createPage({
+      path: edge.node.fields.slug,
+      component: path.resolve(
+        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+      },
+    })
+  })
+}
+
+function createSessions(actions, sessions) {
+  const {createPage} = actions
+
+  sessions.data.allMarkdownRemark.edges.forEach(edge => {
+    const id = edge.node.id
+
+    createPage({
+      path: edge.node.fields.slug,
+      component: path.resolve(
+        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+      },
+    })
+  })
+}
 
 function createEvents(actions, events) {
   const {createPage} = actions
 
   events.data.allMarkdownRemark.edges.forEach(edge => {
     const id = edge.node.id
+
     createPage({
       path: edge.node.fields.slug,
       component: path.resolve(
@@ -215,8 +364,8 @@ function createEventsCalendar(actions, result) {
   const {createPage} = actions
 
   const events = result.data.allMarkdownRemark.edges
-  const firstEventMoment = Moment.utc(events[0].node.frontmatter.startDate, "Do MMMM YYYY")
-  const lastEventMoment = Moment.utc(events[events.length - 1].node.frontmatter.startDate, "Do MMMM YYYY")
+  const firstEventMoment = Moment.utc(events[0].node.frontmatter.startsAt)
+  const lastEventMoment = Moment.utc(events[events.length - 1].node.frontmatter.startsAt)
   const monthsToGenerate = []
 
   for (let date = firstEventMoment.clone().startOf('month'); date.isSameOrBefore(lastEventMoment); date.add(1, 'month')) {
@@ -240,50 +389,58 @@ function createEventsCalendar(actions, result) {
   })
 }
 
-  exports.createSchemaCustomization = ({actions, schema}) => {
-    const {createTypes} = actions
-    const typeDefs = [
-      `type MarkdownRemark implements Node { 
+exports.createSchemaCustomization = ({actions, schema}) => {
+  const {createTypes} = actions
+  const typeDefs = [
+    `type MarkdownRemark implements Node { 
       frontmatter: Frontmatter 
     }`,
-      `type Frontmatter {
-      address: String!
-      events: [MarkdownRemark!]! @link(by: "frontmatter.venue.title", from: "venue") # events for venue
-      location: String!
-      startsAt: Date! @dateformat(formatString: "YYYY-MM-DD HH:mm")
+    `type Frontmatter {
+      address: String
+      championship: MarkdownRemark @link(by: "frontmatter.title", from: "championshipName") # championship for event
+      championshipName: String
+      championshipEvents: [MarkdownRemark!] @link(by: "frontmatter.championshipName", from: "title") # events for championship
+      location: String
+      session: MarkdownRemark @link(by: "frontmatter.title", from: "sessionName") # session for event
+      sessionName: String
+      sessionEvents: [MarkdownRemark!] @link(by: "frontmatter.sessionName", from: "title") # events for session
+      startsAt: Date @dateformat(formatString: "YYYY-MM-DD HH:mm")
       templateKey: String
+      terrain: String
       title: String
-      type: String!
-      venue: MarkdownRemark! @link(by: "frontmatter.title") # venue for event
+      type: String
+      venue: MarkdownRemark @link(by: "frontmatter.title", from: "venueName") # venue for event
+      venueName: String
+      venueEvents: [MarkdownRemark!] @link(by: "frontmatter.venueName", from: "title") # events for venue
     }`
-    ]
+  ]
 
-    createTypes(typeDefs)
-  }
+  createTypes(typeDefs)
+}
 
-  exports.onCreateNode = ({node, actions, getNode}) => {
-    const {createNodeField} = actions
-    fmImagesToRelative(node) // convert image paths for gatsby images
+exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions
+  fmImagesToRelative(node) // convert image paths for gatsby images
 
-    var value
+  var value
 
-    if (node.internal.type === `MarkdownRemark`) {
-      value = createFilePath({node, getNode})
+  if (node.internal.type === `MarkdownRemark`) {
+    value = createFilePath({node, getNode})
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+
+    // If we have a location, create it as a field
+    if (node.frontmatter.location) {
+      value = JSON.parse(node.frontmatter.location)
+      value.coordinates = value.coordinates.reverse()
       createNodeField({
-        name: `slug`,
         node,
-        value,
+        name: "location",
+        value: value,
       })
-
-      // If we have a location, create it as a field
-      if (node.frontmatter.location) {
-        value = JSON.parse(node.frontmatter.location)
-        value.coordinates = value.coordinates.reverse()
-        createNodeField({
-          node,
-          name: "location",
-          value: value,
-        })
-      }
     }
   }
+}

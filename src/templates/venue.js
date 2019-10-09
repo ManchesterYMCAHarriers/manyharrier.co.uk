@@ -37,7 +37,9 @@ VenueTemplate.propTypes = {
   address: PropTypes.string,
   contentComponent: PropTypes.func,
   information: PropTypes.node,
-  location: PropTypes.object,
+  location: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number)
+  }),
   title: PropTypes.string,
 }
 

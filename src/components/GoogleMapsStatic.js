@@ -11,7 +11,7 @@ class GoogleMapsStatic extends React.Component {
     }
 
     return (
-      <img className="google-maps-static"
+      <img className="image is-16by9"
            alt={altText}
            style={{width: "100%", maxWidth: maxWidth, maxHeight: maxHeight}}
            src={"https://maps.googleapis.com/maps/api/staticmap?center=&zoom=" + zoom + "&size=" + maxWidth + "x" + maxHeight + "&maptype=roadmap&markers=color:red%7C" + location.coordinates.join(",") + "&key=" + apiKey} />
