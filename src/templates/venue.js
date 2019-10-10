@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
-import GoogleMapsStatic from "../components/GoogleMapsStatic"
+import GoogleMapsLocation from "../components/GoogleMapsLocation"
+import PageTitle from "../components/PageTitle";
+import VenueAddress from "../components/VenueAddress";
+import Subtitle from "../components/Subtitle";
+import GoogleMapsDirectionsLink from "../components/GoogleMapsDirectionsLink";
+import UpcomingEvents from "../components/UpcomingEvents";
 
 export const VenueTemplate = ({
                                 contentComponent,
@@ -11,6 +16,7 @@ export const VenueTemplate = ({
                                 address,
                                 location,
                                 information,
+                                events,
                               }) => {
   const InformationContent = contentComponent || Content
 
@@ -19,13 +25,17 @@ export const VenueTemplate = ({
       <div className="container content">
         <div className="columns">
           <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
-            <p style={{ marginTop: "-1rem", whiteSpace: "pre"}}>{address}</p>
-            <GoogleMapsStatic altText={"Location of " + title} maxWidth={640} maxHeight={360} zoom={10} location={location} />
-            <h2>Information</h2>
-            <InformationContent content={information} />
+            <PageTitle title={title} />
+            <VenueAddress address={address} />
+            <GoogleMapsLocation zoom={13} location={location} />
+            <Subtitle text={"Directions"} />
+            <GoogleMapsDirectionsLink location={location}
+                                      text={"Navigate to " + title + " with Google Maps"} />
+            <Subtitle text={"Information"} />
+            <InformationContent content={information}
+                                className={"information"} />
+            <Subtitle text={"Upcoming events"} />
+            <UpcomingEvents events={events} venueName={title} />
           </div>
         </div>
       </div>
@@ -36,6 +46,7 @@ export const VenueTemplate = ({
 VenueTemplate.propTypes = {
   address: PropTypes.string,
   contentComponent: PropTypes.func,
+  events: PropTypes.arrayOf(PropTypes.object),
   information: PropTypes.node,
   location: PropTypes.shape({
     coordinates: PropTypes.arrayOf(PropTypes.number)
@@ -44,12 +55,13 @@ VenueTemplate.propTypes = {
 }
 
 const Venue = ({data}) => {
-  const { markdownRemark: venue } = data
+  const {markdownRemark: venue} = data
 
   return (
     <Layout>
       <VenueTemplate
         contentComponent={HTMLContent}
+        events={venue.frontmatter.venueEvents}
         information={venue.html}
         address={venue.frontmatter.address}
         location={venue.fields.location}
@@ -80,6 +92,16 @@ export const venueQuery = graphql`
       frontmatter {
         title
         address
+        venueEvents {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            startsAt
+          }
+        }
       }
     }
   }

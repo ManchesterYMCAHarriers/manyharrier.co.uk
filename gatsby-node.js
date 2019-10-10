@@ -54,6 +54,16 @@ exports.createPages = ({actions, graphql}) => {
             frontmatter {
               address
               templateKey
+              venueEvents {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  startsAt
+                  title
+                }
+              }
             }
           }
         }

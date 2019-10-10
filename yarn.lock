@@ -1472,6 +1472,25 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@react-google-maps/api@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-1.7.7.tgz#9b26fabeb8e0fad7835b72b35f5b2336d564942a"
+  integrity sha512-4AiYpvwldlNI3LIXxHUdL029XvtwV5WPRuDrS+XIoXA2miWeSewOoRwDkMerO91mJE781zt4N3vlvoi4Fd6sfA==
+  dependencies:
+    "@react-google-maps/infobox" "1.7.0"
+    "@react-google-maps/marker-clusterer" "1.7.0"
+    invariant "2.2.4"
+
+"@react-google-maps/infobox@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-1.7.0.tgz#b904737fe48670accfa456502e11c0729c6abf25"
+  integrity sha512-cfrRpSS5/fb0ZNtqbYBc/BL6cJoCpuHOdvsrusROl+sDTQ/0NyiDxB44U/hQlWqbpfS6nA4q9yoPCi2ICEJl4g==
+
+"@react-google-maps/marker-clusterer@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-1.7.0.tgz#eb47d118ea1b1a96617418c07400ae7435bbe57b"
+  integrity sha512-g8lp2pFlDgVyHEUH4QyNv+VFqY7uARMnuyA+Sn7QG4MT8ehdRK/kVfhmZkbyXDOt6yfzW4GtQFezOQRESQAxlA==
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
@@ -7688,7 +7707,7 @@ into-stream@^3.1.0:
     from2 "^2.1.1"
     p-is-promise "^1.1.0"
 
-invariant@^2.0.0, invariant@^2.1.0, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.0.0, invariant@^2.1.0, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -9414,7 +9433,7 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5, mkdirp@^0.5.0, mkdirp
   dependencies:
     minimist "0.0.8"
 
-moment@^2.24.0:
+moment@^2.24.0, moment@latest:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
