@@ -8,6 +8,7 @@ import ChampionshipPreview from './preview-templates/ChampionshipPreview'
 import EventPreview from "./preview-templates/EventPreview"
 import ProductPagePreview from './preview-templates/ProductPagePreview'
 import IndexPagePreview from './preview-templates/IndexPagePreview'
+import InfoPreview from './preview-templates/InfoPreview'
 import RoutePreview from "./preview-templates/RoutePreview"
 import SessionPreview from "./preview-templates/SessionPreview"
 import VenuePreview from "./preview-templates/VenuePreview"
@@ -24,3 +25,4 @@ CMS.registerPreviewTemplate('championships', ChampionshipPreview)
 CMS.registerPreviewTemplate('venues', VenuePreview)
 CMS.registerPreviewTemplate('routes', RoutePreview)
 CMS.registerPreviewTemplate('sessions', SessionPreview)
+CMS.registerPreviewTemplate('info', InfoPreview)
