@@ -29,8 +29,11 @@ export const VenueTemplate = ({
             <VenueAddress address={address} />
             <GoogleMapsLocation zoom={13} location={location} />
             <Subtitle text={"Directions"} />
-            <GoogleMapsDirectionsLink location={location}
-                                      text={"Navigate to " + title + " with Google Maps"} />
+            <ul>
+              <li><GoogleMapsDirectionsLink location={location}
+                                            text={"Navigate to " + title + " with Google Maps"} />
+              </li>
+            </ul>
             <Subtitle text={"Information"} />
             <InformationContent content={information}
                                 className={"information"} />

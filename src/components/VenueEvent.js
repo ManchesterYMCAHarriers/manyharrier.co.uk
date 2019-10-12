@@ -6,7 +6,7 @@ import { Link } from "gatsby"
 class VenueEvent extends React.Component {
   render() {
     const { event } = this.props
-    const { slug } = event
+    const { slug } = event.fields
     const { title } = event.frontmatter
 
     const startsAt = Moment.utc(event.frontmatter.startsAt)

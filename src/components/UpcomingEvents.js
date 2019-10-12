@@ -5,8 +5,10 @@ import VenueEvent from "./VenueEvent";
 
 class UpcomingEvents extends React.Component {
   render() {
-    const { events, venueName } = this.props
+    const { venueName } = this.props
     const today = Moment.utc().startOf("day")
+
+    let events = this.props.events || []
 
     const filteredEvents = events.filter(event => {
       const start = Moment.utc(event.frontmatter.startsAt)
