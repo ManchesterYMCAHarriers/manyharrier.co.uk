@@ -19,9 +19,10 @@ export const EventTemplate = ({
                                 session,
                                 startsAt,
                                 information,
-                                type,
+                                eventType,
                                 terrain,
                                 championship,
+                                competitionName,
                                 sessionContentComponent,
                               }) => {
   const InformationContent = contentComponent || Content
@@ -39,14 +40,17 @@ export const EventTemplate = ({
       <SessionContent content={session.html} />
       }
       <div className="tags">
-        {type &&
-        <TagEventType tag={type} />
+        {eventType &&
+        <TagEventType tag={eventType} />
         }
         {terrain &&
         <TagTerrain tag={terrain} />
         }
         {championship &&
         <TagChampionship tag={championship.frontmatter.title} />
+        }
+        {competitionName &&
+        <TagTerrain tag={competitionName} />
         }
       </div>
     </StandardContentContainer>
@@ -61,7 +65,7 @@ EventTemplate.propTypes = {
   session: PropTypes.object,
   startsAt: PropTypes.instanceOf(Moment),
   terrain: PropTypes.string,
-  type: PropTypes.string,
+  eventType: PropTypes.string,
   title: PropTypes.string,
   venue: PropTypes.object,
 }
@@ -75,6 +79,7 @@ const Event = ({data}) => {
     <Layout>
       <EventTemplate
         championship={event.frontmatter.championship}
+        competition={event.frontmatter.competitionName}
         contentComponent={HTMLContent}
         sessionContentComponent={HTMLContent}
         information={event.html}
@@ -82,7 +87,7 @@ const Event = ({data}) => {
         startsAt={startsAt}
         terrain={event.frontmatter.terrain}
         title={event.frontmatter.title}
-        type={event.frontmatter.type}
+        eventType={event.frontmatter.eventType}
         venue={event.frontmatter.venue}
       />
     </Layout>
@@ -113,6 +118,24 @@ export const eventQuery = graphql`
             title
           }
         }
+        competitionName
+        eventType
+        infoForChampionship {
+          id
+          html
+        }
+        infoForCompetition {
+          id
+          html
+        }
+        infoForEventType {
+          id
+          html
+        }
+        infoForTerrain {
+          id
+          html
+        }
         session {
           id
           fields {
@@ -124,7 +147,6 @@ export const eventQuery = graphql`
         }
         startsAt
         terrain
-        type
         venue {
           id
           fields {

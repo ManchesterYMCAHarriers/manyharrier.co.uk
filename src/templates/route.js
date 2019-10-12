@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Content, {HTMLContent} from "../components/Content";
+import GoogleMapsRoute from "../components/GoogleMapsRoute";
 
 export const RouteTemplate = ({
                                 contentComponent,
@@ -21,6 +22,7 @@ export const RouteTemplate = ({
             <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
               {title}
             </h1>
+            <GoogleMapsRoute routeTrack={routeTrack} />
             <h2>Information</h2>
             <InformationContent content={information} />
           </div>
@@ -34,7 +36,9 @@ RouteTemplate.propTypes = {
   contentComponent: PropTypes.func,
   events: PropTypes.object,
   information: PropTypes.node,
-  routeTrack: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  routeTrack: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
+  }),
   title: PropTypes.string,
 }
 

@@ -222,6 +222,44 @@ exports.createPages = ({actions, graphql}) => {
         filter: {
           frontmatter: {
             templateKey: {
+              eq: "route"
+            }
+          }
+        }
+        sort: {
+          order: ASC,
+          fields: [
+            frontmatter___title
+          ]
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              routeTrack {
+                coordinates
+              }
+              slug
+            }
+            frontmatter {
+              championshipName
+              competitionName
+              eventType
+              terrain
+              templateKey
+              title
+            }
+          }
+        }
+      }
+    }`),
+    graphql(`
+    {
+      allMarkdownRemark(
+        filter: {
+          frontmatter: {
+            templateKey: {
               eq: "event"
             }
           }
@@ -250,6 +288,24 @@ exports.createPages = ({actions, graphql}) => {
                   title
                 }
               }
+              competitionName
+              eventType
+              infoForChampionship {
+                id
+                html
+              }
+              infoForCompetition {
+                id
+                html
+              }
+              infoForEventType {
+                id
+                html
+              }
+              infoForTerrain {
+                id
+                html
+              }
               route {
                 id
                 fields {
@@ -275,7 +331,6 @@ exports.createPages = ({actions, graphql}) => {
               templateKey
               terrain
               title
-              type
               venue {
                 id
                 fields {
@@ -312,14 +367,16 @@ exports.createPages = ({actions, graphql}) => {
     const championships = results[2]
     const sessions = results[3]
     const routes = results[4]
-    const events = results[5]
+    const info = results[5]
+    const events = results[6]
 
     createBlogPosts(actions, blogPosts)
-    createVenues(actions, venues)
-    createChampionships(actions, championships)
-    createRoutes(actions, routes)
-    createSessions(actions, sessions)
-    createEvents(actions, events)
+    createGeneric(actions, venues)
+    createGeneric(actions, championships)
+    createGeneric(actions, routes)
+    createGeneric(actions, sessions)
+    createGeneric(actions, info)
+    createGeneric(actions, events)
     createEventsCalendar(actions, events)
   })
 }
@@ -367,87 +424,11 @@ function createBlogPosts(actions, blogPosts) {
   })
 }
 
-function createVenues(actions, venues) {
+function createGeneric(actions, pages) {
   const {createPage} = actions
 
-  venues.data.allMarkdownRemark.edges.forEach(edge => {
+  pages.data.allMarkdownRemark.edges.forEach(edge => {
     const id = edge.node.id
-    createPage({
-      path: edge.node.fields.slug,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
-}
-
-function createChampionships(actions, championships) {
-  const {createPage} = actions
-
-  championships.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-
-    createPage({
-      path: edge.node.fields.slug,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
-}
-
-function createSessions(actions, sessions) {
-  const {createPage} = actions
-
-  sessions.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-
-    createPage({
-      path: edge.node.fields.slug,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
-}
-
-function createRoutes(actions, sessions) {
-  const {createPage} = actions
-
-  sessions.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-
-    createPage({
-      path: edge.node.fields.slug,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
-}
-
-function createEvents(actions, events) {
-  const {createPage} = actions
-
-  events.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-
     createPage({
       path: edge.node.fields.slug,
       component: path.resolve(
@@ -501,6 +482,12 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       championship: MarkdownRemark @link(by: "frontmatter.title", from: "championshipName") # championship for event
       championshipName: String
       championshipEvents: [MarkdownRemark!] @link(by: "frontmatter.championshipName", from: "title") # events for championship
+      competitionName: String
+      eventType: String
+      infoForChampionship: MarkdownRemark @link(by: "frontmatter.championshipName", from: "championshipName") # info for championship
+      infoForCompetition: MarkdownRemark @link(by: "frontmatter.competitionName", from: "competitionName") # info for competition
+      infoForEventType: MarkdownRemark @link(by: "frontmatter.eventType", from: "eventType") # info for event type
+      infoForTerrain: MarkdownRemark @link(by: "frontmatter.terrain", from: "terrain") # info for terraim
       location: String
       route: MarkdownRemark @link(by: "frontmatter.title", from: "routeName") # route for event
       routeName: String
@@ -513,7 +500,6 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       templateKey: String
       terrain: String
       title: String
-      type: String
       venue: MarkdownRemark @link(by: "frontmatter.title", from: "venueName") # venue for event
       venueName: String
       venueEvents: [MarkdownRemark!] @link(by: "frontmatter.venueName", from: "title") # events for venue
