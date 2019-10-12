@@ -537,6 +537,9 @@ exports.onCreateNode = ({node, actions, getNode}) => {
       value,
     })
 
+    // TODO: these node fields will cause a problem if there is no data available;
+    //  i.e. a location and a route must exist otherwise this fails. Why?
+
     // If we have a location, create it as a field
     if (node.frontmatter.location) {
       value = JSON.parse(node.frontmatter.location)
