@@ -6,6 +6,7 @@ const SessionPreview = ({ entry, widgetFor }) => {
   return (
     <SessionTemplate
       title={entry.getIn(['data', 'title'])}
+      events={entry.getIn(['data', 'events'])}
       information={widgetFor('body')}
     />
   )
