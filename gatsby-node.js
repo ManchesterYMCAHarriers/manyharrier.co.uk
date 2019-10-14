@@ -4,468 +4,71 @@ const {createFilePath} = require('gatsby-source-filesystem')
 const {fmImagesToRelative} = require('gatsby-remark-relative-images')
 const Moment = require('moment')
 
-exports.createPages = ({actions, graphql}) => {
-  return Promise.all([
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "blog-post"
-            }
-          }
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-            }
-            frontmatter {
-              tags
-              templateKey
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "venue"
-            }
-          }
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-              location {
-                coordinates
-              }
-            }
-            frontmatter {
-              address
-              templateKey
-              venueEvents {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  startsAt
-                  title
-                }
-              }
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "championship"
-            }
-          }
-        }
-        sort: {
-          order: ASC,
-          fields: [
-            frontmatter___title
-          ]
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-            }
-            frontmatter {
-              championshipEvents {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  startsAt
-                  title
-                  venue {
-                    id
-                    frontmatter {
-                      address
-                      title
-                    }
-                  }
-                }
-              }
-              templateKey
-              title
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "session"
-            }
-          }
-        }
-        sort: {
-          order: ASC,
-          fields: [
-            frontmatter___title
-          ]
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-            }
-            frontmatter {
-              sessionEvents {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  startsAt
-                  title
-                  venue {
-                    id
-                    frontmatter {
-                      address
-                      title
-                    }
-                  }
-                }
-              }
-              templateKey
-              title
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "route"
-            }
-          }
-        }
-        sort: {
-          order: ASC,
-          fields: [
-            frontmatter___title
-          ]
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              routeTrack {
-                coordinates
-              }
-              slug
-            }
-            frontmatter {
-              routeEvents {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  startsAt
-                  title
-                  venue {
-                    id
-                    frontmatter {
-                      address
-                      title
-                    }
-                  }
-                }
-              }
-              templateKey
-              title
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "route"
-            }
-          }
-        }
-        sort: {
-          order: ASC,
-          fields: [
-            frontmatter___title
-          ]
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              routeTrack {
-                coordinates
-              }
-              slug
-            }
-            frontmatter {
-              championshipName
-              competitionName
-              eventType
-              terrain
-              templateKey
-              title
-            }
-          }
-        }
-      }
-    }`),
-    graphql(`
-    {
-      allMarkdownRemark(
-        filter: {
-          frontmatter: {
-            templateKey: {
-              eq: "event"
-            }
-          }
-        }
-        sort: {
-          order: ASC,
-          fields: [
-            frontmatter___startsAt,
-            frontmatter___title
-          ]
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-            }
-            frontmatter {
-              championship {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  title
-                }
-              }
-              competitionName
-              eventType
-              infoForChampionship {
-                id
-                html
-              }
-              infoForCompetition {
-                id
-                html
-              }
-              infoForEventType {
-                id
-                html
-              }
-              infoForTerrain {
-                id
-                html
-              }
-              route {
-                id
-                fields {
-                  routeTrack {
-                    coordinates
-                  }
-                  slug
-                }
-                frontmatter {
-                  title
-                }
-              }
-              session {
-                id
-                fields {
-                  slug
-                }
-                frontmatter {
-                  title
-                }
-              }
-              startsAt
-              templateKey
-              terrain
-              title
-              venue {
-                id
-                fields {
-                  slug
-                  location {
-                    coordinates
-                  }
-                }
-                frontmatter {
-                  address
-                  title
-                }
-              }
-            }
-          }
-        }
-      }
-    }`),
-  ]).then(results => {
-    const errors = []
-    results.forEach(result => {
-      if (result.errors) {
-        errors.push(...result.errors)
-        result.errors.forEach(e => console.error(e.toString()))
-      }
-    })
-
-    if (errors.length > 0) {
-      return Promise.reject(errors)
-    }
-
-    const blogPosts = results[0]
-    const venues = results[1]
-    const championships = results[2]
-    const sessions = results[3]
-    const routes = results[4]
-    const info = results[5]
-    const events = results[6]
-
-    createBlogPosts(actions, blogPosts)
-    createGeneric(actions, venues)
-    createGeneric(actions, championships)
-    createGeneric(actions, routes)
-    createGeneric(actions, sessions)
-    createGeneric(actions, info)
-    createGeneric(actions, events)
-    createEventsCalendar(actions, events)
-  })
-}
-
-function createBlogPosts(actions, blogPosts) {
+exports.createPages = async ({actions, graphql}) => {
   const {createPage} = actions
 
-  blogPosts.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-    createPage({
-      path: edge.node.fields.slug,
-      tags: edge.node.frontmatter.tags,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
+  const pages = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              calendarPage: startsAt(formatString: "YYYY-MM")
+              templateKey
+            }
+          }
+        }
+      }
+    }`)
 
-  // Tag pages:
-  let tags = []
-  // Iterate through each post, putting all found tags into `tags`
-  blogPosts.data.allMarkdownRemark.edges.forEach(edge => {
-    if (_.get(edge, `node.frontmatter.tags`)) {
-      tags = tags.concat(edge.node.frontmatter.tags)
-    }
-  })
-  // Eliminate duplicate tags
-  tags = _.uniq(tags)
-
-  // Make tag pages
-  tags.forEach(tag => {
-    const tagPath = `/tags/${_.kebabCase(tag)}/`
-
-    createPage({
-      path: tagPath,
-      component: path.resolve(`src/templates/tags.js`),
-      context: {
-        tag,
-      },
-    })
-  })
-}
-
-function createGeneric(actions, pages) {
-  const {createPage} = actions
-
-  pages.data.allMarkdownRemark.edges.forEach(edge => {
-    const id = edge.node.id
-    createPage({
-      path: edge.node.fields.slug,
-      component: path.resolve(
-        `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
-      ),
-      // additional data can be passed via context
-      context: {
-        id,
-      },
-    })
-  })
-}
-
-function createEventsCalendar(actions, result) {
-  const {createPage} = actions
-
-  const events = result.data.allMarkdownRemark.edges
-  const firstEventMoment = Moment.utc(events[0].node.frontmatter.startsAt)
-  const lastEventMoment = Moment.utc(events[events.length - 1].node.frontmatter.startsAt)
-  const monthsToGenerate = []
-
-  for (let date = firstEventMoment.clone().startOf('month'); date.isSameOrBefore(lastEventMoment); date.add(1, 'month')) {
-    monthsToGenerate.push(date.clone().startOf('month'))
+  if (pages.errors) {
+    pages.errors.forEach(e => console.error(e.toString()))
+    return Promise.reject(result.errors)
   }
 
-  monthsToGenerate.forEach(month => {
+  pages.data.allMarkdownRemark.edges.forEach(({node}) => {
+    const id = node.id
+    const now = Moment.utc().format("YYYY-MM-DD HH:mm")
     createPage({
-      path: `/events/` + month.format("MMMM-YYYY").toLowerCase(),
+      path: node.fields.slug,
       component: path.resolve(
-        `src/templates/events-calendar.js`
+        `src/templates/${String(node.frontmatter.templateKey)}.js`
       ),
       // additional data can be passed via context
       context: {
-        events: events,
-        month: month,
-        firstMonth: firstEventMoment.clone().startOf('month'),
-        lastMonth: lastEventMoment.clone().startOf('month'),
+        id,
+        now
+      },
+    })
+  })
+
+  // Event calendar pages
+  let calendarPages = []
+  // Iterate through each post, putting all found tags into `tags`
+  pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    if (_.get(node, `frontmatter.calendarPage`)) {
+      calendarPages = calendarPages.concat(node.frontmatter.calendarPage)
+    }
+  })
+
+  calendarPages = _.uniq(calendarPages)
+
+  calendarPages.forEach(month => {
+    const thisMonthMoment = Moment.utc(month, "YYYY-MM")
+    const thisMonth = thisMonthMoment.format("YYYY-MM-DD HH:mm")
+    const nextMonth = thisMonthMoment.clone().add(1, 'month').format("YYYY-MM-DD HH:mm")
+    const calendarPagePath = `/events/${_.kebabCase(thisMonthMoment.format("MMMM-YYYY"))}`
+
+    createPage({
+      path: calendarPagePath,
+      component: path.resolve(`src/templates/events-calendar.js`),
+      context: {
+        thisMonth: thisMonth,
+        nextMonth: nextMonth
       },
     })
   })
@@ -484,10 +87,10 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       championshipEvents: [MarkdownRemark!] @link(by: "frontmatter.championshipName", from: "title") # events for championship
       competitionName: String
       eventType: String
-      infoForChampionship: MarkdownRemark @link(by: "frontmatter.championshipName", from: "championshipName") # info for championship
-      infoForCompetition: MarkdownRemark @link(by: "frontmatter.competitionName", from: "competitionName") # info for competition
-      infoForEventType: MarkdownRemark @link(by: "frontmatter.eventType", from: "eventType") # info for event type
-      infoForTerrain: MarkdownRemark @link(by: "frontmatter.terrain", from: "terrain") # info for terraim
+      infoForChampionship: MarkdownRemark @link(by: "frontmatter.forChampionship", from: "championshipName") # info for championship
+      infoForCompetition: MarkdownRemark @link(by: "frontmatter.forCompetition", from: "competitionName") # info for competition
+      infoForEventType: MarkdownRemark @link(by: "frontmatter.forEventType", from: "eventType") # info for event type
+      infoForTerrain: MarkdownRemark @link(by: "frontmatter.forTerrain", from: "terrain") # info for terraim
       location: String
       route: MarkdownRemark @link(by: "frontmatter.title", from: "routeName") # route for event
       routeName: String

@@ -17,7 +17,7 @@ Postcode for sat-navs: **M3 4NB**
 
 ## Youth Hostel Association
 
-There is a nearby car park at the YHA, also on Potato Wharf. This car park is £2 for two hours and £4 for four hours.
+There is a nearby car park at the YHA, also on Potato Wharf.
 
 Postcode for sat-navs: **M3 4NB**
 
@@ -42,4 +42,3 @@ There are some on-street parking bays nearby:
 The nearest tram stop is Deansgate-Castlefield, which is in Metrolink zone 1 in the city centre.
 
 * [Deansgate-Castlefield live tram times](https://tfgm.com/public-transport/tram/stops/deansgate-castlefield-tram)
-

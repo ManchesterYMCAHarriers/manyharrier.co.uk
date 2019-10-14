@@ -1,144 +1,89 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, graphql } from 'gatsby'
+import {graphql} from 'gatsby'
+import Moment from 'moment'
+import {kebabCase} from 'lodash'
 
 import Layout from '../components/Layout'
-import Features from '../components/Features'
-import BlogRoll from '../components/BlogRoll'
+import PageTitle from "../components/PageTitle";
+import EventBox from "../components/EventBox";
+import {HTMLContent} from "../components/Content";
+import SecondaryTitle from "../components/SecondaryTitle";
 
 export const IndexPageTemplate = ({
-  image,
-  title,
-  heading,
-  subheading,
-  mainpitch,
-  description,
-  intro,
-}) => (
-  <div>
-    <div
-      className="full-width-image margin-top-0"
-      style={{
-        backgroundImage: `url(${
-          !!image.childImageSharp ? image.childImageSharp.fluid.src : image
-        })`,
-        backgroundPosition: `top left`,
-        backgroundAttachment: `fixed`,
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          height: '150px',
-          lineHeight: '1',
-          justifyContent: 'space-around',
-          alignItems: 'left',
-          flexDirection: 'column',
-        }}
-      >
-        <h1
-          className="has-text-weight-bold is-size-3-mobile is-size-2-tablet is-size-1-widescreen"
-          style={{
-            boxShadow:
-              'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
-            color: 'white',
-            lineHeight: '1',
-            padding: '0.25em',
-          }}
-        >
-          {title}
-        </h1>
-        <h3
-          className="has-text-weight-bold is-size-5-mobile is-size-5-tablet is-size-4-widescreen"
-          style={{
-            boxShadow:
-              'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
-            color: 'white',
-            lineHeight: '1',
-            padding: '0.25em',
-          }}
-        >
-          {subheading}
-        </h3>
-      </div>
-    </div>
-    <section className="section section--gradient">
-      <div className="container">
-        <div className="section">
-          <div className="columns">
-            <div className="column is-10 is-offset-1">
-              <div className="content">
-                <div className="content">
-                  <div className="tile">
-                    <h1 className="title">{mainpitch.title}</h1>
-                  </div>
-                  <div className="tile">
-                    <h3 className="subtitle">{mainpitch.description}</h3>
-                  </div>
+                                    body,
+                                    nextEvents,
+                                    title,
+                                  }) => (
+  <div className="container">
+    <div className="section">
+      <div className="columns">
+        <div className="column is-10 is-offset-1">
+          <div className="content">
+            <PageTitle title={title} />
+            <HTMLContent content={body} />
+            <SecondaryTitle title={"Coming up"} />
+            <div className="columns is-multiline">
+              {nextEvents.map(ev => (
+                <div className="column is-half"
+                     key={"next-event-" + kebabCase(ev.eventType)}>
+                  <EventBox eventTitle={ev.eventTitle}
+                            preTitle={"Next " + ev.eventType.toLowerCase()}
+                            startsAt={ev.startsAt} slug={ev.slug}
+                            venueName={ev.venueName} />
                 </div>
-                <div className="columns">
-                  <div className="column is-12">
-                    <h3 className="has-text-weight-semibold is-size-2">
-                      {heading}
-                    </h3>
-                    <p>{description}</p>
-                  </div>
-                </div>
-                <Features gridItems={intro.blurbs} />
-                <div className="columns">
-                  <div className="column is-12 has-text-centered">
-                    <Link className="btn" to="/products">
-                      See all products
-                    </Link>
-                  </div>
-                </div>
-                <div className="column is-12">
-                  <h3 className="has-text-weight-semibold is-size-2">
-                    Latest stories
-                  </h3>
-                  <BlogRoll />
-                  <div className="column is-12 has-text-centered">
-                    <Link className="btn" to="/blog">
-                      Read more
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 )
 
 IndexPageTemplate.propTypes = {
-  image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  title: PropTypes.string,
-  heading: PropTypes.string,
-  subheading: PropTypes.string,
-  mainpitch: PropTypes.object,
-  description: PropTypes.string,
-  intro: PropTypes.shape({
-    blurbs: PropTypes.array,
-  }),
+  title: PropTypes.string.isRequired,
+  body: PropTypes.node.isRequired,
+  nextEvents: PropTypes.arrayOf(PropTypes.shape({
+    eventTitle: PropTypes.string.isRequired,
+    eventType: PropTypes.string.isRequired,
+    startsAt: PropTypes.instanceOf(Moment).isRequired,
+    slug: PropTypes.string.isRequired,
+    venueName: PropTypes.string.isRequired,
+  }))
 }
 
-const IndexPage = ({ data }) => {
-  const { frontmatter } = data.markdownRemark
+const IndexPage = ({data}) => {
+  const body = data.page.html
+  const {title} = data.page.frontmatter
+
+  let nextEvents = []
+
+  const nextEventKeys = [
+    "nextGroupRun",
+    "nextTrackSession",
+    "nextRace",
+    "nextSocial"
+  ]
+
+  nextEventKeys.forEach(key => {
+    data[key].edges.forEach(({node}) => {
+      nextEvents.push({
+        eventTitle: node.frontmatter.title,
+        eventType: node.frontmatter.eventType,
+        startsAt: Moment.utc(node.frontmatter.startsAt),
+        slug: node.fields.slug,
+        venueName: node.frontmatter.venue.frontmatter.title,
+      })
+    })
+  })
 
   return (
     <Layout>
       <IndexPageTemplate
-        image={frontmatter.image}
-        title={frontmatter.title}
-        heading={frontmatter.heading}
-        subheading={frontmatter.subheading}
-        mainpitch={frontmatter.mainpitch}
-        description={frontmatter.description}
-        intro={frontmatter.intro}
+        body={body}
+        nextEvents={nextEvents}
+        title={title}
       />
     </Layout>
   )
@@ -146,46 +91,143 @@ const IndexPage = ({ data }) => {
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.object,
+    page: PropTypes.shape({
+      html: PropTypes.node,
+      frontmatter: PropTypes.shape({
+        title: PropTypes.string.isRequired
+      }),
     }),
+    nextGroupRun: PropTypes.object,
+    nextRace: PropTypes.object,
+    nextSocial: PropTypes.object,
+    nextTrackSession: PropTypes.object,
   }),
 }
 
 export default IndexPage
 
-export const pageQuery = graphql`
-  query IndexPageTemplate {
-    markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
+export const indexPageQuery = graphql`
+  query IndexPageQuery($id: String!, $now: Date!) {
+    page: markdownRemark(id: { eq: $id }) {
+      html
       frontmatter {
         title
-        image {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 100) {
-              ...GatsbyImageSharpFluid
-            }
+      }
+    }
+    nextGroupRun: allMarkdownRemark(
+      limit: 1
+      filter: {
+        frontmatter: {
+          eventType: {
+            eq: "Group Run"
+          }
+          startsAt: {
+            gt: $now
+          }
+          templateKey: {
+            eq: "event"
           }
         }
-        heading
-        subheading
-        mainpitch {
-          title
-          description
-        }
-        description
-        intro {
-          blurbs {
-            image {
-              childImageSharp {
-                fluid(maxWidth: 240, quality: 64) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-            text
+      }
+      sort: {
+        fields: [frontmatter___startsAt]
+        order: ASC
+      }
+    ) {
+      edges {
+        ...nextEvent
+      }
+    }
+    nextTrackSession: allMarkdownRemark(
+      limit: 1
+      filter: {
+        frontmatter: {
+          eventType: {
+            eq: "Track"
           }
-          heading
-          description
+          startsAt: {
+            gt: $now
+          }
+          templateKey: {
+            eq: "event"
+          }
+        }
+      }
+      sort: {
+        fields: [frontmatter___startsAt]
+        order: ASC
+      }
+    ) {
+      edges {
+        ...nextEvent
+      }
+    }
+    nextRace: allMarkdownRemark(
+      limit: 1
+      filter: {
+        frontmatter: {
+          eventType: {
+            eq: "Race"
+          }
+          startsAt: {
+            gt: $now
+          }
+          templateKey: {
+            eq: "event"
+          }
+        }
+      }
+      sort: {
+        fields: [frontmatter___startsAt]
+        order: ASC
+      }
+    ) {
+      edges {
+        ...nextEvent
+      }
+    }
+    nextSocial: allMarkdownRemark(
+      limit: 1
+      filter: {
+        frontmatter: {
+          eventType: {
+            eq: "Social"
+          }
+          startsAt: {
+            gt: $now
+          }
+          templateKey: {
+            eq: "event"
+          }
+        }
+      }
+      sort: {
+        fields: [frontmatter___startsAt]
+        order: ASC
+      }
+    ) {
+      edges {
+        ...nextEvent
+      }
+    }
+  }
+`
+
+export const nextEventFragment = graphql`
+  fragment nextEvent on MarkdownRemarkEdge {
+    node {
+      fields {
+        slug
+      }
+      frontmatter {
+        eventType
+        startsAt
+        title
+        venue {
+          frontmatter {
+            address
+            title
+          }
         }
       }
     }

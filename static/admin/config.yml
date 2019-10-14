@@ -71,10 +71,10 @@ collections:
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "info"}
       - {label: "Title", name: "title", widget: "string", hint: "Not displayed to end users"}
-      - {label: "Championship", name: "championshipName", widget: "relation", collection: "championships", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "Select if this info relates to a championship"}
-      - {label: "Competition", name: "competitionName", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if this info relates to a competition"}
-      - {label: "Type", name: "eventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"], required: false, hint: "Select if this info relates to an event type"}
-      - {label: "Terrain", name: "terrain", widget: "select", options: ["Cross Country", "Fell", "Mixed", "Road", "Track", "Trail"], required: false, hint: "Select if this info relates to a terrain"}
+      - {label: "Championship", name: "forChampionship", widget: "relation", collection: "championships", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "Select if this info relates to a championship"}
+      - {label: "Competition", name: "forCompetition", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if this info relates to a competition"}
+      - {label: "Type", name: "forEventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"], required: false, hint: "Select if this info relates to an event type"}
+      - {label: "Terrain", name: "forTerrain", widget: "select", options: ["Cross Country", "Fell", "Mixed", "Road", "Track", "Trail"], required: false, hint: "Select if this info relates to a terrain"}
       - {label: "Info", name: "body", widget: "markdown", hint: "Reusable information, e.g. kit requirements, generic session structure, etc."}
   - name: "blog"
     label: "Blog"
@@ -86,10 +86,7 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Description", name: "description", widget: "text"}
-      - {label: "Featured Post", name: "featuredpost", widget: "boolean"}
-      - {label: "Featured Image", name: "featuredimage", widget: image}
       - {label: "Body", name: "body", widget: "markdown"}
-      - {label: "Tags", name: "tags", widget: "list"}
   - name: "pages"
     label: "Pages"
     files:
@@ -98,14 +95,9 @@ collections:
         name: "index"
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "index-page"}
-          - {label: Title, name: title, widget: string}
-          - {label: Image, name: image, widget: image}
-          - {label: Heading, name: heading, widget: string}
-          - {label: Subheading, name: subheading, widget: string}
-          - {label: Mainpitch, name: mainpitch, widget: object, fields: [{label: Title, name: title, widget: string}, {label: Description, name: description, widget: text}]}
-          - {label: Description, name: description, widget: string}
-          - {label: Intro, name: intro, widget: object, fields: [{label: Heading, name: heading, widget: string}, {label: Description, name: description, widget: text}, {label: Blurbs, name: blurbs, widget: list, fields: [{label: Image, name: image, widget: image}, {label: Text, name: text, widget: text}]}]}
-          - {label: Main, name: main, widget: object, fields: [{label: Heading, name: heading, widget: string}, {label: Description, name: description, widget: text}, {label: Image1, name: image1, widget: object, fields: [{label: Image, name: image, widget: image}, {label: Alt, name: alt, widget: string}]}, {label: Image2, name: image2, widget: object, fields: [{label: Image, name: image, widget: image}, {label: Alt, name: alt, widget: string}]}, {label: Image3, name: image3, widget: object, fields: [{label: Image, name: image, widget: image}, {label: Alt, name: alt, widget: string}]}]}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Description", name: "description", widget: "string", pattern: ['^.{,156}$', "The description can only contain a maximum of 156 characters"]}
+          - {label: "Body", name: "body", widget: "markdown"}
       - file: "src/pages/about/index.md"
         label: "About"
         name: "about"

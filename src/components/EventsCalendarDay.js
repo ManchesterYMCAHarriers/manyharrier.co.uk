@@ -5,18 +5,7 @@ import {Link} from 'gatsby'
 
 class EventsCalendarDay extends React.Component {
   render() {
-    const {day, events} = this.props
-
-    const filteredEvents = events.map(event => {
-      event.node.frontmatter.startsAt = Moment.utc(event.node.frontmatter.startsAt)
-      return event
-    }).filter(event => {
-      return event.node.frontmatter.startsAt.clone().startOf('day').isSame(day)
-    })
-
-    if (filteredEvents.length === 0) {
-      return null
-    }
+    const {date, events} = this.props
 
     return (
       <div
@@ -25,23 +14,23 @@ class EventsCalendarDay extends React.Component {
           <div
             className="column is-one-third-desktop is-one-quarter-widescreen">
             <div className="box is-size-4 has-text-grey is-shadowless events-calendar-date">
-              {day.format("dddd Do")}
+              {date.format("dddd Do")}
             </div>
           </div>
-          {filteredEvents.map(event => (
-            <div className="column">
-              <Link to={event.node.fields.slug}
+          {events.map(event => (
+            <div className="column" key={event.slug}>
+              <Link to={event.slug}
                     className="box"
-                    key={"events-calendar-day-" + event.node.fields.slug}
+                    key={"events-calendar-day-" + event.slug}
                     style={{flexGrow: 1}}
               >
               <span
-                className="event-start-time has-text-weight-bold">{event.node.frontmatter.startsAt.format("h:mma")}</span>
+                className="event-start-time has-text-weight-bold">{event.startsAt.format("h:mma")}</span>
                 <span> - </span>
                 <span
-                  className="event-location has-text-weight-semibold">{event.node.frontmatter.venue.frontmatter.title}</span>
+                  className="event-location has-text-weight-semibold">{event.venueName}</span>
                 <span
-                  className="is-block event-title">{event.node.frontmatter.title}</span>
+                  className="is-block event-title">{event.title}</span>
               </Link>
             </div>
           ))}
@@ -52,10 +41,14 @@ class EventsCalendarDay extends React.Component {
 }
 
 EventsCalendarDay.propTypes = {
-  day: PropTypes.instanceOf(Moment),
-  targetMonth: PropTypes.instanceOf(Moment),
+  date: PropTypes.instanceOf(Moment).isRequired,
   events: PropTypes.arrayOf(
-    PropTypes.object
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      title: PropTypes.string.isRequired,
+      venueName: PropTypes.string.isRequired,
+    }).isRequired
   )
 }
 

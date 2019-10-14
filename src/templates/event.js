@@ -3,69 +3,66 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from "../components/Content";
+import {HTMLContent} from "../components/Content";
 import PageTitle from "../components/PageTitle";
-import TagEventType from "../components/TagEventType";
-import TagTerrain from "../components/TagTerrain";
-import TagChampionship from "../components/TagChampionship";
 import EventStartsAt from "../components/EventStartsAt";
 import EventLocation from "../components/EventLocation";
 import StandardContentContainer from "../components/StandardContentContainer";
+import { get } from 'lodash'
 
 export const EventTemplate = ({
-                                contentComponent,
-                                title,
-                                venue,
-                                session,
-                                startsAt,
-                                information,
-                                eventType,
-                                terrain,
                                 championship,
                                 competitionName,
-                                sessionContentComponent,
+                                eventInfo,
+                                eventType,
+                                infoForChampionship,
+                                infoForCompetition,
+                                infoForEventType,
+                                infoForTerrain,
+                                session,
+                                startsAt,
+                                terrain,
+                                title,
+                                venue,
                               }) => {
-  const InformationContent = contentComponent || Content
-  const SessionContent = sessionContentComponent || Content
-
   return (
     <StandardContentContainer>
       <PageTitle title={title} />
       <EventStartsAt startsAt={startsAt} />
       <EventLocation venue={venue} />
-      {information &&
-      <InformationContent content={information} />
+      {eventInfo &&
+      <HTMLContent content={eventInfo} className={"content"} />
       }
       {session &&
-      <SessionContent content={session.html} />
+      <HTMLContent content={session} className={"content"} />
       }
-      <div className="tags">
-        {eventType &&
-        <TagEventType tag={eventType} />
-        }
-        {terrain &&
-        <TagTerrain tag={terrain} />
-        }
-        {championship &&
-        <TagChampionship tag={championship.frontmatter.title} />
-        }
-        {competitionName &&
-        <TagTerrain tag={competitionName} />
-        }
-      </div>
+      {infoForTerrain &&
+      <HTMLContent content={infoForTerrain} className={"content"} />
+      }
+      {infoForEventType &&
+      <HTMLContent content={infoForEventType} className={"content"} />
+      }
+      {infoForCompetition &&
+      <HTMLContent content={infoForCompetition} className={"content"} />
+      }
+      {infoForChampionship &&
+      <HTMLContent content={infoForChampionship} className={"content"} />
+      }
     </StandardContentContainer>
   )
 }
 
 EventTemplate.propTypes = {
   championship: PropTypes.object,
-  contentComponent: PropTypes.func,
-  sessionContentComponent: PropTypes.func,
-  information: PropTypes.node,
-  session: PropTypes.object,
+  eventInfo: PropTypes.node,
+  eventType: PropTypes.string,
+  infoForChampionship: PropTypes.node,
+  infoForCompetition: PropTypes.node,
+  infoForEventType: PropTypes.node,
+  infoForTerrain: PropTypes.node,
+  session: PropTypes.node,
   startsAt: PropTypes.instanceOf(Moment),
   terrain: PropTypes.string,
-  eventType: PropTypes.string,
   title: PropTypes.string,
   venue: PropTypes.object,
 }
@@ -80,14 +77,16 @@ const Event = ({data}) => {
       <EventTemplate
         championship={event.frontmatter.championship}
         competition={event.frontmatter.competitionName}
-        contentComponent={HTMLContent}
-        sessionContentComponent={HTMLContent}
-        information={event.html}
-        session={event.frontmatter.session}
+        eventInfo={event.html}
+        eventType={event.frontmatter.eventType}
+        infoForChampionship={get(event.frontmatter.infoForChampionship, ["html"])}
+        infoForCompetition={get(event.frontmatter.infoForCompetition, ["html"])}
+        infoForEventType={get(event.frontmatter.infoForEventType, ["html"])}
+        infoForTerrain={get(event.frontmatter.infoForChampionship, ["html"])}
+        session={get(event.frontmatter.session, ["html"])}
         startsAt={startsAt}
         terrain={event.frontmatter.terrain}
         title={event.frontmatter.title}
-        eventType={event.frontmatter.eventType}
         venue={event.frontmatter.venue}
       />
     </Layout>
@@ -110,7 +109,6 @@ export const eventQuery = graphql`
       frontmatter {
         title
         championship {
-          id
           fields {
             slug
           }
@@ -120,24 +118,17 @@ export const eventQuery = graphql`
         }
         competitionName
         eventType
-        infoForChampionship {
-          id
-          html
-        }
         infoForCompetition {
-          id
           html
         }
         infoForEventType {
-          id
           html
         }
         infoForTerrain {
-          id
           html
         }
         session {
-          id
+          html
           fields {
             slug
           }
@@ -148,7 +139,6 @@ export const eventQuery = graphql`
         startsAt
         terrain
         venue {
-          id
           fields {
             slug
             location {

@@ -3,20 +3,32 @@ import PropTypes from 'prop-types'
 import Moment from 'moment'
 import {Link} from 'gatsby'
 import EventsCalendarDay from "./EventsCalendarDay";
+import { uniq } from 'lodash'
 
 class EventsCalendarMonth extends React.Component {
   render() {
-    const {month, firstMonth, lastMonth, events} = this.props
+    const {month, showPreviousMonthLink, showNextMonthLink, events} = this.props
     const previousMonth = month.clone().add(-1, 'month')
     const nextMonth = month.clone().add(1, 'month')
 
-    const endOfMonth = month.clone().endOf('month')
+    let days = []
+    events.forEach(({ startsAt }) => {
+      days.push(startsAt.format("YYYY-MM-DD"))
+    })
 
-    const days = []
+    days = uniq(days)
 
-    for (let date = month.clone().startOf('month'); date.isBefore(endOfMonth); date.add(1, 'day')) {
-      days.push(date.clone())
-    }
+    days = days.map(day => {
+      return {
+        date: Moment.utc(day),
+        events: events.filter(event => {
+          return event.startsAt.format("YYYY-MM-DD") === day
+        })
+      }
+    })
+
+    console.log(days)
+
 
     return (
       <div className="column is-10 is-offset-1">
@@ -25,13 +37,13 @@ class EventsCalendarMonth extends React.Component {
         </h1>
         <div className="columns is-multiline is-mobile">
           <div className="column is-half">
-            {month.isAfter(firstMonth) &&
+            {showPreviousMonthLink &&
             <Link
               to={"/events/" + previousMonth.format("MMMM-YYYY").toLowerCase()}><span aria-hidden="true">&larr;&nbsp;</span>{previousMonth.format("MMMM YYYY")}</Link>
             }
           </div>
           <div className="column is-half has-text-right">
-            {month.isBefore(lastMonth) &&
+            {showNextMonthLink &&
             <Link
               to={"/events/" + nextMonth.format("MMMM-YYYY").toLowerCase()}>{nextMonth.format("MMMM YYYY")}<span aria-hidden="true">&nbsp;&rarr;</span></Link>
             }
@@ -39,7 +51,7 @@ class EventsCalendarMonth extends React.Component {
           <div
             className="column is-full columns is-multiline is-desktop">
             {days.map(day => (
-              <EventsCalendarDay day={day} events={events} />
+              <EventsCalendarDay date={day.date} events={day.events} key={day.date.format("YYYY-MM-DD").toLowerCase()} />
             ))}
           </div>
         </div>
@@ -49,11 +61,16 @@ class EventsCalendarMonth extends React.Component {
 }
 
 EventsCalendarMonth.propTypes = {
-  month: PropTypes.instanceOf(Moment),
-  firstMonth: PropTypes.instanceOf(Moment),
-  lastMonth: PropTypes.instanceOf(Moment),
+  month: PropTypes.instanceOf(Moment).isRequired,
+  showPreviousMonthLink: PropTypes.bool.isRequired,
+  showNextMonthLink: PropTypes.bool.isRequired,
   events: PropTypes.arrayOf(
-    PropTypes.object
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      title: PropTypes.string.isRequired,
+      venueName: PropTypes.string.isRequired,
+    }).isRequired
   )
 }
 

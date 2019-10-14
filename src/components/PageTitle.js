@@ -12,7 +12,7 @@ class PageTitle extends React.Component {
 }
 
 PageTitle.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string.isRequired
 }
 
 export default PageTitle
