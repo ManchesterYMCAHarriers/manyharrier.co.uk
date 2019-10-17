@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Manchester Regional Arena
+venueKey: Manchester Regional Arena
 address: |-
   Rowsley Street
   Sportcity

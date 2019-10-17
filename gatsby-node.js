@@ -82,30 +82,40 @@ exports.createSchemaCustomization = ({actions, schema}) => {
     }`,
     `type Frontmatter {
       address: String
-      championship: MarkdownRemark @link(by: "frontmatter.title", from: "championshipName") # championship for event
-      championshipName: String
-      championshipEvents: [MarkdownRemark!] @link(by: "frontmatter.championshipName", from: "title") # events for championship
-      competitionName: String
+      championship: MarkdownRemark @link(by: "frontmatter.championshipKey", from: "championshipForeignKey") # championship for event
+      championshipEvents: [MarkdownRemark!] @link(by: "frontmatter.championshipForeignKey", from: "championshipKey") # events for championship
+      championshipKey: String
+      championshipForeignKey: String
+      competitionForeignKey: String
+      competitionKey: String
+      eventKey: String
       eventType: String
-      infoForChampionship: MarkdownRemark @link(by: "frontmatter.forChampionship", from: "championshipName") # info for championship
-      infoForCompetition: MarkdownRemark @link(by: "frontmatter.forCompetition", from: "competitionName") # info for competition
+      forChampionshipKey: String
+      forCompetitionKey: String
+      forEventType: String
+      forTerrain: String
+      infoForChampionship: MarkdownRemark @link(by: "frontmatter.forChampionshipKey", from: "championshipForeignKey") # info for championship
+      infoForCompetition: MarkdownRemark @link(by: "frontmatter.forCompetitionKey", from: "competitionForeignKey") # info for competition
       infoForEventType: MarkdownRemark @link(by: "frontmatter.forEventType", from: "eventType") # info for event type
       infoForTerrain: MarkdownRemark @link(by: "frontmatter.forTerrain", from: "terrain") # info for terraim
       location: String
-      route: MarkdownRemark @link(by: "frontmatter.title", from: "routeName") # route for event
-      routeName: String
+      route: MarkdownRemark @link(by: "frontmatter.routeKey", from: "routeForeignKey") # route for event
+      routeEvents: [MarkdownRemark!] @link(by: "frontmatter.routeForeignKey", from: "routenKey") # events for route
+      routeForeignKey: String
+      routeKey: String
       routeTrack: String
-      routeEvents: [MarkdownRemark!] @link(by: "frontmatter.routeName", from: "title") # events for route
-      session: MarkdownRemark @link(by: "frontmatter.title", from: "sessionName") # session for event
-      sessionName: String
-      sessionEvents: [MarkdownRemark!] @link(by: "frontmatter.sessionName", from: "title") # events for session
+      session: MarkdownRemark @link(by: "frontmatter.sessionKey", from: "sessionForeignKey") # session for event
+      sessionEvents: [MarkdownRemark!] @link(by: "frontmatter.sessionForeignKey", from: "sessionKey") # events for session
+      sessionForeignKey: String
+      sessionKey: String
       startsAt: Date @dateformat(formatString: "YYYY-MM-DD HH:mm")
       templateKey: String
       terrain: String
       title: String
-      venue: MarkdownRemark @link(by: "frontmatter.title", from: "venueName") # venue for event
-      venueName: String
-      venueEvents: [MarkdownRemark!] @link(by: "frontmatter.venueName", from: "title") # events for venue
+      venue: MarkdownRemark @link(by: "frontmatter.venueKey", from: "venueForeignKey") # venue for event
+      venueEvents: [MarkdownRemark!] @link(by: "frontmatter.venueForeignKey", from: "venueKey") # events for venue
+      venueForeignKey: String
+      venueKey: String
     }`
   ]
 
@@ -125,32 +135,5 @@ exports.onCreateNode = ({node, actions, getNode}) => {
       node,
       value,
     })
-
-    // TODO: these node fields will cause a problem if there is no data available;
-    //  i.e. a location and a route must exist otherwise this fails. Why?
-
-    // If we have a location, create it as a field
-    if (node.frontmatter.location) {
-      value = JSON.parse(node.frontmatter.location)
-      value.coordinates = value.coordinates.reverse()
-      createNodeField({
-        node,
-        name: "location",
-        value: value,
-      })
-    }
-
-    // If we have a route, create it as a field
-    if (node.frontmatter.routeTrack) {
-      value = JSON.parse(node.frontmatter.routeTrack)
-      value.coordinates = value.coordinates.map(coords => {
-        return coords.reverse()
-      })
-      createNodeField({
-        node,
-        name: "routeTrack",
-        value: value,
-      })
-    }
   }
 }

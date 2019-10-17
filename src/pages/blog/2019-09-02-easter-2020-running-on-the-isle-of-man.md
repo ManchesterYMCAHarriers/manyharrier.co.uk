@@ -1,6 +1,6 @@
 ---
 templateKey: blog-post
-title: "Easter 2020: Running on the Isle of Man"
+blogKey: "Easter 2020: Running on the Isle of Man"
 date: 2019-09-02T21:56:54.000Z
 description: Steph Goodchild extols the virtues of an Easter trip to the Isle of Man for a spot of running!
 ---

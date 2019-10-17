@@ -2,43 +2,49 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from "../components/Content";
+import {HTMLContent} from "../components/Content";
 import GoogleMapsLocation from "../components/GoogleMapsLocation"
 import PageTitle from "../components/PageTitle";
-import VenueAddress from "../components/VenueAddress";
 import Subtitle from "../components/Subtitle";
 import GoogleMapsDirectionsLink from "../components/GoogleMapsDirectionsLink";
-import UpcomingEvents from "../components/UpcomingEvents";
+import Moment from "moment"
+import Address from "../components/Address";
+import EventBox from "../components/EventBox";
 
 export const VenueTemplate = ({
-                                contentComponent,
                                 title,
                                 address,
                                 location,
                                 information,
                                 events,
                               }) => {
-  const InformationContent = contentComponent || Content
-
   return (
     <section className="section">
       <div className="container content">
         <div className="columns">
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
-            <VenueAddress address={address} />
-            <GoogleMapsLocation zoom={13} location={location} />
-            <Subtitle text={"Directions"} />
-            <ul>
-              <li><GoogleMapsDirectionsLink location={location}
-                                            text={"Navigate to " + title + " with Google Maps"} />
-              </li>
-            </ul>
+            <div className="subtitle is-size-4">
+              <Address address={address} />
+            </div>
+            <div className="maps-container">
+              <GoogleMapsLocation id={"venue-location-map"} zoom={14}
+                                  location={location}
+                                  mapContainerClassName={"maps-style"}
+              />
+            </div>
+            <GoogleMapsDirectionsLink location={location}
+                                      text={"Navigate to " + title + " with Google Maps"} />
             <Subtitle text={"Information"} />
-            <InformationContent content={information}
-                                className={"information"} />
+            <HTMLContent content={information}
+                         className={"information"} />
             <Subtitle text={"Upcoming events"} />
-            <UpcomingEvents events={events} venueName={title} />
+            {events.length === 0 &&
+            <div>There are no upcoming events at {title}</div>
+            }
+            {events.map((event, i) => (
+              <EventBox key={"venue-event-i"} startsAt={event.startsAt} slug={event.slug} tags={event.tags} title={event.title} />
+            ))}
           </div>
         </div>
       </div>
@@ -47,28 +53,89 @@ export const VenueTemplate = ({
 }
 
 VenueTemplate.propTypes = {
-  address: PropTypes.string,
-  contentComponent: PropTypes.func,
-  events: PropTypes.arrayOf(PropTypes.object),
+  address: PropTypes.arrayOf(PropTypes.string),
+  events: PropTypes.arrayOf(PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    startsAt: PropTypes.instanceOf(Moment).isRequired,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })),
+    title: PropTypes.string.isRequired,
+  })),
   information: PropTypes.node,
   location: PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.number)
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
   }),
   title: PropTypes.string,
 }
 
-const Venue = ({data}) => {
+const Venue = ({data, pageContext}) => {
   const {markdownRemark: venue} = data
+  const {now} = pageContext
+
+  const coords = JSON.parse(venue.frontmatter.location).coordinates
+
+  const location = {
+    lat: coords[1],
+    lng: coords[0]
+  }
+
+  const events = venue.frontmatter.venueEvents.map(event => {
+    const tags = []
+
+    if (event.frontmatter.eventType) {
+      tags.push({
+        key: "eventType",
+        value: event.frontmatter.eventType,
+      })
+    }
+
+    if (event.frontmatter.terrain) {
+      tags.push({
+        key: "terrain",
+        value: event.frontmatter.terrain,
+      })
+    }
+
+    if (event.frontmatter.championshipForeignKey) {
+      tags.push({
+        key: "championship",
+        value: event.frontmatter.championshipForeignKey,
+      })
+    }
+
+    if (event.frontmatter.competitionForeignKey) {
+      tags.push({
+        key: "competition",
+        value: event.frontmatter.competitionForeignKey,
+      })
+    }
+
+    return {
+      slug: event.fields.slug,
+      startsAt: Moment.utc(event.frontmatter.startsAt),
+      tags: tags,
+      title: event.frontmatter.eventKey,
+    }
+  }).filter(event => {
+    return event.startsAt.isAfter(now)
+  }).sort((a, b) => {
+    if (a.startsAt.isSame(b.startsAt)) {
+      return a.title < b.title ? -1 : 1
+    }
+    return a.startsAt.isBefore(b.startsAt) ? -1 : 1
+  })
 
   return (
     <Layout>
       <VenueTemplate
-        contentComponent={HTMLContent}
-        events={venue.frontmatter.venueEvents}
+        events={events}
         information={venue.html}
-        address={venue.frontmatter.address}
-        location={venue.fields.location}
-        title={venue.frontmatter.title}
+        address={venue.frontmatter.address.split("\n")}
+        location={location}
+        title={venue.frontmatter.venueKey}
       />
     </Layout>
   )
@@ -87,24 +154,24 @@ export const venueQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
-      fields {
-        location {
-          coordinates
-        }
-      }
       frontmatter {
-        title
         address
+        location
         venueEvents {
           id
           fields {
             slug
           }
           frontmatter {
-            title
+            championshipForeignKey
+            competitionForeignKey
+            eventKey
+            eventType
             startsAt
+            terrain
           }
         }
+        venueKey
       }
     }
   }

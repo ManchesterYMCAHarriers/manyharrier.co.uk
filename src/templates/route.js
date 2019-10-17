@@ -52,7 +52,7 @@ const Route = ({data}) => {
         events={route.frontmatter.routeEvents}
         information={route.html}
         routeTrack={route.fields.routeTrack}
-        title={route.frontmatter.title}
+        title={route.frontmatter.routeKey}
       />
     </Layout>
   )
@@ -72,9 +72,6 @@ export const routeQuery = graphql`
       id
       html
       fields {
-        routeTrack {
-          coordinates
-        }
         slug
       }
       frontmatter {
@@ -95,7 +92,8 @@ export const routeQuery = graphql`
             }
           }
         }
-        title
+        routeKey
+        routeTrack
       }
     }
   }

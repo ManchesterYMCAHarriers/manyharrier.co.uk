@@ -1,6 +1,6 @@
 ---
 templateKey: session
-title: 400m + 300m + 200m efforts with 100m walk/jog recovery
+sessionKey: 400m + 300m + 200m efforts with 100m walk/jog recovery
 ---
 This is a 30-minute session, where we repeat the following pattern:
 

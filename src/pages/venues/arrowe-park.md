@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Arrowe Park
+venueKey: Arrowe Park
 address: |-
   Arrowe Park Road
   Woodchurch

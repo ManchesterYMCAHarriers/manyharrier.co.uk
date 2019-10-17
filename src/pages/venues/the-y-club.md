@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Y Club
+venueKey: The Y Club
 address: |-
   Liverpool Road
   Manchester

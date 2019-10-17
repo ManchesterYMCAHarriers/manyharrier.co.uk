@@ -1,6 +1,6 @@
 ---
 templateKey: session
-title: 7 x 3 minutes with 90 seconds recovery
+sessionKey: 7 x 3 minutes with 90 seconds recovery
 ---
 This speedwork session will be 7 sets of three-minute intervals with 90 seconds 
 of recovery between each set. Each interval will be marked by a whistle.

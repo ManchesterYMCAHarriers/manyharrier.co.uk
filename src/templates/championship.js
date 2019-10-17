@@ -48,7 +48,7 @@ const Championship = ({data}) => {
         contentComponent={HTMLContent}
         events={championship.frontmatter.championshipEvents}
         information={championship.html}
-        title={championship.frontmatter.title}
+        title={championship.frontmatter.championshipKey}
       />
     </Layout>
   )
@@ -77,8 +77,8 @@ export const championshipQuery = graphql`
             slug
           }
           frontmatter {
+            eventKey
             startsAt
-            title
             venue {
               id
               frontmatter {
@@ -88,7 +88,7 @@ export const championshipQuery = graphql`
             }
           }
         }
-        title
+        championshipKey
       }
     }
   }

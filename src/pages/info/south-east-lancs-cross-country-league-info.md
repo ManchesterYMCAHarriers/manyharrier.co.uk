@@ -1,7 +1,7 @@
 ---
 templateKey: info
-title: South East Lancs Cross Country League Info
-forCompetition: South East Lancs Cross Country League
+infoKey: South East Lancs Cross Country League Info
+forCompetitionKey: South East Lancs Cross Country League
 ---
 # Start times
 

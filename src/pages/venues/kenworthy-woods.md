@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Kenworthy Woods
+venueKey: Kenworthy Woods
 address: |-
   Wythenshawe Sports Ground
   Wythenshawe

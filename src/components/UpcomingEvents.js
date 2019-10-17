@@ -1,26 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Moment from "moment"
-import VenueEvent from "./VenueEvent";
+import {Link} from "gatsby";
 
 class UpcomingEvents extends React.Component {
   render() {
-    const { venueName } = this.props
-    const today = Moment.utc().startOf("day")
+    const { events, venueName } = this.props
 
-    let events = this.props.events || []
-
-    const filteredEvents = events.filter(event => {
-      const start = Moment.utc(event.frontmatter.startsAt)
-      return start.isAfter(today)
-    }).sort((a, b) => {
-      if (a.frontmatter.startsAt === b.frontmatter.startsAt) {
-        return a.frontmatter.title < b.frontmatter.title ? -1 : 1
-      }
-      return a.frontmatter.startsAt < b.frontmatter.startsAt ? -1 : 1
-    })
-
-    if (filteredEvents.length === 0) {
+    if (events.length === 0) {
       return (
         <div>There are no upcoming events at {venueName}</div>
       )
@@ -28,8 +15,13 @@ class UpcomingEvents extends React.Component {
 
     return (
       <div>
-        {filteredEvents.map(event => (
-          <VenueEvent event={event} />
+        {events.map(event => (
+          <Link to={event.slug} className="box" key={event.slug}>
+            <h3>{event.title}</h3>
+            <div className="is-inline-tablet">{event.startsAt.format("dddd Do MMMM YYYY")}</div>
+            <span className="is-hidden-mobile">, </span>
+            <div className="is-inline-tablet">{event.startsAt.format("h:mma")}</div>
+          </Link>
         ))}
       </div>
     )
@@ -37,7 +29,11 @@ class UpcomingEvents extends React.Component {
 }
 
 UpcomingEvents.propTypes = {
-  events: PropTypes.arrayOf(PropTypes.object)
+  events: PropTypes.arrayOf(PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    startsAt: PropTypes.instanceOf(Moment).isRequired,
+    title: PropTypes.string.isRequired,
+  }))
 }
 
 export default UpcomingEvents

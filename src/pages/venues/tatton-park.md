@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Tatton Park
+venueKey: Tatton Park
 address: |-
   Mereheath Drive
   Knutsford

@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Tandle Hill
+venueKey: Tandle Hill
 address: |-
   Tandle Hill Road
   Oldham

@@ -1,4 +1,4 @@
 ---
 templateKey: championship
-title: 2019-20 Cross Country Championship
+championshipKey: 2019-20 Cross Country Championship
 ---

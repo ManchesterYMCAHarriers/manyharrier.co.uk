@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Wythenshawe Park
+venueKey: Wythenshawe Park
 address: |-
   Wythenshawe Road
   Manchester

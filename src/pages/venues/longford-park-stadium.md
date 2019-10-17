@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Longford Park Stadium
+venueKey: Longford Park Stadium
 address: |-
   Ryebank Road
   Stretford

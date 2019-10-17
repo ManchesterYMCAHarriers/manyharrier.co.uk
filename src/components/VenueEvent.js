@@ -12,12 +12,7 @@ class VenueEvent extends React.Component {
     const startsAt = Moment.utc(event.frontmatter.startsAt)
 
     return (
-      <Link to={slug} className="box">
-        <h3>{title}</h3>
-        <div className="is-inline-tablet">{startsAt.format("dddd Do MMMM YYYY")}</div>
-        <span className="is-hidden-mobile">, </span>
-        <div className="is-inline-tablet">{startsAt.format("h:mma")}</div>
-      </Link>
+
     )
   }
 }

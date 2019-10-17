@@ -7,15 +7,10 @@ class EventStartsAt extends React.Component {
     const { startsAt } = this.props
 
     return (
-      <div className="is-size-4" style={{
-        marginBottom: "1rem"
-      }}>
-        <div
-          className="is-inline-tablet">{startsAt.format("dddd Do MMMM YYYY")}</div>
-        <span className="is-hidden-mobile">, </span>
-        <div
-          className="is-inline-tablet">{startsAt.format("h:mma")}</div>
-      </div>
+      <p className="subtitle is-size-4">
+        {startsAt.format("dddd Do MMMM YYYY")}<br/>
+        {startsAt.format("h:mma")}
+      </p>
     )
   }
 }

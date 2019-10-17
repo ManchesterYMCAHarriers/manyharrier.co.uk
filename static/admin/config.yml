@@ -11,27 +11,29 @@ collections:
     folder: "src/pages/events"
     create: true
     slug: "{{startsAt}}-{{slug}}"
-    summary: "{{startsAt}}: {{type}} - {{title}}"
+    summary: "{{startsAt}}: {{type}} - {{eventKey}}"
+    identifier_field: "eventKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "event"}
-      - {label: "Title", name: "title", widget: "string", hint: "The name of the event, e.g. Oaklands"}
-      - {label: "Venue", name: "venueName", widget: "relation", collection: "venues", searchFields: ["title"], valueField: "title", displayField: "title", hint: "Where the event is taking place"}
+      - {label: "Title", name: "eventKey", widget: "string", hint: "The name of the event, e.g. Oaklands"}
       - {label: "Starts at", name: "startsAt", widget: "datetime", format: "YYYY-MM-DD HH:mm", hint: "The start time in local time"}
-      - {label: "Type", name: "eventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"]}
+      - {label: "Venue", name: "venueForeignKey", widget: "relation", collection: "venues", searchFields: ["venueKey"], valueField: "venueKey", displayField: "venueKey", hint: "Where the event is taking place"}
+      - {label: "Type", name: "eventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Speedwork"]}
       - {label: "Terrain", name: "terrain", widget: "select", options: ["Cross Country", "Fell", "Mixed", "Road", "Track", "Trail"]}
-      - {label: "Championship", name: "championshipName", widget: "relation", collection: "championships", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "If the event is part of a championship, add it here"}
-      - {label: "Competition", name: "competition", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if the event is part of a competition or league"}
-      - {label: "Route", name: "routeName", widget: "relation", collection: "routes", searchFields: ["title"], valueField: "title", displayField: "title", multiple: true, required: false, hint: "If this event has routes, add them here"}
-      - {label: "Session", name: "sessionName", widget: "relation", collection: "sessions", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "If this event is a track session, add it here"}
+      - {label: "Championship", name: "championshipForeignKey", widget: "relation", collection: "championships", searchFields: ["championshipKey"], valueField: "championshipKey", displayField: "championshipKey", required: false, hint: "If the event is part of a championship, add it here"}
+      - {label: "Competition", name: "competitionForeignKey", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if the event is part of a competition or league"}
+      - {label: "Route", name: "routeForeignKey", widget: "relation", collection: "routes", searchFields: ["routeKey"], valueField: "routeKey", displayField: "routeKey", multiple: true, required: false, hint: "If this event has routes, add them here"}
+      - {label: "Session", name: "sessionForeignKey", widget: "relation", collection: "sessions", searchFields: ["sessionKey"], valueField: "sessionKey", displayField: "sessionKey", required: false, hint: "If this event is a track session, add it here"}
       - {label: "Information", name: "body", widget: "markdown", required: false, hint: "Additional information about the event."}
   - name: "venues"
     label: "Venues"
     folder: "src/pages/venues"
     create: true
     slug: "{{slug}}"
+    identifier_field: "venueKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "venue"}
-      - {label: "Title", name: "title", widget: "string", hint: "The name of the venue, e.g. Heaton Park"}
+      - {label: "Title", name: "venueKey", widget: "string", hint: "The name of the venue, e.g. Heaton Park"}
       - {label: "Address", name: "address", widget: "text", hint: "The postal address of the venue. Include a postcode if you can!"}
       - {label: "Location", name: "location", widget: "map", hint: "Select the location of the venue on the map", decimals: 6}
       - {label: "Information", name: "body", widget: "markdown", hint: "Useful information about the venue, e.g. car parking, public transport", required: false}
@@ -40,27 +42,30 @@ collections:
     folder: "src/pages/championships"
     create: true
     slug: "{{slug}}"
+    identifier_field: "championshipKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "championship"}
-      - {label: "Title", name: "title", widget: "string", pattern: ['^[0-9]{4}(-[0-9]{2})?\s.+$', "The championship name must begin with the date"], hint: "The name of the championship, e.g. 2019-20 Cross Country Championship"}
+      - {label: "Title", name: "championshipKey", widget: "string", pattern: ['^[0-9]{4}(-[0-9]{2})?\s.+$', "The championship name must begin with the date"], hint: "The name of the championship, e.g. 2019-20 Cross Country Championship"}
       - {label: "Information", name: "body", widget: "markdown", hint: "Information about the championship, e.g. entry requirements, qualification criteria"}
   - name: "sessions"
     label: "Sessions"
     folder: "src/pages/sessions"
     create: true
     slug: "{{slug}}"
+    identifier_field: "sessionKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "session"}
-      - {label: "Title", name: "title", widget: "string", hint: "The name of the session, e.g. 400m repeats"}
+      - {label: "Title", name: "sessionKey", widget: "string", hint: "The name of the session, e.g. 400m repeats"}
       - {label: "Information", name: "body", widget: "markdown", hint: "Information about the session, e.g. duration, number of reps"}
   - name: "routes"
     label: "Routes"
     folder: "src/pages/routes"
     create: true
     slug: "{{slug}}"
+    identifier_field: "routeKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "route"}
-      - {label: "Title", name: "title", widget: "string", hint: "The name of the route, e.g. Oaklands"}
+      - {label: "Title", name: "routeKey", widget: "string", hint: "The name of the route, e.g. Oaklands"}
       - {label: "Route", name: "routeTrack", widget: "map", type: "LineString", decimals: 6}
       - {label: "Information", name: "body", widget: "markdown", hint: "Information about the route, e.g. distance, directions, things to see"}
   - name: "info"
@@ -68,22 +73,24 @@ collections:
     folder: "src/pages/info"
     create: true
     slug: "{{slug}}"
+    identifier_field: "infoKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "info"}
-      - {label: "Title", name: "title", widget: "string", hint: "Not displayed to end users"}
-      - {label: "Championship", name: "forChampionship", widget: "relation", collection: "championships", searchFields: ["title"], valueField: "title", displayField: "title", required: false, hint: "Select if this info relates to a championship"}
-      - {label: "Competition", name: "forCompetition", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if this info relates to a competition"}
-      - {label: "Type", name: "forEventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Track"], required: false, hint: "Select if this info relates to an event type"}
-      - {label: "Terrain", name: "forTerrain", widget: "select", options: ["Cross Country", "Fell", "Mixed", "Road", "Track", "Trail"], required: false, hint: "Select if this info relates to a terrain"}
+      - {label: "Title", name: "infoKey", widget: "string", hint: "Not displayed to end users"}
+      - {label: "Championship", name: "forChampionshipKey", widget: "relation", collection: "championships", searchFields: ["championshipKey"], valueField: "championshipKey", displayField: "championshipKey", required: false, hint: "Select if this info relates to a championship"}
+      - {label: "Competition", name: "forCompetitionKey", widget: "select", options: ["Manchester Area Cross Country League", "South East Lancs Cross Country League"], required: false, hint: "Select if this info relates to a competition"}
+      - {label: "Type", name: "forEventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Speedwork"], required: false, hint: "Select if this info relates to an event type"}
+      - {label: "Terrain", name: "forTerrain", widget: "select", options: ["Cross Country", "Fell", "Mixed Terrain", "Road", "Track", "Trail"], required: false, hint: "Select if this info relates to a terrain"}
       - {label: "Info", name: "body", widget: "markdown", hint: "Reusable information, e.g. kit requirements, generic session structure, etc."}
   - name: "blog"
     label: "Blog"
     folder: "src/pages/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "blogKey"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post"}
-      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Title", name: "blogKey", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Body", name: "body", widget: "markdown"}

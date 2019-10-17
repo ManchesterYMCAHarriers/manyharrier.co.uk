@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Yarrow Valley
+venueKey: Yarrow Valley
 address: |-
   Butterworth Brow
   Chorley

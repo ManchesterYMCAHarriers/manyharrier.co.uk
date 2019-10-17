@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: Heaton Park
+venueKey: Heaton Park
 address: |-
   Manchester
   M25 2SW

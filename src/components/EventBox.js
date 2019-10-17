@@ -2,32 +2,39 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
 import {Link} from "gatsby";
+import EventTags from "./EventTags";
 
 class EventBox extends React.Component {
   render() {
-    const { eventTitle, preTitle, startsAt, slug, venueName } = this.props
+    const {startsAt, slug, tags, title} = this.props
 
     return (
       <Link className={"box"} to={slug}>
-        {preTitle && <div className="has-text-weight-semibold has-text-grey">{preTitle}: </div>}
-        <div className="is-size-4 has-text-weight-bold">{eventTitle}</div>
-        <div className="is-inline-tablet is-6 has-text-weight-semibold">
-          <span className="is-block-mobile">{startsAt.format("dddd Do MMMM YYYY")}</span>
-          <span className="is-hidden-mobile">, </span>
-          <span className="is-block-mobile">{startsAt.format("h:mma")}</span>
+        <div className="columns">
+          <div className="column">
+            <div className="title is-size-4">{title}</div>
+            <div className="subtitle is-size-6">
+              <div>{startsAt.format("dddd Do MMMM YYYY")}</div>
+              <div>{startsAt.format("h:mma")}</div>
+            </div>
+          </div>
+          <div className="column">
+            <EventTags reactKey={"next-event-" + slug} tags={tags} />
+          </div>
         </div>
-        <div>{venueName}</div>
       </Link>
     )
   }
 }
 
 EventBox.propTypes = {
-  eventTitle: PropTypes.string.isRequired,
-  preTitle: PropTypes.string,
   startsAt: PropTypes.instanceOf(Moment).isRequired,
   slug: PropTypes.string.isRequired,
-  venueName: PropTypes.string.isRequired
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })),
+  title: PropTypes.string.isRequired,
 }
 
 export default EventBox

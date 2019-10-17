@@ -1,6 +1,6 @@
 ---
 templateKey: info
-title: Track Info
+infoKey: Track Info
 forEventType: Track
 ---
 # Session format

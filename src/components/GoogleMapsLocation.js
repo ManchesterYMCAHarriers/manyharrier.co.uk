@@ -4,7 +4,7 @@ import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api'
 
 class GoogleMapsLocation extends React.Component {
   render() {
-    const {location, mapsContainerStyle, zoom} = this.props
+    const {id, location, mapContainerClassName, mapContainerStyle, zoom} = this.props
 
     const googleMapsApiKey = process.env.GATSBY_GOOGLE_MAPS_JAVASCRIPT_API_KEY
 
@@ -14,24 +14,19 @@ class GoogleMapsLocation extends React.Component {
 
     return (
       <LoadScript
-        id="google-maps-script"
+        id={id + "-script"}
         googleMapsApiKey={googleMapsApiKey}
       >
         <GoogleMap
-          id='location-map'
-          center={{
-            lat: location.coordinates[0],
-            lng: location.coordinates[1],
-          }}
+          id={id}
+          center={location}
           zoom={zoom}
-          mapContainerStyle={mapsContainerStyle}
+          mapContainerStyle={mapContainerStyle}
+          mapContainerClassName={mapContainerClassName}
         >
           <Marker
             clickable={false}
-            position={{
-              lat: location.coordinates[0],
-              lng: location.coordinates[1],
-            }}
+            position={location}
           />
         </GoogleMap>
       </LoadScript>
@@ -40,19 +35,18 @@ class GoogleMapsLocation extends React.Component {
 }
 
 GoogleMapsLocation.propTypes = {
+  id: PropTypes.string.isRequired,
   location: PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
   }).isRequired,
+  mapsContainerClassName: PropTypes.string,
   mapsContainerStyle: PropTypes.object,
   zoom: PropTypes.number,
 }
 
 GoogleMapsLocation.defaultProps = {
-  mapsContainerStyle: {
-    height: "360px",
-    width: "100%",
-  },
-  zoom: 10,
+  zoom: 14,
 }
 
 export default GoogleMapsLocation

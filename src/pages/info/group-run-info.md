@@ -1,6 +1,6 @@
 ---
 templateKey: info
-title: Group Run Info
+infoKey: Group Run Info
 forEventType: Group Run
 ---
 # Session format

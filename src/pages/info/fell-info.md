@@ -1,6 +1,6 @@
 ---
 templateKey: info
-title: Fell Info
+infoKey: Fell Info
 forTerrain: Fell
 ---
 Fell races usually take place in remote and exposed areas, where weather 

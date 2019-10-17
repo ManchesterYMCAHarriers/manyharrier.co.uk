@@ -1,7 +1,7 @@
 ---
 templateKey: info
-title: Manchester Area Cross Country League Info
-forCompetition: Manchester Area Cross Country League
+infoKey: Manchester Area Cross Country League Info
+forCompetitionKey: Manchester Area Cross Country League
 ---
 # Start times
 

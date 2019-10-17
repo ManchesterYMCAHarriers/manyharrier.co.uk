@@ -1,6 +1,6 @@
 ---
 templateKey: venue
-title: HOME MCR
+venueKey: HOME MCR
 address: |-
   2 Tony Wilson Place
   Manchester

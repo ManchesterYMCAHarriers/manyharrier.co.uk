@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
 import {Link} from 'gatsby'
+import EventTags from "./EventTags";
 
 class EventsCalendarDay extends React.Component {
   render() {
@@ -12,9 +13,10 @@ class EventsCalendarDay extends React.Component {
         className="column is-full events-calendar-day">
         <div className="columns is-multiline is-desktop">
           <div
-            className="column is-one-third-desktop is-one-quarter-widescreen">
-            <div className="box is-size-4 has-text-grey is-shadowless events-calendar-date">
-              {date.format("dddd Do")}
+            className="column is-one-half-desktop is-one-third-widescreen">
+            <div
+              className="box is-size-4 has-text-grey is-shadowless events-calendar-date">
+              {date.format("dddd Do MMMM")}
             </div>
           </div>
           {events.map(event => (
@@ -24,13 +26,11 @@ class EventsCalendarDay extends React.Component {
                     key={"events-calendar-day-" + event.slug}
                     style={{flexGrow: 1}}
               >
-              <span
-                className="event-start-time has-text-weight-bold">{event.startsAt.format("h:mma")}</span>
-                <span> - </span>
-                <span
-                  className="event-location has-text-weight-semibold">{event.venueName}</span>
-                <span
-                  className="is-block event-title">{event.title}</span>
+                <div className="title is-size-5">
+                  {event.startsAt.format("h:mma")} - {event.venueName}
+                </div>
+                <div className="subtitle is-size-6">{event.title}</div>
+                <EventTags reactKey={event.slug} tags={event.tags} />
               </Link>
             </div>
           ))}
@@ -46,6 +46,10 @@ EventsCalendarDay.propTypes = {
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
+      tags: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+      })),
       title: PropTypes.string.isRequired,
       venueName: PropTypes.string.isRequired,
     }).isRequired

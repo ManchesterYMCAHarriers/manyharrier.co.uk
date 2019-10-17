@@ -3,33 +3,34 @@ import PropTypes from "prop-types"
 import {Link} from "gatsby"
 import GoogleMapsDirectionsLink from "./GoogleMapsDirectionsLink";
 import GoogleMapsLocation from "./GoogleMapsLocation";
+import GoogleMapsLocationAndRoute from "./GoogleMapsLocationAndRoute";
 
 class EventLocation extends React.Component {
   render() {
-    const {venue} = this.props
-    const {title, address} = venue.frontmatter
-    const {location, slug} = venue.fields
+    const {address, location, mapOptions, slug, title, track} = this.props
 
     return (
-      <div className="event-location" style={{
-        marginBottom: "1rem"
-      }}>
-        <div className="address" style={{
-          marginBottom: "1rem"
-        }}>
+      <div>
+        <div>
           <div
-            className="is-size-5 has-text-weight-bold">{title}</div>
+            className="is-size-6 has-text-weight-bold">{title}</div>
           {
-            address.split("\n").map((part, i) => (
+            address.map((part, i) => (
               <div key={"venue-address-" + i}>{part}</div>
             ))
           }
         </div>
-        <GoogleMapsLocation location={location} zoom={13} mapsContainerStyle={{
-          marginBottom: "1rem",
-          height: "360px",
-          width: "100%",
-        }} />
+        {track &&
+        <GoogleMapsLocationAndRoute id={'location-and-route-map'}
+                                    location={location} zoom={mapOptions.zoom}
+                                    mapContainerStyle={mapOptions.mapsContainerStyle}
+                                    track={track} />
+        }
+        {!track &&
+        <GoogleMapsLocation id={'location-map'} location={location}
+                            zoom={mapOptions.zoom}
+                            mapsContainerStyle={mapOptions.mapsContainerStyle} />
+        }
         <ul>
           <li><GoogleMapsDirectionsLink
             location={location}
@@ -44,7 +45,31 @@ class EventLocation extends React.Component {
 }
 
 EventLocation.propTypes = {
-  venue: PropTypes.object
+  address: PropTypes.arrayOf(PropTypes.string),
+  location: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  }),
+  mapOptions: PropTypes.shape({
+    mapsContainerStyle: PropTypes.object,
+    zoom: PropTypes.number,
+  }),
+  slug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  track: PropTypes.arrayOf(PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  }))
+}
+
+EventLocation.defaultProps = {
+  mapOptions: {
+    mapsContainerStyle: {
+      height: "360px",
+      width: "100%",
+    },
+    zoom: 14,
+  },
 }
 
 export default EventLocation

@@ -50,7 +50,7 @@ const BlogPost = ({ data }) => {
             />
           </Helmet>
         }
-        title={post.frontmatter.title}
+        title={post.frontmatter.blogKey}
       />
     </Layout>
   )
@@ -70,8 +70,8 @@ export const pageQuery = graphql`
       id
       html
       frontmatter {
+        blogKey
         date(formatString: "Do MMMM YYYY")
-        title
         description
       }
     }

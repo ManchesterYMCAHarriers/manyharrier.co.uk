@@ -27,9 +27,6 @@ class EventsCalendarMonth extends React.Component {
       }
     })
 
-    console.log(days)
-
-
     return (
       <div className="column is-10 is-offset-1">
         <h1 className="title is-size-3 has-text-weight-bold has-text-centered">
@@ -54,6 +51,18 @@ class EventsCalendarMonth extends React.Component {
               <EventsCalendarDay date={day.date} events={day.events} key={day.date.format("YYYY-MM-DD").toLowerCase()} />
             ))}
           </div>
+          <div className="column is-half">
+            {showPreviousMonthLink &&
+            <Link
+              to={"/events/" + previousMonth.format("MMMM-YYYY").toLowerCase()}><span aria-hidden="true">&larr;&nbsp;</span>{previousMonth.format("MMMM YYYY")}</Link>
+            }
+          </div>
+          <div className="column is-half has-text-right">
+            {showNextMonthLink &&
+            <Link
+              to={"/events/" + nextMonth.format("MMMM-YYYY").toLowerCase()}>{nextMonth.format("MMMM YYYY")}<span aria-hidden="true">&nbsp;&rarr;</span></Link>
+            }
+          </div>
         </div>
       </div>
     )
@@ -68,6 +77,10 @@ EventsCalendarMonth.propTypes = {
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
+      tags: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+      })),
       title: PropTypes.string.isRequired,
       venueName: PropTypes.string.isRequired,
     }).isRequired
