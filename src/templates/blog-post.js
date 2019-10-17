@@ -29,7 +29,7 @@ export const BlogPostTemplate = ({
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   description: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   helmet: PropTypes.object,
 }
 

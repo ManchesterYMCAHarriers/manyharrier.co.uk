@@ -43,7 +43,7 @@ export const VenueTemplate = ({
             <div>There are no upcoming events at {title}</div>
             }
             {events.map((event, i) => (
-              <EventBox key={"venue-event-i"} startsAt={event.startsAt} slug={event.slug} tags={event.tags} title={event.title} />
+              <EventBox key={"venue-event-" + i} startsAt={event.startsAt} slug={event.slug} tags={event.tags} title={event.title} />
             ))}
           </div>
         </div>

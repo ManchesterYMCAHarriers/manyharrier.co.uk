@@ -4,10 +4,7 @@ import {GoogleMap, LoadScript, Polyline} from '@react-google-maps/api'
 
 class GoogleMapsRoute extends React.Component {
   render() {
-    const {routeTrack, mapsContainerStyle} = this.props
-    const paths = routeTrack.coordinates.map(coords => {
-      return {lat: coords[1], lng: coords[2]}
-    })
+    const {paths, mapContainerStyle, mapContainerClassName, zoom} = this.props
 
     const googleMapsApiKey = process.env.GATSBY_GOOGLE_MAPS_JAVASCRIPT_API_KEY
 
@@ -30,8 +27,9 @@ class GoogleMapsRoute extends React.Component {
       >
         <GoogleMap
           id='route-map'
-          mapContainerStyle={mapsContainerStyle}
-          zoom={11}
+          mapContainerStyle={mapContainerStyle}
+          mapContainerClassName={mapContainerClassName}
+          zoom={zoom}
           center={{
             lat: 53.476445,
             lng: -2.256367
@@ -62,17 +60,24 @@ class GoogleMapsRoute extends React.Component {
 }
 
 GoogleMapsRoute.propTypes = {
-  routeTrack: PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
-  }).isRequired,
-  mapsContainerStyle: PropTypes.object,
+  paths: PropTypes.arrayOf(PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  })).isRequired,
+  mapContainerStyle: PropTypes.object,
+  mapContainerClassName: PropTypes.string,
+  zoom: PropTypes.number,
 }
 
 GoogleMapsRoute.defaultProps = {
   mapsContainerStyle: {
-    height: "360px",
-    width: "100%",
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
   },
+  zoom: 11,
 }
 
 export default GoogleMapsRoute

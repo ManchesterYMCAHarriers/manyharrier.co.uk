@@ -82,7 +82,6 @@ EventsCalendarMonth.propTypes = {
         value: PropTypes.string.isRequired,
       })),
       title: PropTypes.string.isRequired,
-      venueName: PropTypes.string.isRequired,
     }).isRequired
   )
 }

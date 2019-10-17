@@ -31,7 +31,6 @@ EventsCalendarTemplate.propTypes = {
       value: PropTypes.string.isRequired,
     })),
     title: PropTypes.string.isRequired,
-    venueName: PropTypes.string.isRequired,
   })),
   showNextMonthLink: PropTypes.bool.isRequired,
   showPreviousMonthLink: PropTypes.bool.isRequired,
@@ -44,6 +43,13 @@ const EventsCalendar = ({data, pageContext}) => {
   const thisMonth = Moment.utc(pageContext.thisMonth, "YYYY-MM")
   const events = data.events.edges.map(({ node }) => {
     const tags = []
+
+    if (node.frontmatter.venue && node.frontmatter.venue.frontmatter.venueKey) {
+      tags.push({
+        key: "venue",
+        value: node.frontmatter.venue.frontmatter.venueKey,
+      })
+    }
 
     if (node.frontmatter.eventType) {
       tags.push({
@@ -78,7 +84,6 @@ const EventsCalendar = ({data, pageContext}) => {
       startsAt: Moment.utc(node.frontmatter.startsAt),
       tags: tags,
       title: node.frontmatter.eventKey,
-      venueName: node.frontmatter.venue.frontmatter.venueKey,
     }
   })
 

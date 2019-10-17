@@ -1,25 +1,58 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { IndexPageTemplate } from '../../templates/index-page'
+import Moment from "moment";
 
-const IndexPagePreview = ({ entry, getAsset }) => {
-  const data = entry.getIn(['data']).toJS()
+const IndexPagePreview = ({ entry, widgetFor }) => {
+  const events = []
 
-  if (data) {
-    return (
-      <IndexPageTemplate
-        image={data.image}
-        title={data.title}
-        heading={data.heading}
-        subheading={data.subheading}
-        description={data.description}
-        intro={data.intro || { blurbs: [] }}
-        mainpitch={data.mainpitch || {}}
-      />
-    )
-  } else {
-    return <div>Loading...</div>
+  for (let i = 1; i <= 3; i++) {
+    const tags = [
+      {
+        key: "venue",
+        value: "Venue",
+      },
+      {
+        key: "eventType",
+        value: "Event Type",
+      },
+      {
+        key: "terrain",
+        value: "Terrain",
+      },
+      {
+        key: "championship",
+        value: "Championship",
+      },
+      {
+        key: "competition",
+        value: "Competition",
+      },
+    ]
+
+    events.push({
+      slug: "#",
+      startsAt: Moment.utc().startOf('year'),
+      tags: tags,
+      title: "Dummy event",
+    })
   }
+
+  events.push({
+    slug: "#",
+    startsAt: Moment.utc().startOf('year'),
+    tags: [
+      {
+        key: "eventType",
+        value: "Social",
+      }
+    ],
+    title: "Dummy social",
+  })
+
+  return (
+    <IndexPageTemplate title={entry.getIn(['data', 'title'])} body={widgetFor('body')} nextEvents={events} />
+  )
 }
 
 IndexPagePreview.propTypes = {

@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
-import {Link} from 'gatsby'
-import EventTags from "./EventTags";
+import EventBox from "./EventBox";
 
 class EventsCalendarDay extends React.Component {
   render() {
@@ -10,28 +9,18 @@ class EventsCalendarDay extends React.Component {
 
     return (
       <div
-        className="column is-full events-calendar-day">
+        className="column is-full">
         <div className="columns is-multiline is-desktop">
           <div
-            className="column is-one-half-desktop is-one-third-widescreen">
+            className="column is-full-desktop is-two-fifths-widescreen">
             <div
-              className="box is-size-4 has-text-grey is-shadowless events-calendar-date">
+              className="box is-size-4 has-text-grey is-shadowless">
               {date.format("dddd Do MMMM")}
             </div>
           </div>
           {events.map(event => (
             <div className="column" key={event.slug}>
-              <Link to={event.slug}
-                    className="box"
-                    key={"events-calendar-day-" + event.slug}
-                    style={{flexGrow: 1}}
-              >
-                <div className="title is-size-5">
-                  {event.startsAt.format("h:mma")} - {event.venueName}
-                </div>
-                <div className="subtitle is-size-6">{event.title}</div>
-                <EventTags reactKey={event.slug} tags={event.tags} />
-              </Link>
+              <EventBox startsAt={event.startsAt} slug={event.slug} title={event.title} tags={event.tags} />
             </div>
           ))}
         </div>
@@ -51,7 +40,6 @@ EventsCalendarDay.propTypes = {
         value: PropTypes.string.isRequired,
       })),
       title: PropTypes.string.isRequired,
-      venueName: PropTypes.string.isRequired,
     }).isRequired
   )
 }

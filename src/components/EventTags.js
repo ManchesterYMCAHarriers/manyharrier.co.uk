@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {FaBeer, FaMedal, FaMountain, FaRunning, FaTrophy} from "react-icons/fa";
+import {FaBeer, FaMapMarkerAlt, FaMedal, FaMountain, FaRunning, FaTrophy} from "react-icons/fa";
 
 class EventTags extends React.Component {
   render() {
@@ -15,6 +15,7 @@ class EventTags extends React.Component {
       competition: <FaTrophy/>,
       eventType: <FaRunning/>,
       terrain: <FaMountain/>,
+      venue: <FaMapMarkerAlt/>
     }
 
     const classNames = {
@@ -22,6 +23,7 @@ class EventTags extends React.Component {
       competition: "is-info",
       eventType: "is-primary",
       terrain: "is-dark",
+      venue: "is-success",
     }
 
     const data = tags.map(tag => {

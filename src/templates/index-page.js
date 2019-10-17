@@ -27,8 +27,6 @@ export const IndexPageTemplate = ({
                         title={event.title}
                         startsAt={event.startsAt} slug={event.slug}
                         tags={event.tags}
-                        venueName={event.venueName}
-                        venueAddress={event.venueAddress}
               />
             ))}
           </div>
@@ -42,7 +40,6 @@ IndexPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
   nextEvents: PropTypes.arrayOf(PropTypes.shape({
-    eventType: PropTypes.string.isRequired,
     startsAt: PropTypes.instanceOf(Moment).isRequired,
     slug: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.shape({
@@ -61,6 +58,13 @@ const IndexPage = ({data}) => {
 
   data.nextEvents.edges.forEach(({node}) => {
     const tags = []
+
+    if (node.frontmatter.venue && node.frontmatter.venue.frontmatter.venueKey) {
+      tags.push({
+        key: "venue",
+        value: node.frontmatter.venue.frontmatter.venueKey,
+      })
+    }
 
     if (node.frontmatter.eventType) {
       tags.push({
@@ -160,6 +164,11 @@ export const indexPageQuery = graphql`
             eventType
             startsAt
             terrain
+            venue {
+              frontmatter {
+                venueKey
+              }
+            }
           }
         }
       }

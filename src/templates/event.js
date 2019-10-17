@@ -17,6 +17,7 @@ import {FaInfo} from "react-icons/fa";
 import EventTags from "../components/EventTags";
 
 export const EventTemplate = ({
+                                championship,
                                 eventInfo,
                                 infoForChampionship,
                                 infoForCompetition,

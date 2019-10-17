@@ -100,7 +100,7 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       infoForTerrain: MarkdownRemark @link(by: "frontmatter.forTerrain", from: "terrain") # info for terraim
       location: String
       route: MarkdownRemark @link(by: "frontmatter.routeKey", from: "routeForeignKey") # route for event
-      routeEvents: [MarkdownRemark!] @link(by: "frontmatter.routeForeignKey", from: "routenKey") # events for route
+      routeEvents: [MarkdownRemark!] @link(by: "frontmatter.routeForeignKey", from: "routeKey") # events for route
       routeForeignKey: String
       routeKey: String
       routeTrack: String
