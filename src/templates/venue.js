@@ -82,7 +82,7 @@ const Venue = ({data, pageContext}) => {
     lng: coords[0]
   }
 
-  const events = venue.frontmatter.venueEvents.map(event => {
+  const events = (venue.frontmatter.venueEvents || []).map(event => {
     const tags = []
 
     if (event.frontmatter.eventType) {

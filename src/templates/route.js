@@ -63,7 +63,7 @@ const Route = ({data, pageContext}) => {
   const {markdownRemark: route} = data
   const {now} = pageContext
 
-  const events = route.frontmatter.routeEvents.map(event => {
+  const events = (route.frontmatter.routeEvents || []).map(event => {
     const tags = []
 
     if (event.frontmatter.venue && event.frontmatter.venue.frontmatter.venueKey) {

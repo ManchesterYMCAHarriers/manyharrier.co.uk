@@ -53,7 +53,7 @@ const Session = ({data, pageContext}) => {
 
   const {now} = pageContext
 
-  const events = session.frontmatter.sessionEvents.map(event => {
+  const events = (session.frontmatter.sessionEvents || []).map(event => {
     const tags = []
 
     if (event.frontmatter.venue && event.frontmatter.venue.frontmatter.venueKey) {

@@ -48,7 +48,7 @@ ChampionshipTemplate.propTypes = {
 const Championship = ({data}) => {
   const {markdownRemark: championship} = data
 
-  const events = championship.frontmatter.championshipEvents.map(event => {
+  const events = (championship.frontmatter.championshipEvents || []).map(event => {
     const tags = []
 
     if (event.frontmatter.venue && event.frontmatter.venue.frontmatter.venueKey) {
