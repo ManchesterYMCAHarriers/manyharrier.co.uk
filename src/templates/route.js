@@ -24,8 +24,8 @@ export const RouteTemplate = ({
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
             <div className="maps-container">
-              <GoogleMapsRoute paths={routeTrack}
-                               mapContainerClassName={"maps-style"} />
+              <GoogleMapsRoute id={"route-map"} paths={routeTrack}
+                               mapContainerClassName={"maps-style"} zoom={14} />
             </div>
             <PageContent content={information} />
             <h2>Upcoming Events</h2>

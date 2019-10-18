@@ -59,19 +59,19 @@ const EventPreview = ({entry, widgetFor}) => {
   }
 
   if (entry.getIn(['data', 'championshipForeignKey'])) {
-    infoForChampionship = <p>Info for championship</p>
+    infoForChampionship = <p>Info for championship (if exists)</p>
   }
 
   if (entry.getIn(['data', 'competitionForeignKey'])) {
-    infoForCompetition = <p>Info for competition</p>
+    infoForCompetition = <p>Info for competition (if exists)</p>
   }
 
   if (entry.getIn(['data', 'eventType'])) {
-    infoForEventType = <p>Info for event type</p>
+    infoForEventType = <p>Info for event type (if exists)</p>
   }
 
   if (entry.getIn(['data', 'terrain'])) {
-    infoForTerrain = <p>Info for terrain</p>
+    infoForTerrain = <p>Info for terrain (if exists)</p>
   }
 
   if (entry.getIn(['data', 'sessionForeignKey'])) {
