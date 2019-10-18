@@ -6,7 +6,8 @@ import Moment from "moment";
 const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
   const startsAt = Moment.utc(entry.getIn(['data', 'startsAt']))
 
-  let championship, venue
+  let championship, venue, infoForChampionship, infoForCompetition,
+    infoForEventType, infoForTerrain, session
 
   if (entry.getIn(['data', 'championshipForeignKey'])) {
     championship = {
@@ -18,6 +19,8 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
   const venueForeignKey = entry.getIn(['data', 'venueForeignKey'])
 
   if (venueForeignKey) {
+    console.log(fieldsMetaData)
+
     const venueObj = fieldsMetaData.getIn(['venues', venueForeignKey]).toJS()
 
     const coords = JSON.parse(venueObj.location).coordinates
@@ -56,17 +59,43 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
     })
   }
 
-  if (entry.getIn(['data', 'competitionKey'])) {
+  if (entry.getIn(['data', 'competitionForeignKey'])) {
     tags.push({
       key: "competition",
       value: entry.getIn(['data', 'competitionForeignKey']),
     })
   }
 
+  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'championshipForeignKey'])])) {
+    infoForChampionship = <p>Info for championship</p>
+  }
+
+  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'competitionForeignKey'])])) {
+    infoForCompetition = <p>Info for competition</p>
+  }
+
+  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'eventType'])])) {
+    infoForEventType = <p>Info for event type</p>
+  }
+
+  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'terrain'])])) {
+    infoForTerrain = <p>Info for terrain</p>
+  }
+
+  if (fieldsMetaData.getIn(['sessions', entry.getIn(['data', 'sessionForeignKey'])])) {
+    session = <p>Session info</p>
+  }
+
   return (
     <EventTemplate championship={championship} startsAt={startsAt} venue={venue}
                    title={entry.getIn(['data', 'eventKey'])} tags={tags}
-                   eventInfo={widgetFor('body')} />
+                   eventInfo={widgetFor('body')}
+                   infoForChampionship={infoForChampionship}
+                   infoForCompetition={infoForCompetition}
+                   infoForEventType={infoForEventType}
+                   infoForTerrain={infoForTerrain}
+                   session={session}
+    />
   )
 }
 
