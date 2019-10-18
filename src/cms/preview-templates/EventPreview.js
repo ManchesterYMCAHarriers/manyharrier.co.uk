@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {EventTemplate} from '../../templates/event'
 import Moment from "moment";
 
-const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
+const EventPreview = ({entry, widgetFor}) => {
   const startsAt = Moment.utc(entry.getIn(['data', 'startsAt']))
 
   let championship, venue, infoForChampionship, infoForCompetition,
@@ -16,25 +16,15 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
     }
   }
 
-  const venueForeignKey = entry.getIn(['data', 'venueForeignKey'])
-
-  if (venueForeignKey) {
-    console.log(fieldsMetaData)
-    console.log(fieldsMetaData.toString())
-    console.log(fieldsMetaData.getIn(['venues']))
-
-    const venueObj = fieldsMetaData.getIn(['venues', venueForeignKey]).toJS()
-
-    const coords = JSON.parse(venueObj.location).coordinates
-
+  if (entry.getIn(['data', 'venueForeignKey'])) {
     venue = {
-      address: venueObj.address.split("\n"),
+      address: ["London", "SW1A 2AA"],
       location: {
-        lat: coords[1],
-        lng: coords[0],
+        lat: 51.503396,
+        lng: -0.12764,
       },
       slug: "#",
-      title: venueObj.venueKey,
+      title: "10 Downing Street",
     }
   }
 
@@ -68,23 +58,23 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
     })
   }
 
-  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'championshipForeignKey'])])) {
+  if (entry.getIn(['data', 'championshipForeignKey'])) {
     infoForChampionship = <p>Info for championship</p>
   }
 
-  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'competitionForeignKey'])])) {
+  if (entry.getIn(['data', 'competitionForeignKey'])) {
     infoForCompetition = <p>Info for competition</p>
   }
 
-  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'eventType'])])) {
+  if (entry.getIn(['data', 'eventType'])) {
     infoForEventType = <p>Info for event type</p>
   }
 
-  if (fieldsMetaData.getIn(['info', entry.getIn(['data', 'terrain'])])) {
+  if (entry.getIn(['data', 'terrain'])) {
     infoForTerrain = <p>Info for terrain</p>
   }
 
-  if (fieldsMetaData.getIn(['sessions', entry.getIn(['data', 'sessionForeignKey'])])) {
+  if (entry.getIn(['data', 'sessionForeignKey'])) {
     session = <p>Session info</p>
   }
 
@@ -103,9 +93,6 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
 
 EventPreview.propTypes = {
   entry: PropTypes.shape({
-    getIn: PropTypes.func,
-  }),
-  fieldsMetaData: PropTypes.shape({
     getIn: PropTypes.func,
   }),
   widgetFor: PropTypes.func,
