@@ -6,37 +6,42 @@ import Moment from 'moment'
 import Layout from '../components/Layout'
 import PageTitle from "../components/PageTitle";
 import EventBox from "../components/EventBox";
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import SecondaryTitle from "../components/SecondaryTitle";
 
 export const IndexPageTemplate = ({
+                                    contentComponent,
                                     body,
                                     nextEvents,
                                     title,
-                                  }) => (
-  <div className="container">
-    <div className="section">
-      <div className="columns">
-        <div className="column is-10 is-offset-1">
-          <div className="content">
-            <PageTitle title={title} />
-            <HTMLContent content={body} />
-            <SecondaryTitle title={"Coming up"} />
-            {nextEvents.map((event, i) => (
-              <EventBox key={"next-event-" + i}
-                        title={event.title}
-                        startsAt={event.startsAt} slug={event.slug}
-                        tags={event.tags}
-              />
-            ))}
+                                  }) => {
+  const PageContent = contentComponent || Content
+  return (
+    <div className="container">
+      <div className="section">
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            <div className="content">
+              <PageTitle title={title} />
+              <PageContent content={body} />
+              <SecondaryTitle title={"Coming up"} />
+              {nextEvents.map((event, i) => (
+                <EventBox key={"next-event-" + i}
+                          title={event.title}
+                          startsAt={event.startsAt} slug={event.slug}
+                          tags={event.tags}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 IndexPageTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
   nextEvents: PropTypes.arrayOf(PropTypes.shape({
@@ -105,6 +110,7 @@ const IndexPage = ({data}) => {
   return (
     <Layout>
       <IndexPageTemplate
+        contentComponent={HTMLContent}
         body={body}
         nextEvents={nextEvents}
         title={title}

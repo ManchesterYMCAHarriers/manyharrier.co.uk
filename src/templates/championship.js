@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import EventBox from "../components/EventBox";
 
 export const ChampionshipTemplate = ({
+                                       contentComponent,
                                        events,
                                        title,
                                        information,
                                      }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       <div className="container content">
@@ -20,10 +23,12 @@ export const ChampionshipTemplate = ({
             <PageTitle title={title} />
             <h2>Fixtures</h2>
             {events.map((event, i) => (
-              <EventBox key={"championship-event-" + i} startsAt={event.startsAt} slug={event.slug} title={event.title} tags={event.tags} />
+              <EventBox key={"championship-event-" + i}
+                        startsAt={event.startsAt} slug={event.slug}
+                        title={event.title} tags={event.tags} />
             ))}
             <h2>Information</h2>
-            <HTMLContent content={information} />
+            <PageContent content={information} />
           </div>
         </div>
       </div>
@@ -32,6 +37,7 @@ export const ChampionshipTemplate = ({
 }
 
 ChampionshipTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(PropTypes.shape({
     startsAt: PropTypes.instanceOf(Moment).isRequired,
     slug: PropTypes.string.isRequired,
@@ -88,6 +94,7 @@ const Championship = ({data}) => {
   return (
     <Layout>
       <ChampionshipTemplate
+        contentComponent={HTMLContent}
         events={events}
         information={championship.html}
         title={championship.frontmatter.championshipKey}

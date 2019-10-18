@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {graphql, Link} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import EventStartsAt from "../components/EventStartsAt";
 import StandardContentContainer from "../components/StandardContentContainer";
@@ -17,6 +17,7 @@ import {FaInfo} from "react-icons/fa";
 import EventTags from "../components/EventTags";
 
 export const EventTemplate = ({
+  contentComponent,
                                 championship,
                                 eventInfo,
                                 infoForChampionship,
@@ -31,6 +32,8 @@ export const EventTemplate = ({
                                 venue,
                               }) => {
   const track = route ? route.track : null
+
+  const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
@@ -74,22 +77,22 @@ export const EventTemplate = ({
         </div>
       </div>
       {eventInfo &&
-      <HTMLContent content={eventInfo} className={"content"} />
+      <PageContent content={eventInfo} className={"content"} />
       }
       {session &&
-      <HTMLContent content={session} className={"content"} />
+      <PageContent content={session} className={"content"} />
       }
       {infoForTerrain &&
-      <HTMLContent content={infoForTerrain} className={"content"} />
+      <PageContent content={infoForTerrain} className={"content"} />
       }
       {infoForEventType &&
-      <HTMLContent content={infoForEventType} className={"content"} />
+      <PageContent content={infoForEventType} className={"content"} />
       }
       {infoForCompetition &&
-      <HTMLContent content={infoForCompetition} className={"content"} />
+      <PageContent content={infoForCompetition} className={"content"} />
       }
       {infoForChampionship &&
-      <HTMLContent content={infoForChampionship} className={"content"} />
+      <PageContent content={infoForChampionship} className={"content"} />
       }
     </StandardContentContainer>
   )
@@ -100,6 +103,7 @@ EventTemplate.propTypes = {
     slug: PropTypes.string,
     title: PropTypes.string,
   }),
+  contentComponent: PropTypes.func,
   eventInfo: PropTypes.node,
   infoForChampionship: PropTypes.node,
   infoForCompetition: PropTypes.node,
@@ -208,6 +212,7 @@ const Event = ({data}) => {
     <Layout>
       <EventTemplate
         championship={championship}
+        contentComponent={HTMLContent}
         eventInfo={event.html}
         infoForChampionship={get(event.frontmatter.infoForChampionship, ["html"])}
         infoForCompetition={get(event.frontmatter.infoForCompetition, ["html"])}

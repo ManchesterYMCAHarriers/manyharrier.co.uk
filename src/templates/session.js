@@ -2,15 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import Moment from "moment";
 import EventBox from "../components/EventBox";
 
 export const SessionTemplate = ({
-                                       events,
-                                       title,
-                                       information,
-                                     }) => {
+                                  contentComponent,
+                                  events,
+                                  title,
+                                  information,
+                                }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       <div className="container content">
@@ -19,13 +22,15 @@ export const SessionTemplate = ({
             <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
               {title}
             </h1>
-            <HTMLContent content={information} />
+            <PageContent content={information} />
             <h2>Upcoming events</h2>
             {events.length === 0 &&
             <p>There are no upcoming events featuring this session.</p>
             }
             {events.map((event, i) => (
-              <EventBox key={"session-event-" + 1} startsAt={event.startsAt} slug={event.slug} title={event.title} tags={event.tags} />
+              <EventBox key={"session-event-" + 1} startsAt={event.startsAt}
+                        slug={event.slug} title={event.title}
+                        tags={event.tags} />
             ))}
           </div>
         </div>
@@ -35,6 +40,7 @@ export const SessionTemplate = ({
 }
 
 SessionTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(PropTypes.shape({
     slug: PropTypes.string.isRequired,
     startsAt: PropTypes.instanceOf(Moment).isRequired,
@@ -109,6 +115,7 @@ const Session = ({data, pageContext}) => {
   return (
     <Layout>
       <SessionTemplate
+        contentComponent={HTMLContent}
         events={events}
         information={session.html}
         title={session.frontmatter.sessionKey}

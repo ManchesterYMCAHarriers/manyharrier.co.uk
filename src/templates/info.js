@@ -2,15 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import EventTags from "../components/EventTags";
 
 export const InfoTemplate = ({
+                               contentComponent,
                                tags,
                                title,
                                information,
                              }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       <div className="container content">
@@ -18,7 +21,7 @@ export const InfoTemplate = ({
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
             <EventTags reactKey={"info-for"} tags={tags} />
-            <HTMLContent content={information} />
+            <PageContent content={information} />
           </div>
         </div>
       </div>
@@ -27,6 +30,7 @@ export const InfoTemplate = ({
 }
 
 InfoTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   information: PropTypes.node,
   tags: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
@@ -71,6 +75,7 @@ const Info = ({data}) => {
   return (
     <Layout>
       <InfoTemplate
+        contentComponent={HTMLContent}
         information={info.html}
         tags={tags}
         title={info.frontmatter.infoKey}

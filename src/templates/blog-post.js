@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import { HTMLContent } from '../components/Content'
+import Content, { HTMLContent } from '../components/Content'
 import PageTitle from "../components/PageTitle";
 
 export const BlogPostTemplate = ({
+  contentComponent,
   content,
   title,
   helmet,
 }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       {helmet || ''}
@@ -18,7 +21,7 @@ export const BlogPostTemplate = ({
         <div className="columns">
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
-            <HTMLContent content={content} className={"content"} />
+            <PageContent content={content} className={"content"} />
           </div>
         </div>
       </div>
@@ -27,6 +30,7 @@ export const BlogPostTemplate = ({
 }
 
 BlogPostTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   content: PropTypes.node.isRequired,
   description: PropTypes.string,
   title: PropTypes.string.isRequired,
@@ -39,6 +43,7 @@ const BlogPost = ({ data }) => {
   return (
     <Layout>
       <BlogPostTemplate
+        contentComponent={HTMLContent}
         content={post.html}
         description={post.frontmatter.description}
         helmet={

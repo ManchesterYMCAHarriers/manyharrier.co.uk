@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import GoogleMapsLocation from "../components/GoogleMapsLocation"
 import PageTitle from "../components/PageTitle";
 import Subtitle from "../components/Subtitle";
@@ -12,12 +12,15 @@ import Address from "../components/Address";
 import EventBox from "../components/EventBox";
 
 export const VenueTemplate = ({
+  contentComponent,
                                 title,
                                 address,
                                 location,
                                 information,
                                 events,
                               }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       <div className="container content">
@@ -36,7 +39,7 @@ export const VenueTemplate = ({
             <GoogleMapsDirectionsLink location={location}
                                       text={"Navigate to " + title + " with Google Maps"} />
             <Subtitle text={"Information"} />
-            <HTMLContent content={information}
+            <PageContent content={information}
                          className={"information"} />
             <Subtitle text={"Upcoming events"} />
             {events.length === 0 &&
@@ -53,6 +56,7 @@ export const VenueTemplate = ({
 }
 
 VenueTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   address: PropTypes.arrayOf(PropTypes.string),
   events: PropTypes.arrayOf(PropTypes.shape({
     slug: PropTypes.string.isRequired,
@@ -131,6 +135,7 @@ const Venue = ({data, pageContext}) => {
   return (
     <Layout>
       <VenueTemplate
+        contentComponent={HTMLContent}
         events={events}
         information={venue.html}
         address={venue.frontmatter.address.split("\n")}

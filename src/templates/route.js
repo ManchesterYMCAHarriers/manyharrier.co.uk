@@ -2,18 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import {HTMLContent} from "../components/Content";
+import Content, {HTMLContent} from "../components/Content";
 import GoogleMapsRoute from "../components/GoogleMapsRoute";
 import PageTitle from "../components/PageTitle";
 import Moment from "moment";
 import EventBox from "../components/EventBox";
 
 export const RouteTemplate = ({
+                                contentComponent,
                                 events,
                                 title,
                                 routeTrack,
                                 information,
                               }) => {
+  const PageContent = contentComponent || Content
+
   return (
     <section className="section">
       <div className="container content">
@@ -24,7 +27,7 @@ export const RouteTemplate = ({
               <GoogleMapsRoute paths={routeTrack}
                                mapContainerClassName={"maps-style"} />
             </div>
-            <HTMLContent content={information} />
+            <PageContent content={information} />
             <h2>Upcoming Events</h2>
             {events.length === 0 &&
             <p>There are no upcoming events on the {title} route.</p>
@@ -42,6 +45,7 @@ export const RouteTemplate = ({
 }
 
 RouteTemplate.propTypes = {
+  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(PropTypes.shape({
     slug: PropTypes.string.isRequired,
     startsAt: PropTypes.instanceOf(Moment).isRequired,
@@ -126,6 +130,7 @@ const Route = ({data, pageContext}) => {
   return (
     <Layout>
       <RouteTemplate
+        contentComponent={HTMLContent}
         events={events}
         information={route.html}
         routeTrack={routeTrack}
