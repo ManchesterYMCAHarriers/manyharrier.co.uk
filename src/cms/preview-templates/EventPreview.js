@@ -15,8 +15,10 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
     }
   }
 
-  if (fieldsMetaData.getIn(['data', 'venueForeignKey'])) {
-    const venueObj = fieldsMetaData.getIn(['data', 'venueForeignKey']).toJS()
+  const venueForeignKey = entry.getIn(['data', 'venueForeignKey'])
+
+  if (venueForeignKey) {
+    const venueObj = fieldsMetaData.getIn(['venues', venueForeignKey]).toJS()
 
     const coords = JSON.parse(venueObj.location).coordinates
 
