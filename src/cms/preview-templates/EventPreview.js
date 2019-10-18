@@ -20,6 +20,8 @@ const EventPreview = ({entry, widgetFor, fieldsMetaData}) => {
 
   if (venueForeignKey) {
     console.log(fieldsMetaData)
+    console.log(fieldsMetaData.toString())
+    console.log(fieldsMetaData.getIn(['venues']))
 
     const venueObj = fieldsMetaData.getIn(['venues', venueForeignKey]).toJS()
 
