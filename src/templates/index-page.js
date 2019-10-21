@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import {graphql, Link} from 'gatsby'
 import Moment from 'moment'
 
 import Layout from '../components/Layout'
@@ -8,14 +8,17 @@ import PageTitle from "../components/PageTitle";
 import EventBox from "../components/EventBox";
 import Content, {HTMLContent} from "../components/Content";
 import SecondaryTitle from "../components/SecondaryTitle";
+import {FaCalendarAlt} from "react-icons/fa";
 
 export const IndexPageTemplate = ({
                                     contentComponent,
                                     body,
+                                    eventsCalendarSlug,
                                     nextEvents,
                                     title,
                                   }) => {
   const PageContent = contentComponent || Content
+
   return (
     <div className="container">
       <div className="section">
@@ -32,6 +35,29 @@ export const IndexPageTemplate = ({
                           tags={event.tags}
                 />
               ))}
+              <div className="columns">
+                <div className="column">
+                  <Link to={eventsCalendarSlug}
+                        className={"button is-large is-fullwidth"}>
+                <span className="icon is-large">
+                  <FaCalendarAlt />
+                </span>
+                    <span>Go to the events calendar</span>
+                  </Link>
+                </div>
+              </div>
+              <div className="columns">
+                <div className="column">
+                  <div className="box">
+                    <SecondaryTitle title={"About the club"} />
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="box">
+                    <SecondaryTitle title={"Join us!"} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -42,6 +68,7 @@ export const IndexPageTemplate = ({
 
 IndexPageTemplate.propTypes = {
   contentComponent: PropTypes.func,
+  eventsCalendarSlug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
   nextEvents: PropTypes.arrayOf(PropTypes.shape({
@@ -55,9 +82,10 @@ IndexPageTemplate.propTypes = {
   }))
 }
 
-const IndexPage = ({data}) => {
+const IndexPage = ({data, pageContext}) => {
   const body = data.page.html
   const {title} = data.page.frontmatter
+  const now = Moment.utc(pageContext.now)
 
   let nextEvents = []
 
@@ -111,6 +139,7 @@ const IndexPage = ({data}) => {
     <Layout>
       <IndexPageTemplate
         contentComponent={HTMLContent}
+        eventsCalendarSlug={"/events/" + now.format("MMMM-YYYY").toLowerCase()}
         body={body}
         nextEvents={nextEvents}
         title={title}
