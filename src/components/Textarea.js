@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class InputText extends React.Component {
+class Textarea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,11 +18,7 @@ class InputText extends React.Component {
       const failureStates = [
         'valueMissing',
         'badInput',
-        'typeMismatch',
         'patternMismatch',
-        'rangeOverflow',
-        'rangeUnderflow',
-        'stepMismatch',
         'tooLong',
         'tooShort',
       ]
@@ -59,7 +55,7 @@ class InputText extends React.Component {
   }
 
   render() {
-    const {hint, inputAttributes, inputId, inputType, label} = this.props
+    const {hint, inputAttributes, inputId, label, rows} = this.props
 
     return (
       <div className={"field" + (label && this.state.validationMessage ? " has-error" : "")}>
@@ -73,36 +69,34 @@ class InputText extends React.Component {
         <p className="validation-message">{this.state.validationMessage}</p>
         }
         <div className="control">
-          <input type={inputType} className="input" name={inputId}
-                 id={inputId} {...inputAttributes} />
+          <textarea className="textarea" name={inputId}
+                 id={inputId} rows={rows} {...inputAttributes} />
         </div>
       </div>
     )
   }
 }
 
-InputText.propTypes = {
+Textarea.propTypes = {
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
   inputType: PropTypes.string.isRequired,
   label: PropTypes.string,
+  rows: PropTypes.number.isRequired,
   setFormValidationState: PropTypes.func.isRequired,
   validationMessages: PropTypes.shape({
     badInput: PropTypes.string,
     patternMismatch: PropTypes.string,
-    rangeOverflow: PropTypes.string,
-    rangeUnderflow: PropTypes.string,
-    stepMismatch: PropTypes.string,
     tooLong: PropTypes.string,
     tooShort: PropTypes.string,
-    typeMismatch: PropTypes.string,
     valueMissing: PropTypes.string,
   }),
 }
 
-InputText.defaults = {
+Textarea.defaults = {
+  rows: 3,
   validationMessages: {},
 }
 
-export default InputText
+export default Textarea

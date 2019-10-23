@@ -1,22 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import InputText from "./InputText";
 import ValidationSummary from "./ValidationSummary";
+import Textarea from "./Textarea";
 
-class FieldsetText extends React.Component {
+class FieldsetTextarea extends React.Component {
   render() {
-    const {hint, inputAttributes, inputId, inputType, label, setFormValidationState, validationIssues, validationMessages, visible} = this.props
+    const {hint, inputAttributes, inputId, label, rows, setFormValidationState, validationIssues, validationMessages, visible} = this.props
     return (
       <div>
-        <fieldset className={"section is-field" + (visible ? "" : " is-hidden") + (validationIssues.length > 0 ? " has-error" : "")}>
+        <fieldset
+          className={"section is-field" + (visible ? "" : " is-hidden") + (validationIssues.length > 0 ? " has-error" : "")}>
           <ValidationSummary validationIssues={validationIssues} />
           <legend>
             <label className="title is-size-3" htmlFor={inputId}>{label}</label>
           </legend>
-          <InputText hint={hint} inputAttributes={inputAttributes}
-                     inputId={inputId} inputType={inputType}
-                     setFormValidationState={setFormValidationState}
-                     validationMessages={validationMessages}
+          <Textarea hint={hint} inputAttributes={inputAttributes}
+                    inputId={inputId}
+                    rows={rows}
+                    setFormValidationState={setFormValidationState}
+                    validationMessages={validationMessages}
           />
         </fieldset>
       </div>
@@ -24,12 +26,12 @@ class FieldsetText extends React.Component {
   }
 }
 
-FieldsetText.propTypes = {
+FieldsetTextarea.propTypes = {
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
-  inputType: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  rows: PropTypes.number.isRequired,
   setFormValidationState: PropTypes.func.isRequired,
   validationIssues: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -38,19 +40,16 @@ FieldsetText.propTypes = {
   validationMessages: PropTypes.shape({
     badInput: PropTypes.string,
     patternMismatch: PropTypes.string,
-    rangeOverflow: PropTypes.string,
-    rangeUnderflow: PropTypes.string,
-    stepMismatch: PropTypes.string,
     tooLong: PropTypes.string,
     tooShort: PropTypes.string,
-    typeMismatch: PropTypes.string,
     valueMissing: PropTypes.string,
   }),
   visible: PropTypes.bool.isRequired,
 }
 
-FieldsetText.defaults = {
+FieldsetTextarea.defaults = {
+  rows: 3,
   validationIssues: [],
 }
 
-export default FieldsetText
+export default FieldsetTextarea

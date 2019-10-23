@@ -6,75 +6,163 @@ class InputDate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      day: null,
+      month: null,
+      year: null,
       validationMessage: null,
     }
   }
 
   componentDidMount() {
-    const {inputId, setFormValidationState, validationMessages} = this.props
+    const {earliestDate, latestDate, inputAttributes, inputId, setFormValidationState, validationMessages} = this.props
 
-    document.getElementById(inputId).querySelectorAll('input').forEach(el => {
+    const day = document.getElementById(inputId + "-day")
+    const month = document.getElementById(inputId + "-month")
+    const year = document.getElementById(inputId + "-year")
 
-      el.addEventListener('invalid', () => {
-        const failureStates = [
-          'valueMissing',
-          'badInput',
-          'typeMismatch',
-          'patternMismatch',
-          'rangeOverflow',
-          'rangeUnderflow',
-          'stepMismatch',
-          'tooLong',
-          'tooShort',
-        ]
-
-        for (let i = 0; i < failureStates.length; i++) {
-          const failureState = failureStates[i]
-          if (el.validity[failureState] && validationMessages[failureState]) {
-            this.setState({
-              validationMessage: validationMessages[failureState],
-            })
-            setFormValidationState({
-              id: inputId,
-              message: validationMessages[failureState],
-            })
-            let parent = el.closest('.is-field')
-            if (!parent) {
-              parent = el.closest('.date-field')
-            }
-            parent.classList.add('has-error')
-            break
-          }
-        }
-      }, false)
-
-      el.addEventListener('change', () => {
-        this.setState({
-          value: el.value,
-        })
-
-        if (el.checkValidity()) {
+    const checkValidity = () => {
+      if (inputAttributes.required) {
+        if (day.validity.valueMissing && month.validity.valueMissing && year.validity.valueMissing) {
           this.setState({
-            validationMessage: null,
+            validationMessage: validationMessages['valueMissing']
           })
           setFormValidationState({
             id: inputId,
+            message: validationMessages['valueMissing']
           })
-          let parent = el.closest('.is-field')
-          if (!parent) {
-            parent = el.closest('.date-field')
-          }
-          parent.classList.remove('has-error')
+          return false
         }
-      }, false)
+
+        if (day.validity.valueMissing) {
+          this.setState({
+            validationMessage: validationMessages['dayValueMissing']
+          })
+          setFormValidationState({
+            id: inputId,
+            message: validationMessages['dayValueMissing']
+          })
+          return false
+        }
+
+        if (month.validity.valueMissing) {
+          this.setState({
+            validationMessage: validationMessages['monthValueMissing']
+          })
+          setFormValidationState({
+            id: inputId,
+            message: validationMessages['monthValueMissing']
+          })
+          return false
+        }
+
+        if (year.validity.valueMissing) {
+          this.setState({
+            validationMessage: validationMessages['yearValueMissing']
+          })
+          setFormValidationState({
+            id: inputId,
+            message: validationMessages['yearValueMissing']
+          })
+          return false
+        }
+      }
+
+      if (day.validity.typeMismatch || day.validity.stepMismatch || day.validity.rangeUnderflow || day.validity.rangeOverflow || day.validity.badInput ||
+        month.validity.typeMismatch || month.validity.stepMismatch || month.validity.rangeUnderflow || month.validity.rangeOverflow || month.validity.badInput ||
+        year.validity.typeMismatch || year.validity.stepMismatch || year.validity.badInput) {
+        this.setState({
+          validationMessage: validationMessages['invalidDate']
+        })
+        setFormValidationState({
+          id: inputId,
+          message: validationMessages['invalidDate']
+        })
+
+        return false
+      }
+
+      if (year.value && month.value && day.value) {
+        const dateValue = Moment.utc(year.value + "-" + month.value + "-" + day.value, "YYYY-MM-DD")
+
+        if (earliestDate && dateValue.isBefore(earliestDate)) {
+          this.setState({
+            validationMessage: validationMessages['beforeEarliestDate']
+          })
+          setFormValidationState({
+            id: inputId,
+            message: validationMessages['beforeEarliestDate']
+          })
+
+          return false
+        }
+
+        if (latestDate && dateValue.isAfter(latestDate)) {
+          this.setState({
+            validationMessage: validationMessages['afterLatestDate']
+          })
+          setFormValidationState({
+            id: inputId,
+            message: validationMessages['afterLatestDate']
+          })
+
+          return false
+        }
+      }
+
+      this.setState({
+        validationMessage: null,
+      })
+      setFormValidationState({
+        id: inputId,
+      })
+
+      return true
+    }
+
+    day.addEventListener('invalid', checkValidity, false)
+    month.addEventListener('invalid', checkValidity, false)
+    year.addEventListener('invalid', checkValidity, false)
+
+    day.addEventListener('change', () => {
+      this.setState({
+        day: day.value,
+      }, () => {
+        if (this.state.month && this.state.year) {
+          checkValidity()
+        }
+      })
+    }, false)
+
+    month.addEventListener('change', () => {
+      this.setState({
+        month: month.value,
+      }, () => {
+        if (this.state.day && this.state.year) {
+          checkValidity()
+        }
+      })
+    })
+
+    year.addEventListener('change', () => {
+      this.setState({
+        year: year.value,
+      }, () => {
+        if (this.state.day && this.state.month) {
+          checkValidity()
+        }
+      })
     })
   }
 
   render() {
-    const {hint, inputAttributes, inputId, label, yearAttributes} = this.props
+    const {autoCompleteDay, autoCompleteMonth, autoCompleteYear, earliestDate, latestDate, hint, inputAttributes, inputId, label} = this.props
 
     return (
-      <div id={inputId} className="date-field">
+      <div
+        className={"date-field" + (label && this.state.validationMessage ? " has-error" : "")}>
+        <input type="date" readOnly={true} className="is-hidden" name={inputId}
+               id={inputId}
+               value={this.state.year + "-" + this.state.month + "-" + this.state.day} />
         {label &&
         <p className="label">{label}</p>
         }
@@ -84,14 +172,14 @@ class InputDate extends React.Component {
         {this.state.validationMessage &&
         <p className="validation-message">{this.state.validationMessage}</p>
         }
-        <div className="columns">
+        <div className="columns is-mobile">
           <div className="column is-narrow">
             <div className="field">
               <label className="label" htmlFor={inputId + "-day"}>Day</label>
               <div className="control">
                 <input className="input" id={inputId + "-day"}
                        name={inputId + "-day"} type="number" min="1" max="31"
-                       step="1" {...inputAttributes} />
+                       step="1" {...inputAttributes} autoComplete={autoCompleteDay} />
               </div>
             </div>
           </div>
@@ -102,7 +190,7 @@ class InputDate extends React.Component {
               <div className="control">
                 <input className="input" id={inputId + "-month"}
                        name={inputId + "-month"} type="number" min="1" max="12"
-                       step="1" {...inputAttributes} />
+                       step="1" {...inputAttributes} autoComplete={autoCompleteMonth} />
               </div>
             </div>
           </div>
@@ -111,8 +199,10 @@ class InputDate extends React.Component {
               <label className="label" htmlFor={inputId + "-year"}>Year</label>
               <div className="control">
                 <input className="input" id={inputId + "-year"}
+                       min={earliestDate && earliestDate.year()}
+                       max={latestDate && latestDate.year()}
                        name={inputId + "-year"} type="number"
-                       step="1" {...yearAttributes} {...inputAttributes} />
+                       step="1" {...inputAttributes} autoComplete={autoCompleteYear} />
               </div>
             </div>
           </div>
@@ -123,29 +213,26 @@ class InputDate extends React.Component {
 }
 
 InputDate.propTypes = {
+  autoCompleteDay: PropTypes.string,
+  autoCompleteMonth: PropTypes.string,
+  autoCompleteYear: PropTypes.string,
   hint: PropTypes.string,
   inputAttributes: PropTypes.shape({
     required: PropTypes.bool,
   }),
   inputId: PropTypes.string.isRequired,
   label: PropTypes.string,
-  minDate: PropTypes.instanceOf(Moment),
-  maxDate: PropTypes.instanceOf(Moment),
+  earliestDate: PropTypes.instanceOf(Moment),
+  latestDate: PropTypes.instanceOf(Moment),
   setFormValidationState: PropTypes.func.isRequired,
-  yearAttributes: PropTypes.shape({
-    min: PropTypes.string,
-    max: PropTypes.string,
-  }),
   validationMessages: PropTypes.shape({
-    badInput: PropTypes.string,
-    patternMismatch: PropTypes.string,
-    rangeOverflow: PropTypes.string,
-    rangeUnderflow: PropTypes.string,
-    stepMismatch: PropTypes.string,
-    tooLong: PropTypes.string,
-    tooShort: PropTypes.string,
-    typeMismatch: PropTypes.string,
-    valueMissing: PropTypes.string,
+    valueMissing: PropTypes.string.isRequired,
+    dayValueMissing: PropTypes.string.isRequired,
+    monthValueMissing: PropTypes.string.isRequired,
+    yearValueMissing: PropTypes.string.isRequired,
+    invalidDate: PropTypes.string.isRequired,
+    beforeEarliestDate: PropTypes.string,
+    afterLatestDate: PropTypes.string,
   }),
 }
 
