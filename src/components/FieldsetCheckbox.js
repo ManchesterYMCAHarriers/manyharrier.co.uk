@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ValidationSummary from "./ValidationSummary";
 
-class Textarea extends React.Component {
+class FieldsetCheckbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +18,6 @@ class Textarea extends React.Component {
     el.addEventListener('invalid', () => {
       const failureStates = [
         'valueMissing',
-        'badInput',
-        'patternMismatch',
-        'tooLong',
-        'tooShort',
       ]
 
       for (let i = 0; i < failureStates.length; i++) {
@@ -55,47 +52,43 @@ class Textarea extends React.Component {
   }
 
   render() {
-    const {hint, inputAttributes, inputId, label, rows} = this.props
-
+    const { inputAttributes, inputId, legend, statements, label, value, validationIssues, visible } = this.props
     return (
-      <div className={"field" + (label && this.state.validationMessage ? " has-error" : "")}>
-        {label &&
-        <label className="label" htmlFor={inputId}>{label}</label>
-        }
-        {hint &&
-        <p className="hint">{hint}</p>
-        }
+      <fieldset className={"section is-field" + (visible ? "" : " is-hidden") + (validationIssues.length > 0 ? " has-error" : "")}>
+        <legend>
+          <h2 className="title is-size-3">{legend}</h2>
+        </legend>
+        <ValidationSummary validationIssues={validationIssues} />
+        {statements}
         {this.state.validationMessage &&
         <p className="validation-message">{this.state.validationMessage}</p>
         }
-        <div className="control">
-          <textarea className="textarea" name={inputId}
-                 id={inputId} rows={rows} {...inputAttributes} />
+        <div className="field">
+          <label className="checkbox">
+            <input type="checkbox" className="checkbox" id={inputId} name={inputId} value={value} {...inputAttributes} />&nbsp;{label}
+          </label>
         </div>
-      </div>
+      </fieldset>
     )
   }
 }
 
-Textarea.propTypes = {
-  hint: PropTypes.string,
+FieldsetCheckbox.propTypes = {
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  rows: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
+  legend: PropTypes.string.isRequired,
   setFormValidationState: PropTypes.func.isRequired,
-  validationMessages: PropTypes.shape({
-    badInput: PropTypes.string,
-    patternMismatch: PropTypes.string,
-    tooLong: PropTypes.string,
-    tooShort: PropTypes.string,
-    valueMissing: PropTypes.string,
-  }),
+  statements: PropTypes.node.isRequired,
+  validationIssues: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+  })).isRequired,
+  visible: PropTypes.bool.isRequired,
 }
 
-Textarea.defaults = {
-  rows: 3,
-  validationMessages: {},
+FieldsetCheckbox.defaults = {
+  validationIssues: [],
 }
 
-export default Textarea
+export default FieldsetCheckbox

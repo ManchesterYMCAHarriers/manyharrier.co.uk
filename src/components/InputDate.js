@@ -160,7 +160,7 @@ class InputDate extends React.Component {
     return (
       <div
         className={"date-field" + (label && this.state.validationMessage ? " has-error" : "")}>
-        <input type="date" readOnly={true} className="is-hidden" name={inputId}
+        <input type="hidden" readOnly={true} className="is-hidden" name={inputId}
                id={inputId}
                value={this.state.year + "-" + this.state.month + "-" + this.state.day} />
         {label &&

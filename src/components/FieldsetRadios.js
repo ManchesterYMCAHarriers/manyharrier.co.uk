@@ -18,7 +18,6 @@ class FieldsetRadios extends React.Component {
       el.addEventListener('invalid', () => {
         const failureStates = [
           'valueMissing',
-          'badInput',
         ]
 
         for (let i = 0; i < failureStates.length; i++) {
