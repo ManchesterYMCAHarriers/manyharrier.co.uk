@@ -17,9 +17,10 @@ import {FaInfo} from "react-icons/fa";
 import EventTags from "../components/EventTags";
 
 export const EventTemplate = ({
-  contentComponent,
+                                contentComponent,
                                 championship,
                                 eventInfo,
+                                googleMapsApiKey,
                                 infoForChampionship,
                                 infoForCompetition,
                                 infoForEventType,
@@ -49,16 +50,20 @@ export const EventTemplate = ({
       </div>
       <div className="maps-container">
         {track &&
-        <GoogleMapsLocationAndRoute track={track}
-                                    id={"event-location-and-route"}
-                                    location={venue.location}
-                                    mapContainerClassName={"maps-style"}
+        <GoogleMapsLocationAndRoute
+          googleMapsApiKey={googleMapsApiKey}
+          track={track}
+          id={"event-location-and-route"}
+          location={venue.location}
+          mapContainerClassName={"maps-style"}
         />
         }
         {!track &&
-        <GoogleMapsLocation id={"event-location"}
-                            location={venue.location}
-                            mapContainerClassName={"maps-style"}
+        <GoogleMapsLocation
+          googleMapsApiKey={googleMapsApiKey}
+          id={"event-location"}
+          location={venue.location}
+          mapContainerClassName={"maps-style"}
         />
         }
       </div>
@@ -105,6 +110,7 @@ EventTemplate.propTypes = {
   }),
   contentComponent: PropTypes.func,
   eventInfo: PropTypes.node,
+  googleMapsApiKey: PropTypes.string.isRequired,
   infoForChampionship: PropTypes.node,
   infoForCompetition: PropTypes.node,
   infoForEventType: PropTypes.node,
@@ -136,8 +142,18 @@ EventTemplate.propTypes = {
 }
 
 const Event = ({data}) => {
-  const {markdownRemark: event} = data
-
+  const {
+    site: {
+      siteMetadata: {
+        apiKeys: {
+          google: {
+            mapsJavascriptKey,
+          },
+        },
+      },
+    },
+    markdownRemark: event
+  } = data
   const startsAt = Moment.utc(event.frontmatter.startsAt)
 
   let championship, route, venue
@@ -214,6 +230,7 @@ const Event = ({data}) => {
         championship={championship}
         contentComponent={HTMLContent}
         eventInfo={event.html}
+        googleMapsApiKey={mapsJavascriptKey}
         infoForChampionship={get(event.frontmatter.infoForChampionship, ["html"])}
         infoForCompetition={get(event.frontmatter.infoForCompetition, ["html"])}
         infoForEventType={get(event.frontmatter.infoForEventType, ["html"])}
@@ -231,6 +248,7 @@ const Event = ({data}) => {
 
 Event.propTypes = {
   data: PropTypes.shape({
+    site: PropTypes.object,
     markdownRemark: PropTypes.object
   }),
 }
@@ -239,6 +257,15 @@ export default Event
 
 export const eventQuery = graphql`
   query EventByID($id: String!) {
+    site {
+      siteMetadata {
+        apiKeys {
+          google {
+            mapsJavascriptKey
+          }
+        }
+      }
+    }
     markdownRemark(id: { eq: $id }) {
       id
       html

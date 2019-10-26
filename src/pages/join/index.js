@@ -10,23 +10,73 @@ import FieldsetRadios from "../../components/FieldsetRadios";
 import FieldsetText from "../../components/FieldsetText";
 import FieldsetTextarea from "../../components/FieldsetTextarea";
 import FieldsetCheckbox from "../../components/FieldsetCheckbox";
+import {graphql} from "gatsby";
 
-// function encode(data) {
-//   return Object.keys(data)
-//     .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-//     .join('&')
-// }
+export const JoinFormQuery = graphql`
+  query JoinFormQuery {
+    site {
+      siteMetadata {
+        url
+        apiKeys {
+          stripe {
+            publishableKey
+          }
+        }
+      }
+    }
+  }
+`
+
+function encode(data) {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&')
+}
 
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
+    const {
+      site: {
+        siteMetadata: {
+          url,
+          apiKeys: {
+            stripe: {
+              publishableKey
+            }
+          }
+        }
+      }
+    } = props
+
     this.state = {
+      baseUrl: url,
       data: {},
+      membershipFees: {
+        "First claim": 28.00,
+        "Second claim": 11.00
+      },
+      membershipValidUntil: "30 April 2020",
       stage: 1,
-      stages: 14,
+      stages: 15,
+      stripePublishableKey: publishableKey,
+      stripeSKUs: {
+        "First claim": "membership-first-claim",
+        "Second claim": "membership-second-claim"
+      },
       submitValue: "Next",
       validationIssues: []
     }
+
+    console.log(this.state)
+  }
+
+  showBack = () => {
+    return this.state.stage > 1 && this.state.stage <= this.state.stages
+  }
+
+  showSubmit = () => {
+    return this.state.stage <= this.state.stages
   }
 
   backHandler = () => {
@@ -47,7 +97,7 @@ export default class Index extends React.Component {
     }
   }
 
-  submitHandler = ev => {
+  submitHandler = (ev) => {
     ev.preventDefault()
     // Check if visible elements validate
     let data = this.state.data
@@ -89,13 +139,12 @@ export default class Index extends React.Component {
       if (this.state.stage < this.state.stages) {
         this.setState({
           stage: nextStage,
-          submitValue: this.state.stage === this.state.stages - 1 ? "Submit" : "Next"
+          submitValue: this.state.stage === this.state.stages - 1 && this.state.data.paymentMethod === "Stripe" ? "Make payment" : "Next"
         }, () => {
           // Scroll to page title
           document.querySelector("h1").scrollIntoView()
           // Set focus on first visible input
           const firstVisibleInput = ev.target.querySelector('fieldset:not(.is-hidden)').querySelector('input:not([type="hidden"]), textarea, select')
-          console.log(firstVisibleInput)
           if (firstVisibleInput) {
             firstVisibleInput.focus({
               preventScroll: true,
@@ -103,11 +152,56 @@ export default class Index extends React.Component {
           }
         })
       }
-      // ...or submit it
+      // ...or proceed to payment
       else {
+        const body = encode(this.state.data)
+        try {
+          const response = this.submitFormData(body)
+          if (!response.ok) {
+            throw new Error(response.statusText)
+          }
+        } catch (err) {
+          console.error("Submit form data error:", err)
+          return
+        }
 
+        if (this.state.data.paymentMethod === "BACS") {
+          this.setState({
+            stage: nextStage,
+          }, () => {
+            document.querySelector("h1").scrollIntoView()
+          })
+          return
+        }
+
+        const {error} = this.redirectToCheckout()
+        if (error) {
+          console.error("Redirect to checkout error:", error)
+        }
       }
     })
+  }
+
+  submitFormData = async(body) => {
+    return await fetch(this.state.formAction, {
+      method: 'POST',
+      body: body,
+    })
+  }
+
+  redirectToCheckout = async() => {
+    try {
+      await this.stripe.redirectToCheckout({
+        items: [{sku: this.state.stripeSKUs[this.state.data.membership], quantity: 1}],
+        successUrl: this.state.baseUrl + `/join/success/`,
+        cancelUrl: this.state.baseUrl + `/join/cancel/`,
+        customerEmail: this.state.data.email,
+        billingAddressCollection: "auto",
+        submitType: "pay",
+      })
+    } catch (err) {
+      console.error("Stripe error:", err)
+    }
   }
 
   updateValidationIssues = ({id, message}) => {
@@ -143,10 +237,11 @@ export default class Index extends React.Component {
   }
 
   componentDidMount() {
+    this.stripe = window.Stripe(this.state.stripePublishableKey)
+
     document.querySelector('form#join').querySelector('fieldset:not(.is-hidden)').querySelector(' input:not([type="hidden"]), textarea, select').focus({
       preventScroll: true,
     })
-
   }
 
   render() {
@@ -156,14 +251,15 @@ export default class Index extends React.Component {
           <div className="container">
             <div className="content">
               <PageTitle title={"Join us"} />
-              <Form action={"/join/thanks"} formId={"join"}
+              <Form formId={"join"}
                     method={"POST"}
                     backHandler={this.backHandler} backValue={"Back"}
                     stage={this.state.stage} stages={this.state.stages}
+                    showBack={this.showBack()}
+                    showSubmit={this.showSubmit()}
                     submitHandler={this.submitHandler}
                     submitValue={this.state.submitValue}
                     validationIssues={this.state.validationIssues}>
-
 
                 {/* First and last name */}
                 <FieldsetMulti legend={"What is your name?"}
@@ -242,12 +338,12 @@ export default class Index extends React.Component {
                                 name={"membership"} options={[
                   {
                     id: "membershipFirstClaim",
-                    label: "First claim",
+                    label: "First claim - £" + this.state.membershipFees["First claim"] + " - valid until " + this.state.membershipValidUntil,
                     value: "First claim",
                   },
                   {
                     id: "membershipSecondClaim",
-                    label: "Second claim",
+                    label: "Second claim - £" + this.state.membershipFees["Second claim"] + " - valid until " + this.state.membershipValidUntil,
                     value: "Second claim",
                   }
                 ]} setFormValidationState={this.updateValidationIssues}
@@ -485,11 +581,35 @@ export default class Index extends React.Component {
                                       </li>
                                     </ul>
                                   } />
+
+                {/* Payment */}
+                <FieldsetRadios inputAttributes={{
+                  required: true,
+                }} legend={"How would you like to pay for your membership?"}
+                                hint={"It saves the club some money if you pay by bank transfer"}
+                                name={"paymentMethod"} options={[
+                  {
+                    id: "paymentMethodBankTransfer",
+                    label: "Bank transfer",
+                    value: "BACS",
+                  },
+                  {
+                    id: "paymentMethodStripe",
+                    label: "Debit or credit card",
+                    value: "Stripe",
+                  }
+                ]} setFormValidationState={this.updateValidationIssues}
+                                validationMessages={{
+                                  valueMissing: "Select a payment method",
+                                }}
+                                validationIssues={this.state.validationIssues}
+                                visible={this.state.stage === 14} />
+
                 {/* Review */}
                 <FieldsetMulti legend={"Is all of your information correct?"}
                                hint={"If not, please use the back button to go back and correct it."}
                                validationIssues={this.state.validationIssues}
-                               visible={this.state.stage === 14}>
+                               visible={this.state.stage === 15}>
                   <dl>
                     <dt>Name</dt>
                     <dd>{this.state.data.firstName} {this.state.data.lastName}</dd>
@@ -498,14 +618,14 @@ export default class Index extends React.Component {
                     <dt>Gender</dt>
                     <dd>{this.state.data.gender}</dd>
                     <dt>Manchester YMCA Harriers Club membership type</dt>
-                    <dd>{this.state.data.membership}</dd>
+                    <dd>{this.state.data.membership} @ £{this.state.membershipFees[this.state.data.membership]}, valid until {this.state.membershipValidUntil}</dd>
                     {this.state.data.membership === "Second claim" &&
                     <dt>First claim club</dt>
                     }
                     {this.state.data.membership === "Second claim" &&
                     <dd>{this.state.data.firstClaimClub}</dd>
                     }
-                    <dt>Y Club membershipt type</dt>
+                    <dt>Y Club membership type</dt>
                     <dd>{this.state.data.yClubMembership}</dd>
                     <dt>Address</dt>
                     <dd>{this.state.data.address}</dd>
@@ -529,9 +649,31 @@ export default class Index extends React.Component {
                     <dd>You have accepted the rules and Data Protection
                       statements
                     </dd>
+                    <dt>Payment method</dt>
+                    <dd>
+                      You have opted to pay by
+                      {this.state.data.paymentMethod === "BACS" && " bank transfer"}
+                      {this.state.data.paymentMethod === "Stripe" && " credit or debit card"}
+                    </dd>
                   </dl>
                 </FieldsetMulti>
-                {/* Payment */}
+
+                {/* Bank payment details */}
+                <FieldsetMulti legend={"Thanks for joining the club!"}
+                               name={"paymentMethod"}
+                               setFormValidationState={this.updateValidationIssues}
+                               validationIssues={this.state.validationIssues}
+                               visible={this.state.stage === 16}>
+                  <p>You have opted to pay for your membership by <strong>bank transfer</strong>.</p>
+                  <p>Please transfer your membership fee of <strong>£{this.state.membershipFees[this.state.data.membership]}</strong> to the account:</p>
+                  <dl>
+                    <dt>Sort code</dt>
+                    <dd>30-90-89</dd>
+                    <dt>Account number</dt>
+                    <dd>39972068</dd>
+                  </dl>
+                  <p>Use <strong>{this.state.data.firstName && this.state.data.firstName.charAt(0)} {this.state.data.lastName}</strong> as your payment reference.</p>
+                </FieldsetMulti>
               </Form>
             </div>
           </div>

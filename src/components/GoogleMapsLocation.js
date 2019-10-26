@@ -4,13 +4,7 @@ import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api'
 
 class GoogleMapsLocation extends React.Component {
   render() {
-    const {id, location, mapContainerClassName, mapContainerStyle, zoom} = this.props
-
-    const googleMapsApiKey = process.env.GATSBY_GOOGLE_MAPS_JAVASCRIPT_API_KEY
-
-    if (!googleMapsApiKey) {
-      throw new Error("Google Maps API Key not set")
-    }
+    const {googleMapsApiKey, id, location, mapContainerClassName, mapContainerStyle, zoom} = this.props
 
     return (
       <LoadScript
@@ -35,6 +29,7 @@ class GoogleMapsLocation extends React.Component {
 }
 
 GoogleMapsLocation.propTypes = {
+  googleMapsApiKey: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   location: PropTypes.shape({
     lat: PropTypes.number.isRequired,

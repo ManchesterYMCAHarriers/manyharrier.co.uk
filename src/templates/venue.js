@@ -12,7 +12,8 @@ import Address from "../components/Address";
 import EventBox from "../components/EventBox";
 
 export const VenueTemplate = ({
-  contentComponent,
+                                contentComponent,
+                                googleMapsApiKey,
                                 title,
                                 address,
                                 location,
@@ -31,9 +32,11 @@ export const VenueTemplate = ({
               <Address address={address} />
             </div>
             <div className="maps-container">
-              <GoogleMapsLocation id={"venue-location-map"} zoom={14}
-                                  location={location}
-                                  mapContainerClassName={"maps-style"}
+              <GoogleMapsLocation
+                googleMapsApiKey={googleMapsApiKey}
+                id={"venue-location-map"} zoom={14}
+                location={location}
+                mapContainerClassName={"maps-style"}
               />
             </div>
             <GoogleMapsDirectionsLink location={location}
@@ -46,7 +49,9 @@ export const VenueTemplate = ({
             <div>There are no upcoming events at {title}</div>
             }
             {events.map((event, i) => (
-              <EventBox key={"venue-event-" + i} startsAt={event.startsAt} slug={event.slug} tags={event.tags} title={event.title} />
+              <EventBox key={"venue-event-" + i} startsAt={event.startsAt}
+                        slug={event.slug} tags={event.tags}
+                        title={event.title} />
             ))}
           </div>
         </div>
@@ -67,6 +72,7 @@ VenueTemplate.propTypes = {
     })),
     title: PropTypes.string.isRequired,
   })),
+  googleMapsApiKey: PropTypes.string.isRequired,
   information: PropTypes.node,
   location: PropTypes.shape({
     lat: PropTypes.number.isRequired,
@@ -76,7 +82,18 @@ VenueTemplate.propTypes = {
 }
 
 const Venue = ({data, pageContext}) => {
-  const {markdownRemark: venue} = data
+  const {
+    site: {
+      siteMetadata: {
+        apiKeys: {
+          google: {
+            mapsJavascriptKey,
+          },
+        },
+      },
+    },
+    markdownRemark: venue
+  } = data
   const {now} = pageContext
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
@@ -137,6 +154,7 @@ const Venue = ({data, pageContext}) => {
       <VenueTemplate
         contentComponent={HTMLContent}
         events={events}
+        googleMapsApiKey={mapsJavascriptKey}
         information={venue.html}
         address={venue.frontmatter.address.split("\n")}
         location={location}
@@ -148,6 +166,7 @@ const Venue = ({data, pageContext}) => {
 
 Venue.propTypes = {
   data: PropTypes.shape({
+    site: PropTypes.object,
     markdownRemark: PropTypes.object
   }),
 }
@@ -156,6 +175,15 @@ export default Venue
 
 export const venueQuery = graphql`
   query VenueByID($id: String!) {
+    site {
+      siteMetadata {
+        apiKeys {
+          google {
+            mapsJavascriptKey
+          }
+        }
+      }
+    }
     markdownRemark(id: { eq: $id }) {
       id
       html

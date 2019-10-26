@@ -13,7 +13,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const {action, backHandler, backValue, children, formAttributes, formId, method, stage, stages, submitValue, validationIssues} = this.props
+    const {action, backHandler, backValue, children, formAttributes, formId, method, showBack, showSubmit, stage, stages, submitValue, validationIssues} = this.props
 
     return (
       <form
@@ -22,6 +22,7 @@ class Form extends React.Component {
         method={method}
         action={action}
         {...formAttributes}
+        data-netlify="true"
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value={formId} />
@@ -32,8 +33,8 @@ class Form extends React.Component {
         {children}
         <div className="section has-text-right">
             <button type="submit"
-                    className="button forward-button is-link">{submitValue}</button>
-            <button type="button" className={"button back-button is-pulled-left " + (stage > 1 ? "" : " is-hidden")}
+                    className={"button forward-button is-link " + (!showSubmit && " is-hidden")}>{submitValue}</button>
+            <button type="button" className={"button back-button is-pulled-left " + (!showBack && " is-hidden")}
                     onClick={backHandler}
             >{backValue}</button>
         </div>
@@ -43,13 +44,15 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
-  action: PropTypes.string.isRequired,
+  action: PropTypes.string,
   backHandler: PropTypes.func.isRequired,
   backValue: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   formAttributes: PropTypes.object,
   formId: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
+  showBack: PropTypes.bool.isRequired,
+  showSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,
   submitValue: PropTypes.string.isRequired,
   validationIssues: PropTypes.arrayOf(PropTypes.shape({

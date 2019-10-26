@@ -1,12 +1,20 @@
 module.exports = {
   siteMetadata: {
     title: 'Manchester YMCA Harriers',
-    description:
-      'Alpha',
-
+    description: 'Alpha',
+    url: process.env.URL,
+    apiKeys: {
+      google: {
+        mapsJavascriptKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
+      },
+      stripe: {
+        publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      },
+    },
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-stripe',
     'gatsby-plugin-sass',
     {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
