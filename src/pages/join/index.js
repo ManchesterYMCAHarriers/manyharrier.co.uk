@@ -127,38 +127,41 @@ export default class Index extends React.Component {
       }
       // ...or proceed to payment
       else {
-        try {
-          const response = this.submitFormData()
-          if (!response.ok) {
-            throw new Error(response.statusText)
+        const dataSubmitted = this.submitFormData()
+        if (dataSubmitted) {
+          if (this.state.data.paymentMethod === "BACS") {
+            this.setState({
+              stage: nextStage,
+            }, () => {
+              document.querySelector("h1").scrollIntoView()
+            })
+            return
           }
-        } catch (err) {
-          console.error("Submit form data error:", err)
-          return
-        }
 
-        if (this.state.data.paymentMethod === "BACS") {
-          this.setState({
-            stage: nextStage,
-          }, () => {
-            document.querySelector("h1").scrollIntoView()
-          })
-          return
-        }
-
-        const {error} = this.redirectToCheckout()
-        if (error) {
-          console.error("Redirect to checkout error:", error)
+          const {error} = this.redirectToCheckout()
+          if (error) {
+            console.error("Redirect to checkout error:", error)
+          }
         }
       }
     })
   }
 
   submitFormData = async() => {
-    return await fetch(this.state.formAction, {
-      method: 'POST',
-      body: encode(this.state.data),
-    })
+    try {
+      const response = await fetch(this.state.formAction, {
+        method: 'POST',
+        body: encode(this.state.data),
+      })
+
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+    } catch (err) {
+      console.error("Submit form data error:", err)
+      return false
+    }
+    return true
   }
 
   redirectToCheckout = async() => {
