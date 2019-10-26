@@ -132,10 +132,7 @@ export default class Index extends React.Component {
           data: data,
         }, () => {
           try {
-            const response = this.submitFormData()
-            if (!response.ok) {
-              throw new Error(response.statusText)
-            }
+            const _response = this.submitFormData()
           } catch (err) {
             console.error("Submit form data error:", err)
             return
@@ -159,13 +156,17 @@ export default class Index extends React.Component {
   }
 
   submitFormData = async () => {
-    return await fetch(this.state.formAction, {
+    const response = await fetch(this.state.formAction, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: encode(this.state.data),
     })
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return await response.json()
   }
 
   redirectToCheckout = async () => {
