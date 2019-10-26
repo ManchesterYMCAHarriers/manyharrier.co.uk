@@ -161,6 +161,9 @@ export default class Index extends React.Component {
   submitFormData = async () => {
     return await fetch(this.state.formAction, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
       body: encode(this.state.data),
     })
   }
