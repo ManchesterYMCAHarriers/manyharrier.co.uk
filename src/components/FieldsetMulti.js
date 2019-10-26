@@ -5,8 +5,14 @@ import ValidationSummary from "./ValidationSummary";
 class FieldsetMulti extends React.Component {
   render() {
     const { children, hint, legend, validationIssues, visible } = this.props
+    const fieldsetClassNames = ["section", "fieldset-multi"]
+
+    if (!visible) {
+      fieldsetClassNames.push("is-hidden")
+    }
+
     return (
-      <fieldset className={"section fieldset-multi" + (visible ? "" : " is-hidden")}>
+      <fieldset className={fieldsetClassNames.join(" ")}>
         <legend>
           <h2 className="title is-size-3">{legend}</h2>
         </legend>

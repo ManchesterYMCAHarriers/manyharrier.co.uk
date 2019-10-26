@@ -6,20 +6,28 @@ import ValidationSummary from "./ValidationSummary";
 class FieldsetText extends React.Component {
   render() {
     const {hint, inputAttributes, inputId, inputType, label, setFormValidationState, validationIssues, validationMessages, visible} = this.props
+    const fieldsetClassNames = ["section", "is-field"]
+
+    if (!visible) {
+      fieldsetClassNames.push("is-hidden")
+    }
+
+    if (validationIssues.length > 0) {
+      fieldsetClassNames.push("has-error")
+    }
+
     return (
-      <div>
-        <fieldset className={"section is-field" + (visible ? "" : " is-hidden") + (validationIssues.length > 0 ? " has-error" : "")}>
-          <ValidationSummary validationIssues={validationIssues} />
-          <legend>
-            <label className="title is-size-3" htmlFor={inputId}>{label}</label>
-          </legend>
-          <InputText hint={hint} inputAttributes={inputAttributes}
-                     inputId={inputId} inputType={inputType}
-                     setFormValidationState={setFormValidationState}
-                     validationMessages={validationMessages}
-          />
-        </fieldset>
-      </div>
+      <fieldset className={fieldsetClassNames.join(" ")}>
+        <ValidationSummary validationIssues={validationIssues} />
+        <legend>
+          <label className="title is-size-3" htmlFor={inputId}>{label}</label>
+        </legend>
+        <InputText hint={hint} inputAttributes={inputAttributes}
+                   inputId={inputId} inputType={inputType}
+                   setFormValidationState={setFormValidationState}
+                   validationMessages={validationMessages}
+        />
+      </fieldset>
     )
   }
 }

@@ -5,11 +5,11 @@ class ValidationSummary extends React.Component {
   handleClick = ev => {
     ev.preventDefault()
     const targetId = ev.target.href.split('#')[1]
-    const input = document.getElementById(targetId)
-    let parent = input.closest('.is-field')
-    if (!parent) {
-      parent = input.closest('.field')
+    let input = document.getElementById(targetId)
+    if (!input) {
+      input = ev.target.closest('form').querySelector('input[name="' + targetId + '"]')
     }
+    let parent = input.closest('.has-error')
     parent.scrollIntoView()
     input.focus({
       preventScroll: true,

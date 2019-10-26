@@ -27,10 +27,17 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['valueMissing']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-day",
             message: validationMessages['valueMissing']
           })
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-day"
+          })
         }
 
         if (day.validity.valueMissing) {
@@ -38,10 +45,17 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['dayValueMissing']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-day",
             message: validationMessages['dayValueMissing']
           })
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-day"
+          })
         }
 
         if (month.validity.valueMissing) {
@@ -49,10 +63,17 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['monthValueMissing']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-month",
             message: validationMessages['monthValueMissing']
           })
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-month"
+          })
         }
 
         if (year.validity.valueMissing) {
@@ -60,10 +81,17 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['yearValueMissing']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-year",
             message: validationMessages['yearValueMissing']
           })
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-year"
+          })
         }
       }
 
@@ -74,11 +102,18 @@ class InputDate extends React.Component {
           validationMessage: validationMessages['invalidDate']
         })
         setFormValidationState({
-          id: inputId,
+          id: inputId + "-day",
           message: validationMessages['invalidDate']
         })
 
         return false
+      } else {
+        this.setState({
+          validationMessage: null
+        })
+        setFormValidationState({
+          id: inputId + "-day"
+        })
       }
 
       if (year.value && month.value && day.value) {
@@ -89,11 +124,18 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['beforeEarliestDate']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-day",
             message: validationMessages['beforeEarliestDate']
           })
 
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-day"
+          })
         }
 
         if (latestDate && dateValue.isAfter(latestDate)) {
@@ -101,11 +143,18 @@ class InputDate extends React.Component {
             validationMessage: validationMessages['afterLatestDate']
           })
           setFormValidationState({
-            id: inputId,
+            id: inputId + "-day",
             message: validationMessages['afterLatestDate']
           })
 
           return false
+        } else {
+          this.setState({
+            validationMessage: null
+          })
+          setFormValidationState({
+            id: inputId + "-day"
+          })
         }
       }
 
@@ -113,7 +162,13 @@ class InputDate extends React.Component {
         validationMessage: null,
       })
       setFormValidationState({
-        id: inputId,
+        id: inputId + "day",
+      })
+      setFormValidationState({
+        id: inputId + "month",
+      })
+      setFormValidationState({
+        id: inputId + "year",
       })
 
       return true
@@ -157,10 +212,16 @@ class InputDate extends React.Component {
   render() {
     const {autoCompleteDay, autoCompleteMonth, autoCompleteYear, earliestDate, latestDate, hint, inputAttributes, inputId, label} = this.props
 
+    const inputClassNames = ["date-field", "is-field"]
+
+    if (this.state.validationMessage) {
+      inputClassNames.push("has-error")
+    }
+
     return (
-      <div
-        className={"date-field" + (label && this.state.validationMessage ? " has-error" : "")}>
-        <input type="hidden" readOnly={true} className="is-hidden" name={inputId}
+      <div className={inputClassNames.join(" ")}>
+        <input type="hidden" readOnly={true} className="is-hidden"
+               name={inputId}
                id={inputId}
                value={this.state.year + "-" + this.state.month + "-" + this.state.day} />
         {label &&
@@ -179,7 +240,8 @@ class InputDate extends React.Component {
               <div className="control">
                 <input className="input" id={inputId + "-day"}
                        name={inputId + "-day"} type="number" min="1" max="31"
-                       step="1" {...inputAttributes} autoComplete={autoCompleteDay} />
+                       step="1" {...inputAttributes}
+                       autoComplete={autoCompleteDay} />
               </div>
             </div>
           </div>
@@ -190,7 +252,8 @@ class InputDate extends React.Component {
               <div className="control">
                 <input className="input" id={inputId + "-month"}
                        name={inputId + "-month"} type="number" min="1" max="12"
-                       step="1" {...inputAttributes} autoComplete={autoCompleteMonth} />
+                       step="1" {...inputAttributes}
+                       autoComplete={autoCompleteMonth} />
               </div>
             </div>
           </div>
@@ -202,7 +265,8 @@ class InputDate extends React.Component {
                        min={earliestDate && earliestDate.year()}
                        max={latestDate && latestDate.year()}
                        name={inputId + "-year"} type="number"
-                       step="1" {...inputAttributes} autoComplete={autoCompleteYear} />
+                       step="1" {...inputAttributes}
+                       autoComplete={autoCompleteYear} />
               </div>
             </div>
           </div>

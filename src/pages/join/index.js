@@ -10,6 +10,7 @@ import FieldsetRadios from "../../components/FieldsetRadios";
 import FieldsetText from "../../components/FieldsetText";
 import FieldsetTextarea from "../../components/FieldsetTextarea";
 import FieldsetCheckbox from "../../components/FieldsetCheckbox";
+import FieldsetAddress from "../../components/FieldsetAddress";
 
 function encode(data) {
   return Object.keys(data)
@@ -21,12 +22,13 @@ export default class Index extends React.Component {
   constructor(props) {
     super(props)
 
-    const {baseUrl, stripePublishableKey} = props.pageContext
+    const {baseUrl, getAddressApiKey, stripePublishableKey} = props.pageContext
 
     this.state = {
       baseUrl: baseUrl,
       data: {},
       formAction: "/join",
+      getAddressApiKey: getAddressApiKey,
       membershipFees: {
         "First claim": 28.00,
         "Second claim": 11.00
@@ -52,7 +54,7 @@ export default class Index extends React.Component {
     return this.state.stage <= this.state.stages
   }
 
-  backHandler = () => {
+  backHandler = ev => {
     if (this.state.stage > 1) {
       let prevStage = this.state.stage - 1
       // Exceptions
@@ -66,6 +68,16 @@ export default class Index extends React.Component {
       this.setState({
         stage: prevStage,
         submitValue: "Next",
+      }, () => {
+        // Scroll to page title
+        document.querySelector("h1").scrollIntoView()
+        // Set focus on first visible input
+        const firstVisibleInput = document.querySelector('fieldset:not(.is-hidden)').querySelector('input:not([type="hidden"]), textarea, select')
+        if (firstVisibleInput) {
+          firstVisibleInput.focus({
+            preventScroll: true,
+          })
+        }
       })
     }
   }
@@ -132,7 +144,11 @@ export default class Index extends React.Component {
           data: data,
         }, () => {
           try {
-            const _response = this.submitFormData()
+            const {status, ok} = this.submitFormData()
+
+            if (!ok) {
+              throw new Error(status)
+            }
           } catch (err) {
             console.error("Submit form data error:", err)
             return
@@ -156,17 +172,13 @@ export default class Index extends React.Component {
   }
 
   submitFormData = async () => {
-    const response = await fetch(this.state.formAction, {
+    return await fetch(this.state.formAction, {
       method: 'POST',
-      headers: {
+      headers: new Headers({
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
+      }),
       body: encode(this.state.data),
     })
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return await response.json()
   }
 
   redirectToCheckout = async () => {
@@ -391,20 +403,7 @@ export default class Index extends React.Component {
 
 
                 {/* Address */}
-                <FieldsetTextarea inputId={"address"}
-                                  label={"What is your address?"} rows={6}
-                                  setFormValidationState={this.updateValidationIssues}
-                                  validationIssues={this.state.validationIssues}
-                                  visible={this.state.stage === 7}
-                                  inputAttributes={{
-                                    required: true,
-                                    autoComplete: "street-address",
-                                  }}
-                                  validationMessages={{
-                                    valueMissing: "Enter your address",
-                                  }}
-                />
-
+                <FieldsetAddress getAddressApiKey={this.state.getAddressApiKey} label={"What is your address?"} inputId={"address"} setFormValidationState={this.updateValidationIssues} visible={this.state.stage === 7} validationIssues={this.state.validationIssues} />
 
                 {/* Email address */}
                 <FieldsetText inputId={"email"} inputType={"email"}

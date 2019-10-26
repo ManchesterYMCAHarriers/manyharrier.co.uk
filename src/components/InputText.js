@@ -59,10 +59,22 @@ class InputText extends React.Component {
   }
 
   render() {
-    const {hint, inputAttributes, inputId, inputType, label} = this.props
+    const {classNames, defaultValue, hint, inputAttributes, inputId, inputType, label} = this.props
+
+    let inputClassNames = ["field"]
+
+    if (label && this.state.validationMessage) {
+      inputClassNames.push("has-error")
+    }
+
+    if (classNames) {
+      classNames.forEach(className => {
+        inputClassNames.push(className)
+      })
+    }
 
     return (
-      <div className={"field" + (label && this.state.validationMessage ? " has-error" : "")}>
+      <div className={inputClassNames.join(" ")}>
         {label &&
         <label className="label" htmlFor={inputId}>{label}</label>
         }
@@ -74,7 +86,7 @@ class InputText extends React.Component {
         }
         <div className="control">
           <input type={inputType} className="input" name={inputId}
-                 id={inputId} {...inputAttributes} />
+                 id={inputId} {...inputAttributes} defaultValue={defaultValue} />
         </div>
       </div>
     )
@@ -82,6 +94,8 @@ class InputText extends React.Component {
 }
 
 InputText.propTypes = {
+  classNames: PropTypes.arrayOf(PropTypes.string),
+  defaultValue: PropTypes.string,
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
@@ -102,6 +116,7 @@ InputText.propTypes = {
 }
 
 InputText.defaults = {
+  classNames: [],
   validationMessages: {},
 }
 

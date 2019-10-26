@@ -43,6 +43,7 @@ exports.createPages = async ({actions, graphql}) => {
         id,
         now,
         baseUrl: process.env.URL,
+        getAddressApiKey: process.env.GET_ADDRESS_API_KEY,
         googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
         stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       },
@@ -151,6 +152,7 @@ exports.onCreatePage = ({ page, actions }) => {
     context: {
       ...page.context,
       baseUrl: process.env.URL,
+      getAddressApiKey: process.env.GET_ADDRESS_API_KEY,
       googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },

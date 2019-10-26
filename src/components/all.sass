@@ -77,10 +77,17 @@
   bottom: 0
 
 // Forms
-.has-error
+// Field error state
+div.is-field.has-error,
+div.field.has-error
   border-left: 0.3rem solid $danger
   padding-left: 1rem
   margin-left: -1.3rem
+
+// Fieldset error state
+fieldset.is-field.has-error
+  border-left: 0.3rem solid $danger
+  margin-left: -0.3rem
 
 .validation-message
   color: $danger

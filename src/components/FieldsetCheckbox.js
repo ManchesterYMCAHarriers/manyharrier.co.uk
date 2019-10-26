@@ -53,8 +53,19 @@ class FieldsetCheckbox extends React.Component {
 
   render() {
     const { inputAttributes, inputId, legend, statements, label, value, validationIssues, visible } = this.props
+
+    const fieldsetClassNames = ["section", "is-field"]
+
+    if (!visible) {
+      fieldsetClassNames.push("is-hidden")
+    }
+
+    if (validationIssues.length > 0) {
+      fieldsetClassNames.push("has-error")
+    }
+
     return (
-      <fieldset className={"section is-field" + (visible ? "" : " is-hidden") + (validationIssues.length > 0 ? " has-error" : "")}>
+      <fieldset className={fieldsetClassNames.join(" ")}>
         <legend>
           <h2 className="title is-size-3">{legend}</h2>
         </legend>
