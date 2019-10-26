@@ -21,7 +21,7 @@ export default class Index extends React.Component {
   constructor(props) {
     super(props)
 
-    const { baseUrl, stripePublishableKey } = props.pageContext
+    const {baseUrl, stripePublishableKey} = props.pageContext
 
     this.state = {
       baseUrl: baseUrl,
@@ -127,8 +127,19 @@ export default class Index extends React.Component {
       }
       // ...or proceed to payment
       else {
-        const dataSubmitted = this.submitFormData()
-        if (dataSubmitted) {
+        data["form-name"] = ev.target.getAttribute("name")
+        this.setState({
+          data: data,
+        }, () => {
+          try {
+            const response = this.submitFormData()
+            if (!response.ok) {
+              throw new Error(response.statusText)
+            }
+          } catch (err) {
+            console.error("Submit form data error:", err)
+            return
+          }
           if (this.state.data.paymentMethod === "BACS") {
             this.setState({
               stage: nextStage,
@@ -142,32 +153,25 @@ export default class Index extends React.Component {
           if (error) {
             console.error("Redirect to checkout error:", error)
           }
-        }
+        })
       }
     })
   }
 
-  submitFormData = async() => {
-    try {
-      const response = await fetch(this.state.formAction, {
-        method: 'POST',
-        body: encode(this.state.data),
-      })
-
-      if (!response.ok) {
-        throw new Error(response.statusText)
-      }
-    } catch (err) {
-      console.error("Submit form data error:", err)
-      return false
-    }
-    return true
+  submitFormData = async () => {
+    return await fetch(this.state.formAction, {
+      method: 'POST',
+      body: encode(this.state.data),
+    })
   }
 
-  redirectToCheckout = async() => {
+  redirectToCheckout = async () => {
     try {
       await this.stripe.redirectToCheckout({
-        items: [{sku: this.state.stripeSKUs[this.state.data.membership], quantity: 1}],
+        items: [{
+          sku: this.state.stripeSKUs[this.state.data.membership],
+          quantity: 1
+        }],
         successUrl: this.state.baseUrl + `/join/success/`,
         cancelUrl: this.state.baseUrl + `/join/cancel/`,
         customerEmail: this.state.data.email,
@@ -593,7 +597,9 @@ export default class Index extends React.Component {
                     <dt>Gender</dt>
                     <dd>{this.state.data.gender}</dd>
                     <dt>Manchester YMCA Harriers Club membership type</dt>
-                    <dd>{this.state.data.membership} @ £{this.state.membershipFees[this.state.data.membership]}, valid until {this.state.membershipValidUntil}</dd>
+                    <dd>{this.state.data.membership} @
+                      £{this.state.membershipFees[this.state.data.membership]},
+                      valid until {this.state.membershipValidUntil}</dd>
                     {this.state.data.membership === "Second claim" &&
                     <dt>First claim club</dt>
                     }
@@ -639,15 +645,19 @@ export default class Index extends React.Component {
                                setFormValidationState={this.updateValidationIssues}
                                validationIssues={this.state.validationIssues}
                                visible={this.state.stage === 16}>
-                  <p>You have opted to pay for your membership by <strong>bank transfer</strong>.</p>
-                  <p>Please transfer your membership fee of <strong>£{this.state.membershipFees[this.state.data.membership]}</strong> to the account:</p>
+                  <p>You have opted to pay for your membership by <strong>bank
+                    transfer</strong>.</p>
+                  <p>Please transfer your membership fee
+                    of <strong>£{this.state.membershipFees[this.state.data.membership]}</strong> to
+                    the account:</p>
                   <dl>
                     <dt>Sort code</dt>
                     <dd>30-90-89</dd>
                     <dt>Account number</dt>
                     <dd>39972068</dd>
                   </dl>
-                  <p>Use <strong>{this.state.data.firstName && this.state.data.firstName.charAt(0)} {this.state.data.lastName}</strong> as your payment reference.</p>
+                  <p>Use <strong>{this.state.data.firstName && this.state.data.firstName.charAt(0)} {this.state.data.lastName}</strong> as
+                    your payment reference.</p>
                 </FieldsetMulti>
               </Form>
             </div>
