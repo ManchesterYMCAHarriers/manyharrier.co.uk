@@ -80,6 +80,7 @@ FieldsetCheckbox.propTypes = {
   legend: PropTypes.string.isRequired,
   setFormValidationState: PropTypes.func.isRequired,
   statements: PropTypes.node.isRequired,
+  value: PropTypes.node.isRequired,
   validationIssues: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,

@@ -514,6 +514,7 @@ export default class Index extends React.Component {
                                   visible={this.state.stage === 13}
                                   setFormValidationState={this.updateValidationIssues}
                                   label={"Yes, I agree to the statements above"}
+                                  value={"Accepted"}
                                   statements={
                                     <ul>
                                       <li>I declare that I am an amateur under
