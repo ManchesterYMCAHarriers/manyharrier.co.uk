@@ -11,6 +11,7 @@ import EventBox from "../components/EventBox";
 export const RouteTemplate = ({
                                 contentComponent,
                                 events,
+  googleMapsApiKey,
                                 title,
                                 routeTrack,
                                 information,
@@ -24,7 +25,7 @@ export const RouteTemplate = ({
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
             <div className="maps-container">
-              <GoogleMapsRoute id={"route-map"} paths={routeTrack}
+              <GoogleMapsRoute googleMapsApiKey={googleMapsApiKey} id={"route-map"} paths={routeTrack}
                                mapContainerClassName={"maps-style"} zoom={14} />
             </div>
             <PageContent content={information} />
@@ -55,6 +56,7 @@ RouteTemplate.propTypes = {
     })),
     title: PropTypes.string.isRequired,
   })),
+  googleMapsApiKey: PropTypes.string.isRequired,
   information: PropTypes.node,
   routeTrack: PropTypes.arrayOf(PropTypes.shape({
     lat: PropTypes.number.isRequired,
@@ -65,7 +67,7 @@ RouteTemplate.propTypes = {
 
 const Route = ({data, pageContext}) => {
   const {markdownRemark: route} = data
-  const {now} = pageContext
+  const {now, googleMapsApiKey} = pageContext
 
   const events = (route.frontmatter.routeEvents || []).map(event => {
     const tags = []
@@ -132,6 +134,7 @@ const Route = ({data, pageContext}) => {
       <RouteTemplate
         contentComponent={HTMLContent}
         events={events}
+        googleMapsApiKey={googleMapsApiKey}
         information={route.html}
         routeTrack={routeTrack}
         title={route.frontmatter.routeKey}

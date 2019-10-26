@@ -4,13 +4,7 @@ import {GoogleMap, LoadScript, Polyline} from '@react-google-maps/api'
 
 class GoogleMapsRoute extends React.Component {
   render() {
-    const {id, paths, mapContainerStyle, mapContainerClassName, zoom} = this.props
-
-    const googleMapsApiKey = process.env.GATSBY_GOOGLE_MAPS_JAVASCRIPT_API_KEY
-
-    if (!googleMapsApiKey) {
-      throw new Error("Google Maps API Key not set")
-    }
+    const {googleMapsApiKey, id, paths, mapContainerStyle, mapContainerClassName, zoom} = this.props
 
     const onLoadHandler = map => {
       const bounds = new window.google.maps.LatLngBounds();
@@ -60,6 +54,7 @@ class GoogleMapsRoute extends React.Component {
 }
 
 GoogleMapsRoute.propTypes = {
+  googleMapsApiKey: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   paths: PropTypes.arrayOf(PropTypes.shape({
     lat: PropTypes.number.isRequired,
