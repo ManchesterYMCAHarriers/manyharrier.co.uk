@@ -52,6 +52,7 @@ export default class Index extends React.Component {
     this.state = {
       baseUrl: url,
       data: {},
+      formAction: "/join",
       membershipFees: {
         "First claim": 28.00,
         "Second claim": 11.00
@@ -67,8 +68,6 @@ export default class Index extends React.Component {
       submitValue: "Next",
       validationIssues: []
     }
-
-    console.log(this.state)
   }
 
   showBack = () => {
@@ -154,9 +153,8 @@ export default class Index extends React.Component {
       }
       // ...or proceed to payment
       else {
-        const body = encode(this.state.data)
         try {
-          const response = this.submitFormData(body)
+          const response = this.submitFormData()
           if (!response.ok) {
             throw new Error(response.statusText)
           }
@@ -182,10 +180,10 @@ export default class Index extends React.Component {
     })
   }
 
-  submitFormData = async(body) => {
+  submitFormData = async() => {
     return await fetch(this.state.formAction, {
       method: 'POST',
-      body: body,
+      body: encode(this.state.data),
     })
   }
 
