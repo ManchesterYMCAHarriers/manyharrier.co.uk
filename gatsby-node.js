@@ -41,7 +41,10 @@ exports.createPages = async ({actions, graphql}) => {
       // additional data can be passed via context
       context: {
         id,
-        now
+        now,
+        baseUrl: process.env.URL,
+        googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
+        stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       },
     })
   })
@@ -136,4 +139,20 @@ exports.onCreateNode = ({node, actions, getNode}) => {
       value,
     })
   }
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+
+  deletePage(page)
+  // You can access the variable "house" in your page queries now
+  createPage({
+    ...page,
+    context: {
+      ...page.context,
+      baseUrl: process.env.URL,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    },
+  })
 }

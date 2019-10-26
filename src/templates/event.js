@@ -141,19 +141,13 @@ EventTemplate.propTypes = {
   }).isRequired,
 }
 
-const Event = ({data}) => {
+const Event = ({data, pageContext}) => {
   const {
-    site: {
-      siteMetadata: {
-        apiKeys: {
-          google: {
-            mapsJavascriptKey,
-          },
-        },
-      },
-    },
     markdownRemark: event
   } = data
+
+  const { googleMapsApiKey } = pageContext
+
   const startsAt = Moment.utc(event.frontmatter.startsAt)
 
   let championship, route, venue
@@ -230,7 +224,7 @@ const Event = ({data}) => {
         championship={championship}
         contentComponent={HTMLContent}
         eventInfo={event.html}
-        googleMapsApiKey={mapsJavascriptKey}
+        googleMapsApiKey={googleMapsApiKey}
         infoForChampionship={get(event.frontmatter.infoForChampionship, ["html"])}
         infoForCompetition={get(event.frontmatter.infoForCompetition, ["html"])}
         infoForEventType={get(event.frontmatter.infoForEventType, ["html"])}
@@ -248,7 +242,6 @@ const Event = ({data}) => {
 
 Event.propTypes = {
   data: PropTypes.shape({
-    site: PropTypes.object,
     markdownRemark: PropTypes.object
   }),
 }
@@ -257,15 +250,6 @@ export default Event
 
 export const eventQuery = graphql`
   query EventByID($id: String!) {
-    site {
-      siteMetadata {
-        apiKeys {
-          google {
-            mapsJavascriptKey
-          }
-        }
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       id
       html

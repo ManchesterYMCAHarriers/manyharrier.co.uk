@@ -83,18 +83,9 @@ VenueTemplate.propTypes = {
 
 const Venue = ({data, pageContext}) => {
   const {
-    site: {
-      siteMetadata: {
-        apiKeys: {
-          google: {
-            mapsJavascriptKey,
-          },
-        },
-      },
-    },
     markdownRemark: venue
   } = data
-  const {now} = pageContext
+  const {now, googleMapsApiKey} = pageContext
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
 
@@ -154,7 +145,7 @@ const Venue = ({data, pageContext}) => {
       <VenueTemplate
         contentComponent={HTMLContent}
         events={events}
-        googleMapsApiKey={mapsJavascriptKey}
+        googleMapsApiKey={googleMapsApiKey}
         information={venue.html}
         address={venue.frontmatter.address.split("\n")}
         location={location}
@@ -166,7 +157,6 @@ const Venue = ({data, pageContext}) => {
 
 Venue.propTypes = {
   data: PropTypes.shape({
-    site: PropTypes.object,
     markdownRemark: PropTypes.object
   }),
 }
@@ -175,15 +165,6 @@ export default Venue
 
 export const venueQuery = graphql`
   query VenueByID($id: String!) {
-    site {
-      siteMetadata {
-        apiKeys {
-          google {
-            mapsJavascriptKey
-          }
-        }
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       id
       html

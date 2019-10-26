@@ -10,22 +10,6 @@ import FieldsetRadios from "../../components/FieldsetRadios";
 import FieldsetText from "../../components/FieldsetText";
 import FieldsetTextarea from "../../components/FieldsetTextarea";
 import FieldsetCheckbox from "../../components/FieldsetCheckbox";
-import {graphql} from "gatsby";
-
-export const JoinFormQuery = graphql`
-  query JoinFormQuery {
-    site {
-      siteMetadata {
-        url
-        apiKeys {
-          stripe {
-            publishableKey
-          }
-        }
-      }
-    }
-  }
-`
 
 function encode(data) {
   return Object.keys(data)
@@ -36,21 +20,11 @@ function encode(data) {
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
-    const {
-      site: {
-        siteMetadata: {
-          url,
-          apiKeys: {
-            stripe: {
-              publishableKey
-            }
-          }
-        }
-      }
-    } = props
+
+    const { baseUrl, stripePublishableKey } = props.pageContext
 
     this.state = {
-      baseUrl: url,
+      baseUrl: baseUrl,
       data: {},
       formAction: "/join",
       membershipFees: {
@@ -60,7 +34,7 @@ export default class Index extends React.Component {
       membershipValidUntil: "30 April 2020",
       stage: 1,
       stages: 15,
-      stripePublishableKey: publishableKey,
+      stripePublishableKey: stripePublishableKey,
       stripeSKUs: {
         "First claim": "membership-first-claim",
         "Second claim": "membership-second-claim"
