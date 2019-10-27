@@ -8,7 +8,6 @@ import InputDate from "../../components/InputDate";
 import Moment from 'moment'
 import FieldsetRadios from "../../components/FieldsetRadios";
 import FieldsetText from "../../components/FieldsetText";
-import FieldsetTextarea from "../../components/FieldsetTextarea";
 import FieldsetCheckbox from "../../components/FieldsetCheckbox";
 import FieldsetAddress from "../../components/FieldsetAddress";
 
@@ -142,17 +141,19 @@ export default class Index extends React.Component {
         data["form-name"] = ev.target.getAttribute("name")
         this.setState({
           data: data,
-        }, () => {
+        }, async () => {
           try {
-            const {status, ok} = this.submitFormData()
+            const {status, ok} = await this.submitFormData()
 
             if (!ok) {
-              throw new Error(status)
+              console.error("Submit form data error", status)
+              return
             }
           } catch (err) {
-            console.error("Submit form data error:", err)
+            console.error("Submit form data network error", err)
             return
           }
+
           if (this.state.data.paymentMethod === "BACS") {
             this.setState({
               stage: nextStage,
@@ -162,9 +163,9 @@ export default class Index extends React.Component {
             return
           }
 
-          const {error} = this.redirectToCheckout()
+          const {error} = await this.redirectToCheckout()
           if (error) {
-            console.error("Redirect to checkout error:", error)
+            console.error("Redirect to checkout error", error)
           }
         })
       }
@@ -182,21 +183,17 @@ export default class Index extends React.Component {
   }
 
   redirectToCheckout = async () => {
-    try {
-      await this.stripe.redirectToCheckout({
-        items: [{
-          sku: this.state.stripeSKUs[this.state.data.membership],
-          quantity: 1
-        }],
-        successUrl: this.state.baseUrl + `/join/success/`,
-        cancelUrl: this.state.baseUrl + `/join/cancel/`,
-        customerEmail: this.state.data.email,
-        billingAddressCollection: "auto",
-        submitType: "pay",
-      })
-    } catch (err) {
-      console.error("Stripe error:", err)
-    }
+    return await this.stripe.redirectToCheckout({
+      items: [{
+        sku: this.state.stripeSKUs[this.state.data.membership],
+        quantity: 1
+      }],
+      successUrl: this.state.baseUrl + `/join/success/`,
+      cancelUrl: this.state.baseUrl + `/join/cancel/`,
+      customerEmail: this.state.data.email,
+      billingAddressCollection: "auto",
+      submitType: "pay",
+    })
   }
 
   updateValidationIssues = ({id, message}) => {
@@ -403,7 +400,12 @@ export default class Index extends React.Component {
 
 
                 {/* Address */}
-                <FieldsetAddress getAddressApiKey={this.state.getAddressApiKey} label={"What is your address?"} inputId={"address"} setFormValidationState={this.updateValidationIssues} visible={this.state.stage === 7} validationIssues={this.state.validationIssues} />
+                <FieldsetAddress getAddressApiKey={this.state.getAddressApiKey}
+                                 label={"What is your address?"}
+                                 inputId={"address"}
+                                 setFormValidationState={this.updateValidationIssues}
+                                 visible={this.state.stage === 7}
+                                 validationIssues={this.state.validationIssues} />
 
                 {/* Email address */}
                 <FieldsetText inputId={"email"} inputType={"email"}
