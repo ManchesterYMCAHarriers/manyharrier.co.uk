@@ -1,37 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from "../components/Content";
-import PageTitle from "../components/PageTitle";
-import EventStartsAt from "../components/EventStartsAt";
-import StandardContentContainer from "../components/StandardContentContainer";
-import {get} from 'lodash'
-import Address from "../components/Address";
-import GoogleMapsLocationAndRoute
-  from "../components/GoogleMapsLocationAndRoute";
-import GoogleMapsLocation from "../components/GoogleMapsLocation";
-import GoogleMapsDirectionsLink from "../components/GoogleMapsDirectionsLink";
-import {FaInfo} from "react-icons/fa";
-import EventTags from "../components/EventTags";
+import Content, { HTMLContent } from '../components/Content'
+import PageTitle from '../components/PageTitle'
+import EventStartsAt from '../components/EventStartsAt'
+import StandardContentContainer from '../components/StandardContentContainer'
+import { get } from 'lodash'
+import Address from '../components/Address'
+import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute'
+import GoogleMapsLocation from '../components/GoogleMapsLocation'
+import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
+import { FaInfo } from 'react-icons/fa'
+import EventTags from '../components/EventTags'
 
 export const EventTemplate = ({
-                                contentComponent,
-                                championship,
-                                eventInfo,
-                                googleMapsApiKey,
-                                infoForChampionship,
-                                infoForCompetition,
-                                infoForEventType,
-                                infoForTerrain,
-                                route,
-                                session,
-                                startsAt,
-                                tags,
-                                title,
-                                venue,
-                              }) => {
+  contentComponent,
+  championship,
+  eventInfo,
+  googleMapsApiKey,
+  infoForChampionship,
+  infoForCompetition,
+  infoForEventType,
+  infoForTerrain,
+  route,
+  session,
+  startsAt,
+  tags,
+  title,
+  venue,
+}) => {
   const track = route ? route.track : null
 
   const PageContent = contentComponent || Content
@@ -42,63 +41,61 @@ export const EventTemplate = ({
         <div className="column is-two-thirds">
           <PageTitle title={title} />
           <EventStartsAt startsAt={startsAt} />
-          <EventTags reactKey={"event"} tags={tags} />
+          <EventTags reactKey={'event'} tags={tags} />
         </div>
         <div className="column is-one-third has-text-right-tablet">
           <Address address={venue.address} title={venue.title} />
         </div>
       </div>
       <div className="maps-container">
-        {track &&
-        <GoogleMapsLocationAndRoute
-          googleMapsApiKey={googleMapsApiKey}
-          track={track}
-          id={"event-location-and-route"}
-          location={venue.location}
-          mapContainerClassName={"maps-style"}
-        />
-        }
-        {!track &&
-        <GoogleMapsLocation
-          googleMapsApiKey={googleMapsApiKey}
-          id={"event-location"}
-          location={venue.location}
-          mapContainerClassName={"maps-style"}
-        />
-        }
+        {track && (
+          <GoogleMapsLocationAndRoute
+            googleMapsApiKey={googleMapsApiKey}
+            track={track}
+            id={'event-location-and-route'}
+            location={venue.location}
+            mapContainerClassName={'maps-style'}
+          />
+        )}
+        {!track && (
+          <GoogleMapsLocation
+            googleMapsApiKey={googleMapsApiKey}
+            id={'event-location'}
+            location={venue.location}
+            mapContainerClassName={'maps-style'}
+          />
+        )}
       </div>
       <div className="columns">
         <div className="column">
-          <GoogleMapsDirectionsLink location={venue.location}
-                                    text={"Navigate to " + venue.title + " with Google Maps"} />
+          <GoogleMapsDirectionsLink
+            location={venue.location}
+            text={'Navigate to ' + venue.title + ' with Google Maps'}
+          />
         </div>
         <div className="column">
           <Link to={venue.slug} className="button is-fullwidth">
-        <span className="icon">
-          <FaInfo />
-        </span>
+            <span className="icon">
+              <FaInfo />
+            </span>
             <span>Full venue info</span>
           </Link>
         </div>
       </div>
-      {eventInfo &&
-      <PageContent content={eventInfo} className={"content"} />
-      }
-      {session &&
-      <PageContent content={session} className={"content"} />
-      }
-      {infoForTerrain &&
-      <PageContent content={infoForTerrain} className={"content"} />
-      }
-      {infoForEventType &&
-      <PageContent content={infoForEventType} className={"content"} />
-      }
-      {infoForCompetition &&
-      <PageContent content={infoForCompetition} className={"content"} />
-      }
-      {infoForChampionship &&
-      <PageContent content={infoForChampionship} className={"content"} />
-      }
+      {eventInfo && <PageContent content={eventInfo} className={'content'} />}
+      {session && <PageContent content={session} className={'content'} />}
+      {infoForTerrain && (
+        <PageContent content={infoForTerrain} className={'content'} />
+      )}
+      {infoForEventType && (
+        <PageContent content={infoForEventType} className={'content'} />
+      )}
+      {infoForCompetition && (
+        <PageContent content={infoForCompetition} className={'content'} />
+      )}
+      {infoForChampionship && (
+        <PageContent content={infoForChampionship} className={'content'} />
+      )}
     </StandardContentContainer>
   )
 }
@@ -118,17 +115,21 @@ EventTemplate.propTypes = {
   route: PropTypes.shape({
     description: PropTypes.node,
     title: PropTypes.string,
-    track: PropTypes.arrayOf(PropTypes.shape({
-      lat: PropTypes.number,
-      lng: PropTypes.number,
-    })),
+    track: PropTypes.arrayOf(
+      PropTypes.shape({
+        lat: PropTypes.number,
+        lng: PropTypes.number,
+      })
+    ),
   }),
   session: PropTypes.node,
   startsAt: PropTypes.instanceOf(Moment).isRequired,
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })),
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ),
   title: PropTypes.string.isRequired,
   venue: PropTypes.shape({
     address: PropTypes.arrayOf(PropTypes.string),
@@ -141,10 +142,8 @@ EventTemplate.propTypes = {
   }).isRequired,
 }
 
-const Event = ({data, pageContext}) => {
-  const {
-    markdownRemark: event
-  } = data
+const Event = ({ data, pageContext }) => {
+  const { markdownRemark: event } = data
 
   const { googleMapsApiKey } = pageContext
 
@@ -176,9 +175,10 @@ const Event = ({data, pageContext}) => {
   }
 
   if (event.frontmatter.venue) {
-    let coords = JSON.parse(event.frontmatter.venue.frontmatter.location).coordinates
+    let coords = JSON.parse(event.frontmatter.venue.frontmatter.location)
+      .coordinates
     venue = {
-      address: event.frontmatter.venue.frontmatter.address.split("\n"),
+      address: event.frontmatter.venue.frontmatter.address.split('\n'),
       location: {
         lat: coords[1],
         lng: coords[0],
@@ -192,28 +192,28 @@ const Event = ({data, pageContext}) => {
 
   if (event.frontmatter.eventType) {
     tags.push({
-      key: "eventType",
+      key: 'eventType',
       value: event.frontmatter.eventType,
     })
   }
 
   if (event.frontmatter.terrain) {
     tags.push({
-      key: "terrain",
+      key: 'terrain',
       value: event.frontmatter.terrain,
     })
   }
 
   if (event.frontmatter.championshipForeignKey) {
     tags.push({
-      key: "championship",
+      key: 'championship',
       value: event.frontmatter.championshipForeignKey,
     })
   }
 
   if (event.frontmatter.competitionForeignKey) {
     tags.push({
-      key: "competition",
+      key: 'competition',
       value: event.frontmatter.competitionForeignKey,
     })
   }
@@ -225,12 +225,14 @@ const Event = ({data, pageContext}) => {
         contentComponent={HTMLContent}
         eventInfo={event.html}
         googleMapsApiKey={googleMapsApiKey}
-        infoForChampionship={get(event.frontmatter.infoForChampionship, ["html"])}
-        infoForCompetition={get(event.frontmatter.infoForCompetition, ["html"])}
-        infoForEventType={get(event.frontmatter.infoForEventType, ["html"])}
-        infoForTerrain={get(event.frontmatter.infoForChampionship, ["html"])}
+        infoForChampionship={get(event.frontmatter.infoForChampionship, [
+          'html',
+        ])}
+        infoForCompetition={get(event.frontmatter.infoForCompetition, ['html'])}
+        infoForEventType={get(event.frontmatter.infoForEventType, ['html'])}
+        infoForTerrain={get(event.frontmatter.infoForChampionship, ['html'])}
         route={route}
-        session={get(event.frontmatter.session, ["html"])}
+        session={get(event.frontmatter.session, ['html'])}
         startsAt={startsAt}
         tags={tags}
         title={event.frontmatter.eventKey}
@@ -242,7 +244,7 @@ const Event = ({data, pageContext}) => {
 
 Event.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object
+    markdownRemark: PropTypes.object,
   }),
 }
 
@@ -264,9 +266,9 @@ export const eventQuery = graphql`
         }
         eventKey
         eventType
-#        infoForChampionship {
-#          html
-#        }
+        #        infoForChampionship {
+        #          html
+        #        }
         infoForCompetition {
           html
         }

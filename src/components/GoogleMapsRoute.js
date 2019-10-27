@@ -1,24 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {GoogleMap, LoadScript, Polyline} from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Polyline } from '@react-google-maps/api'
 
 class GoogleMapsRoute extends React.Component {
   render() {
-    const {googleMapsApiKey, id, paths, mapContainerStyle, mapContainerClassName, zoom} = this.props
+    const {
+      googleMapsApiKey,
+      id,
+      paths,
+      mapContainerStyle,
+      mapContainerClassName,
+      zoom,
+    } = this.props
 
     const onLoadHandler = map => {
-      const bounds = new window.google.maps.LatLngBounds();
+      const bounds = new window.google.maps.LatLngBounds()
       paths.forEach(coord => {
-        bounds.extend(coord);
-      });
-      map.fitBounds(bounds);
+        bounds.extend(coord)
+      })
+      map.fitBounds(bounds)
     }
 
     return (
-      <LoadScript
-        id="google-maps-script"
-        googleMapsApiKey={googleMapsApiKey}
-      >
+      <LoadScript id="google-maps-script" googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           id={id}
           mapContainerStyle={mapContainerStyle}
@@ -26,7 +30,7 @@ class GoogleMapsRoute extends React.Component {
           zoom={zoom}
           center={{
             lat: 53.476445,
-            lng: -2.256367
+            lng: -2.256367,
           }}
           onLoad={onLoadHandler}
         >
@@ -44,7 +48,7 @@ class GoogleMapsRoute extends React.Component {
               visible: true,
               radius: 30000,
               paths: paths,
-              zIndex: 1
+              zIndex: 1,
             }}
           />
         </GoogleMap>
@@ -56,10 +60,12 @@ class GoogleMapsRoute extends React.Component {
 GoogleMapsRoute.propTypes = {
   googleMapsApiKey: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  paths: PropTypes.arrayOf(PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-  })).isRequired,
+  paths: PropTypes.arrayOf(
+    PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   mapContainerStyle: PropTypes.object,
   mapContainerClassName: PropTypes.string,
   zoom: PropTypes.number,
@@ -67,7 +73,7 @@ GoogleMapsRoute.propTypes = {
 
 GoogleMapsRoute.defaultProps = {
   mapsContainerStyle: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
     right: 0,

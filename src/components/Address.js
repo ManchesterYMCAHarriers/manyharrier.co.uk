@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 
 class Address extends React.Component {
   render() {
-    const {address, title} = this.props
+    const { address, title } = this.props
 
     return (
       <div>
-        {title &&
-        <div className="is-size-5 has-text-weight-bold">{title}</div>
-        }
+        {title && <div className="is-size-5 has-text-weight-bold">{title}</div>}
         {address.map((line, i) => (
-          <div key={"address-line-" + i}>{line}</div>
+          <div key={'address-line-' + i}>{line}</div>
         ))}
       </div>
     )

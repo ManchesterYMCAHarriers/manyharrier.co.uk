@@ -1,22 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Moment from 'moment'
 
 import Layout from '../components/Layout'
-import PageTitle from "../components/PageTitle";
-import EventBox from "../components/EventBox";
-import Content, {HTMLContent} from "../components/Content";
-import SecondaryTitle from "../components/SecondaryTitle";
-import {FaCalendarAlt} from "react-icons/fa";
+import PageTitle from '../components/PageTitle'
+import EventBox from '../components/EventBox'
+import Content, { HTMLContent } from '../components/Content'
+import SecondaryTitle from '../components/SecondaryTitle'
+import { FaCalendarAlt } from 'react-icons/fa'
 
 export const IndexPageTemplate = ({
-                                    contentComponent,
-                                    body,
-                                    eventsCalendarSlug,
-                                    nextEvents,
-                                    title,
-                                  }) => {
+  contentComponent,
+  body,
+  eventsCalendarSlug,
+  nextEvents,
+  title,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -27,21 +27,25 @@ export const IndexPageTemplate = ({
             <div className="content">
               <PageTitle title={title} />
               <PageContent content={body} />
-              <SecondaryTitle title={"Coming up"} />
+              <SecondaryTitle title={'Coming up'} />
               {nextEvents.map((event, i) => (
-                <EventBox key={"next-event-" + i}
-                          title={event.title}
-                          startsAt={event.startsAt} slug={event.slug}
-                          tags={event.tags}
+                <EventBox
+                  key={'next-event-' + i}
+                  title={event.title}
+                  startsAt={event.startsAt}
+                  slug={event.slug}
+                  tags={event.tags}
                 />
               ))}
               <div className="columns">
                 <div className="column">
-                  <Link to={eventsCalendarSlug}
-                        className={"button is-large is-fullwidth"}>
-                <span className="icon is-large">
-                  <FaCalendarAlt />
-                </span>
+                  <Link
+                    to={eventsCalendarSlug}
+                    className={'button is-large is-fullwidth'}
+                  >
+                    <span className="icon is-large">
+                      <FaCalendarAlt />
+                    </span>
                     <span>Go to the events calendar</span>
                   </Link>
                 </div>
@@ -49,12 +53,12 @@ export const IndexPageTemplate = ({
               <div className="columns">
                 <div className="column">
                   <div className="box">
-                    <SecondaryTitle title={"About the club"} />
+                    <SecondaryTitle title={'About the club'} />
                   </div>
                 </div>
                 <div className="column">
                   <div className="box">
-                    <SecondaryTitle title={"Join us!"} />
+                    <SecondaryTitle title={'Join us!'} />
                   </div>
                 </div>
               </div>
@@ -71,58 +75,62 @@ IndexPageTemplate.propTypes = {
   eventsCalendarSlug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.node.isRequired,
-  nextEvents: PropTypes.arrayOf(PropTypes.shape({
-    startsAt: PropTypes.instanceOf(Moment).isRequired,
-    slug: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })),
-    title: PropTypes.string.isRequired,
-  }))
+  nextEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      slug: PropTypes.string.isRequired,
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          key: PropTypes.string.isRequired,
+          value: PropTypes.string.isRequired,
+        })
+      ),
+      title: PropTypes.string.isRequired,
+    })
+  ),
 }
 
-const IndexPage = ({data, pageContext}) => {
+const IndexPage = ({ data, pageContext }) => {
   const body = data.page.html
-  const {title} = data.page.frontmatter
+  const { title } = data.page.frontmatter
   const now = Moment.utc(pageContext.now)
 
   let nextEvents = []
 
-  data.nextEvents.edges.forEach(({node}) => {
+  data.nextEvents.edges.forEach(({ node }) => {
     const tags = []
 
     if (node.frontmatter.venue && node.frontmatter.venue.frontmatter.venueKey) {
       tags.push({
-        key: "venue",
+        key: 'venue',
         value: node.frontmatter.venue.frontmatter.venueKey,
       })
     }
 
     if (node.frontmatter.eventType) {
       tags.push({
-        key: "eventType",
+        key: 'eventType',
         value: node.frontmatter.eventType,
       })
     }
 
     if (node.frontmatter.terrain) {
       tags.push({
-        key: "terrain",
+        key: 'terrain',
         value: node.frontmatter.terrain,
       })
     }
 
     if (node.frontmatter.championshipForeignKey) {
       tags.push({
-        key: "championship",
+        key: 'championship',
         value: node.frontmatter.championshipForeignKey,
       })
     }
 
     if (node.frontmatter.competitionForeignKey) {
       tags.push({
-        key: "competition",
+        key: 'competition',
         value: node.frontmatter.competitionForeignKey,
       })
     }
@@ -139,7 +147,7 @@ const IndexPage = ({data, pageContext}) => {
     <Layout>
       <IndexPageTemplate
         contentComponent={HTMLContent}
-        eventsCalendarSlug={"/events/" + now.format("MMMM-YYYY").toLowerCase()}
+        eventsCalendarSlug={'/events/' + now.format('MMMM-YYYY').toLowerCase()}
         body={body}
         nextEvents={nextEvents}
         title={title}
@@ -153,7 +161,7 @@ IndexPage.propTypes = {
     page: PropTypes.shape({
       html: PropTypes.node,
       frontmatter: PropTypes.shape({
-        title: PropTypes.string.isRequired
+        title: PropTypes.string.isRequired,
       }),
     }),
     nextEvents: PropTypes.object,
@@ -173,19 +181,9 @@ export const indexPageQuery = graphql`
     nextEvents: allMarkdownRemark(
       limit: 4
       filter: {
-        frontmatter: {
-          startsAt: {
-            gt: $now
-          }
-          templateKey: {
-            eq: "event"
-          }
-        }
+        frontmatter: { startsAt: { gt: $now }, templateKey: { eq: "event" } }
       }
-      sort: {
-        fields: [frontmatter___startsAt]
-        order: ASC
-      }
+      sort: { fields: [frontmatter___startsAt], order: ASC }
     ) {
       edges {
         node {

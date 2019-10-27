@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
-import PageTitle from "../components/PageTitle";
+import PageTitle from '../components/PageTitle'
 
 export const BlogPostTemplate = ({
   contentComponent,
@@ -21,7 +21,7 @@ export const BlogPostTemplate = ({
         <div className="columns">
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
-            <PageContent content={content} className={"content"} />
+            <PageContent content={content} className={'content'} />
           </div>
         </div>
       </div>

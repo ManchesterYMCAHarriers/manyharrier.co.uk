@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SessionTemplate } from '../../templates/session'
-import Moment from "moment";
+import Moment from 'moment'
 
 const SessionPreview = ({ entry, widgetFor }) => {
   const events = []
@@ -9,32 +9,32 @@ const SessionPreview = ({ entry, widgetFor }) => {
   for (let i = 1; i <= 3; i++) {
     const tags = [
       {
-        key: "venue",
-        value: "Venue",
+        key: 'venue',
+        value: 'Venue',
       },
       {
-        key: "eventType",
-        value: "eventType",
+        key: 'eventType',
+        value: 'eventType',
       },
       {
-        key: "terrain",
-        value: "Terrain",
+        key: 'terrain',
+        value: 'Terrain',
       },
       {
-        key: "championship",
-        value: "Championship",
+        key: 'championship',
+        value: 'Championship',
       },
       {
-        key: "competition",
-        value: "Competition",
+        key: 'competition',
+        value: 'Competition',
       },
     ]
 
     events.push({
-      slug: "#",
+      slug: '#',
       startsAt: Moment.utc().startOf('year'),
       tags: tags,
-      title: "Dummy event",
+      title: 'Dummy event',
     })
   }
 

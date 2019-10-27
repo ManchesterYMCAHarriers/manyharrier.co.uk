@@ -5,13 +5,13 @@ import CMS from 'netlify-cms-app'
 import AboutPagePreview from './preview-templates/AboutPagePreview'
 import BlogPostPreview from './preview-templates/BlogPostPreview'
 import ChampionshipPreview from './preview-templates/ChampionshipPreview'
-import EventPreview from "./preview-templates/EventPreview"
+import EventPreview from './preview-templates/EventPreview'
 import ProductPagePreview from './preview-templates/ProductPagePreview'
 import IndexPagePreview from './preview-templates/IndexPagePreview'
 import InfoPreview from './preview-templates/InfoPreview'
-import RoutePreview from "./preview-templates/RoutePreview"
-import SessionPreview from "./preview-templates/SessionPreview"
-import VenuePreview from "./preview-templates/VenuePreview"
+import RoutePreview from './preview-templates/RoutePreview'
+import SessionPreview from './preview-templates/SessionPreview'
+import VenuePreview from './preview-templates/VenuePreview'
 
 // CMS.registerMediaLibrary(uploadcare)
 // CMS.registerMediaLibrary(cloudinary)

@@ -9,24 +9,24 @@ const ChampionshipPreview = ({ entry, widgetFor }) => {
   for (let i = 1; i <= 3; i++) {
     const tags = [
       {
-        key: "venue",
-        value: "Venue",
+        key: 'venue',
+        value: 'Venue',
       },
       {
-        key: "terrain",
-        value: "Terrain",
+        key: 'terrain',
+        value: 'Terrain',
       },
       {
-        key: "competition",
-        value: "Competition",
+        key: 'competition',
+        value: 'Competition',
       },
     ]
 
     events.push({
-      slug: "#",
+      slug: '#',
       startsAt: Moment.utc().startOf('year'),
       tags: tags,
-      title: "Dummy event",
+      title: 'Dummy event',
     })
   }
 

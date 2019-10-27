@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from "../components/Content";
-import PageTitle from "../components/PageTitle";
-import EventTags from "../components/EventTags";
+import Content, { HTMLContent } from '../components/Content'
+import PageTitle from '../components/PageTitle'
+import EventTags from '../components/EventTags'
 
 export const InfoTemplate = ({
-                               contentComponent,
-                               tags,
-                               title,
-                               information,
-                             }) => {
+  contentComponent,
+  tags,
+  title,
+  information,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -20,7 +20,7 @@ export const InfoTemplate = ({
         <div className="columns">
           <div className="column is-10 is-offset-1">
             <PageTitle title={title} />
-            <EventTags reactKey={"info-for"} tags={tags} />
+            <EventTags reactKey={'info-for'} tags={tags} />
             <PageContent content={information} />
           </div>
         </div>
@@ -32,42 +32,44 @@ export const InfoTemplate = ({
 InfoTemplate.propTypes = {
   contentComponent: PropTypes.func,
   information: PropTypes.node,
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })),
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ),
   title: PropTypes.string,
 }
 
-const Info = ({data}) => {
-  const {markdownRemark: info} = data
+const Info = ({ data }) => {
+  const { markdownRemark: info } = data
 
   const tags = []
 
   if (info.frontmatter.forChampionshipKey) {
     tags.push({
-      key: "championship",
+      key: 'championship',
       value: info.frontmatter.forChampionshipKey,
     })
   }
 
   if (info.frontmatter.forCompetitionKey) {
     tags.push({
-      key: "competition",
+      key: 'competition',
       value: info.frontmatter.forCompetitionKey,
     })
   }
 
   if (info.frontmatter.forEventType) {
     tags.push({
-      key: "eventType",
+      key: 'eventType',
       value: info.frontmatter.forEventType,
     })
   }
 
   if (info.frontmatter.forTerrain) {
     tags.push({
-      key: "terrain",
+      key: 'terrain',
       value: info.frontmatter.forTerrain,
     })
   }
@@ -86,7 +88,7 @@ const Info = ({data}) => {
 
 Info.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object
+    markdownRemark: PropTypes.object,
   }),
 }
 

@@ -1,80 +1,97 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Layout from '../components/Layout'
-import EventsCalendarMonth from "../components/EventsCalendarMonth";
+import EventsCalendarMonth from '../components/EventsCalendarMonth'
 import Moment from 'moment'
-import {graphql} from "gatsby";
+import { graphql } from 'gatsby'
 
 export class EventsCalendarTemplate extends React.Component {
   render() {
-    const { events, showNextMonthLink, showPreviousMonthLink, thisMonth } = this.props
+    const {
+      events,
+      showNextMonthLink,
+      showPreviousMonthLink,
+      thisMonth,
+    } = this.props
 
     return (
-        <section className="section">
-          <div className="container content">
-            <h1 className="is-size-1">Events</h1>
-            <div className="columns">
-              <EventsCalendarMonth month={thisMonth} events={events} showPreviousMonthLink={showPreviousMonthLink} showNextMonthLink={showNextMonthLink} />
-            </div>
+      <section className="section">
+        <div className="container content">
+          <h1 className="is-size-1">Events</h1>
+          <div className="columns">
+            <EventsCalendarMonth
+              month={thisMonth}
+              events={events}
+              showPreviousMonthLink={showPreviousMonthLink}
+              showNextMonthLink={showNextMonthLink}
+            />
           </div>
-        </section>
+        </div>
+      </section>
     )
   }
 }
 
 EventsCalendarTemplate.propTypes = {
-  events: PropTypes.arrayOf(PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    startsAt: PropTypes.instanceOf(Moment).isRequired,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })),
-    title: PropTypes.string.isRequired,
-  })),
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          key: PropTypes.string.isRequired,
+          value: PropTypes.string.isRequired,
+        })
+      ),
+      title: PropTypes.string.isRequired,
+    })
+  ),
   showNextMonthLink: PropTypes.bool.isRequired,
   showPreviousMonthLink: PropTypes.bool.isRequired,
   thisMonth: PropTypes.instanceOf(Moment).isRequired,
 }
 
-const EventsCalendar = ({data, pageContext}) => {
-  const showPreviousMonthLink = data.showPrevious.group.length > 0 && data.showPrevious.group[0].totalCount > 0
-  const showNextMonthLink = data.showNext.group.length > 0 && data.showNext.group[0].totalCount > 0
-  const thisMonth = Moment.utc(pageContext.thisMonth, "YYYY-MM")
+const EventsCalendar = ({ data, pageContext }) => {
+  const showPreviousMonthLink =
+    data.showPrevious.group.length > 0 &&
+    data.showPrevious.group[0].totalCount > 0
+  const showNextMonthLink =
+    data.showNext.group.length > 0 && data.showNext.group[0].totalCount > 0
+  const thisMonth = Moment.utc(pageContext.thisMonth, 'YYYY-MM')
   const events = data.events.edges.map(({ node }) => {
     const tags = []
 
     if (node.frontmatter.venue && node.frontmatter.venue.frontmatter.venueKey) {
       tags.push({
-        key: "venue",
+        key: 'venue',
         value: node.frontmatter.venue.frontmatter.venueKey,
       })
     }
 
     if (node.frontmatter.eventType) {
       tags.push({
-        key: "eventType",
+        key: 'eventType',
         value: node.frontmatter.eventType,
       })
     }
 
     if (node.frontmatter.terrain) {
       tags.push({
-        key: "terrain",
+        key: 'terrain',
         value: node.frontmatter.terrain,
       })
     }
 
     if (node.frontmatter.championshipForeignKey) {
       tags.push({
-        key: "championship",
+        key: 'championship',
         value: node.frontmatter.championshipForeignKey,
       })
     }
 
     if (node.frontmatter.competitionForeignKey) {
       tags.push({
-        key: "competition",
+        key: 'competition',
         value: node.frontmatter.competitionForeignKey,
       })
     }
@@ -89,7 +106,12 @@ const EventsCalendar = ({data, pageContext}) => {
 
   return (
     <Layout>
-      <EventsCalendarTemplate events={events} showNextMonthLink={showNextMonthLink} showPreviousMonthLink={showPreviousMonthLink} thisMonth={thisMonth} />
+      <EventsCalendarTemplate
+        events={events}
+        showNextMonthLink={showNextMonthLink}
+        showPreviousMonthLink={showPreviousMonthLink}
+        thisMonth={thisMonth}
+      />
     </Layout>
   )
 }
@@ -97,40 +119,44 @@ const EventsCalendar = ({data, pageContext}) => {
 EventsCalendar.propTypes = {
   data: PropTypes.shape({
     showPrevious: PropTypes.shape({
-      group: PropTypes.arrayOf(PropTypes.shape({
-          totalCount: PropTypes.number
+      group: PropTypes.arrayOf(
+        PropTypes.shape({
+          totalCount: PropTypes.number,
         }).isRequired
-      )
+      ),
     }).isRequired,
     showNext: PropTypes.shape({
-      group: PropTypes.arrayOf(PropTypes.shape({
-          totalCount: PropTypes.number
+      group: PropTypes.arrayOf(
+        PropTypes.shape({
+          totalCount: PropTypes.number,
         }).isRequired
-      )
+      ),
     }).isRequired,
     events: PropTypes.shape({
-      edges: PropTypes.arrayOf(PropTypes.shape({
-        node: PropTypes.shape({
-          fields: PropTypes.shape({
-            slug: PropTypes.string.isRequired
-          }),
-          frontmatter: PropTypes.shape({
-            championshipForeignKey: PropTypes.string,
-            competitionForeignKey: PropTypes.string,
-            eventKey: PropTypes.string.isRequired,
-            eventType: PropTypes.string,
-            startsAt: PropTypes.string.isRequired,
-            terrain: PropTypes.string,
-            venue: PropTypes.shape({
-              frontmatter: PropTypes.shape({
-                venueKey: PropTypes.string.isRequired
-              }).isRequired
-            }).isRequired
-          }).isRequired
-        }).isRequired
-      }))
-    }).isRequired
-  }).isRequired
+      edges: PropTypes.arrayOf(
+        PropTypes.shape({
+          node: PropTypes.shape({
+            fields: PropTypes.shape({
+              slug: PropTypes.string.isRequired,
+            }),
+            frontmatter: PropTypes.shape({
+              championshipForeignKey: PropTypes.string,
+              competitionForeignKey: PropTypes.string,
+              eventKey: PropTypes.string.isRequired,
+              eventType: PropTypes.string,
+              startsAt: PropTypes.string.isRequired,
+              terrain: PropTypes.string,
+              venue: PropTypes.shape({
+                frontmatter: PropTypes.shape({
+                  venueKey: PropTypes.string.isRequired,
+                }).isRequired,
+              }).isRequired,
+            }).isRequired,
+          }).isRequired,
+        })
+      ),
+    }).isRequired,
+  }).isRequired,
 }
 
 export default EventsCalendar
@@ -138,26 +164,14 @@ export default EventsCalendar
 export const eventsCalendarQuery = graphql`
   query EventsCalendarQuery($thisMonth: Date!, $nextMonth: Date!) {
     showPrevious: allMarkdownRemark(
-      filter: {
-        frontmatter: {
-          startsAt: {
-            lt: $thisMonth
-          }
-        }
-      }
+      filter: { frontmatter: { startsAt: { lt: $thisMonth } } }
     ) {
       group(field: frontmatter___templateKey) {
         totalCount
       }
     }
     showNext: allMarkdownRemark(
-      filter: {
-        frontmatter: {
-          startsAt: {
-            gt: $nextMonth
-          }
-        }
-      }
+      filter: { frontmatter: { startsAt: { gt: $nextMonth } } }
     ) {
       group(field: frontmatter___templateKey) {
         totalCount
@@ -166,20 +180,12 @@ export const eventsCalendarQuery = graphql`
     events: allMarkdownRemark(
       filter: {
         frontmatter: {
-          startsAt: {
-            gte: $thisMonth,
-            lt: $nextMonth
-          }
-          templateKey: {
-            eq: "event"
-          }
+          startsAt: { gte: $thisMonth, lt: $nextMonth }
+          templateKey: { eq: "event" }
         }
       }
       sort: {
-        fields: [
-          frontmatter___startsAt,
-          frontmatter___title
-        ],
+        fields: [frontmatter___startsAt, frontmatter___title]
         order: ASC
       }
     ) {

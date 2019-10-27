@@ -1,19 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ProgressBar from "./ProgressBar";
+import ProgressBar from './ProgressBar'
 
 class Form extends React.Component {
   componentDidMount() {
-    const {formId, submitHandler} = this.props
+    const { formId, submitHandler } = this.props
 
     const form = document.getElementById(formId)
-    form.setAttribute("noValidate", "true")
+    form.setAttribute('noValidate', 'true')
 
     form.addEventListener('submit', submitHandler, false)
   }
 
   render() {
-    const {action, backHandler, backValue, children, formAttributes, formId, method, showBack, showSubmit, stage, stages, submitValue, validationIssues} = this.props
+    const {
+      action,
+      backHandler,
+      backValue,
+      children,
+      formAttributes,
+      formId,
+      method,
+      showBack,
+      showSubmit,
+      stage,
+      stages,
+      submitValue,
+      validationIssues,
+    } = this.props
 
     return (
       <form
@@ -26,17 +40,32 @@ class Form extends React.Component {
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value={formId} />
-        {children.length > 1 &&
-        <ProgressBar stage={stage} stages={stages}
-                     validationIssues={validationIssues} />
-        }
+        {children.length > 1 && (
+          <ProgressBar
+            stage={stage}
+            stages={stages}
+            validationIssues={validationIssues}
+          />
+        )}
         {children}
         <div className="section has-text-right">
-            <button type="submit"
-                    className={"button forward-button is-link " + (!showSubmit && " is-hidden")}>{submitValue}</button>
-            <button type="button" className={"button back-button is-pulled-left " + (!showBack && " is-hidden")}
-                    onClick={backHandler}
-            >{backValue}</button>
+          <button
+            type="submit"
+            className={
+              'button forward-button is-link ' + (!showSubmit && ' is-hidden')
+            }
+          >
+            {submitValue}
+          </button>
+          <button
+            type="button"
+            className={
+              'button back-button is-pulled-left ' + (!showBack && ' is-hidden')
+            }
+            onClick={backHandler}
+          >
+            {backValue}
+          </button>
         </div>
       </form>
     )
@@ -55,17 +84,19 @@ Form.propTypes = {
   showSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,
   submitValue: PropTypes.string.isRequired,
-  validationIssues: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-  })).isRequired
+  validationIssues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 }
 
 Form.defaults = {
-  backValue: "Back",
-  method: "POST",
-  nextValue: "Next",
-  submitValue: "Submit",
+  backValue: 'Back',
+  method: 'POST',
+  nextValue: 'Next',
+  submitValue: 'Submit',
 }
 
 export default Form

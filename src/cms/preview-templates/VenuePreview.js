@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { VenueTemplate } from '../../templates/venue'
-import Moment from "moment";
+import Moment from 'moment'
 
 const VenuePreview = ({ entry, widgetFor }) => {
   const coords = JSON.parse(entry.getIn(['data', 'location'])).coordinates
@@ -15,28 +15,28 @@ const VenuePreview = ({ entry, widgetFor }) => {
   for (let i = 1; i <= 3; i++) {
     const tags = [
       {
-        key: "eventType",
-        value: "eventType",
+        key: 'eventType',
+        value: 'eventType',
       },
       {
-        key: "terrain",
-        value: "Terrain",
+        key: 'terrain',
+        value: 'Terrain',
       },
       {
-        key: "championship",
-        value: "Championship",
+        key: 'championship',
+        value: 'Championship',
       },
       {
-        key: "competition",
-        value: "Competition",
+        key: 'competition',
+        value: 'Competition',
       },
     ]
 
     events.push({
-      slug: "#",
+      slug: '#',
       startsAt: Moment.utc().startOf('year'),
       tags: tags,
-      title: "Dummy event",
+      title: 'Dummy event',
     })
   }
 
@@ -44,7 +44,7 @@ const VenuePreview = ({ entry, widgetFor }) => {
     <VenueTemplate
       events={events}
       title={entry.getIn(['data', 'venueKey'])}
-      address={entry.getIn(['data', 'address']).split("\n")}
+      address={entry.getIn(['data', 'address']).split('\n')}
       location={location}
       information={widgetFor('body')}
     />

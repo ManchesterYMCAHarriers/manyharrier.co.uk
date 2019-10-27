@@ -1,11 +1,11 @@
 const _ = require('lodash')
 const path = require('path')
-const {createFilePath} = require('gatsby-source-filesystem')
-const {fmImagesToRelative} = require('gatsby-remark-relative-images')
+const { createFilePath } = require('gatsby-source-filesystem')
+const { fmImagesToRelative } = require('gatsby-remark-relative-images')
 const Moment = require('moment')
 
-exports.createPages = async ({actions, graphql}) => {
-  const {createPage} = actions
+exports.createPages = async ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {
@@ -23,16 +23,17 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-    }`)
+    }
+  `)
 
   if (pages.errors) {
     pages.errors.forEach(e => console.error(e.toString()))
     return Promise.reject(result.errors)
   }
 
-  pages.data.allMarkdownRemark.edges.forEach(({node}) => {
+  pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
     const id = node.id
-    const now = Moment.utc().format("YYYY-MM-DD HH:mm")
+    const now = Moment.utc().format('YYYY-MM-DD HH:mm')
     createPage({
       path: node.fields.slug,
       component: path.resolve(
@@ -62,24 +63,29 @@ exports.createPages = async ({actions, graphql}) => {
   calendarPages = _.uniq(calendarPages)
 
   calendarPages.forEach(month => {
-    const thisMonthMoment = Moment.utc(month, "YYYY-MM")
-    const thisMonth = thisMonthMoment.format("YYYY-MM-DD HH:mm")
-    const nextMonth = thisMonthMoment.clone().add(1, 'month').format("YYYY-MM-DD HH:mm")
-    const calendarPagePath = `/events/${_.kebabCase(thisMonthMoment.format("MMMM-YYYY"))}`
+    const thisMonthMoment = Moment.utc(month, 'YYYY-MM')
+    const thisMonth = thisMonthMoment.format('YYYY-MM-DD HH:mm')
+    const nextMonth = thisMonthMoment
+      .clone()
+      .add(1, 'month')
+      .format('YYYY-MM-DD HH:mm')
+    const calendarPagePath = `/events/${_.kebabCase(
+      thisMonthMoment.format('MMMM-YYYY')
+    )}`
 
     createPage({
       path: calendarPagePath,
       component: path.resolve(`src/templates/events-calendar.js`),
       context: {
         thisMonth: thisMonth,
-        nextMonth: nextMonth
+        nextMonth: nextMonth,
       },
     })
   })
 }
 
-exports.createSchemaCustomization = ({actions, schema}) => {
-  const {createTypes} = actions
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
   const typeDefs = [
     `type MarkdownRemark implements Node { 
       frontmatter: Frontmatter 
@@ -120,20 +126,20 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       venueEvents: [MarkdownRemark!] @link(by: "frontmatter.venueForeignKey", from: "venueKey") # events for venue
       venueForeignKey: String
       venueKey: String
-    }`
+    }`,
   ]
 
   createTypes(typeDefs)
 }
 
-exports.onCreateNode = ({node, actions, getNode}) => {
-  const {createNodeField} = actions
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
   fmImagesToRelative(node) // convert image paths for gatsby images
 
   var value
 
   if (node.internal.type === `MarkdownRemark`) {
-    value = createFilePath({node, getNode})
+    value = createFilePath({ node, getNode })
     createNodeField({
       name: `slug`,
       node,

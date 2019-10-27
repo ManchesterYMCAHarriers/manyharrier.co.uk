@@ -4,7 +4,7 @@ import Moment from 'moment'
 
 class InputDate extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       day: null,
       month: null,
@@ -14,146 +14,172 @@ class InputDate extends React.Component {
   }
 
   componentDidMount() {
-    const {earliestDate, latestDate, inputAttributes, inputId, setFormValidationState, validationMessages} = this.props
+    const {
+      earliestDate,
+      latestDate,
+      inputAttributes,
+      inputId,
+      setFormValidationState,
+      validationMessages,
+    } = this.props
 
-    const day = document.getElementById(inputId + "-day")
-    const month = document.getElementById(inputId + "-month")
-    const year = document.getElementById(inputId + "-year")
+    const day = document.getElementById(inputId + '-day')
+    const month = document.getElementById(inputId + '-month')
+    const year = document.getElementById(inputId + '-year')
 
     const checkValidity = () => {
       if (inputAttributes.required) {
-        if (day.validity.valueMissing && month.validity.valueMissing && year.validity.valueMissing) {
+        if (
+          day.validity.valueMissing &&
+          month.validity.valueMissing &&
+          year.validity.valueMissing
+        ) {
           this.setState({
-            validationMessage: validationMessages['valueMissing']
+            validationMessage: validationMessages['valueMissing'],
           })
           setFormValidationState({
-            id: inputId + "-day",
-            message: validationMessages['valueMissing']
+            id: inputId + '-day',
+            message: validationMessages['valueMissing'],
           })
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-day"
+            id: inputId + '-day',
           })
         }
 
         if (day.validity.valueMissing) {
           this.setState({
-            validationMessage: validationMessages['dayValueMissing']
+            validationMessage: validationMessages['dayValueMissing'],
           })
           setFormValidationState({
-            id: inputId + "-day",
-            message: validationMessages['dayValueMissing']
+            id: inputId + '-day',
+            message: validationMessages['dayValueMissing'],
           })
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-day"
+            id: inputId + '-day',
           })
         }
 
         if (month.validity.valueMissing) {
           this.setState({
-            validationMessage: validationMessages['monthValueMissing']
+            validationMessage: validationMessages['monthValueMissing'],
           })
           setFormValidationState({
-            id: inputId + "-month",
-            message: validationMessages['monthValueMissing']
+            id: inputId + '-month',
+            message: validationMessages['monthValueMissing'],
           })
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-month"
+            id: inputId + '-month',
           })
         }
 
         if (year.validity.valueMissing) {
           this.setState({
-            validationMessage: validationMessages['yearValueMissing']
+            validationMessage: validationMessages['yearValueMissing'],
           })
           setFormValidationState({
-            id: inputId + "-year",
-            message: validationMessages['yearValueMissing']
+            id: inputId + '-year',
+            message: validationMessages['yearValueMissing'],
           })
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-year"
+            id: inputId + '-year',
           })
         }
       }
 
-      if (day.validity.typeMismatch || day.validity.stepMismatch || day.validity.rangeUnderflow || day.validity.rangeOverflow || day.validity.badInput ||
-        month.validity.typeMismatch || month.validity.stepMismatch || month.validity.rangeUnderflow || month.validity.rangeOverflow || month.validity.badInput ||
-        year.validity.typeMismatch || year.validity.stepMismatch || year.validity.badInput) {
+      if (
+        day.validity.typeMismatch ||
+        day.validity.stepMismatch ||
+        day.validity.rangeUnderflow ||
+        day.validity.rangeOverflow ||
+        day.validity.badInput ||
+        month.validity.typeMismatch ||
+        month.validity.stepMismatch ||
+        month.validity.rangeUnderflow ||
+        month.validity.rangeOverflow ||
+        month.validity.badInput ||
+        year.validity.typeMismatch ||
+        year.validity.stepMismatch ||
+        year.validity.badInput
+      ) {
         this.setState({
-          validationMessage: validationMessages['invalidDate']
+          validationMessage: validationMessages['invalidDate'],
         })
         setFormValidationState({
-          id: inputId + "-day",
-          message: validationMessages['invalidDate']
+          id: inputId + '-day',
+          message: validationMessages['invalidDate'],
         })
 
         return false
       } else {
         this.setState({
-          validationMessage: null
+          validationMessage: null,
         })
         setFormValidationState({
-          id: inputId + "-day"
+          id: inputId + '-day',
         })
       }
 
       if (year.value && month.value && day.value) {
-        const dateValue = Moment.utc(year.value + "-" + month.value + "-" + day.value, "YYYY-MM-DD")
+        const dateValue = Moment.utc(
+          year.value + '-' + month.value + '-' + day.value,
+          'YYYY-MM-DD'
+        )
 
         if (earliestDate && dateValue.isBefore(earliestDate)) {
           this.setState({
-            validationMessage: validationMessages['beforeEarliestDate']
+            validationMessage: validationMessages['beforeEarliestDate'],
           })
           setFormValidationState({
-            id: inputId + "-day",
-            message: validationMessages['beforeEarliestDate']
+            id: inputId + '-day',
+            message: validationMessages['beforeEarliestDate'],
           })
 
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-day"
+            id: inputId + '-day',
           })
         }
 
         if (latestDate && dateValue.isAfter(latestDate)) {
           this.setState({
-            validationMessage: validationMessages['afterLatestDate']
+            validationMessage: validationMessages['afterLatestDate'],
           })
           setFormValidationState({
-            id: inputId + "-day",
-            message: validationMessages['afterLatestDate']
+            id: inputId + '-day',
+            message: validationMessages['afterLatestDate'],
           })
 
           return false
         } else {
           this.setState({
-            validationMessage: null
+            validationMessage: null,
           })
           setFormValidationState({
-            id: inputId + "-day"
+            id: inputId + '-day',
           })
         }
       }
@@ -162,13 +188,13 @@ class InputDate extends React.Component {
         validationMessage: null,
       })
       setFormValidationState({
-        id: inputId + "day",
+        id: inputId + 'day',
       })
       setFormValidationState({
-        id: inputId + "month",
+        id: inputId + 'month',
       })
       setFormValidationState({
-        id: inputId + "year",
+        id: inputId + 'year',
       })
 
       return true
@@ -178,95 +204,144 @@ class InputDate extends React.Component {
     month.addEventListener('invalid', checkValidity, false)
     year.addEventListener('invalid', checkValidity, false)
 
-    day.addEventListener('change', () => {
-      this.setState({
-        day: day.value,
-      }, () => {
-        if (this.state.month && this.state.year) {
-          checkValidity()
-        }
-      })
-    }, false)
+    day.addEventListener(
+      'change',
+      () => {
+        this.setState(
+          {
+            day: day.value,
+          },
+          () => {
+            if (this.state.month && this.state.year) {
+              checkValidity()
+            }
+          }
+        )
+      },
+      false
+    )
 
     month.addEventListener('change', () => {
-      this.setState({
-        month: month.value,
-      }, () => {
-        if (this.state.day && this.state.year) {
-          checkValidity()
+      this.setState(
+        {
+          month: month.value,
+        },
+        () => {
+          if (this.state.day && this.state.year) {
+            checkValidity()
+          }
         }
-      })
+      )
     })
 
     year.addEventListener('change', () => {
-      this.setState({
-        year: year.value,
-      }, () => {
-        if (this.state.day && this.state.month) {
-          checkValidity()
+      this.setState(
+        {
+          year: year.value,
+        },
+        () => {
+          if (this.state.day && this.state.month) {
+            checkValidity()
+          }
         }
-      })
+      )
     })
   }
 
   render() {
-    const {autoCompleteDay, autoCompleteMonth, autoCompleteYear, earliestDate, latestDate, hint, inputAttributes, inputId, label} = this.props
+    const {
+      autoCompleteDay,
+      autoCompleteMonth,
+      autoCompleteYear,
+      earliestDate,
+      latestDate,
+      hint,
+      inputAttributes,
+      inputId,
+      label,
+    } = this.props
 
-    const inputClassNames = ["date-field", "is-field"]
+    const inputClassNames = ['date-field', 'is-field']
 
     if (this.state.validationMessage) {
-      inputClassNames.push("has-error")
+      inputClassNames.push('has-error')
     }
 
     return (
-      <div className={inputClassNames.join(" ")}>
-        <input type="hidden" readOnly={true} className="is-hidden"
-               name={inputId}
-               id={inputId}
-               value={this.state.year + "-" + this.state.month + "-" + this.state.day} />
-        {label &&
-        <p className="label">{label}</p>
-        }
-        {hint &&
-        <p className="hint">{hint}</p>
-        }
-        {this.state.validationMessage &&
-        <p className="validation-message">{this.state.validationMessage}</p>
-        }
+      <div className={inputClassNames.join(' ')}>
+        <input
+          type="hidden"
+          readOnly={true}
+          className="is-hidden"
+          name={inputId}
+          id={inputId}
+          value={
+            this.state.year + '-' + this.state.month + '-' + this.state.day
+          }
+        />
+        {label && <p className="label">{label}</p>}
+        {hint && <p className="hint">{hint}</p>}
+        {this.state.validationMessage && (
+          <p className="validation-message">{this.state.validationMessage}</p>
+        )}
         <div className="columns is-mobile">
           <div className="column is-narrow">
             <div className="field">
-              <label className="label" htmlFor={inputId + "-day"}>Day</label>
+              <label className="label" htmlFor={inputId + '-day'}>
+                Day
+              </label>
               <div className="control">
-                <input className="input" id={inputId + "-day"}
-                       name={inputId + "-day"} type="number" min="1" max="31"
-                       step="1" {...inputAttributes}
-                       autoComplete={autoCompleteDay} />
+                <input
+                  className="input"
+                  id={inputId + '-day'}
+                  name={inputId + '-day'}
+                  type="number"
+                  min="1"
+                  max="31"
+                  step="1"
+                  {...inputAttributes}
+                  autoComplete={autoCompleteDay}
+                />
               </div>
             </div>
           </div>
           <div className="column is-narrow">
             <div className="field">
-              <label className="label"
-                     htmlFor={inputId + "-month"}>Month</label>
+              <label className="label" htmlFor={inputId + '-month'}>
+                Month
+              </label>
               <div className="control">
-                <input className="input" id={inputId + "-month"}
-                       name={inputId + "-month"} type="number" min="1" max="12"
-                       step="1" {...inputAttributes}
-                       autoComplete={autoCompleteMonth} />
+                <input
+                  className="input"
+                  id={inputId + '-month'}
+                  name={inputId + '-month'}
+                  type="number"
+                  min="1"
+                  max="12"
+                  step="1"
+                  {...inputAttributes}
+                  autoComplete={autoCompleteMonth}
+                />
               </div>
             </div>
           </div>
           <div className="column is-narrow">
             <div className="field">
-              <label className="label" htmlFor={inputId + "-year"}>Year</label>
+              <label className="label" htmlFor={inputId + '-year'}>
+                Year
+              </label>
               <div className="control">
-                <input className="input" id={inputId + "-year"}
-                       min={earliestDate && earliestDate.year()}
-                       max={latestDate && latestDate.year()}
-                       name={inputId + "-year"} type="number"
-                       step="1" {...inputAttributes}
-                       autoComplete={autoCompleteYear} />
+                <input
+                  className="input"
+                  id={inputId + '-year'}
+                  min={earliestDate && earliestDate.year()}
+                  max={latestDate && latestDate.year()}
+                  name={inputId + '-year'}
+                  type="number"
+                  step="1"
+                  {...inputAttributes}
+                  autoComplete={autoCompleteYear}
+                />
               </div>
             </div>
           </div>

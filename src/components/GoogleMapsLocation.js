@@ -1,16 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 
 class GoogleMapsLocation extends React.Component {
   render() {
-    const {googleMapsApiKey, id, location, mapContainerClassName, mapContainerStyle, zoom} = this.props
+    const {
+      googleMapsApiKey,
+      id,
+      location,
+      mapContainerClassName,
+      mapContainerStyle,
+      zoom,
+    } = this.props
 
     return (
-      <LoadScript
-        id={id + "-script"}
-        googleMapsApiKey={googleMapsApiKey}
-      >
+      <LoadScript id={id + '-script'} googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           id={id}
           center={location}
@@ -18,10 +22,7 @@ class GoogleMapsLocation extends React.Component {
           mapContainerStyle={mapContainerStyle}
           mapContainerClassName={mapContainerClassName}
         >
-          <Marker
-            clickable={false}
-            position={location}
-          />
+          <Marker clickable={false} position={location} />
         </GoogleMap>
       </LoadScript>
     )

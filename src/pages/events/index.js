@@ -4,7 +4,11 @@ import Moment from 'moment'
 
 // Redirect to current month
 export default () => {
-  const slug = '/events/' + Moment.utc().format('MMMM-YYYY').toLowerCase()
+  const slug =
+    '/events/' +
+    Moment.utc()
+      .format('MMMM-YYYY')
+      .toLowerCase()
 
   useEffect(() => {
     navigate(slug)

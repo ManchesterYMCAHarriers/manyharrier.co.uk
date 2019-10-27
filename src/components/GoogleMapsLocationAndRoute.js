@@ -1,24 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {GoogleMap, LoadScript, Marker, Polyline} from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api'
 
 class GoogleMapsLocationAndRoute extends React.Component {
   render() {
-    const {googleMapsApiKey, id, location, track, mapContainerClassName, mapContainerStyle, zoom} = this.props
+    const {
+      googleMapsApiKey,
+      id,
+      location,
+      track,
+      mapContainerClassName,
+      mapContainerStyle,
+      zoom,
+    } = this.props
 
     const onLoadHandler = map => {
-      const bounds = new window.google.maps.LatLngBounds();
+      const bounds = new window.google.maps.LatLngBounds()
       track.forEach(coord => {
-        bounds.extend(coord);
-      });
-      map.fitBounds(bounds);
+        bounds.extend(coord)
+      })
+      map.fitBounds(bounds)
     }
 
     return (
-      <LoadScript
-        id={id + "-script"}
-        googleMapsApiKey={googleMapsApiKey}
-      >
+      <LoadScript id={id + '-script'} googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           id={id}
           mapContainerClassName={mapContainerClassName}
@@ -41,7 +46,7 @@ class GoogleMapsLocationAndRoute extends React.Component {
               visible: true,
               radius: 30000,
               paths: track,
-              zIndex: 1
+              zIndex: 1,
             }}
           />
           <Marker clickable={false} position={location} />
@@ -60,10 +65,12 @@ GoogleMapsLocationAndRoute.propTypes = {
   }).isRequired,
   mapContainerClassName: PropTypes.string,
   mapContainerStyle: PropTypes.object,
-  track: PropTypes.arrayOf(PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-  })).isRequired,
+  track: PropTypes.arrayOf(
+    PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   zoom: PropTypes.number,
 }
 

@@ -1,12 +1,13 @@
-import React from "react"
-import PropTypes from "prop-types"
-import {FaCompass} from "react-icons/fa";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { FaCompass } from 'react-icons/fa'
 
 class GoogleMapsDirectionsLink extends React.Component {
   render() {
     const { location, text } = this.props
     const { lat, lng } = location
-    const googleMapsDirectionsLink = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng
+    const googleMapsDirectionsLink =
+      'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
 
     return (
       <a className="button is-fullwidth" href={googleMapsDirectionsLink}>

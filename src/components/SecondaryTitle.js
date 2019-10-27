@@ -6,13 +6,15 @@ class SecondaryTitle extends React.Component {
     const { title } = this.props
 
     return (
-      <h2 className="title is-size-4 has-text-weight-bold is-bold-light">{title}</h2>
+      <h2 className="title is-size-4 has-text-weight-bold is-bold-light">
+        {title}
+      </h2>
     )
   }
 }
 
 SecondaryTitle.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 export default SecondaryTitle

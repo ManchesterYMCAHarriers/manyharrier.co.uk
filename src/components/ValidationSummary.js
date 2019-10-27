@@ -7,7 +7,9 @@ class ValidationSummary extends React.Component {
     const targetId = ev.target.href.split('#')[1]
     let input = document.getElementById(targetId)
     if (!input) {
-      input = ev.target.closest('form').querySelector('input[name="' + targetId + '"]')
+      input = ev.target
+        .closest('form')
+        .querySelector('input[name="' + targetId + '"]')
     }
     let parent = input.closest('.has-error')
     parent.scrollIntoView()
@@ -17,20 +19,21 @@ class ValidationSummary extends React.Component {
   }
 
   render() {
-    const {validationIssues} = this.props
+    const { validationIssues } = this.props
 
     if (validationIssues.length === 0) {
       return null
     }
 
     return (
-      <div className="notification is-danger" tabIndex={"-1"}>
+      <div className="notification is-danger" tabIndex={'-1'}>
         <h3 className="title is-size-5">There is a problem</h3>
         <ul>
           {validationIssues.map((validationIssue, i) => (
-            <li key={"validation-summary-" + i}>
-              <a onClick={this.handleClick}
-                 href={"#" + validationIssue.id}>{validationIssue.message}</a>
+            <li key={'validation-summary-' + i}>
+              <a onClick={this.handleClick} href={'#' + validationIssue.id}>
+                {validationIssue.message}
+              </a>
             </li>
           ))}
         </ul>
@@ -40,10 +43,12 @@ class ValidationSummary extends React.Component {
 }
 
 ValidationSummary.propTypes = {
-  validationIssues: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-  })).isRequired
+  validationIssues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 }
 
 ValidationSummary.defaults = {

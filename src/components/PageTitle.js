@@ -6,13 +6,15 @@ class PageTitle extends React.Component {
     const { title } = this.props
 
     return (
-      <h1 className="title is-size-2 has-text-weight-bold is-bold-light">{title}</h1>
+      <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
+        {title}
+      </h1>
     )
   }
 }
 
 PageTitle.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 export default PageTitle

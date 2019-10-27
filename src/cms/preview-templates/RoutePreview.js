@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { RouteTemplate } from '../../templates/route'
-import Moment from "moment";
+import Moment from 'moment'
 
 const RoutePreview = ({ entry, widgetFor }) => {
-  const routeTrack = JSON.parse(entry.getIn(['data', 'routeTrack'])).coordinates.map(coords => {
+  const routeTrack = JSON.parse(
+    entry.getIn(['data', 'routeTrack'])
+  ).coordinates.map(coords => {
     return {
       lat: coords[1],
       lng: coords[0],
@@ -16,32 +18,32 @@ const RoutePreview = ({ entry, widgetFor }) => {
   for (let i = 1; i <= 3; i++) {
     const tags = [
       {
-        key: "venue",
-        value: "Venue",
+        key: 'venue',
+        value: 'Venue',
       },
       {
-        key: "eventType",
-        value: "eventType",
+        key: 'eventType',
+        value: 'eventType',
       },
       {
-        key: "terrain",
-        value: "Terrain",
+        key: 'terrain',
+        value: 'Terrain',
       },
       {
-        key: "championship",
-        value: "Championship",
+        key: 'championship',
+        value: 'Championship',
       },
       {
-        key: "competition",
-        value: "Competition",
+        key: 'competition',
+        value: 'Competition',
       },
     ]
 
     events.push({
-      slug: "#",
+      slug: '#',
       startsAt: Moment.utc().startOf('year'),
       tags: tags,
-      title: "Dummy event",
+      title: 'Dummy event',
     })
   }
 

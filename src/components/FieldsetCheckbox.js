@@ -1,82 +1,105 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ValidationSummary from "./ValidationSummary";
+import ValidationSummary from './ValidationSummary'
 
 class FieldsetCheckbox extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       validationMessage: null,
     }
   }
 
   componentDidMount() {
-    const {inputId, setFormValidationState, validationMessages} = this.props
+    const { inputId, setFormValidationState, validationMessages } = this.props
 
     const el = document.getElementById(inputId)
 
-    el.addEventListener('invalid', () => {
-      const failureStates = [
-        'valueMissing',
-      ]
+    el.addEventListener(
+      'invalid',
+      () => {
+        const failureStates = ['valueMissing']
 
-      for (let i = 0; i < failureStates.length; i++) {
-        const failureState = failureStates[i]
-        if (el.validity[failureState] && validationMessages[failureState]) {
+        for (let i = 0; i < failureStates.length; i++) {
+          const failureState = failureStates[i]
+          if (el.validity[failureState] && validationMessages[failureState]) {
+            this.setState({
+              validationMessage: validationMessages[failureState],
+            })
+            setFormValidationState({
+              id: inputId,
+              message: validationMessages[failureState],
+            })
+            break
+          }
+        }
+      },
+      false
+    )
+
+    el.addEventListener(
+      'change',
+      () => {
+        this.setState({
+          value: el.value,
+        })
+
+        if (el.checkValidity()) {
           this.setState({
-            validationMessage: validationMessages[failureState],
+            validationMessage: null,
           })
           setFormValidationState({
             id: inputId,
-            message: validationMessages[failureState],
           })
-          break
         }
-      }
-    }, false)
-
-    el.addEventListener('change', () => {
-      this.setState({
-        value: el.value,
-      })
-
-      if (el.checkValidity()) {
-        this.setState({
-          validationMessage: null,
-        })
-        setFormValidationState({
-          id: inputId,
-        })
-      }
-    }, false)
+      },
+      false
+    )
   }
 
   render() {
-    const { inputAttributes, inputId, legend, statements, label, value, validationIssues, visible } = this.props
+    const {
+      inputAttributes,
+      inputId,
+      legend,
+      statements,
+      label,
+      value,
+      validationIssues,
+      visible,
+    } = this.props
 
-    const fieldsetClassNames = ["section", "is-field"]
+    const fieldsetClassNames = ['section', 'is-field']
 
     if (!visible) {
-      fieldsetClassNames.push("is-hidden")
+      fieldsetClassNames.push('is-hidden')
     }
 
     if (validationIssues.length > 0) {
-      fieldsetClassNames.push("has-error")
+      fieldsetClassNames.push('has-error')
     }
 
     return (
-      <fieldset className={fieldsetClassNames.join(" ")}>
+      <fieldset className={fieldsetClassNames.join(' ')}>
         <legend>
           <h2 className="title is-size-3">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
         {statements}
-        {this.state.validationMessage &&
-        <p className="validation-message">{this.state.validationMessage}</p>
-        }
+        {this.state.validationMessage && (
+          <p className="validation-message">{this.state.validationMessage}</p>
+        )}
         <div className="field">
           <label className="checkbox">
-            <input type="checkbox" className="checkbox" id={inputId} name={inputId} value={value} {...inputAttributes} />&nbsp;{label}
+            <input
+              type="checkbox"
+              className="checkbox"
+              id={inputId}
+              name={inputId}
+              value={value}
+              {...inputAttributes}
+            />
+            &nbsp;{label}
           </label>
         </div>
       </fieldset>
@@ -92,10 +115,12 @@ FieldsetCheckbox.propTypes = {
   setFormValidationState: PropTypes.func.isRequired,
   statements: PropTypes.node.isRequired,
   value: PropTypes.node.isRequired,
-  validationIssues: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-  })).isRequired,
+  validationIssues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   visible: PropTypes.bool.isRequired,
 }
 

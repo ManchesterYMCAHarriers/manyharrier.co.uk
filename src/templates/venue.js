@@ -1,25 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from "../components/Content";
-import GoogleMapsLocation from "../components/GoogleMapsLocation"
-import PageTitle from "../components/PageTitle";
-import Subtitle from "../components/Subtitle";
-import GoogleMapsDirectionsLink from "../components/GoogleMapsDirectionsLink";
-import Moment from "moment"
-import Address from "../components/Address";
-import EventBox from "../components/EventBox";
+import Content, { HTMLContent } from '../components/Content'
+import GoogleMapsLocation from '../components/GoogleMapsLocation'
+import PageTitle from '../components/PageTitle'
+import Subtitle from '../components/Subtitle'
+import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
+import Moment from 'moment'
+import Address from '../components/Address'
+import EventBox from '../components/EventBox'
 
 export const VenueTemplate = ({
-                                contentComponent,
-                                googleMapsApiKey,
-                                title,
-                                address,
-                                location,
-                                information,
-                                events,
-                              }) => {
+  contentComponent,
+  googleMapsApiKey,
+  title,
+  address,
+  location,
+  information,
+  events,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -34,24 +34,30 @@ export const VenueTemplate = ({
             <div className="maps-container">
               <GoogleMapsLocation
                 googleMapsApiKey={googleMapsApiKey}
-                id={"venue-location-map"} zoom={14}
+                id={'venue-location-map'}
+                zoom={14}
                 location={location}
-                mapContainerClassName={"maps-style"}
+                mapContainerClassName={'maps-style'}
               />
             </div>
-            <GoogleMapsDirectionsLink location={location}
-                                      text={"Navigate to " + title + " with Google Maps"} />
-            <Subtitle text={"Information"} />
-            <PageContent content={information}
-                         className={"information"} />
-            <Subtitle text={"Upcoming events"} />
-            {events.length === 0 &&
-            <div>There are no upcoming events at {title}</div>
-            }
+            <GoogleMapsDirectionsLink
+              location={location}
+              text={'Navigate to ' + title + ' with Google Maps'}
+            />
+            <Subtitle text={'Information'} />
+            <PageContent content={information} className={'information'} />
+            <Subtitle text={'Upcoming events'} />
+            {events.length === 0 && (
+              <div>There are no upcoming events at {title}</div>
+            )}
             {events.map((event, i) => (
-              <EventBox key={"venue-event-" + i} startsAt={event.startsAt}
-                        slug={event.slug} tags={event.tags}
-                        title={event.title} />
+              <EventBox
+                key={'venue-event-' + i}
+                startsAt={event.startsAt}
+                slug={event.slug}
+                tags={event.tags}
+                title={event.title}
+              />
             ))}
           </div>
         </div>
@@ -63,15 +69,19 @@ export const VenueTemplate = ({
 VenueTemplate.propTypes = {
   contentComponent: PropTypes.func,
   address: PropTypes.arrayOf(PropTypes.string),
-  events: PropTypes.arrayOf(PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    startsAt: PropTypes.instanceOf(Moment).isRequired,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })),
-    title: PropTypes.string.isRequired,
-  })),
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          key: PropTypes.string.isRequired,
+          value: PropTypes.string.isRequired,
+        })
+      ),
+      title: PropTypes.string.isRequired,
+    })
+  ),
   googleMapsApiKey: PropTypes.string.isRequired,
   information: PropTypes.node,
   location: PropTypes.shape({
@@ -81,64 +91,65 @@ VenueTemplate.propTypes = {
   title: PropTypes.string,
 }
 
-const Venue = ({data, pageContext}) => {
-  const {
-    markdownRemark: venue
-  } = data
-  const {now, googleMapsApiKey} = pageContext
+const Venue = ({ data, pageContext }) => {
+  const { markdownRemark: venue } = data
+  const { now, googleMapsApiKey } = pageContext
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
 
   const location = {
     lat: coords[1],
-    lng: coords[0]
+    lng: coords[0],
   }
 
-  const events = (venue.frontmatter.venueEvents || []).map(event => {
-    const tags = []
+  const events = (venue.frontmatter.venueEvents || [])
+    .map(event => {
+      const tags = []
 
-    if (event.frontmatter.eventType) {
-      tags.push({
-        key: "eventType",
-        value: event.frontmatter.eventType,
-      })
-    }
+      if (event.frontmatter.eventType) {
+        tags.push({
+          key: 'eventType',
+          value: event.frontmatter.eventType,
+        })
+      }
 
-    if (event.frontmatter.terrain) {
-      tags.push({
-        key: "terrain",
-        value: event.frontmatter.terrain,
-      })
-    }
+      if (event.frontmatter.terrain) {
+        tags.push({
+          key: 'terrain',
+          value: event.frontmatter.terrain,
+        })
+      }
 
-    if (event.frontmatter.championshipForeignKey) {
-      tags.push({
-        key: "championship",
-        value: event.frontmatter.championshipForeignKey,
-      })
-    }
+      if (event.frontmatter.championshipForeignKey) {
+        tags.push({
+          key: 'championship',
+          value: event.frontmatter.championshipForeignKey,
+        })
+      }
 
-    if (event.frontmatter.competitionForeignKey) {
-      tags.push({
-        key: "competition",
-        value: event.frontmatter.competitionForeignKey,
-      })
-    }
+      if (event.frontmatter.competitionForeignKey) {
+        tags.push({
+          key: 'competition',
+          value: event.frontmatter.competitionForeignKey,
+        })
+      }
 
-    return {
-      slug: event.fields.slug,
-      startsAt: Moment.utc(event.frontmatter.startsAt),
-      tags: tags,
-      title: event.frontmatter.eventKey,
-    }
-  }).filter(event => {
-    return event.startsAt.isAfter(now)
-  }).sort((a, b) => {
-    if (a.startsAt.isSame(b.startsAt)) {
-      return a.title < b.title ? -1 : 1
-    }
-    return a.startsAt.isBefore(b.startsAt) ? -1 : 1
-  })
+      return {
+        slug: event.fields.slug,
+        startsAt: Moment.utc(event.frontmatter.startsAt),
+        tags: tags,
+        title: event.frontmatter.eventKey,
+      }
+    })
+    .filter(event => {
+      return event.startsAt.isAfter(now)
+    })
+    .sort((a, b) => {
+      if (a.startsAt.isSame(b.startsAt)) {
+        return a.title < b.title ? -1 : 1
+      }
+      return a.startsAt.isBefore(b.startsAt) ? -1 : 1
+    })
 
   return (
     <Layout>
@@ -147,7 +158,7 @@ const Venue = ({data, pageContext}) => {
         events={events}
         googleMapsApiKey={googleMapsApiKey}
         information={venue.html}
-        address={venue.frontmatter.address.split("\n")}
+        address={venue.frontmatter.address.split('\n')}
         location={location}
         title={venue.frontmatter.venueKey}
       />
@@ -157,7 +168,7 @@ const Venue = ({data, pageContext}) => {
 
 Venue.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object
+    markdownRemark: PropTypes.object,
   }),
 }
 
