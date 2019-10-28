@@ -9,7 +9,8 @@ import Moment from 'moment'
 import FieldsetRadios from '../../components/FieldsetRadios'
 import FieldsetText from '../../components/FieldsetText'
 import FieldsetCheckbox from '../../components/FieldsetCheckbox'
-import FieldsetAddress from '../../components/FieldsetAddress'
+import FieldsetPostcode from "../../components/FieldsetPostcode";
+import FieldsetSelect from "../../components/FieldsetSelect";
 
 function encode(data) {
   return Object.keys(data)
@@ -28,9 +29,12 @@ export default class Index extends React.Component {
     } = props.pageContext
 
     this.state = {
+      addressSelectorDisplayOptions: [],
+      addressSelectorOptionsMap: [],
       baseUrl: baseUrl,
       data: {},
       formAction: '/join',
+      getAddressApiError: false,
       getAddressApiKey: getAddressApiKey,
       membershipFees: {
         'First claim': 28.0,
@@ -38,7 +42,7 @@ export default class Index extends React.Component {
       },
       membershipValidUntil: '30 April 2020',
       stage: 1,
-      stages: 15,
+      stages: 17,
       stripePublishableKey: stripePublishableKey,
       stripeSKUs: {
         'First claim': 'membership-first-claim',
@@ -57,14 +61,98 @@ export default class Index extends React.Component {
     return this.state.stage <= this.state.stages
   }
 
+  getPossibleAddresses = async () => {
+    const postcodeForQuery = this.state.data.postcode
+      .toLowerCase()
+      .replace(/\s/g, '')
+
+    // This data will come from getAddress API
+    try {
+      const response = await Promise.race([
+        fetch(
+          'https://api.getAddress.io/find/' +
+          postcodeForQuery +
+          '?api-key=' +
+          this.state.getAddressApiKey +
+          '&sort=true'
+        ),
+        new Promise((_, reject) => {
+          console.error("getAddress API timeout")
+          setTimeout(() => reject({
+            ok: false
+          }), 5000)
+        })
+      ])
+
+      // Invalid postcode format or postcode not found
+      if (response.status === 400 || response.status === 404) {
+        return {
+          error: true,
+        }
+      }
+
+      // Other error - 401 = api key not valid, 429 = too many requests, 500 = internal server error
+      // Effectively API is down
+      if (!response.ok) {
+        return {
+          apiError: true,
+        }
+      }
+
+      const {latitude, longitude, addresses} = await response.json()
+
+      console.log(latitude, longitude, addresses)
+
+      const optionsArray = addresses.map(option => {
+        return option.split(',').map(line => line.trim())
+      })
+
+      const displayOptions = optionsArray.map(option =>
+        option.filter(line => line !== '').join(', ')
+      )
+
+      const optionsMap = optionsArray.map(option => {
+        return {
+          line1: option[0],
+          line2: option[1],
+          line3: option[2],
+          line4: option[3],
+          locality: option[4],
+          town: option[5],
+          county: option[6],
+        }
+      })
+
+      return {
+        displayOptions: displayOptions,
+        optionsMap: optionsMap,
+        latitude: latitude,
+        longitude: longitude,
+        ok: true,
+      }
+    } catch (err) {
+      return {
+        apiError: true
+      }
+    }
+  }
+
   backHandler = ev => {
     if (this.state.stage > 1) {
       let prevStage = this.state.stage - 1
       // Exceptions
       const data = this.state.data
       if (this.state.stage === 6 && data.membership === 'First claim') {
+        // Skip first claim club question if membership type is first claim
         prevStage -= 1
-      } else if (this.state.stage === 12 && !data.telephone) {
+      } else if (this.state.stage === 9 && this.state.getAddressApiError) {
+        // Skip address selection if there has been an API error
+        prevStage -= 1
+      } else if (this.state.stage === 10 && data.selectedAddress !== "none") {
+        // Skip manual address entry if an address has been selected
+        prevStage -= 1
+      } else if (this.state.stage === 14 && !data.telephone) {
+        // Skip WhatsApp sign up if no telephone number has been entered
         prevStage -= 1
       }
 
@@ -72,6 +160,7 @@ export default class Index extends React.Component {
         {
           stage: prevStage,
           submitValue: 'Next',
+          validationIssues: [],
         },
         () => {
           // Scroll to page title
@@ -90,7 +179,7 @@ export default class Index extends React.Component {
     }
   }
 
-  submitHandler = ev => {
+  submitHandler = async (ev) => {
     ev.preventDefault()
     // Check if visible elements validate
     let data = this.state.data
@@ -124,17 +213,86 @@ export default class Index extends React.Component {
       return
     }
 
+    let nextStage = this.state.stage + 1
+
+    // If we're on the postcode lookup
+    // Get postcode data from getAddress.io
+    if (this.state.stage === 7) {
+      try {
+        const {apiError, error, displayOptions, optionsMap, latitude, longitude} = await this.getPossibleAddresses()
+
+        if (error) {
+          this.updateValidationIssues({
+            inputId: 'postcode',
+            message: 'Enter a valid UK postcode',
+          })
+          return
+        }
+
+        // Skip to manual address entry in case of API error
+        if (apiError) {
+          this.setState({
+            getAddressApiError: true,
+          })
+          nextStage += 1
+        } else {
+          // Set lat/long data
+          data.latitude = latitude;
+          data.longitude = longitude;
+          // Set address lookup data
+          this.setState({
+            addressSelectorDisplayOptions: displayOptions,
+            addressSelectorOptionsMap: optionsMap,
+          })
+        }
+      } catch (err) {
+        this.setState({
+          getAddressApiError: true,
+        })
+        nextStage += 1
+      }
+    }
+
+    if (this.state.stage === 8) {
+      if (data.selectedAddress === "none") {
+        data.addressLine1 = ""
+        data.addressLine2 = ""
+        data.addressLine3 = ""
+        data.addressLine4 = ""
+        data.addressLocality = ""
+        data.addressTown = ""
+        data.addressCounty = ""
+      } else {
+        const idx = parseInt(data.selectedAddress, 10)
+        document.getElementById('addressLine1').value = ""
+        document.getElementById('addressLine2').value = ""
+        document.getElementById('addressLine3').value = ""
+        document.getElementById('addressLine4').value = ""
+        document.getElementById('addressLocality').value = ""
+        document.getElementById('addressTown').value = ""
+        document.getElementById('addressCounty').value = ""
+        data.addressLine1 = this.state.addressSelectorOptionsMap[idx].line1
+        data.addressLine2 = this.state.addressSelectorOptionsMap[idx].line2
+        data.addressLine3 = this.state.addressSelectorOptionsMap[idx].line3
+        data.addressLine4 = this.state.addressSelectorOptionsMap[idx].line4
+        data.addressLocality = this.state.addressSelectorOptionsMap[idx].locality
+        data.addressTown = this.state.addressSelectorOptionsMap[idx].town
+        data.addressCounty = this.state.addressSelectorOptionsMap[idx].county
+      }
+    }
+
     this.setState(
       {
         data: data,
       },
       () => {
         // Navigate to the next page in the form...
-        let nextStage = this.state.stage + 1
         // Exceptions
         if (this.state.stage === 4 && data.membership === 'First claim') {
           nextStage += 1
-        } else if (this.state.stage === 10 && !data.telephone) {
+        } else if (this.state.stage === 8 && data.selectedAddress !== "none") {
+          nextStage += 1
+        } else if (this.state.stage === 12 && !data.telephone) {
           nextStage += 1
         }
 
@@ -172,7 +330,7 @@ export default class Index extends React.Component {
             },
             async () => {
               try {
-                const { status, ok } = await this.submitFormData()
+                const {status, ok} = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -195,7 +353,7 @@ export default class Index extends React.Component {
                 return
               }
 
-              const { error } = await this.redirectToCheckout()
+              const {error} = await this.redirectToCheckout()
               if (error) {
                 console.error('Redirect to checkout error', error)
               }
@@ -232,7 +390,7 @@ export default class Index extends React.Component {
     })
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -270,7 +428,7 @@ export default class Index extends React.Component {
     document
       .querySelector('form#join')
       .querySelector('fieldset:not(.is-hidden)')
-      .querySelector(' input:not([type="hidden"]), textarea, select')
+      .querySelector('input:not([type="hidden"]), textarea, select')
       .focus({
         preventScroll: true,
       })
@@ -487,15 +645,90 @@ export default class Index extends React.Component {
                   visible={this.state.stage === 6}
                 />
 
-                {/* Address */}
-                <FieldsetAddress
-                  getAddressApiKey={this.state.getAddressApiKey}
-                  label={'What is your address?'}
-                  inputId={'address'}
+                {/* Postcode */}
+                <FieldsetPostcode
+                  label={'What is your postcode?'}
+                  inputId={'postcode'}
+                  inputAttributes={{
+                    required: true,
+                  }}
                   setFormValidationState={this.updateValidationIssues}
                   visible={this.state.stage === 7}
                   validationIssues={this.state.validationIssues}
+                  validationMessages={{
+                    valueMissing: "Enter your postcode",
+                    customError: "Enter a valid UK postcode",
+                  }}
                 />
+
+                {/* Address lookup */}
+                <FieldsetSelect
+                  defaultValue={""}
+                  legend={'Select your address'}
+                  inputId={'selectedAddress'}
+                  inputAttributes={{
+                    required: true,
+                  }}
+                  setFormValidationState={this.updateValidationIssues}
+                  visible={this.state.stage === 8}
+                  validationIssues={this.state.validationIssues}
+                  validationMessages={{
+                    valueMissing: "Select an option",
+                  }}
+                >
+                  <option key={"address-option-default"} value="">(Select your
+                    address)
+                  </option>
+                  {this.state.addressSelectorDisplayOptions.map((addressOption, i) => (
+                    <option key={"address-option-" + i}
+                            value={i}>{addressOption}</option>
+                  ))}
+                  <option key={"address-option-none"} value="none">My address is
+                    not listed
+                  </option>
+                </FieldsetSelect>
+
+                {/* Manual address entry */}
+                <FieldsetMulti
+                  legend={"What is your address?"}
+                  hint={this.state.getAddressApiError ? "Sorry! There's been a problem with our address lookup, so we need you to enter your address manually" : ""}
+                  setFormValidationState={this.updateValidationIssues}
+                  visible={this.state.stage === 9}
+                  validationIssues={this.state.validationIssues}
+                >
+                  <InputText label={"Line 1"} inputId={"addressLine1"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             inputAttributes={{
+                               required: true,
+                             }} validationMessages={{
+                    valueMissing: "Enter the first line of your address"
+                  }} defaultValue={this.state.data.addressLine1} />
+                  <InputText label={"Line 2"} inputId={"addressLine2"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressLine2} />
+                  <InputText label={"Line 3"} inputId={"addressLine3"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressLine3} />
+                  <InputText label={"Line 4"} inputId={"addressLine4"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressLine4} />
+                  <InputText label={"Locality"} inputId={"addressLocality"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressLocality} />
+                  <InputText label={"Town"} inputId={"addressTown"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressTown} />
+                  <InputText label={"County"} inputId={"addressCounty"}
+                             inputType={"text"}
+                             setFormValidationState={this.updateValidationIssues}
+                             defaultValue={this.state.data.addressCounty} />
+                </FieldsetMulti>
 
                 {/* Email address */}
                 <FieldsetText
@@ -507,7 +740,7 @@ export default class Index extends React.Component {
                   }
                   setFormValidationState={this.updateValidationIssues}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 8}
+                  visible={this.state.stage === 10}
                   inputAttributes={{
                     autoComplete: 'email',
                     required: true,
@@ -545,7 +778,7 @@ export default class Index extends React.Component {
                     valueMissing: 'Select an option',
                   }}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 9}
+                  visible={this.state.stage === 11}
                 />
 
                 {/* Telephone number */}
@@ -558,7 +791,7 @@ export default class Index extends React.Component {
                   label={'What is your telephone number?'}
                   setFormValidationState={this.updateValidationIssues}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 10}
+                  visible={this.state.stage === 12}
                   inputAttributes={{
                     autoComplete: 'tel',
                   }}
@@ -591,7 +824,7 @@ export default class Index extends React.Component {
                     valueMissing: 'Select an option',
                   }}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 11}
+                  visible={this.state.stage === 13}
                 />
 
                 {/* Emergency contact */}
@@ -600,7 +833,7 @@ export default class Index extends React.Component {
                     'Do you have someone we should contact in the case of an emergency?'
                   }
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 12}
+                  visible={this.state.stage === 14}
                   hint={
                     "You do not need to tell us an emergency contact if you don't want to."
                   }
@@ -631,56 +864,113 @@ export default class Index extends React.Component {
                     valueMissing:
                       'You must agree to these statements in order to continue',
                   }}
-                  visible={this.state.stage === 13}
+                  visible={this.state.stage === 15}
                   setFormValidationState={this.updateValidationIssues}
                   label={'Yes, I agree to the statements above'}
                   value={'Accepted'}
                   statements={
-                    <ul>
-                      <li>
-                        I declare that I am an amateur under the rules of UK
-                        Athletics.
-                      </li>
-                      <li>
+                    <dl>
+                      <dt>Club Rules</dt>
+                      <dd>
                         I hereby apply for membership of the Manchester YMCA
-                        Harriers Club and I agree to abide by the rules of the
-                        Club.
-                      </li>
+                        Harriers Club and I agree to abide by the <a
+                        href="/rules" target="_blank">rules of the
+                        Club</a>.
+                      </dd>
+                      <dt>Y Club membership and facilities use</dt>
+                      <dd>
+                        I understand that the Manchester YMCA Harriers Club and
+                        the Y Club are separate entities.
+                      </dd>
+                      <dd>
+                        I understand that Y Club facilities, including the
+                        changing rooms, lockers, showers and toilets are only
+                        available to Y Club members.
+                      </dd>
+                      <dd>
+                        I understand that the reception staff at the Y Club are
+                        not permitted to accept items for safe-keeping,
+                        regardless of whether I am a member of the Y Club or
+                        not.
+                      </dd>
                       {this.state.data.yClubMembership === 'Non-member' && (
-                        <li>
-                          I understand that as I am not a member of the Y Club,
-                          I will not be able to use any of the Y Club's
-                          facilities, including the changing rooms, lockers,
-                          showers and toilets. I understand that I cannot leave
-                          anything with the Y Club reception for safe-keeping
-                          and should not ask to do so.
-                        </li>
+                        <dd>
+                          I am aware that as I am not a member of the Y Club, I
+                          should arrive at sessions starting from the Y Club
+                          "ready to run".
+                        </dd>
                       )}
-                      <li>
+                      {this.state.data.yClubMembership === 'Non-member' && (
+                        <dd>
+                          I am aware that if I wish to use the Y Club's
+                          facilities, I need to become a member of the Y Club
+                          and I should arrange this with the Y Club reception.
+                        </dd>
+                      )}
+                      <dt>Club membership</dt>
+                      {this.state.data.membership === "First claim" && (
+                        <dd>
+                          I understand that I will be registered as a first
+                          claim member of the Manchester YMCA Harriers Club with
+                          England Athletics.
+                        </dd>
+                      )}
+                      {this.state.data.membership === "Second claim" && (
+                        <dd>
+                          I understand that I am becoming a second claim member
+                          of the Manchester YMCA Harriers Club.
+                        </dd>
+                      )}
+                      <dd>I am aware that the Manchester YMCA Harriers Club is a
+                        registered club in the disciplines of road running, fell
+                        running, cross country running and trail running.
+                      </dd>
+                      {this.state.data.membership === "First claim" && (
+                        <dd>
+                          I am aware that if I participate in any competitions
+                          in these disciplines, I am expected to represent the
+                          Manchester YMCA Harriers Club in that competition.
+                        </dd>
+                      )}
+                      {this.state.data.membership === "Second claim" && (
+                        <dd>
+                          I am aware that if I participate in any competitions,
+                          I will only be able to represent the Manchester YMCA
+                          Harriers Club if my first claim club
+                          ({this.state.data.firstClaimClub}) is not registered
+                          for that discipline.
+                        </dd>
+                      )}
+                      <dt>Data protection</dt>
+                      <dd>
                         I understand that my personal data will be controlled by
                         the Manchester YMCA Harriers Club and that my personal
                         data can be processed by any member of the Club's
                         Committee for official Club business.
-                      </li>
-                      <li>
-                        I understand that on becoming a member of the Manchester
-                        YMCA Harriers Club I will automatically be registered as
-                        a member of England Athletics. The Club will provide
-                        England Athletics with your personal data which they
-                        will use to enable access to an online portal for you
-                        (called <em>myAthletics</em>). England Athletics will
-                        contact you to invite you to sign into the{' '}
-                        <em>myAthletics</em> portal, where you can, amongst
-                        other things, set and amend your privacy settings. If
-                        you have any questions about the continuing privacy of
-                        your personal data when it is shared with England
-                        Athletics, please contact{' '}
-                        <a href="mailto:dataprotection@englandathletics.org">
-                          dataprotetion@englandathletics.org
-                        </a>
-                        .
-                      </li>
-                    </ul>
+                      </dd>
+                      {this.state.data.membership === "First claim" && (
+                        <dd>
+                          I understand that on becoming a member of the
+                          Manchester
+                          YMCA Harriers Club I will automatically be registered
+                          as
+                          a member of England Athletics. The Club will provide
+                          England Athletics with your personal data which they
+                          will use to enable access to an online portal for you
+                          (called <em>myAthletics</em>). England Athletics will
+                          contact you to invite you to sign into the{' '}
+                          <em>myAthletics</em> portal, where you can, amongst
+                          other things, set and amend your privacy settings. If
+                          you have any questions about the continuing privacy of
+                          your personal data when it is shared with England
+                          Athletics, please contact{' '}
+                          <a href="mailto:dataprotection@englandathletics.org">
+                            dataprotetion@englandathletics.org
+                          </a>
+                          .
+                        </dd>
+                      )}
+                    </dl>
                   }
                 />
 
@@ -711,7 +1001,7 @@ export default class Index extends React.Component {
                     valueMissing: 'Select a payment method',
                   }}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 14}
+                  visible={this.state.stage === 16}
                 />
 
                 {/* Review */}
@@ -721,7 +1011,7 @@ export default class Index extends React.Component {
                     'If not, please use the back button to go back and correct it.'
                   }
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 15}
+                  visible={this.state.stage === 17}
                 >
                   <dl>
                     <dt>Name</dt>
@@ -730,9 +1020,7 @@ export default class Index extends React.Component {
                     </dd>
                     <dt>Date of birth</dt>
                     <dd>
-                      {this.state.data['dateOfBirth-day']}/
-                      {this.state.data['dateOfBirth-month']}/
-                      {this.state.data['dateOfBirth-year']}
+                      {this.state.data['dateOfBirth']}
                     </dd>
                     <dt>Gender</dt>
                     <dd>{this.state.data.gender}</dd>
@@ -751,7 +1039,28 @@ export default class Index extends React.Component {
                     <dt>Y Club membership type</dt>
                     <dd>{this.state.data.yClubMembership}</dd>
                     <dt>Address</dt>
-                    <dd>{this.state.data.address}</dd>
+                    <dd>
+                      <div>{this.state.data.addressLine1}</div>
+                      {this.state.data.addressLine2 && (
+                        <div>{this.state.data.addressLine2}</div>
+                      )}
+                      {this.state.data.addressLine3 && (
+                        <div>{this.state.data.addressLine3}</div>
+                      )}
+                      {this.state.data.addressLine4 && (
+                        <div>{this.state.data.addressLine4}</div>
+                      )}
+                      {this.state.data.addressLocality && (
+                        <div>{this.state.data.addressLocality}</div>
+                      )}
+                      {this.state.data.addressTown && (
+                        <div>{this.state.data.addressTown}</div>
+                      )}
+                      {this.state.data.addressCounty && (
+                        <div>{this.state.data.addressCounty}</div>
+                      )}
+                      <div>{this.state.data.postcode}</div>
+                    </dd>
                     <dt>Email address</dt>
                     <dd>{this.state.data.email}</dd>
                     <dt>Newsletter subscription</dt>
@@ -761,19 +1070,28 @@ export default class Index extends React.Component {
                       our email newsletter
                     </dd>
                     <dt>Telephone number</dt>
-                    <dd>{this.state.data.telephone}</dd>
-                    <dt>WhatsApp group</dt>
-                    <dd>
-                      You have opted
-                      {this.state.data.whatsApp === 'No' && ' not'} to join our
-                      WhatsApp group
-                    </dd>
+                    {this.state.data.telephone ? (
+                      <dd>{this.state.data.telephone}</dd>
+                    ) : (
+                      <dd>No telephone number provided</dd>
+                    )}
+                    {this.state.data.telephone && (
+                      <dt>WhatsApp group</dt>
+                    )}
+                    {this.state.data.telephone && (
+                      <dd>
+                        You have opted
+                        {this.state.data.whatsApp === 'No' && ' not'} to join
+                        our
+                        WhatsApp group
+                      </dd>
+                    )}
                     <dt>Emergency contact</dt>
                     <dd>
                       {this.state.data.emergencyContactName
                         ? this.state.data.emergencyContactName +
-                          ' - ' +
-                          this.state.data.emergencyContactNumber
+                        ' - ' +
+                        this.state.data.emergencyContactNumber
                         : 'No emergency contact details provided'}
                     </dd>
                     <dt>Acceptance of rules and Data Protection statements</dt>
@@ -784,9 +1102,9 @@ export default class Index extends React.Component {
                     <dd>
                       You have opted to pay by
                       {this.state.data.paymentMethod === 'BACS' &&
-                        ' bank transfer'}
+                      ' bank transfer'}
                       {this.state.data.paymentMethod === 'Stripe' &&
-                        ' credit card, debit card or Apple Pay'}
+                      ' credit card, debit card or Apple Pay'}
                     </dd>
                   </dl>
                   {this.state.data.paymentMethod === 'Stripe' && (
@@ -803,7 +1121,7 @@ export default class Index extends React.Component {
                   name={'paymentMethod'}
                   setFormValidationState={this.updateValidationIssues}
                   validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 16}
+                  visible={this.state.stage === 18}
                 >
                   <p>
                     You have opted to pay for your membership by{' '}
@@ -826,7 +1144,7 @@ export default class Index extends React.Component {
                     Use{' '}
                     <strong>
                       {this.state.data.firstName &&
-                        this.state.data.firstName.charAt(0)}{' '}
+                      this.state.data.firstName.charAt(0)}{' '}
                       {this.state.data.lastName}
                     </strong>{' '}
                     as your payment reference.

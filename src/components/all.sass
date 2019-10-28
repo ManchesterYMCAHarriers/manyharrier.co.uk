@@ -10,9 +10,12 @@
 //$body-color: #333
 //$black: #2b2523
 //
-//$navbar-height: 5rem
-//$navbar-item-img-max-height: $navbar-height - 2rem
-//
+$navbar-height: 5rem
+$navbar-item-img-max-height: $navbar-height - 2rem
+
+$section-padding: 1.5rem 1.5rem
+
+
 ////Menu overrides
 //$menu-item-color: $white-ter
 //$menu-item-hover-color: $black !important
@@ -53,6 +56,10 @@
 
 @import "~bulma"
 
+// Navbar logo
+.navbar-item.logo img
+  width: $navbar-item-img-max-height
+
 // Events calendar
 .events-calendar-date
   padding-left: 0
@@ -77,18 +84,38 @@
   bottom: 0
 
 // Forms
+fieldset legend.legend-label
+  margin-bottom: 0.5714em
+
 // Field error state
 div.is-field.has-error,
 div.field.has-error
   border-left: 0.3rem solid $danger
-  padding-left: 1rem
-  margin-left: -1.3rem
+  padding-left: 0.7rem
+  margin-left: -1rem
 
 // Fieldset error state
 fieldset.is-field.has-error
   border-left: 0.3rem solid $danger
   margin-left: -0.3rem
 
+.select-control
+  .select
+    max-width: calc(100% - 2.5em)
+
+.form-navigation
+  margin-top: 1.5rem
+  text-align: right
+
 .validation-message
   color: $danger
   font-weight: bold
+
+form
+  dt
+    font-weight: bold
+    margin-top: 0.5em
+    &:first-child
+      margin-top: 0
+  dd
+    margin-bottom: 0.5em

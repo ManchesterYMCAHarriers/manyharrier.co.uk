@@ -16,7 +16,7 @@ class FieldsetText extends React.Component {
       validationMessages,
       visible,
     } = this.props
-    const fieldsetClassNames = ['section', 'is-field']
+    const fieldsetClassNames = ['is-field']
 
     if (!visible) {
       fieldsetClassNames.push('is-hidden')
@@ -29,7 +29,7 @@ class FieldsetText extends React.Component {
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <ValidationSummary validationIssues={validationIssues} />
-        <legend>
+        <legend className="legend-label">
           <label className="title is-size-3" htmlFor={inputId}>
             {label}
           </label>

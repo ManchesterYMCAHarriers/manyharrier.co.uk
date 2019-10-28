@@ -9,6 +9,7 @@ class InputDate extends React.Component {
       day: null,
       month: null,
       year: null,
+      date: "",
       validationMessage: null,
     }
   }
@@ -213,7 +214,15 @@ class InputDate extends React.Component {
           },
           () => {
             if (this.state.month && this.state.year) {
-              checkValidity()
+              if (checkValidity()) {
+                const dateValue = Moment.utc(
+                  this.state.year + '-' + this.state.month + '-' + this.state.day,
+                  'YYYY-MM-DD'
+                )
+                this.setState({
+                  date: dateValue.format("D MMMM YYYY")
+                })
+              }
             }
           }
         )
@@ -228,7 +237,15 @@ class InputDate extends React.Component {
         },
         () => {
           if (this.state.day && this.state.year) {
-            checkValidity()
+            if (checkValidity()) {
+              const dateValue = Moment.utc(
+                this.state.year + '-' + this.state.month + '-' + this.state.day,
+                'YYYY-MM-DD'
+              )
+              this.setState({
+                date: dateValue.format("D MMMM YYYY")
+              })
+            }
           }
         }
       )
@@ -241,7 +258,15 @@ class InputDate extends React.Component {
         },
         () => {
           if (this.state.day && this.state.month) {
-            checkValidity()
+            if (checkValidity()) {
+              const dateValue = Moment.utc(
+                this.state.year + '-' + this.state.month + '-' + this.state.day,
+                'YYYY-MM-DD'
+              )
+              this.setState({
+                date: dateValue.format("D MMMM YYYY")
+              })
+            }
           }
         }
       )
@@ -275,9 +300,7 @@ class InputDate extends React.Component {
           className="is-hidden"
           name={inputId}
           id={inputId}
-          value={
-            this.state.year + '-' + this.state.month + '-' + this.state.day
-          }
+          value={this.state.date}
         />
         {label && <p className="label">{label}</p>}
         {hint && <p className="hint">{hint}</p>}

@@ -4,7 +4,7 @@ import ProgressBar from './ProgressBar'
 
 class Form extends React.Component {
   componentDidMount() {
-    const { formId, submitHandler } = this.props
+    const {formId, submitHandler} = this.props
 
     const form = document.getElementById(formId)
     form.setAttribute('noValidate', 'true')
@@ -48,7 +48,7 @@ class Form extends React.Component {
           />
         )}
         {children}
-        <div className="section has-text-right">
+        <div className="form-navigation">
           <button
             type="submit"
             className={

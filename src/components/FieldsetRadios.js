@@ -73,7 +73,7 @@ class FieldsetRadios extends React.Component {
       visible,
     } = this.props
 
-    const fieldsetClassNames = ['section', 'is-field']
+    const fieldsetClassNames = ['is-field']
 
     if (!visible) {
       fieldsetClassNames.push('is-hidden')
