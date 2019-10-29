@@ -34,14 +34,18 @@ class FieldsetText extends React.Component {
             {label}
           </label>
         </legend>
-        <InputText
-          hint={hint}
-          inputAttributes={inputAttributes}
-          inputId={inputId}
-          inputType={inputType}
-          setFormValidationState={setFormValidationState}
-          validationMessages={validationMessages}
-        />
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            <InputText
+              hint={hint}
+              inputAttributes={inputAttributes}
+              inputId={inputId}
+              inputType={inputType}
+              setFormValidationState={setFormValidationState}
+              validationMessages={validationMessages}
+            />
+          </div>
+        </div>
       </fieldset>
     )
   }

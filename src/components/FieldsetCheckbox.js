@@ -11,7 +11,7 @@ class FieldsetCheckbox extends React.Component {
   }
 
   componentDidMount() {
-    const { inputId, setFormValidationState, validationMessages } = this.props
+    const {inputId, setFormValidationState, validationMessages} = this.props
 
     const el = document.getElementById(inputId)
 
@@ -85,22 +85,27 @@ class FieldsetCheckbox extends React.Component {
           <h2 className="title is-size-3">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        {statements}
-        {this.state.validationMessage && (
-          <p className="validation-message">{this.state.validationMessage}</p>
-        )}
-        <div className="field">
-          <label className="checkbox">
-            <input
-              type="checkbox"
-              className="checkbox"
-              id={inputId}
-              name={inputId}
-              value={value}
-              {...inputAttributes}
-            />
-            &nbsp;{label}
-          </label>
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            {statements}
+            {this.state.validationMessage && (
+              <p
+                className="validation-message">{this.state.validationMessage}</p>
+            )}
+            <div className="field">
+              <label className="checkbox">
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id={inputId}
+                  name={inputId}
+                  value={value}
+                  {...inputAttributes}
+                />
+                &nbsp;{label}
+              </label>
+            </div>
+          </div>
         </div>
       </fieldset>
     )

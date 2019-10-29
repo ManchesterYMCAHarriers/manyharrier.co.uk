@@ -11,10 +11,10 @@ class FieldsetRadios extends React.Component {
   }
 
   componentDidMount() {
-    const { options, setFormValidationState, validationMessages } = this.props
+    const {options, setFormValidationState, validationMessages} = this.props
 
     document
-      .querySelectorAll(options.map(({ id }) => '#' + id).join(', '))
+      .querySelectorAll(options.map(({id}) => '#' + id).join(', '))
       .forEach(el => {
         el.addEventListener(
           'invalid',
@@ -89,25 +89,30 @@ class FieldsetRadios extends React.Component {
           <h2 className="title is-size-3">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        {hint && <p className="hint">{hint}</p>}
-        {this.state.validationMessage && (
-          <p className="validation-message">{this.state.validationMessage}</p>
-        )}
-        {options.map(({ id, label, value }) => (
-          <div className="field" key={'radio-' + id}>
-            <label className="radio">
-              <input
-                type="radio"
-                className="radio"
-                id={id}
-                name={name}
-                value={value}
-                {...inputAttributes}
-              />
-              &nbsp;{label}
-            </label>
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            {hint && <p className="hint">{hint}</p>}
+            {this.state.validationMessage && (
+              <p
+                className="validation-message">{this.state.validationMessage}</p>
+            )}
+            {options.map(({id, label, value}) => (
+              <div className="field" key={'radio-' + id}>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    className="radio"
+                    id={id}
+                    name={name}
+                    value={value}
+                    {...inputAttributes}
+                  />
+                  &nbsp;{label}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </fieldset>
     )
   }

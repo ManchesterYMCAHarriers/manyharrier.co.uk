@@ -48,24 +48,26 @@ class Form extends React.Component {
           />
         )}
         {children}
-        <div className="form-navigation">
-          <button
-            type="submit"
-            className={
-              'button forward-button is-link ' + (!showSubmit && ' is-hidden')
-            }
-          >
-            {submitValue}
-          </button>
-          <button
-            type="button"
-            className={
-              'button back-button is-pulled-left ' + (!showBack && ' is-hidden')
-            }
-            onClick={backHandler}
-          >
-            {backValue}
-          </button>
+        <div className="columns">
+          <div className="column is-10 form-navigation is-offset-1">
+            <button
+              type="submit"
+              className={
+                'button forward-button is-link ' + (!showSubmit && ' is-hidden')
+              }
+            >
+              {submitValue}
+            </button>
+            <button
+              type="button"
+              className={
+                'button back-button is-pulled-left ' + (!showBack && ' is-hidden')
+              }
+              onClick={backHandler}
+            >
+              {backValue}
+            </button>
+          </div>
         </div>
       </form>
     )

@@ -42,7 +42,7 @@ export const VenueTemplate = ({
             </div>
             <GoogleMapsDirectionsLink
               location={location}
-              text={'Navigate to ' + title + ' with Google Maps'}
+              text={'Navigate with Google Maps'}
             />
             <Subtitle text={'Information'} />
             <PageContent content={information} className={'information'} />

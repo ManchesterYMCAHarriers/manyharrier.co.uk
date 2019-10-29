@@ -7,11 +7,19 @@ class ProgressBar extends React.Component {
     const progress =
       Math.round(Math.max(0, Math.min(stage, stages)) / stages) * 100
 
+    const classNames = ['progress']
+
+    if (validationIssues.length > 0) {
+      classNames.push('is-danger')
+    }
+
+    if (stage === stages) {
+      classNames.push('is-success')
+    }
+
     return (
       <progress
-        className={
-          'progress' + (validationIssues.length > 0 ? ' is-danger' : '')
-        }
+        className={classNames.join(' ')}
         value={Math.max(0, Math.min(stage, stages))}
         max={stages}
       >

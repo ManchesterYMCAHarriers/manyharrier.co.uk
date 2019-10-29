@@ -11,7 +11,7 @@ class FieldsetPostcode extends React.Component {
   }
 
   componentDidMount() {
-    const { inputId, setFormValidationState, validationMessages } = this.props
+    const {inputId, setFormValidationState, validationMessages} = this.props
 
     const el = document.getElementById(inputId)
 
@@ -96,20 +96,25 @@ class FieldsetPostcode extends React.Component {
             {label}
           </label>
         </legend>
-        <div className="field">
-          {hint && <p className="hint">{hint}</p>}
-          {this.state.validationMessage && (
-            <p className="validation-message">{this.state.validationMessage}</p>
-          )}
-          <div className="control">
-            <input
-              type="text"
-              className="input is-narrow"
-              name={inputId}
-              id={inputId}
-              {...inputAttributes}
-              defaultValue={defaultValue}
-            />
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            <div className="field">
+              {hint && <p className="hint">{hint}</p>}
+              {this.state.validationMessage && (
+                <p
+                  className="validation-message">{this.state.validationMessage}</p>
+              )}
+              <div className="control">
+                <input
+                  type="text"
+                  className="input is-narrow"
+                  name={inputId}
+                  id={inputId}
+                  {...inputAttributes}
+                  defaultValue={defaultValue}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </fieldset>

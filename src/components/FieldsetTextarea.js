@@ -34,14 +34,18 @@ class FieldsetTextarea extends React.Component {
             {label}
           </label>
         </legend>
-        <Textarea
-          hint={hint}
-          inputAttributes={inputAttributes}
-          inputId={inputId}
-          rows={rows}
-          setFormValidationState={setFormValidationState}
-          validationMessages={validationMessages}
-        />
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            <Textarea
+              hint={hint}
+              inputAttributes={inputAttributes}
+              inputId={inputId}
+              rows={rows}
+              setFormValidationState={setFormValidationState}
+              validationMessages={validationMessages}
+            />
+          </div>
+        </div>
       </fieldset>
     )
   }

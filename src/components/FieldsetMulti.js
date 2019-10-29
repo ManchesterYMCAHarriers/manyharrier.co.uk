@@ -4,7 +4,7 @@ import ValidationSummary from './ValidationSummary'
 
 class FieldsetMulti extends React.Component {
   render() {
-    const { children, hint, legend, validationIssues, visible } = this.props
+    const {children, hint, legend, validationIssues, visible} = this.props
     const fieldsetClassNames = ['fieldset-multi']
 
     if (!visible) {
@@ -17,8 +17,12 @@ class FieldsetMulti extends React.Component {
           <h2 className="title is-size-3">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        {hint && <p className="hint">{hint}</p>}
-        {children}
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            {hint && <p className="hint">{hint}</p>}
+            {children}
+          </div>
+        </div>
       </fieldset>
     )
   }

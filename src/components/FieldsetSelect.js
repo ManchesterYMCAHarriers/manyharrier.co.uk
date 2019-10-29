@@ -85,15 +85,20 @@ class FieldsetSelect extends React.Component {
                  htmlFor={inputId}>{legend}</label>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        {hint && <p className="hint">{hint}</p>}
-        {this.state.validationMessage && (
-          <p className="validation-message">{this.state.validationMessage}</p>
-        )}
-        <div className="field select-control">
-          <div className="control">
-            <div className="select">
-              <select id={inputId}
-                      name={inputId} {...inputAttributes}>{children}</select>
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+            {hint && <p className="hint">{hint}</p>}
+            {this.state.validationMessage && (
+              <p
+                className="validation-message">{this.state.validationMessage}</p>
+            )}
+            <div className="field select-control">
+              <div className="control">
+                <div className="select">
+                  <select id={inputId}
+                          name={inputId} {...inputAttributes}>{children}</select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
