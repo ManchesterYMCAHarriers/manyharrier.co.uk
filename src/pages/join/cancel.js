@@ -14,6 +14,10 @@ const Cancel = () => (
             <Link to={'/contact'}>get in touch</Link> with us as soon as
             possible.
           </p>
+          <p>
+            You will not be registered as a member of the Club until you have
+            paid!
+          </p>
         </div>
       </div>
     </section>

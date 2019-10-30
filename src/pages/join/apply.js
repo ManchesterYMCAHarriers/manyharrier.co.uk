@@ -376,7 +376,7 @@ export default class Apply extends React.Component {
           quantity: 1,
         },
       ],
-      successUrl: this.state.baseUrl + `/join/success/`,
+      successUrl: this.state.baseUrl + (this.state.data.membership === this.state.stripeSkus.firstClaim) ? `/join/success/` : `/join/success-second-claim`,
       cancelUrl: this.state.baseUrl + `/join/cancel/`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
@@ -477,7 +477,7 @@ export default class Apply extends React.Component {
             <section className="section">
               <div className="container">
                 <div className="content">
-                  <PageTitle title={'Join us'} />
+                  <PageTitle title={'Membership application form'} />
                   <Form
                     formId={'join'}
                     method={'POST'}
