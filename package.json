@@ -35,6 +35,7 @@
     "react-dom": "^16.8.4",
     "react-helmet": "^5.2.0",
     "react-icons": "^3.7.0",
+    "stripe": "^7.10.0",
     "uuid": "^3.2.1"
   },
   "keywords": [
@@ -45,9 +46,10 @@
   "scripts": {
     "clean": "gatsby clean",
     "start": "npm run develop",
-    "build": "npm run clean && gatsby build",
+    "build": "npm run populate-stripe && npm run clean && gatsby build",
     "develop": "npm run clean && gatsby develop",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js}\"",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js,stripe/**/*.js}\"",
+    "populate-stripe": "node ./stripe/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

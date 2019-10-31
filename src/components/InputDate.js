@@ -9,7 +9,7 @@ class InputDate extends React.Component {
       day: null,
       month: null,
       year: null,
-      date: "",
+      date: '',
       validationMessage: null,
     }
   }
@@ -216,11 +216,15 @@ class InputDate extends React.Component {
             if (this.state.month && this.state.year) {
               if (checkValidity()) {
                 const dateValue = Moment.utc(
-                  this.state.year + '-' + this.state.month + '-' + this.state.day,
+                  this.state.year +
+                    '-' +
+                    this.state.month +
+                    '-' +
+                    this.state.day,
                   'YYYY-MM-DD'
                 )
                 this.setState({
-                  date: dateValue.format("D MMMM YYYY")
+                  date: dateValue.format('D MMMM YYYY'),
                 })
               }
             }
@@ -243,7 +247,7 @@ class InputDate extends React.Component {
                 'YYYY-MM-DD'
               )
               this.setState({
-                date: dateValue.format("D MMMM YYYY")
+                date: dateValue.format('D MMMM YYYY'),
               })
             }
           }
@@ -264,7 +268,7 @@ class InputDate extends React.Component {
                 'YYYY-MM-DD'
               )
               this.setState({
-                date: dateValue.format("D MMMM YYYY")
+                date: dateValue.format('D MMMM YYYY'),
               })
             }
           }

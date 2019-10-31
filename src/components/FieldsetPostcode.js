@@ -11,17 +11,14 @@ class FieldsetPostcode extends React.Component {
   }
 
   componentDidMount() {
-    const {inputId, setFormValidationState, validationMessages} = this.props
+    const { inputId, setFormValidationState, validationMessages } = this.props
 
     const el = document.getElementById(inputId)
 
     el.addEventListener(
       'invalid',
       () => {
-        const failureStates = [
-          'valueMissing',
-          'customError',
-        ]
+        const failureStates = ['valueMissing', 'customError']
 
         for (let i = 0; i < failureStates.length; i++) {
           const failureState = failureStates[i]
@@ -43,26 +40,32 @@ class FieldsetPostcode extends React.Component {
     el.addEventListener(
       'change',
       () => {
-        this.setState({
-          value: el.value,
-        }, () => {
-          let normalizedPostcode = el.value.toUpperCase().replace(/\s/g, "")
-          const constraint = new RegExp('^((([A-PR-UWYZ][A-HK-Y]?[0-9][0-9]?)|(([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRV-Y])))[0-9][ABD-HJLNP-UW-Z]{2})$', "")
-          if (constraint.test(normalizedPostcode)) {
-            el.setCustomValidity("")
-          } else {
-            el.setCustomValidity(validationMessages['customError'])
-          }
+        this.setState(
+          {
+            value: el.value,
+          },
+          () => {
+            let normalizedPostcode = el.value.toUpperCase().replace(/\s/g, '')
+            const constraint = new RegExp(
+              '^((([A-PR-UWYZ][A-HK-Y]?[0-9][0-9]?)|(([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRV-Y])))[0-9][ABD-HJLNP-UW-Z]{2})$',
+              ''
+            )
+            if (constraint.test(normalizedPostcode)) {
+              el.setCustomValidity('')
+            } else {
+              el.setCustomValidity(validationMessages['customError'])
+            }
 
-          if (el.checkValidity()) {
-            this.setState({
-              validationMessage: null,
-            })
-            setFormValidationState({
-              id: inputId,
-            })
+            if (el.checkValidity()) {
+              this.setState({
+                validationMessage: null,
+              })
+              setFormValidationState({
+                id: inputId,
+              })
+            }
           }
-        })
+        )
       },
       false
     )
@@ -101,8 +104,9 @@ class FieldsetPostcode extends React.Component {
             <div className="field">
               {hint && <p className="hint">{hint}</p>}
               {this.state.validationMessage && (
-                <p
-                  className="validation-message">{this.state.validationMessage}</p>
+                <p className="validation-message">
+                  {this.state.validationMessage}
+                </p>
               )}
               <div className="control">
                 <input

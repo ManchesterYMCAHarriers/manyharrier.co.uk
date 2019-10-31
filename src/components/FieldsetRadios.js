@@ -11,10 +11,10 @@ class FieldsetRadios extends React.Component {
   }
 
   componentDidMount() {
-    const {options, setFormValidationState, validationMessages} = this.props
+    const { options, setFormValidationState, validationMessages } = this.props
 
     document
-      .querySelectorAll(options.map(({id}) => '#' + id).join(', '))
+      .querySelectorAll(options.map(({ id }) => '#' + id).join(', '))
       .forEach(el => {
         el.addEventListener(
           'invalid',
@@ -93,10 +93,11 @@ class FieldsetRadios extends React.Component {
           <div className="column is-10 is-offset-1">
             {hint && <p className="hint">{hint}</p>}
             {this.state.validationMessage && (
-              <p
-                className="validation-message">{this.state.validationMessage}</p>
+              <p className="validation-message">
+                {this.state.validationMessage}
+              </p>
             )}
-            {options.map(({id, label, value}) => (
+            {options.map(({ id, label, value }) => (
               <div className="field" key={'radio-' + id}>
                 <label className="radio">
                   <input

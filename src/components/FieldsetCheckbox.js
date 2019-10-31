@@ -11,7 +11,7 @@ class FieldsetCheckbox extends React.Component {
   }
 
   componentDidMount() {
-    const {inputId, setFormValidationState, validationMessages} = this.props
+    const { inputId, setFormValidationState, validationMessages } = this.props
 
     const el = document.getElementById(inputId)
 
@@ -89,8 +89,9 @@ class FieldsetCheckbox extends React.Component {
           <div className="column is-10 is-offset-1">
             {statements}
             {this.state.validationMessage && (
-              <p
-                className="validation-message">{this.state.validationMessage}</p>
+              <p className="validation-message">
+                {this.state.validationMessage}
+              </p>
             )}
             <div className="field">
               <label className="checkbox">

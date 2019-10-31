@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import logo from '../img/logo.svg'
-import * as Moment from "moment";
+import * as Moment from 'moment'
 
 const Navbar = class extends React.Component {
   constructor(props) {
@@ -33,7 +33,11 @@ const Navbar = class extends React.Component {
   }
 
   render() {
-    const eventsCalendarSlug = "/events/" + Moment.utc().format("MMMM-YYYY").toLowerCase()
+    const eventsCalendarSlug =
+      '/events/' +
+      Moment.utc()
+        .format('MMMM-YYYY')
+        .toLowerCase()
 
     return (
       <nav

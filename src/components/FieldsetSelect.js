@@ -11,16 +11,14 @@ class FieldsetSelect extends React.Component {
   }
 
   componentDidMount() {
-    const {inputId, setFormValidationState, validationMessages} = this.props
+    const { inputId, setFormValidationState, validationMessages } = this.props
 
     const el = document.getElementById(inputId)
 
     el.addEventListener(
       'invalid',
       () => {
-        const failureStates = [
-          'valueMissing',
-        ]
+        const failureStates = ['valueMissing']
 
         for (let i = 0; i < failureStates.length; i++) {
           const failureState = failureStates[i]
@@ -39,7 +37,9 @@ class FieldsetSelect extends React.Component {
       false
     )
 
-    el.addEventListener('change', () => {
+    el.addEventListener(
+      'change',
+      () => {
         this.setState({
           value: el.value,
         })
@@ -81,22 +81,25 @@ class FieldsetSelect extends React.Component {
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <legend className="legend-label">
-          <label className="title is-size-3"
-                 htmlFor={inputId}>{legend}</label>
+          <label className="title is-size-3" htmlFor={inputId}>
+            {legend}
+          </label>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
         <div className="columns">
           <div className="column is-10 is-offset-1">
             {hint && <p className="hint">{hint}</p>}
             {this.state.validationMessage && (
-              <p
-                className="validation-message">{this.state.validationMessage}</p>
+              <p className="validation-message">
+                {this.state.validationMessage}
+              </p>
             )}
             <div className="field select-control">
               <div className="control">
                 <div className="select">
-                  <select id={inputId}
-                          name={inputId} {...inputAttributes}>{children}</select>
+                  <select id={inputId} name={inputId} {...inputAttributes}>
+                    {children}
+                  </select>
                 </div>
               </div>
             </div>

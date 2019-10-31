@@ -3,16 +3,14 @@ import PropTypes from 'prop-types'
 
 class PageTitle extends React.Component {
   render() {
-    const {title, subtitle} = this.props
+    const { title, subtitle } = this.props
 
     return (
       <div>
         <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
           {title}
         </h1>
-        {subtitle && (
-          <p className="subtitle is-size-4">{subtitle}</p>
-        )}
+        {subtitle && <p className="subtitle is-size-4">{subtitle}</p>}
       </div>
     )
   }

@@ -34,7 +34,9 @@ exports.createPages = async ({ actions, graphql }) => {
   pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
     const id = node.id
     const now = Moment.utc().format('YYYY-MM-DD HH:mm')
-    const recent = Moment.utc().subtract(2, 'months').format('YYYY-MM-DD HH:mm')
+    const recent = Moment.utc()
+      .subtract(2, 'months')
+      .format('YYYY-MM-DD HH:mm')
     createPage({
       path: node.fields.slug,
       component: path.resolve(

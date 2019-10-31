@@ -37,6 +37,18 @@ collections:
       - {label: "Address", name: "address", widget: "text", hint: "The postal address of the venue. Include a postcode if you can!"}
       - {label: "Location", name: "location", widget: "map", hint: "Select the location of the venue on the map", decimals: 6}
       - {label: "Information", name: "body", widget: "markdown", hint: "Useful information about the venue, e.g. car parking, public transport", required: false}
+  - name: "blog"
+    label: "Blog"
+    folder: "src/pages/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "blogKey"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post"}
+      - {label: "Title", name: "blogKey", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
   - name: "championships"
     label: "Championships"
     folder: "src/pages/championships"
@@ -83,18 +95,6 @@ collections:
       - {label: "Type", name: "forEventType", widget: "select", options: ["Group Run", "Meeting", "Race", "Social", "Speedwork"], required: false, hint: "Select if this info relates to an event type"}
       - {label: "Terrain", name: "forTerrain", widget: "select", options: ["Cross Country", "Fell", "Mixed Terrain", "Road", "Track", "Trail"], required: false, hint: "Select if this info relates to a terrain"}
       - {label: "Info", name: "body", widget: "markdown", hint: "Reusable information, e.g. kit requirements, generic session structure, etc."}
-  - name: "blog"
-    label: "Blog"
-    folder: "src/pages/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    identifier_field: "blogKey"
-    fields:
-      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post"}
-      - {label: "Title", name: "blogKey", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Body", name: "body", widget: "markdown"}
   - name: "pages"
     label: "Pages"
     files:

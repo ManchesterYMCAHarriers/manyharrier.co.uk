@@ -1,0 +1,9 @@
+{
+  "attributes": [
+    "name",
+    "claim",
+    "valid_to"
+  ],
+  "shippable": false,
+  "type": "good"
+}

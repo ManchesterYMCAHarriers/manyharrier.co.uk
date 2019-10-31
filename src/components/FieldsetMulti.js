@@ -4,7 +4,7 @@ import ValidationSummary from './ValidationSummary'
 
 class FieldsetMulti extends React.Component {
   render() {
-    const {children, hint, legend, validationIssues, visible} = this.props
+    const { children, hint, legend, validationIssues, visible } = this.props
     const fieldsetClassNames = ['fieldset-multi']
 
     if (!visible) {

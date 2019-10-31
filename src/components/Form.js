@@ -4,7 +4,7 @@ import ProgressBar from './ProgressBar'
 
 class Form extends React.Component {
   componentDidMount() {
-    const {formId, submitHandler} = this.props
+    const { formId, submitHandler } = this.props
 
     const form = document.getElementById(formId)
     form.setAttribute('noValidate', 'true')
@@ -61,7 +61,8 @@ class Form extends React.Component {
             <button
               type="button"
               className={
-                'button back-button is-pulled-left ' + (!showBack && ' is-hidden')
+                'button back-button is-pulled-left ' +
+                (!showBack && ' is-hidden')
               }
               onClick={backHandler}
             >
