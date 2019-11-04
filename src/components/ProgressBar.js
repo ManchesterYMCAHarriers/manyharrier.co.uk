@@ -7,7 +7,7 @@ class ProgressBar extends React.Component {
     const progress =
       Math.round(Math.max(0, Math.min(stage, stages)) / stages) * 100
 
-    const classNames = ['progress']
+    const classNames = ['w-full border border-gray-400 rounded bg-gray-800']
 
     if (validationIssues.length > 0) {
       classNames.push('is-danger')

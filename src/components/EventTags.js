@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   FaBeer,
-  FaMapMarkerAlt,
   FaMedal,
   FaMountain,
   FaRunning,
@@ -22,20 +21,18 @@ class EventTags extends React.Component {
       competition: <FaTrophy />,
       eventType: <FaRunning />,
       terrain: <FaMountain />,
-      venue: <FaMapMarkerAlt />,
     }
 
     const classNames = {
-      championship: 'is-warning',
-      competition: 'is-info',
-      eventType: 'is-primary',
-      terrain: 'is-dark',
-      venue: 'is-success',
+      championship: 'border-yellow-500',
+      competition: 'border-blue-500',
+      eventType: 'border-orange-500',
+      terrain: 'border-green-500',
     }
 
     const data = tags.map(tag => {
       let icon = tag.value === 'Social' ? <FaBeer /> : icons[tag.key]
-      let className = tag.value === 'Social' ? 'is-danger' : classNames[tag.key]
+      let className = tag.value === 'Social' ? 'border-pink-300' : classNames[tag.key]
       return {
         className: className,
         icon: icon,
@@ -44,15 +41,11 @@ class EventTags extends React.Component {
     })
 
     return (
-      <div className="field is-grouped is-grouped-multiline">
-        {data.map((tag, i) => (
-          <div className="control" key={key + '-tag-' + i}>
-            <div className="tags has-addons">
-              <span className="tag">
-                <span className="icon is-small">{tag.icon}</span>
-              </span>
-              <span className={'tag ' + tag.className}>{tag.value}</span>
-            </div>
+      <div className="flex flex-wrap">
+        {data.map(({className, icon, value}, i) => (
+          <div className={"flex flex-wrap items-center mt-2 mr-2 leading-relaxed bg-white border-4 rounded-lg " + className} key={key + '-tag-' + i}>
+            <span className="px-2 flex-shrink-0 flex-grow-0">{icon}</span>
+            <span className="flex-shrink-0 flex-grow-0 text-xs px-2">{value}</span>
           </div>
         ))}
       </div>

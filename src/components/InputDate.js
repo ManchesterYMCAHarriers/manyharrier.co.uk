@@ -217,10 +217,10 @@ class InputDate extends React.Component {
               if (checkValidity()) {
                 const dateValue = Moment.utc(
                   this.state.year +
-                    '-' +
-                    this.state.month +
-                    '-' +
-                    this.state.day,
+                  '-' +
+                  this.state.month +
+                  '-' +
+                  this.state.day,
                   'YYYY-MM-DD'
                 )
                 this.setState({
@@ -301,7 +301,6 @@ class InputDate extends React.Component {
         <input
           type="hidden"
           readOnly={true}
-          className="is-hidden"
           name={inputId}
           id={inputId}
           value={this.state.date}
@@ -311,65 +310,59 @@ class InputDate extends React.Component {
         {this.state.validationMessage && (
           <p className="validation-message">{this.state.validationMessage}</p>
         )}
-        <div className="columns is-mobile">
-          <div className="column is-narrow">
-            <div className="field">
-              <label className="label" htmlFor={inputId + '-day'}>
-                Day
-              </label>
-              <div className="control">
-                <input
-                  className="input"
-                  id={inputId + '-day'}
-                  name={inputId + '-day'}
-                  type="number"
-                  min="1"
-                  max="31"
-                  step="1"
-                  {...inputAttributes}
-                  autoComplete={autoCompleteDay}
-                />
-              </div>
+        <div className="flex">
+          <div className="flex-shrink-0 flex-grow-0 mr-2">
+            <label className="label" htmlFor={inputId + '-day'}>
+              Day
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                id={inputId + '-day'}
+                name={inputId + '-day'}
+                type="number"
+                min="1"
+                max="31"
+                step="1"
+                {...inputAttributes}
+                autoComplete={autoCompleteDay}
+              />
             </div>
           </div>
-          <div className="column is-narrow">
-            <div className="field">
-              <label className="label" htmlFor={inputId + '-month'}>
-                Month
-              </label>
-              <div className="control">
-                <input
-                  className="input"
-                  id={inputId + '-month'}
-                  name={inputId + '-month'}
-                  type="number"
-                  min="1"
-                  max="12"
-                  step="1"
-                  {...inputAttributes}
-                  autoComplete={autoCompleteMonth}
-                />
-              </div>
+          <div className="flex-shrink-0 flex-grow-0 mr-2">
+            <label className="label" htmlFor={inputId + '-month'}>
+              Month
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                id={inputId + '-month'}
+                name={inputId + '-month'}
+                type="number"
+                min="1"
+                max="12"
+                step="1"
+                {...inputAttributes}
+                autoComplete={autoCompleteMonth}
+              />
             </div>
           </div>
-          <div className="column is-narrow">
-            <div className="field">
-              <label className="label" htmlFor={inputId + '-year'}>
-                Year
-              </label>
-              <div className="control">
-                <input
-                  className="input"
-                  id={inputId + '-year'}
-                  min={earliestDate && earliestDate.year()}
-                  max={latestDate && latestDate.year()}
-                  name={inputId + '-year'}
-                  type="number"
-                  step="1"
-                  {...inputAttributes}
-                  autoComplete={autoCompleteYear}
-                />
-              </div>
+          <div className="flex-shrink-0 flex-grow-0">
+            <label className="label" htmlFor={inputId + '-year'}>
+              Year
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                id={inputId + '-year'}
+                min={earliestDate && earliestDate.year()}
+                max={latestDate && latestDate.year()}
+                name={inputId + '-year'}
+                type="number"
+                step="1"
+                {...inputAttributes}
+                autoComplete={autoCompleteYear}
+              />
             </div>
           </div>
         </div>

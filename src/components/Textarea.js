@@ -80,15 +80,13 @@ class Textarea extends React.Component {
         {this.state.validationMessage && (
           <p className="validation-message">{this.state.validationMessage}</p>
         )}
-        <div className="control">
-          <textarea
-            className="textarea"
-            name={inputId}
-            id={inputId}
-            rows={rows}
-            {...inputAttributes}
-          />
-        </div>
+        <textarea
+          className="textarea"
+          name={inputId}
+          id={inputId}
+          rows={rows}
+          {...inputAttributes}
+        />
       </div>
     )
   }

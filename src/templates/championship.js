@@ -4,8 +4,9 @@ import { graphql } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
-import PageTitle from '../components/PageTitle'
 import EventBox from '../components/EventBox'
+import StandardContentContainer from "../components/StandardContentContainer";
+import {H1, H2} from "../components/Headings";
 
 export const ChampionshipTemplate = ({
   contentComponent,
@@ -16,27 +17,20 @@ export const ChampionshipTemplate = ({
   const PageContent = contentComponent || Content
 
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <PageTitle title={title} />
-            <h2>Fixtures</h2>
-            {events.map((event, i) => (
-              <EventBox
-                key={'championship-event-' + i}
-                startsAt={event.startsAt}
-                slug={event.slug}
-                title={event.title}
-                tags={event.tags}
-              />
-            ))}
-            <h2>Information</h2>
-            <PageContent content={information} />
-          </div>
-        </div>
-      </div>
-    </section>
+    <StandardContentContainer>
+      <H1 title={title} />
+      <H2 title={"Fixtures"} />
+      {events.map(({startsAt, slug, title, venue}, i) => (
+        <EventBox
+          key={'championship-event-' + i}
+          startsAt={startsAt}
+          slug={slug}
+          title={title}
+          venue={venue}
+        />
+      ))}
+      <PageContent content={information} />
+    </StandardContentContainer>
   )
 }
 
@@ -46,13 +40,8 @@ ChampionshipTemplate.propTypes = {
     PropTypes.shape({
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       slug: PropTypes.string.isRequired,
-      tags: PropTypes.arrayOf(
-        PropTypes.shape({
-          key: PropTypes.string.isRequired,
-          value: PropTypes.string.isRequired,
-        })
-      ),
       title: PropTypes.string.isRequired,
+      venue: PropTypes.string.isRequired,
     })
   ),
   information: PropTypes.node,
@@ -64,37 +53,11 @@ const Championship = ({ data }) => {
 
   const events = (championship.frontmatter.championshipEvents || [])
     .map(event => {
-      const tags = []
-
-      if (
-        event.frontmatter.venue &&
-        event.frontmatter.venue.frontmatter.venueKey
-      ) {
-        tags.push({
-          key: 'venue',
-          value: event.frontmatter.venue.frontmatter.venueKey,
-        })
-      }
-
-      if (!championship.frontmatter.terrain && event.frontmatter.terrain) {
-        tags.push({
-          key: 'terrain',
-          value: event.frontmatter.terrain,
-        })
-      }
-
-      if (event.frontmatter.competitionForeignKey) {
-        tags.push({
-          key: 'competition',
-          value: event.frontmatter.competitionForeignKey,
-        })
-      }
-
       return {
         startsAt: Moment.utc(event.frontmatter.startsAt),
         slug: event.fields.slug,
-        tags: tags,
         title: event.frontmatter.eventKey,
+        venue: event.frontmatter.venue.frontmatter.venueKey
       }
     })
     .sort((a, b) => {
@@ -139,10 +102,8 @@ export const championshipQuery = graphql`
             slug
           }
           frontmatter {
-            competitionForeignKey
             eventKey
             startsAt
-            terrain
             venue {
               frontmatter {
                 venueKey

@@ -1,26 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import Moment from 'moment'
 import { Link } from 'gatsby'
-import EventTags from './EventTags'
 
 class EventBox extends React.Component {
   render() {
-    const { startsAt, slug, tags, title } = this.props
+    const { startsAt, slug, title, venue} = this.props
 
     return (
-      <Link className={'box'} to={slug}>
-        <div className="columns">
-          <div className="column">
-            <div className="title is-size-4">{title}</div>
-            <div className="subtitle is-size-6">
-              <div>{startsAt.format('dddd Do MMMM YYYY')}</div>
-              <div>{startsAt.format('h:mma')}</div>
-            </div>
-          </div>
-          <div className="column">
-            <EventTags reactKey={'next-event-' + slug} tags={tags} />
-          </div>
+      <Link to={slug} className="w-full md:mx-2 flex flex-col border-b-2 border-gray-400 hover:border-red-400 hover:bg-gray-200 p-4 pb-2">
+        <h3 className="text-xl order-2 font-semibold">{title}</h3>
+        <p className="text-sm order-1 font-medium">{startsAt.format('dddd Do MMMM YYYY')}, {startsAt.format('h:mma')}</p>
+        {venue && <p className="text-sm order-3 font-light">{venue}</p>}
+        <div className="text-xs order-last text-right">
+          Full details <span className="text-red-400">&rarr;</span>
         </div>
       </Link>
     )
@@ -30,13 +23,8 @@ class EventBox extends React.Component {
 EventBox.propTypes = {
   startsAt: PropTypes.instanceOf(Moment).isRequired,
   slug: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })
-  ),
   title: PropTypes.string.isRequired,
+  venue: PropTypes.string,
 }
 
 export default EventBox

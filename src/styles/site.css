@@ -1,0 +1,140 @@
+@tailwind base;
+
+dl {
+    @apply mb-4
+}
+
+dt {
+    @apply font-bold mb-2 mt-4
+}
+
+dd {
+    @apply my-2 ml-2
+}
+
+.content h1 {
+    @apply text-2xl mt-4 mb-2
+}
+
+.content h2 {
+    @apply text-xl mt-4 mb-2
+}
+
+.content h3 {
+    @apply text-lg mt-4 mb-2
+}
+
+.content p {
+    @apply my-2
+}
+
+.content ul {
+    @apply my-4 ml-6
+}
+
+.content ul li {
+    @apply list-disc
+}
+
+.content ol li {
+    @apply list-decimal
+}
+
+.content a {
+    @apply text-red-700
+}
+
+.content a:hover {
+    @apply text-red-400 underline
+}
+
+@tailwind components;
+
+.input {
+    @apply p-2 border border-gray-700 w-full
+}
+
+.hint {
+    @apply my-2 text-gray-600 font-light
+}
+
+.label {
+    @apply block font-semibold mb-1
+}
+
+.legend {
+    @apply block text-2xl font-semibold mb-4
+}
+
+.checkbox .checkmark {
+    @apply absolute top-0 left-0 h-6 w-6 bg-gray-200 border border-gray-700
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox:hover input ~ .checkmark {
+    @apply bg-gray-400
+}
+
+/* When the radio button is checked, add a blue background */
+.checkbox input:checked ~ .checkmark {
+    @apply bg-blue-600
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkbox .checkmark:after {
+    content: "";
+    @apply absolute hidden
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkbox input:checked ~ .checkmark:after {
+    @apply block
+}
+
+/* Style the indicator (dot/circle) */
+.checkbox .checkmark:after {
+    left: 7px;
+    top: 1px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    @apply border-white border-r-2 border-b-2 h-4 w-2
+}
+
+.radio .checkmark {
+    @apply absolute top-0 left-0 h-6 w-6 bg-gray-200 border rounded-full border-gray-700
+}
+
+/* On mouse-over, add a grey background color */
+.radio:hover input ~ .checkmark {
+    @apply bg-gray-400
+}
+
+/* When the radio button is checked, add a blue background */
+.radio input:checked ~ .checkmark {
+    @apply bg-blue-600
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio .checkmark:after {
+    content: "";
+    @apply absolute hidden
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio input:checked ~ .checkmark:after {
+    @apply block
+}
+
+/* Style the indicator (dot/circle) */
+.radio .checkmark:after {
+    left: calc(0.375rem - 1px);
+    top: calc(0.375rem - 1px);
+    @apply bg-white rounded-full h-3 w-3
+}
+
+.validation-message {
+    @apply font-bold my-1 text-red-600
+}
+
+@tailwind utilities;

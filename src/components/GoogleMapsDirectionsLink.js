@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { FaCompass } from 'react-icons/fa'
+import * as PropTypes from 'prop-types'
 
 class GoogleMapsDirectionsLink extends React.Component {
   render() {
@@ -10,11 +9,8 @@ class GoogleMapsDirectionsLink extends React.Component {
       'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
 
     return (
-      <a className="button is-fullwidth" href={googleMapsDirectionsLink}>
-        <span className="icon">
-          <FaCompass />
-        </span>
-        <span>{text}</span>
+      <a className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200" href={googleMapsDirectionsLink}>
+        {text} <span className="text-red-400">&rarr;</span>
       </a>
     )
   }

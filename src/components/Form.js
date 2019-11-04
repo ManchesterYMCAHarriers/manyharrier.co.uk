@@ -1,10 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import ProgressBar from './ProgressBar'
+import * as PropTypes from 'prop-types'
 
 class Form extends React.Component {
   componentDidMount() {
-    const { formId, submitHandler } = this.props
+    const {formId, submitHandler} = this.props
 
     const form = document.getElementById(formId)
     form.setAttribute('noValidate', 'true')
@@ -23,14 +22,12 @@ class Form extends React.Component {
       method,
       showBack,
       showSubmit,
-      stage,
-      stages,
       submitValue,
-      validationIssues,
     } = this.props
 
     return (
       <form
+        className="mb-8 md:mx-12"
         name={formId}
         id={formId}
         method={method}
@@ -40,29 +37,25 @@ class Form extends React.Component {
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value={formId} />
-        {children.length > 1 && (
-          <ProgressBar
-            stage={stage}
-            stages={stages}
-            validationIssues={validationIssues}
-          />
-        )}
         {children}
-        <div className="columns">
-          <div className="column is-10 form-navigation is-offset-1">
+        <div
+          className="flex flex-no-wrap w-full items-baseline justify-between mt-8">
+          <div className="flex-shrink-0 flex-grow order-last text-right">
             <button
               type="submit"
               className={
-                'button forward-button is-link ' + (!showSubmit && ' is-hidden')
+                'px-4 py-2 text-white font-semibold bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 border border-gray-700 rounded ' + (!showSubmit && ' hidden')
               }
             >
               {submitValue}
             </button>
+          </div>
+          <div className="flex-shrink-0 flex-grow order-first">
             <button
               type="button"
               className={
-                'button back-button is-pulled-left ' +
-                (!showBack && ' is-hidden')
+                'px-4 py-2 text-black font-semibold bg-gray-200 hover:bg-gray-400 focus:bg-gray-400 border border-gray-700 rounded ' +
+                (!showBack && ' hidden')
               }
               onClick={backHandler}
             >
@@ -87,12 +80,6 @@ Form.propTypes = {
   showSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,
   submitValue: PropTypes.string.isRequired,
-  validationIssues: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      message: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 }
 
 Form.defaults = {

@@ -1,68 +1,62 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
-import PageTitle from '../components/PageTitle'
-import Subtitle from '../components/Subtitle'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import Moment from 'moment'
 import Address from '../components/Address'
 import EventBox from '../components/EventBox'
+import {H1, H2} from "../components/Headings";
+import StandardContentContainer from "../components/StandardContentContainer";
 
 export const VenueTemplate = ({
-  contentComponent,
-  googleMapsApiKey,
-  title,
-  address,
-  location,
-  information,
-  events,
-}) => {
+                                contentComponent,
+                                googleMapsApiKey,
+                                title,
+                                address,
+                                location,
+                                information,
+                                events,
+                              }) => {
   const PageContent = contentComponent || Content
 
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <PageTitle title={title} />
-            <div className="subtitle is-size-4">
-              <Address address={address} />
-            </div>
-            <div className="maps-container">
-              <GoogleMapsLocation
-                googleMapsApiKey={googleMapsApiKey}
-                id={'venue-location-map'}
-                zoom={14}
-                location={location}
-                mapContainerClassName={'maps-style'}
-              />
-            </div>
-            <GoogleMapsDirectionsLink
-              location={location}
-              text={'Navigate with Google Maps'}
-            />
-            <Subtitle text={'Information'} />
-            <PageContent content={information} className={'information'} />
-            <Subtitle text={'Upcoming events'} />
-            {events.length === 0 && (
-              <div>There are no upcoming events at {title}</div>
-            )}
-            {events.map((event, i) => (
-              <EventBox
-                key={'venue-event-' + i}
-                startsAt={event.startsAt}
-                slug={event.slug}
-                tags={event.tags}
-                title={event.title}
-              />
-            ))}
-          </div>
-        </div>
+    <StandardContentContainer>
+      <H1 title={title} />
+      <div className="subtitle is-size-4">
+        <Address address={address} />
       </div>
-    </section>
+      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
+        <GoogleMapsLocation
+          googleMapsApiKey={googleMapsApiKey}
+          id={'venue-location-map'}
+          zoom={14}
+          location={location}
+          mapContainerClassName={'h-full'}
+        />
+      </div>
+      <div className="mt-2 mb-4">
+        <GoogleMapsDirectionsLink
+          location={location}
+          text={'Navigate to ' + title + ' with Google Maps'}
+        />
+      </div>
+      {information && <PageContent content={information} />}
+      <H2 title={'Upcoming events at ' + title} />
+      {events.length === 0 && (
+        <div>There are no upcoming events at {title}</div>
+      )}
+      {events.map(({startsAt, slug, title}, i) => (
+        <EventBox
+          key={'venue-event-' + i}
+          startsAt={startsAt}
+          slug={slug}
+          title={title}
+        />
+      ))}
+    </StandardContentContainer>
   )
 }
 
@@ -73,12 +67,6 @@ VenueTemplate.propTypes = {
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
-      tags: PropTypes.arrayOf(
-        PropTypes.shape({
-          key: PropTypes.string.isRequired,
-          value: PropTypes.string.isRequired,
-        })
-      ),
       title: PropTypes.string.isRequired,
     })
   ),
@@ -91,9 +79,9 @@ VenueTemplate.propTypes = {
   title: PropTypes.string,
 }
 
-const Venue = ({ data, pageContext }) => {
-  const { markdownRemark: venue } = data
-  const { now, googleMapsApiKey } = pageContext
+const Venue = ({data, pageContext}) => {
+  const {site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: venue} = data
+  const {now} = pageContext
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
 
@@ -104,40 +92,9 @@ const Venue = ({ data, pageContext }) => {
 
   const events = (venue.frontmatter.venueEvents || [])
     .map(event => {
-      const tags = []
-
-      if (event.frontmatter.eventType) {
-        tags.push({
-          key: 'eventType',
-          value: event.frontmatter.eventType,
-        })
-      }
-
-      if (event.frontmatter.terrain) {
-        tags.push({
-          key: 'terrain',
-          value: event.frontmatter.terrain,
-        })
-      }
-
-      if (event.frontmatter.championshipForeignKey) {
-        tags.push({
-          key: 'championship',
-          value: event.frontmatter.championshipForeignKey,
-        })
-      }
-
-      if (event.frontmatter.competitionForeignKey) {
-        tags.push({
-          key: 'competition',
-          value: event.frontmatter.competitionForeignKey,
-        })
-      }
-
       return {
         slug: event.fields.slug,
         startsAt: Moment.utc(event.frontmatter.startsAt),
-        tags: tags,
         title: event.frontmatter.eventKey,
       }
     })
@@ -167,15 +124,20 @@ const Venue = ({ data, pageContext }) => {
 }
 
 Venue.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
+  data: PropTypes.object,
 }
 
 export default Venue
 
 export const venueQuery = graphql`
   query VenueByID($id: String!) {
+    site {
+      siteMetadata {
+        apiKey {
+          googleMaps
+        }
+      }
+    }
     markdownRemark(id: { eq: $id }) {
       id
       html

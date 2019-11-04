@@ -72,7 +72,7 @@ class FieldsetCheckbox extends React.Component {
     const fieldsetClassNames = ['is-field']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     if (validationIssues.length > 0) {
@@ -82,32 +82,26 @@ class FieldsetCheckbox extends React.Component {
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <legend>
-          <h2 className="title is-size-3">{legend}</h2>
+          <h2 className="legend">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            {statements}
-            {this.state.validationMessage && (
-              <p className="validation-message">
-                {this.state.validationMessage}
-              </p>
-            )}
-            <div className="field">
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  id={inputId}
-                  name={inputId}
-                  value={value}
-                  {...inputAttributes}
-                />
-                &nbsp;{label}
-              </label>
-            </div>
-          </div>
-        </div>
+        {statements}
+        {this.state.validationMessage && (
+          <p className="validation-message">
+            {this.state.validationMessage}
+          </p>
+        )}
+        <label className="checkbox block font-semibold relative cursor-pointer my-4 select-none pl-10">
+          <input
+            type="checkbox"
+            className="absolute opacity-0 cursor-pointer h-0 w-0"
+            id={inputId}
+            name={inputId}
+            value={value}
+            {...inputAttributes}
+          />
+          <span className="checkmark" />{label}
+        </label>
       </fieldset>
     )
   }

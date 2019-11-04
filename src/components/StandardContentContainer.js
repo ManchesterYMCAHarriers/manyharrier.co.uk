@@ -6,13 +6,11 @@ class StandardContentContainer extends React.Component {
     const { children } = this.props
 
     return (
-      <section className="section">
-        <div className="container content">
-          <div className="columns">
-            <div className="column is-10 is-offset-1">{children}</div>
-          </div>
+      <main className="bg-white">
+        <div className="max-w-6xl mx-auto p-4">
+          {children}
         </div>
-      </section>
+      </main>
     )
   }
 }

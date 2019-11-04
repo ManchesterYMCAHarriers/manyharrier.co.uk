@@ -2,6 +2,18 @@ module.exports = {
   siteMetadata: {
     title: 'Manchester YMCA Harriers',
     description: 'Alpha',
+    baseUrl: process.env.URL,
+    apiKey: {
+      getAddress: process.env.GET_ADDRESS_API_KEY,
+      googleMaps: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
+      stripe: process.env.STRIPE_PUBLISHABLE_KEY,
+    },
+    social: {
+      facebook: "https://facebook.com/ManYMCAHarriers",
+      instagram: "https://instagram.com/ManYMCAHarriers",
+      strava: "https://strava.com/clubs/manyharrier",
+      twitter: "https://twitter.com/ManYMCAHarriers",
+    },
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -73,13 +85,15 @@ module.exports = {
         modulePath: `${__dirname}/src/cms/cms.js`,
       },
     },
+    `gatsby-plugin-postcss`,
     {
-      resolve: 'gatsby-plugin-purgecss', // purges all unused/unreferenced css rules
+      resolve: `gatsby-plugin-purgecss`,
       options: {
-        develop: false, // Activates purging in npm run develop
-        purgeOnly: ['/all.sass'], // applies purging only on the bulma css file
+        printRejected: true,
+        tailwind: true,
       },
-    }, // must be after other CSS plugins
+    },
+    // must be after other CSS plugins
     'gatsby-plugin-netlify', // make sure to keep it last in the array
   ],
 }

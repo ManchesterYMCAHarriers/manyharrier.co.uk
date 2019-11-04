@@ -1,35 +1,59 @@
 import React from 'react'
-import { Link } from 'gatsby'
-import logo from '../img/logo.svg'
+import * as PropTypes from 'prop-types'
+import {Link} from 'gatsby'
+import logo from '../img/logo-inverse.svg'
 import * as Moment from 'moment'
+
+const NavbarBrand = () => (
+  <Link to="/"
+        className="flex-shrink-0 flex-grow-0 ml-4 mt-4 mb-2 bg-transparent hover:bg-gray-800 focus:bg-gray-800 border-2 rounded-full border-transparent hover:border-white focus:border-white focus:outline-none"
+        title={"Go to home page"}>
+    <img className="h-20 w-20" src={logo} alt={""} />
+  </Link>
+)
+
+const NavbarLink = ({title, to}) => (
+  <Link
+    className="w-full md:w-auto text-center p-2 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
+    to={to}>{title}</Link>
+)
+
+NavbarLink.propTypes = {
+  title: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+}
+
+const NavbarSpacer = () => (
+  <div className="flex-shrink flex-grow" />
+)
+
+const NavbarToggle = ({callback}) => (
+  <button
+    className="flex-shrink-0 flex-grow-0 mr-6 border-2 p-2 border-gray-800 text-gray-200 hover:text-white hover:bg-gray-800 hover:border-white focus:bg-gray-800 focus:border-white focus:outline-none md:hidden"
+    onClick={callback}>Menu</button>
+)
+
+NavbarToggle.propTypes = {
+  callback: PropTypes.func.isRequired,
+}
 
 const Navbar = class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      active: false,
-      navBarActiveClass: '',
+      open: false,
+      openClassName: 'hidden md:flex'
     }
   }
 
-  toggleHamburger = () => {
-    // toggle the active boolean in the state
-    this.setState(
-      {
-        active: !this.state.active,
-      },
-      // after state has been updated,
-      () => {
-        // set the class in state for the navbar accordingly
-        this.state.active
-          ? this.setState({
-              navBarActiveClass: 'is-active',
-            })
-          : this.setState({
-              navBarActiveClass: '',
-            })
-      }
-    )
+  toggle = () => {
+    this.setState({
+      open: !this.state.open,
+    }, () => {
+      this.setState({
+        openClassName: this.state.open ? 'flex' : 'hidden md:flex'
+      })
+    })
   }
 
   render() {
@@ -40,56 +64,22 @@ const Navbar = class extends React.Component {
         .toLowerCase()
 
     return (
-      <nav
-        className="navbar is-transparent"
-        role="navigation"
-        aria-label="main-navigation"
+      <div
+        className="bg-black text-white"
       >
-        <div className="container">
-          <div className="navbar-brand">
-            <Link to="/" className="navbar-item logo" title="Logo">
-              <img src={logo} alt="Manchester YMCA Harriers" />
-            </Link>
-            {/* Hamburger menu */}
-            <div
-              className={`navbar-burger burger ${this.state.navBarActiveClass}`}
-              data-target="navMenu"
-              onClick={() => this.toggleHamburger()}
-            >
-              <span />
-              <span />
-              <span />
-            </div>
+        <nav
+          className="max-w-6xl mx-auto flex flex-wrap items-center justify-between border-b-2 border-gray-700"
+          role="navigation"
+          aria-label="main-navigation">
+          <NavbarBrand />
+          <NavbarToggle open={this.state.open} callback={this.toggle} />
+          <div className={"flex-shrink-0 flex-grow w-full md:w-auto flex-wrap items-center justify-between md:mx-4 " + this.state.openClassName}>
+            <NavbarLink title={"Join us!"} to={"/join"} />
+            <NavbarSpacer />
+            <NavbarLink title={"Events calendar"} to={eventsCalendarSlug} />
           </div>
-          <div
-            id="navMenu"
-            className={`navbar-menu ${this.state.navBarActiveClass}`}
-          >
-            <div className="navbar-start has-text-centered">
-              <Link className="navbar-item" to="/join">
-                Join Us!
-              </Link>
-            </div>
-            <div className="navbar-end has-text-centered">
-              <Link className="navbar-item" to={eventsCalendarSlug}>
-                Events calendar
-              </Link>
-              <Link className="navbar-item" to="/kit">
-                Kit
-              </Link>
-              <Link className="navbar-item" to="/blog">
-                Blog
-              </Link>
-              <Link className="navbar-item" to="/about">
-                About
-              </Link>
-              <Link className="navbar-item" to="/contact">
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     )
   }
 }

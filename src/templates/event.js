@@ -4,16 +4,14 @@ import { graphql, Link } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
-import PageTitle from '../components/PageTitle'
-import EventStartsAt from '../components/EventStartsAt'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { get } from 'lodash'
 import Address from '../components/Address'
 import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
-import { FaInfo } from 'react-icons/fa'
 import EventTags from '../components/EventTags'
+import {H1} from "../components/Headings";
 
 export const EventTemplate = ({
   contentComponent,
@@ -37,24 +35,26 @@ export const EventTemplate = ({
 
   return (
     <StandardContentContainer>
-      <div className="columns is-vcentered">
-        <div className="column is-two-thirds">
-          <PageTitle title={title} />
-          <EventStartsAt startsAt={startsAt} />
+      <H1 title={title} />
+      <div className="flex flex-wrap md:flex-no-wrap">
+        <div className="flex-shrink-0 flex-grow">
+          <p className="text-lg leading-relaxed">
+            {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
+          </p>
           <EventTags reactKey={'event'} tags={tags} />
         </div>
-        <div className="column is-one-third has-text-right-tablet">
+        <div className="flex-shrink-0 flex-grow-0 w-full md:w-auto mt-4 md:mt-0 md:text-right">
           <Address address={venue.address} title={venue.title} />
         </div>
       </div>
-      <div className="maps-container">
+      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
         {track && (
           <GoogleMapsLocationAndRoute
             googleMapsApiKey={googleMapsApiKey}
             track={track}
             id={'event-location-and-route'}
             location={venue.location}
-            mapContainerClassName={'maps-style'}
+            mapContainerClassName={'h-full'}
           />
         )}
         {!track && (
@@ -62,23 +62,20 @@ export const EventTemplate = ({
             googleMapsApiKey={googleMapsApiKey}
             id={'event-location'}
             location={venue.location}
-            mapContainerClassName={'maps-style'}
+            mapContainerClassName={'h-full'}
           />
         )}
       </div>
-      <div className="columns">
-        <div className="column">
+      <div className="flex flex-wrap md:flex-no-wrap mt-2">
+        <div className="w-full md:w-5/12 md:mr-2 flex-shrink-0 flex-grow">
           <GoogleMapsDirectionsLink
             location={venue.location}
             text={'Navigate to ' + venue.title + ' with Google Maps'}
           />
         </div>
-        <div className="column">
-          <Link to={venue.slug} className="button is-fullwidth">
-            <span className="icon">
-              <FaInfo />
-            </span>
-            <span>Full venue info</span>
+        <div className="w-full md:w-5/12 md:ml-2 flex-shrink-0 flex-grow">
+          <Link to={venue.slug} className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200">
+            Full venue info <span className="text-red-400">&rarr;</span>
           </Link>
         </div>
       </div>
@@ -143,9 +140,7 @@ EventTemplate.propTypes = {
 }
 
 const Event = ({ data, pageContext }) => {
-  const { markdownRemark: event } = data
-
-  const { googleMapsApiKey } = pageContext
+  const { site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: event } = data
 
   const startsAt = Moment.utc(event.frontmatter.startsAt)
 
@@ -252,6 +247,13 @@ export default Event
 
 export const eventQuery = graphql`
   query EventByID($id: String!) {
+    site {
+      siteMetadata {
+        apiKey {
+          googleMaps
+        }
+      }
+    }
     markdownRemark(id: { eq: $id }) {
       id
       html

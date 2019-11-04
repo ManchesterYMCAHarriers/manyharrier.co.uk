@@ -3,6 +3,9 @@ const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
 const Moment = require('moment')
+const remark = require('remark')
+const recommended  = require('remark-preset-lint-recommended')
+const remarkHtml  = require('remark-html')
 
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
@@ -47,10 +50,6 @@ exports.createPages = async ({ actions, graphql }) => {
         id,
         now,
         recent,
-        baseUrl: process.env.URL,
-        getAddressApiKey: process.env.GET_ADDRESS_API_KEY,
-        googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
-        stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       },
     })
   })
@@ -140,7 +139,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   fmImagesToRelative(node) // convert image paths for gatsby images
 
-  var value
+  let value
 
   if (node.internal.type === `MarkdownRemark`) {
     value = createFilePath({ node, getNode })
@@ -149,21 +148,47 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value,
     })
+
+    const {templateKey} = node.frontmatter
+
+    if (templateKey === 'join-page') {
+      const {howToJoinUs, membershipBenefits, yClubFacilities} = node.frontmatter
+
+      value = remark().use(recommended).use(remarkHtml).processSync(howToJoinUs).toString()
+
+      createNodeField({
+        name: `howToJoinUs`,
+        node,
+        value,
+      })
+
+      value = remark().use(recommended).use(remarkHtml).processSync(membershipBenefits).toString()
+
+      createNodeField({
+        name: `membershipBenefits`,
+        node,
+        value,
+      })
+
+      value = remark().use(recommended).use(remarkHtml).processSync(yClubFacilities).toString()
+
+      createNodeField({
+        name: `yClubFacilities`,
+        node,
+        value,
+      })
+    }
+
+    if (templateKey === 'committee-page') {
+      const {intro} = node.frontmatter
+
+      value = remark().use(recommended).use(remarkHtml).processSync(intro).toString()
+
+      createNodeField({
+        name: `intro`,
+        node,
+        value,
+      })
+    }
   }
-}
-
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-
-  deletePage(page)
-  createPage({
-    ...page,
-    context: {
-      ...page.context,
-      baseUrl: process.env.URL,
-      getAddressApiKey: process.env.GET_ADDRESS_API_KEY,
-      googleMapsApiKey: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
-      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    },
-  })
 }

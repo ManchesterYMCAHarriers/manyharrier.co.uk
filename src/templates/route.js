@@ -4,9 +4,10 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
 import GoogleMapsRoute from '../components/GoogleMapsRoute'
-import PageTitle from '../components/PageTitle'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
+import StandardContentContainer from "../components/StandardContentContainer";
+import {H1, H2} from "../components/Headings";
 
 export const RouteTemplate = ({
   contentComponent,
@@ -19,38 +20,32 @@ export const RouteTemplate = ({
   const PageContent = contentComponent || Content
 
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <PageTitle title={title} />
-            <div className="maps-container">
-              <GoogleMapsRoute
-                googleMapsApiKey={googleMapsApiKey}
-                id={'route-map'}
-                paths={routeTrack}
-                mapContainerClassName={'maps-style'}
-                zoom={14}
-              />
-            </div>
-            <PageContent content={information} />
-            <h2>Upcoming Events</h2>
-            {events.length === 0 && (
-              <p>There are no upcoming events on the {title} route.</p>
-            )}
-            {events.map((event, i) => (
-              <EventBox
-                key={'route-event-' + i}
-                startsAt={event.startsAt}
-                slug={event.slug}
-                title={event.title}
-                tags={event.tags}
-              />
-            ))}
-          </div>
-        </div>
+    <StandardContentContainer>
+      <H1 title={title} />
+      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
+        <GoogleMapsRoute
+          googleMapsApiKey={googleMapsApiKey}
+          id={'route-map'}
+          paths={routeTrack}
+          mapContainerClassName={'h-full'}
+          zoom={14}
+        />
       </div>
-    </section>
+      <PageContent content={information} />
+      <H2 title="Upcoming events" />
+      {events.length === 0 && (
+        <p>There are no upcoming events on the {title} route.</p>
+      )}
+      {events.map((event, i) => (
+        <EventBox
+          key={'route-event-' + i}
+          startsAt={event.startsAt}
+          slug={event.slug}
+          title={event.title}
+          tags={event.tags}
+        />
+      ))}
+    </StandardContentContainer>
   )
 }
 
@@ -81,8 +76,8 @@ RouteTemplate.propTypes = {
 }
 
 const Route = ({ data, pageContext }) => {
-  const { markdownRemark: route } = data
-  const { now, googleMapsApiKey } = pageContext
+  const { site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: route } = data
+  const { now } = pageContext
 
   const events = (route.frontmatter.routeEvents || [])
     .map(event => {
@@ -176,6 +171,13 @@ export default Route
 
 export const routeQuery = graphql`
   query RouteByID($id: String!) {
+    site {
+      siteMetadata {
+        apiKey {
+          googleMaps
+        }
+      }
+    }
     markdownRemark(id: { eq: $id }) {
       id
       html

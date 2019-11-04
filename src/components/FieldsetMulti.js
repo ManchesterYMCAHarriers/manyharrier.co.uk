@@ -8,21 +8,17 @@ class FieldsetMulti extends React.Component {
     const fieldsetClassNames = ['fieldset-multi']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <legend>
-          <h2 className="title is-size-3">{legend}</h2>
+          <h2 className="legend">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            {hint && <p className="hint">{hint}</p>}
-            {children}
-          </div>
-        </div>
+        {hint && <p className="hint">{hint}</p>}
+        {children}
       </fieldset>
     )
   }

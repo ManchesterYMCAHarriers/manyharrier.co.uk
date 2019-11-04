@@ -71,7 +71,7 @@ class FieldsetSelect extends React.Component {
     const fieldsetClassNames = ['is-field']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     if (validationIssues.length > 0) {
@@ -80,31 +80,21 @@ class FieldsetSelect extends React.Component {
 
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
-        <legend className="legend-label">
-          <label className="title is-size-3" htmlFor={inputId}>
+        <legend>
+          <label className="legend" htmlFor={inputId}>
             {legend}
           </label>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            {hint && <p className="hint">{hint}</p>}
-            {this.state.validationMessage && (
-              <p className="validation-message">
-                {this.state.validationMessage}
-              </p>
-            )}
-            <div className="field select-control">
-              <div className="control">
-                <div className="select">
-                  <select id={inputId} name={inputId} {...inputAttributes}>
-                    {children}
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {hint && <p className="hint">{hint}</p>}
+        {this.state.validationMessage && (
+          <p className="validation-message">
+            {this.state.validationMessage}
+          </p>
+        )}
+        <select id={inputId} name={inputId} className="block w-full md:w-auto max-w-full border border-gray-700" {...inputAttributes}>
+          {children}
+        </select>
       </fieldset>
     )
   }

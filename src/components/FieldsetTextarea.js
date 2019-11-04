@@ -19,7 +19,7 @@ class FieldsetTextarea extends React.Component {
     const fieldsetClassNames = ['is-field']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     if (validationIssues.length > 0) {
@@ -29,23 +29,19 @@ class FieldsetTextarea extends React.Component {
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <ValidationSummary validationIssues={validationIssues} />
-        <legend className="legend-label">
-          <label className="title is-size-3" htmlFor={inputId}>
+        <legend>
+          <label className="legend" htmlFor={inputId}>
             {label}
           </label>
         </legend>
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <Textarea
-              hint={hint}
-              inputAttributes={inputAttributes}
-              inputId={inputId}
-              rows={rows}
-              setFormValidationState={setFormValidationState}
-              validationMessages={validationMessages}
-            />
-          </div>
-        </div>
+        <Textarea
+          hint={hint}
+          inputAttributes={inputAttributes}
+          inputId={inputId}
+          rows={rows}
+          setFormValidationState={setFormValidationState}
+          validationMessages={validationMessages}
+        />
       </fieldset>
     )
   }

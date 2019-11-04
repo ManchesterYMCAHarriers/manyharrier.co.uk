@@ -5,6 +5,8 @@ import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
+import StandardContentContainer from "../components/StandardContentContainer";
+import {H1, H2} from "../components/Headings";
 
 export const SessionTemplate = ({
   contentComponent,
@@ -15,31 +17,23 @@ export const SessionTemplate = ({
   const PageContent = contentComponent || Content
 
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
-            <PageContent content={information} />
-            <h2>Upcoming events</h2>
-            {events.length === 0 && (
-              <p>There are no upcoming events featuring this session.</p>
-            )}
-            {events.map((event, i) => (
-              <EventBox
-                key={'session-event-' + 1}
-                startsAt={event.startsAt}
-                slug={event.slug}
-                title={event.title}
-                tags={event.tags}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+    <StandardContentContainer>
+      <H1 title={title} />
+      <PageContent content={information} />
+      <H2 title={"Upcoming events"} />
+      {events.length === 0 && (
+        <p>There are no upcoming events featuring this session.</p>
+      )}
+      {events.map(({startsAt, slug, title, venue}, i) => (
+        <EventBox
+          key={'session-event-' + i}
+          startsAt={startsAt}
+          slug={slug}
+          title={title}
+          venue={venue}
+        />
+      ))}
+    </StandardContentContainer>
   )
 }
 
@@ -49,13 +43,8 @@ SessionTemplate.propTypes = {
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
-      tags: PropTypes.arrayOf(
-        PropTypes.shape({
-          key: PropTypes.string.isRequired,
-          value: PropTypes.string.isRequired,
-        })
-      ),
       title: PropTypes.string.isRequired,
+      venue: PropTypes.string.isRequired,
     })
   ),
   information: PropTypes.node,
@@ -69,51 +58,11 @@ const Session = ({ data, pageContext }) => {
 
   const events = (session.frontmatter.sessionEvents || [])
     .map(event => {
-      const tags = []
-
-      if (
-        event.frontmatter.venue &&
-        event.frontmatter.venue.frontmatter.venueKey
-      ) {
-        tags.push({
-          key: 'venue',
-          value: event.frontmatter.venue.frontmatter.venueKey,
-        })
-      }
-
-      if (event.frontmatter.eventType) {
-        tags.push({
-          key: 'eventType',
-          value: event.frontmatter.eventType,
-        })
-      }
-
-      if (event.frontmatter.terrain) {
-        tags.push({
-          key: 'terrain',
-          value: event.frontmatter.terrain,
-        })
-      }
-
-      if (event.frontmatter.championshipForeignKey) {
-        tags.push({
-          key: 'championship',
-          value: event.frontmatter.championshipForeignKey,
-        })
-      }
-
-      if (event.frontmatter.competitionForeignKey) {
-        tags.push({
-          key: 'competition',
-          value: event.frontmatter.competitionForeignKey,
-        })
-      }
-
       return {
         startsAt: Moment.utc(event.frontmatter.startsAt),
         slug: event.fields.slug,
-        tags: tags,
         title: event.frontmatter.eventKey,
+        venue: event.frontmatter.venue.frontmatter.venueKey
       }
     })
     .filter(event => {
@@ -149,7 +98,6 @@ export default Session
 export const sessionQuery = graphql`
   query SessionByID($id: String!) {
     markdownRemark(id: { eq: $id }) {
-      id
       html
       fields {
         slug
@@ -157,17 +105,13 @@ export const sessionQuery = graphql`
       frontmatter {
         sessionKey
         sessionEvents {
-          id
           fields {
             slug
           }
           frontmatter {
             eventKey
-            eventType
             startsAt
-            terrain
             venue {
-              id
               frontmatter {
                 venueKey
               }

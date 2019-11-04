@@ -11,10 +11,10 @@ class FieldsetRadios extends React.Component {
   }
 
   componentDidMount() {
-    const { options, setFormValidationState, validationMessages } = this.props
+    const {options, setFormValidationState, validationMessages} = this.props
 
     document
-      .querySelectorAll(options.map(({ id }) => '#' + id).join(', '))
+      .querySelectorAll(options.map(({id}) => '#' + id).join(', '))
       .forEach(el => {
         el.addEventListener(
           'invalid',
@@ -76,7 +76,7 @@ class FieldsetRadios extends React.Component {
     const fieldsetClassNames = ['is-field']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     if (validationIssues.length > 0) {
@@ -86,34 +86,28 @@ class FieldsetRadios extends React.Component {
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
         <legend>
-          <h2 className="title is-size-3">{legend}</h2>
+          <h2 className="legend">{legend}</h2>
         </legend>
         <ValidationSummary validationIssues={validationIssues} />
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            {hint && <p className="hint">{hint}</p>}
-            {this.state.validationMessage && (
-              <p className="validation-message">
-                {this.state.validationMessage}
-              </p>
-            )}
-            {options.map(({ id, label, value }) => (
-              <div className="field" key={'radio-' + id}>
-                <label className="radio">
-                  <input
-                    type="radio"
-                    className="radio"
-                    id={id}
-                    name={name}
-                    value={value}
-                    {...inputAttributes}
-                  />
-                  &nbsp;{label}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
+        {hint && <p className="hint">{hint}</p>}
+        {this.state.validationMessage && (
+          <p className="validation-message">
+            {this.state.validationMessage}
+          </p>
+        )}
+        {options.map(({id, label, value}, i) => (
+          <label key={name + "-" + i} className="radio block font-semibold relative cursor-pointer my-4 select-none pl-10">
+            <input
+              type="radio"
+              className="absolute opacity-0 cursor-pointer h-0 w-0"
+              id={id}
+              name={name}
+              value={value}
+              {...inputAttributes}
+            />
+            <span className="checkmark" />{label}
+          </label>
+        ))}
       </fieldset>
     )
   }

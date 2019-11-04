@@ -84,7 +84,7 @@ class FieldsetPostcode extends React.Component {
     const fieldsetClassNames = ['is-field']
 
     if (!visible) {
-      fieldsetClassNames.push('is-hidden')
+      fieldsetClassNames.push('hidden')
     }
 
     if (validationIssues.length > 0) {
@@ -93,33 +93,27 @@ class FieldsetPostcode extends React.Component {
 
     return (
       <fieldset className={fieldsetClassNames.join(' ')}>
-        <ValidationSummary validationIssues={validationIssues} />
-        <legend className="legend-label">
-          <label className="title is-size-3" htmlFor={inputId}>
+        <legend>
+          <label className="legend" htmlFor={inputId}>
             {label}
           </label>
         </legend>
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <div className="field">
-              {hint && <p className="hint">{hint}</p>}
-              {this.state.validationMessage && (
-                <p className="validation-message">
-                  {this.state.validationMessage}
-                </p>
-              )}
-              <div className="control">
-                <input
-                  type="text"
-                  className="input is-narrow"
-                  name={inputId}
-                  id={inputId}
-                  {...inputAttributes}
-                  defaultValue={defaultValue}
-                />
-              </div>
-            </div>
-          </div>
+        <ValidationSummary validationIssues={validationIssues} />
+        {hint && <p className="hint">{hint}</p>}
+        {this.state.validationMessage && (
+          <p className="validation-message">
+            {this.state.validationMessage}
+          </p>
+        )}
+        <div className="w-24">
+          <input
+            type="text"
+            className="input"
+            name={inputId}
+            id={inputId}
+            {...inputAttributes}
+            defaultValue={defaultValue}
+          />
         </div>
       </fieldset>
     )

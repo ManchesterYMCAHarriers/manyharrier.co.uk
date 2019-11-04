@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
-import { Link } from 'gatsby'
+import {Link} from 'gatsby'
 import EventsCalendarDay from './EventsCalendarDay'
-import { uniq } from 'lodash'
+import {uniq} from 'lodash'
+import {H2} from "./Headings";
 
 class EventsCalendarMonth extends React.Component {
   render() {
@@ -17,7 +18,7 @@ class EventsCalendarMonth extends React.Component {
     const nextMonth = month.clone().add(1, 'month')
 
     let days = []
-    events.forEach(({ startsAt }) => {
+    events.forEach(({startsAt}) => {
       days.push(startsAt.format('YYYY-MM-DD'))
     })
 
@@ -33,66 +34,81 @@ class EventsCalendarMonth extends React.Component {
     })
 
     return (
-      <div className="column is-10 is-offset-1">
-        <h1 className="title is-size-3 has-text-weight-bold has-text-centered">
-          {month.format('MMMM YYYY')}
-        </h1>
-        <div className="columns is-multiline is-mobile">
-          <div className="column is-half">
+      <>
+        <div className="flex flex-wrap justify-between items-baseline">
+          <div
+            className="w-full md:w-auto flex-shrink-0 flex-grow order-1 md:order-2 text-center">
+            <H2 title={month.format('MMMM YYYY')} />
+          </div>
+          <div
+            className="w-1/2 md:w-auto flex-shrink-0 flex-grow-0 order-2 md:order-1">
             {showPreviousMonthLink && (
               <Link
+                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
                 to={
                   '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
                 }
               >
-                <span aria-hidden="true">&larr;&nbsp;</span>
+                <span className="text-red-400"
+                      aria-hidden="true">&larr;&nbsp;</span>
                 {previousMonth.format('MMMM YYYY')}
               </Link>
             )}
           </div>
-          <div className="column is-half has-text-right">
+          <div
+            className="w-1/2 md:w-auto flex-shrink-0 flex-grow-0 order-3 text-right">
             {showNextMonthLink && (
               <Link
+                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
                 to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
               >
                 {nextMonth.format('MMMM YYYY')}
-                <span aria-hidden="true">&nbsp;&rarr;</span>
-              </Link>
-            )}
-          </div>
-          <div className="column is-full columns is-multiline is-desktop">
-            {days.map(day => (
-              <EventsCalendarDay
-                date={day.date}
-                events={day.events}
-                key={day.date.format('YYYY-MM-DD').toLowerCase()}
-              />
-            ))}
-          </div>
-          <div className="column is-half">
-            {showPreviousMonthLink && (
-              <Link
-                to={
-                  '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
-                }
-              >
-                <span aria-hidden="true">&larr;&nbsp;</span>
-                {previousMonth.format('MMMM YYYY')}
-              </Link>
-            )}
-          </div>
-          <div className="column is-half has-text-right">
-            {showNextMonthLink && (
-              <Link
-                to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
-              >
-                {nextMonth.format('MMMM YYYY')}
-                <span aria-hidden="true">&nbsp;&rarr;</span>
+                <span className="text-red-400"
+                      aria-hidden="true">&nbsp;&rarr;</span>
               </Link>
             )}
           </div>
         </div>
-      </div>
+        <div className="mt-8">
+          {days.map(day => (
+            <div className="mt-8">
+              <EventsCalendarDay
+                date={day.date}
+                events={day.events}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap justify-between items-baseline my-8">
+          <div
+            className="w-1/2 flex-shrink-0 flex-grow-0">
+            {showPreviousMonthLink && (
+              <Link
+                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+                to={
+                  '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
+                }
+              >
+                <span className="text-red-400"
+                      aria-hidden="true">&larr;&nbsp;</span>
+                {previousMonth.format('MMMM YYYY')}
+              </Link>
+            )}
+          </div>
+          <div className="w-1/2 flex-shrink-0 flex-grow-0 text-right">
+            {showNextMonthLink && (
+              <Link
+                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+                to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
+              >
+                {nextMonth.format('MMMM YYYY')}
+                <span className="text-red-400"
+                      aria-hidden="true">&nbsp;&rarr;</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      </>
     )
   }
 }

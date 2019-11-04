@@ -4,6 +4,8 @@ import Layout from '../components/Layout'
 import EventsCalendarMonth from '../components/EventsCalendarMonth'
 import Moment from 'moment'
 import { graphql } from 'gatsby'
+import StandardContentContainer from "../components/StandardContentContainer";
+import {H1} from "../components/Headings";
 
 export class EventsCalendarTemplate extends React.Component {
   render() {
@@ -15,19 +17,15 @@ export class EventsCalendarTemplate extends React.Component {
     } = this.props
 
     return (
-      <section className="section">
-        <div className="container content">
-          <h1 className="is-size-1">Events</h1>
-          <div className="columns">
-            <EventsCalendarMonth
-              month={thisMonth}
-              events={events}
-              showPreviousMonthLink={showPreviousMonthLink}
-              showNextMonthLink={showNextMonthLink}
-            />
-          </div>
-        </div>
-      </section>
+      <StandardContentContainer>
+        <H1 title={"Events calendar"} />
+          <EventsCalendarMonth
+            month={thisMonth}
+            events={events}
+            showPreviousMonthLink={showPreviousMonthLink}
+            showNextMonthLink={showNextMonthLink}
+          />
+      </StandardContentContainer>
     )
   }
 }
@@ -44,6 +42,7 @@ EventsCalendarTemplate.propTypes = {
         })
       ),
       title: PropTypes.string.isRequired,
+      venue: PropTypes.string.isRequired,
     })
   ),
   showNextMonthLink: PropTypes.bool.isRequired,
@@ -60,13 +59,6 @@ const EventsCalendar = ({ data, pageContext }) => {
   const thisMonth = Moment.utc(pageContext.thisMonth, 'YYYY-MM')
   const events = data.events.edges.map(({ node }) => {
     const tags = []
-
-    if (node.frontmatter.venue && node.frontmatter.venue.frontmatter.venueKey) {
-      tags.push({
-        key: 'venue',
-        value: node.frontmatter.venue.frontmatter.venueKey,
-      })
-    }
 
     if (node.frontmatter.eventType) {
       tags.push({
@@ -101,6 +93,7 @@ const EventsCalendar = ({ data, pageContext }) => {
       startsAt: Moment.utc(node.frontmatter.startsAt),
       tags: tags,
       title: node.frontmatter.eventKey,
+      venue: node.frontmatter.venue.frontmatter.venueKey,
     }
   })
 
@@ -145,7 +138,6 @@ EventsCalendar.propTypes = {
               eventKey: PropTypes.string.isRequired,
               eventType: PropTypes.string,
               startsAt: PropTypes.string.isRequired,
-              terrain: PropTypes.string,
               venue: PropTypes.shape({
                 frontmatter: PropTypes.shape({
                   venueKey: PropTypes.string.isRequired,

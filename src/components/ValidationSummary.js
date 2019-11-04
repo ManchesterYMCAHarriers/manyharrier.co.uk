@@ -26,12 +26,12 @@ class ValidationSummary extends React.Component {
     }
 
     return (
-      <div className="notification is-danger" tabIndex={'-1'}>
-        <h3 className="title is-size-5">There is a problem</h3>
-        <ul>
+      <div className="border-2 border-red-400 bg-red-100 p-4 my-4 focus:outline-none" tabIndex={'-1'}>
+        <h3 className="text-xl font-bold mb-4">There is a problem</h3>
+        <ul className="ml-6 mt-4">
           {validationIssues.map((validationIssue, i) => (
-            <li key={'validation-summary-' + i}>
-              <a onClick={this.handleClick} href={'#' + validationIssue.id}>
+            <li className="my-2 list-disc" key={'validation-summary-' + i}>
+              <a className="hover:underline" onClick={this.handleClick} href={'#' + validationIssue.id}>
                 {validationIssue.message}
               </a>
             </li>

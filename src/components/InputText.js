@@ -73,11 +73,12 @@ class InputText extends React.Component {
       hint,
       inputAttributes,
       inputId,
+      inputSizes,
       inputType,
       label,
     } = this.props
 
-    let inputClassNames = ['field']
+    let inputClassNames = ['mt-4']
 
     if (label && this.state.validationMessage) {
       inputClassNames.push('has-error')
@@ -100,7 +101,7 @@ class InputText extends React.Component {
         {this.state.validationMessage && (
           <p className="validation-message">{this.state.validationMessage}</p>
         )}
-        <div className="control">
+        <div className={inputSizes}>
           <input
             type={inputType}
             className="input"
@@ -121,6 +122,7 @@ InputText.propTypes = {
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
+  inputSizes: PropTypes.string.isRequired,
   inputType: PropTypes.string.isRequired,
   label: PropTypes.string,
   setFormValidationState: PropTypes.func.isRequired,
@@ -139,6 +141,7 @@ InputText.propTypes = {
 
 InputText.defaults = {
   classNames: [],
+  inputSizes: "w-full md:w-1/2",
   validationMessages: {},
 }
 
