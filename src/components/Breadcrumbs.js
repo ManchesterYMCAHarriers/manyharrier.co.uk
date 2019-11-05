@@ -26,6 +26,10 @@ const Breadcrumbs = ({path}) => {
       title: "Events",
     },
     {
+      path: "/info",
+      title: "Info",
+    },
+    {
       path: "/join",
       title: "Join us"
     },

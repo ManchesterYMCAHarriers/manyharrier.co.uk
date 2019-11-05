@@ -5,12 +5,12 @@ import StandardContentContainer
   from "../../components/StandardContentContainer";
 import {H1} from "../../components/Headings";
 
-export default class BlogIndexPage extends React.Component {
+export default class VenuesIndexPage extends React.Component {
   render() {
     return (
-      <Layout path={"/blog"}>
+      <Layout path={"/venues"}>
         <StandardContentContainer>
-          <H1 title={"Blog"} />
+          <H1 title={"Venues"} />
         </StandardContentContainer>
       </Layout>
     )
