@@ -14,7 +14,7 @@ const NavbarBrand = () => (
 
 const NavbarLink = ({title, to}) => (
   <Link
-    className="w-full md:w-auto text-center p-2 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
+    className="w-full md:w-auto text-center p-2 md:mr-4 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
     to={to}>{title}</Link>
 )
 
@@ -74,9 +74,10 @@ const Navbar = class extends React.Component {
           <NavbarBrand />
           <NavbarToggle open={this.state.open} callback={this.toggle} />
           <div className={"flex-shrink-0 flex-grow w-full md:w-auto flex-wrap items-center justify-between md:mx-4 " + this.state.openClassName}>
-            <NavbarLink title={"Join us!"} to={"/join"} />
+            <NavbarLink to={"/join"} title={"Join us!"} />
             <NavbarSpacer />
-            <NavbarLink title={"Events calendar"} to={eventsCalendarSlug} />
+            <NavbarLink to={eventsCalendarSlug} title={"Events calendar"} />
+            <NavbarLink to={"/about"} title={"About"}/>
           </div>
         </nav>
       </div>

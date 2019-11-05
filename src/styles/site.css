@@ -28,7 +28,7 @@ dd {
     @apply my-2
 }
 
-.content ul {
+.content ol, .content ul {
     @apply my-4 ml-6
 }
 
@@ -37,6 +37,14 @@ dd {
 }
 
 .content ol li {
+    @apply list-decimal
+}
+
+.content ol ul li {
+    @apply list-disc
+}
+
+.content ul ol li {
     @apply list-decimal
 }
 
@@ -49,6 +57,15 @@ dd {
 }
 
 @tailwind components;
+
+.breadcrumb::after {
+    content: '/';
+    @apply mx-2 text-gray-400 font-semibold
+}
+
+.breadcrumb:last-child::after {
+    content: '';
+}
 
 .input {
     @apply p-2 border border-gray-700 w-full

@@ -148,7 +148,7 @@ const Route = ({ data, pageContext }) => {
   )
 
   return (
-    <Layout>
+    <Layout path={route.fields.slug}>
       <RouteTemplate
         contentComponent={HTMLContent}
         events={events}

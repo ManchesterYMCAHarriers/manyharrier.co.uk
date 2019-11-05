@@ -32,16 +32,16 @@ StandardPageTemplate.propTypes = {
 }
 
 const StandardPage = ({data}) => {
-  const {siteMetadata: title, markdownRemark: post} = data
+  const {siteMetadata: title, markdownRemark: page} = data
 
   return (
-    <Layout>
+    <Layout path={page.fields.slug}>
       <StandardPageTemplate
         contentComponent={HTMLContent}
         siteTitle={title}
-        title={post.frontmatter.title}
-        description={post.frontmatter.description}
-        content={post.html}
+        title={page.frontmatter.title}
+        description={page.frontmatter.description}
+        content={page.html}
       />
     </Layout>
   )
@@ -62,6 +62,9 @@ export const standardPageQuery = graphql`
     }
     markdownRemark(id: { eq: $id }) {
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
         description

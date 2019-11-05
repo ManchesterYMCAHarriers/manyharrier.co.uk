@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: master
 
-media_folder: static/img
-public_folder: /img
+media_folder: static/media
+public_folder: /media
 
 collections:
   - name: "events"
@@ -131,6 +131,14 @@ collections:
               - {label: "Role", name: "role", widget: "string"}
               - {label: "Image", name: "image", widget: "image", allow_multiple: false}
               - {label: "Description", name: "description", widget: "markdown"}
+      - file: "src/pages/about/london-marathon-place/index.md"
+        label: "London Marathon place"
+        name: "londonMarathonPlace"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Description", name: "description", widget: "string", pattern: ['^.{,156}$', "The description can only contain a maximum of 156 characters"]}
+          - {label: "Body", name: "body", widget: "markdown"}
       - file: "src/pages/about/rules/index.md"
         label: "Rules"
         name: "rules"

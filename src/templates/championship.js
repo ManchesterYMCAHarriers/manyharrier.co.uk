@@ -68,7 +68,7 @@ const Championship = ({ data }) => {
     })
 
   return (
-    <Layout>
+    <Layout path={championship.fields.slug}>
       <ChampionshipTemplate
         contentComponent={HTMLContent}
         events={events}

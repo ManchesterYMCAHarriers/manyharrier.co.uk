@@ -214,7 +214,7 @@ const Event = ({ data, pageContext }) => {
   }
 
   return (
-    <Layout>
+    <Layout path={event.fields.slug}>
       <EventTemplate
         championship={championship}
         contentComponent={HTMLContent}
@@ -257,6 +257,9 @@ export const eventQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
+      fields {
+        slug
+      }
       frontmatter {
         championship {
           fields {

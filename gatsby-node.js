@@ -80,8 +80,8 @@ exports.createPages = async ({ actions, graphql }) => {
       path: calendarPagePath,
       component: path.resolve(`src/templates/events-calendar.js`),
       context: {
-        thisMonth: thisMonth,
-        nextMonth: nextMonth,
+        thisMonth,
+        nextMonth,
       },
     })
   })
@@ -186,6 +186,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
       createNodeField({
         name: `intro`,
+        node,
+        value,
+      })
+
+      value = []
+
+      node.frontmatter.members.forEach(({description}) => {
+        value.push(remark().use(recommended).use(remarkHtml).processSync(description).toString())
+      })
+
+      createNodeField({
+        name: `memberDescriptions`,
         node,
         value,
       })

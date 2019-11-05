@@ -13,7 +13,7 @@ You can find out more information on their work and local activities at [ymcaman
 
 ## Races and events
 
-We have various [club championships](/championships), which cover cross-country, fell, road and track disciplines - there are plenty of trophies and medals to be won! If you're after a London Marathon place, our club has one available each year, and participation in our club Summer Championship is the way to get it!
+We have various [club championships](/championships), which cover cross-country, fell, road and track disciplines - there are plenty of trophies and medals to be won! If you're after a [London Marathon place](/about/london-marathon-place), our club has one available each year, and participation in our club Summer Championship is the way to get it!
 
 Beyond that, our members take part in all manner of races, both at home and abroad. Take a look at our [events calendar](/events) to see where our members will be running!
 

@@ -4,9 +4,11 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import useSiteMetadata from './SiteMetadata'
 import { withPrefix } from 'gatsby'
+import Breadcrumbs from "./Breadcrumbs";
 
-const TemplateWrapper = ({ children }) => {
+const TemplateWrapper = ({ children, path }) => {
   const { title, description } = useSiteMetadata()
+
   return (
     <div className="bg-white">
       <Helmet>
@@ -24,6 +26,7 @@ const TemplateWrapper = ({ children }) => {
         />
       </Helmet>
       <Navbar />
+      {path && <Breadcrumbs path={path} />}
       {children}
       <Footer />
     </div>

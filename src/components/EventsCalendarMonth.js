@@ -35,13 +35,13 @@ class EventsCalendarMonth extends React.Component {
 
     return (
       <>
-        <div className="flex flex-wrap justify-between items-baseline">
+        <div className="flex flex-wrap justify-between items-baseline pb-8 border-b-2 border-gray-700">
           <div
             className="w-full md:w-auto flex-shrink-0 flex-grow order-1 md:order-2 text-center">
             <H2 title={month.format('MMMM YYYY')} />
           </div>
           <div
-            className="w-1/2 md:w-auto flex-shrink-0 flex-grow-0 order-2 md:order-1">
+            className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-2 md:order-1">
             {showPreviousMonthLink && (
               <Link
                 className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
@@ -49,22 +49,22 @@ class EventsCalendarMonth extends React.Component {
                   '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
                 }
               >
-                <span className="text-red-400"
-                      aria-hidden="true">&larr;&nbsp;</span>
+                <span className="mr-1 text-red-400"
+                      aria-hidden="true">&larr;</span>
                 {previousMonth.format('MMMM YYYY')}
               </Link>
             )}
           </div>
           <div
-            className="w-1/2 md:w-auto flex-shrink-0 flex-grow-0 order-3 text-right">
+            className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-3 text-right">
             {showNextMonthLink && (
               <Link
                 className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
                 to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
               >
                 {nextMonth.format('MMMM YYYY')}
-                <span className="text-red-400"
-                      aria-hidden="true">&nbsp;&rarr;</span>
+                <span className="ml-1 text-red-400"
+                      aria-hidden="true">&rarr;</span>
               </Link>
             )}
           </div>
@@ -79,7 +79,7 @@ class EventsCalendarMonth extends React.Component {
             </div>
           ))}
         </div>
-        <div className="flex flex-wrap justify-between items-baseline my-8">
+        <div className="flex flex-wrap justify-between items-baseline my-8 border-t-2 border-gray-700 pt-8">
           <div
             className="w-1/2 flex-shrink-0 flex-grow-0">
             {showPreviousMonthLink && (
@@ -89,8 +89,8 @@ class EventsCalendarMonth extends React.Component {
                   '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
                 }
               >
-                <span className="text-red-400"
-                      aria-hidden="true">&larr;&nbsp;</span>
+                <span className="mr-1 text-red-400"
+                      aria-hidden="true">&larr;</span>
                 {previousMonth.format('MMMM YYYY')}
               </Link>
             )}
@@ -102,8 +102,8 @@ class EventsCalendarMonth extends React.Component {
                 to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
               >
                 {nextMonth.format('MMMM YYYY')}
-                <span className="text-red-400"
-                      aria-hidden="true">&nbsp;&rarr;</span>
+                <span className="ml-1 text-red-400"
+                      aria-hidden="true">&rarr;</span>
               </Link>
             )}
           </div>

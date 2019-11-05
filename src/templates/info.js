@@ -70,7 +70,7 @@ const Info = ({ data }) => {
   }
 
   return (
-    <Layout>
+    <Layout path={info.fields.slug}>
       <InfoTemplate
         contentComponent={HTMLContent}
         information={info.html}

@@ -98,7 +98,7 @@ const EventsCalendar = ({ data, pageContext }) => {
   })
 
   return (
-    <Layout>
+    <Layout path={"/events"}>
       <EventsCalendarTemplate
         events={events}
         showNextMonthLink={showNextMonthLink}

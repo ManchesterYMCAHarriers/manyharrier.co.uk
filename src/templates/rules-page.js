@@ -21,11 +21,13 @@ export const RulesPageTemplate = ({siteTitle, title, description, content, rules
       <H1 title={title} />
       <PageContent className="content" content={content} />
       <H2 title={"Resources"} />
-      <ul>
-        <li>
-          <Link to={rulesDocument}>{rulesDocument}</Link>
-        </li>
-      </ul>
+      <div className={"content"}>
+        <ul>
+          <li>
+            <Link to={rulesDocument}>Current rules document</Link>
+          </li>
+        </ul>
+      </div>
     </StandardContentContainer>
   )
 }
@@ -33,23 +35,25 @@ export const RulesPageTemplate = ({siteTitle, title, description, content, rules
 RulesPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
-  content: PropTypes.string,
+  content: PropTypes.string.isRequired,
   contentComponent: PropTypes.func,
-  rulesDocument: PropTypes.string,
+  rulesDocument: PropTypes.shape({
+    publicURL: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const RulesPage = ({data}) => {
-  const {siteMetadata: title, markdownRemark: post} = data
+  const {siteMetadata: title, markdownRemark: page} = data
 
   return (
-    <Layout>
+    <Layout path={page.fields.slug}>
       <RulesPageTemplate
         contentComponent={HTMLContent}
         siteTitle={title}
-        title={post.frontmatter.title}
-        description={post.frontmatter.description}
-        content={post.html}
-        rulesDocument={post.frontmatter.rulesDocument}
+        title={page.frontmatter.title}
+        description={page.frontmatter.description}
+        content={page.html}
+        rulesDocument={page.frontmatter.rulesDocument.publicURL}
       />
     </Layout>
   )
@@ -70,10 +74,15 @@ export const rulesPageQuery = graphql`
     }
     markdownRemark(id: { eq: $id }) {
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
         description
-        rulesDocument
+        rulesDocument {
+          publicURL
+        }
       }
     }
   }

@@ -109,7 +109,7 @@ const Venue = ({data, pageContext}) => {
     })
 
   return (
-    <Layout>
+    <Layout path={venue.fields.slug}>
       <VenueTemplate
         contentComponent={HTMLContent}
         events={events}
@@ -141,6 +141,9 @@ export const venueQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
+      fields {
+        slug
+      }
       frontmatter {
         address
         location

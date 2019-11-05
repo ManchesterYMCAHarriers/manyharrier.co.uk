@@ -76,7 +76,7 @@ const Session = ({ data, pageContext }) => {
     })
 
   return (
-    <Layout>
+    <Layout path={session.fields.slug}>
       <SessionTemplate
         contentComponent={HTMLContent}
         events={events}

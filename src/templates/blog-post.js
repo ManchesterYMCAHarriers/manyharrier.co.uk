@@ -35,7 +35,7 @@ const BlogPost = ({ data }) => {
   const { markdownRemark: post } = data
 
   return (
-    <Layout>
+    <Layout path={post.fields.slug}>
       <BlogPostTemplate
         contentComponent={HTMLContent}
         content={post.html}
@@ -68,6 +68,9 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
+      fields {
+        slug
+      }
       frontmatter {
         blogKey
         date(formatString: "Do MMMM YYYY")

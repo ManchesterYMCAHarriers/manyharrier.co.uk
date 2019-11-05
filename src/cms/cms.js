@@ -19,6 +19,8 @@ import VenuePreview from './preview-templates/VenuePreview'
 CMS.registerPreviewTemplate('index', IndexPagePreview)
 CMS.registerPreviewTemplate('about', StandardPagePreview)
 CMS.registerPreviewTemplate('committee', CommitteePagePreview)
+CMS.registerPreviewTemplate('londonMarathonPlace', StandardPagePreview)
+CMS.registerPreviewTemplate('rules', StandardPagePreview)
 CMS.registerPreviewTemplate('blog', BlogPostPreview)
 CMS.registerPreviewTemplate('events', EventPreview)
 CMS.registerPreviewTemplate('championships', ChampionshipPreview)

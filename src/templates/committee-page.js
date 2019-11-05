@@ -22,12 +22,19 @@ export const CommitteePageTemplate = ({siteTitle, title, description, intro, mem
       <PageContent className="content" content={intro} />
       <H2 title={"Committee members"} />
       {members.map(({name, role, description, image}, i) => (
-        <div key={"committee-member-" + i} className="flex">
-          <img src={image} alt={name} />
-          <h3 className="font-semibold text-lg">
-            <span>{name}</span> - <span className="text-gray-700">{role}</span>
-            {description}
-          </h3>
+        <div key={"committee-member-" + i}
+             className="flex flex-wrap md:flex-no-wrap my-4 pb-4 border-b-2 border-gray-700 last:border-b-0">
+          <div className={"mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2"}>
+            <img src={image.publicURL} alt={"Photo of " + name}
+                 className={"border-2 border-gray-700"} />
+          </div>
+          <div className="flex-shrink flex-grow md:order-1">
+            <h3 className="font-semibold text-lg">
+              <span>{name}</span> - <span
+              className="text-gray-700">{role}</span>
+            </h3>
+            <PageContent className="content" content={description} />
+          </div>
         </div>
       ))}
     </StandardContentContainer>
@@ -41,25 +48,32 @@ CommitteePageTemplate.propTypes = {
   contentComponent: PropTypes.func,
   intro: PropTypes.node,
   members: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    role: PropTypes.string,
-    description: PropTypes.node,
-    image: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+    description: PropTypes.node.isRequired,
+    image: PropTypes.shape({
+      publicURL: PropTypes.string.isRequired
+    }).isRequired,
   }))
 }
 
 const CommitteePage = ({data}) => {
   const {siteMetadata: title, markdownRemark: page} = data
 
+  const members = page.frontmatter.members.map((member, i) => {
+    member.description = page.fields.memberDescriptions[i]
+    return member
+  })
+
   return (
-    <Layout>
+    <Layout path={page.fields.slug}>
       <CommitteePageTemplate
         contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
         description={page.frontmatter.description}
         intro={page.fields.intro}
-        members={page.frontmatter.members}
+        members={members}
       />
     </Layout>
   )
@@ -82,6 +96,8 @@ export const committeePageQuery = graphql`
       html
       fields {
         intro
+        memberDescriptions
+        slug
       }
       frontmatter {
         title
@@ -89,8 +105,9 @@ export const committeePageQuery = graphql`
         members {
           name
           role
-          description
-          image
+          image {
+            publicURL
+          }
         }
       }
     }
