@@ -141,6 +141,10 @@ export const GetSkuItems = sku => {
 
 export const StorageAvailable = type => {
   let storage
+  if (typeof window === 'undefined') {
+    return false
+  }
+
   try {
     storage = window[type]
     var x = '__storage_test__'
