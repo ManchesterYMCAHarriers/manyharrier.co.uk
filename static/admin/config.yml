@@ -179,6 +179,20 @@ collections:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
           - {label: "Title", name: "title", widget: "string", default: "You did not pay for your membership"}
           - {label: "Body", name: "body", widget: "markdown"}
+      - file: "src/pages/checkout/success/index.md"
+        label: "Checkout - Success"
+        name: "checkoutSuccess"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+          - {label: "Title", name: "title", widget: "string", default: "Thanks for your order"}
+          - {label: "Body", name: "body", widget: "markdown"}
+      - file: "src/pages/checkout/cancel/index.md"
+        label: "Checkout - Cancel"
+        name: "checkoutCancel"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+          - {label: "Title", name: "title", widget: "string", default: "You did not pay for your order"}
+          - {label: "Body", name: "body", widget: "markdown"}
       - file: "src/pages/kit/index.md"
         label: "Kit"
         name: "kit"
