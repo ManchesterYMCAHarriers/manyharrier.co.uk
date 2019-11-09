@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 
 class Form extends React.Component {
   componentDidMount() {
-    const {formId, submitHandler} = this.props
+    const { formId, submitHandler } = this.props
 
     const form = document.getElementById(formId)
     form.setAttribute('noValidate', 'true')
@@ -20,6 +20,7 @@ class Form extends React.Component {
       formAttributes,
       formId,
       method,
+      netlify,
       showBack,
       showSubmit,
       submitValue,
@@ -33,18 +34,18 @@ class Form extends React.Component {
         method={method}
         action={action}
         {...formAttributes}
-        data-netlify="true"
+        data-netlify={netlify}
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value={formId} />
         {children}
-        <div
-          className="flex flex-no-wrap w-full items-baseline justify-between mt-8">
+        <div className="flex flex-no-wrap w-full items-baseline justify-between mt-8">
           <div className="flex-shrink-0 flex-grow order-last text-right">
             <button
               type="submit"
               className={
-                'px-4 py-2 text-white font-semibold bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 border border-gray-700 rounded ' + (!showSubmit && ' hidden')
+                'px-4 py-2 text-white font-semibold bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 border border-gray-700 rounded ' +
+                (!showSubmit && ' hidden')
               }
             >
               {submitValue}
@@ -76,6 +77,7 @@ Form.propTypes = {
   formAttributes: PropTypes.object,
   formId: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
+  netlify: PropTypes.bool.isRequired,
   showBack: PropTypes.bool.isRequired,
   showSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,

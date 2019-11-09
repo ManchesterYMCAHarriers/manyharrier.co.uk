@@ -217,10 +217,10 @@ class InputDate extends React.Component {
               if (checkValidity()) {
                 const dateValue = Moment.utc(
                   this.state.year +
-                  '-' +
-                  this.state.month +
-                  '-' +
-                  this.state.day,
+                    '-' +
+                    this.state.month +
+                    '-' +
+                    this.state.day,
                   'YYYY-MM-DD'
                 )
                 this.setState({

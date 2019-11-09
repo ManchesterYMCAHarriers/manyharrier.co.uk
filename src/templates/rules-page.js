@@ -1,27 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1, H2} from "../components/Headings";
-import {Helmet} from "react-helmet";
+import Content, { HTMLContent } from '../components/Content'
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1, H2 } from '../components/Headings'
+import { Helmet } from 'react-helmet'
 
-export const RulesPageTemplate = ({siteTitle, title, description, content, rulesDocument, contentComponent}) => {
+export const RulesPageTemplate = ({
+  siteTitle,
+  title,
+  description,
+  content,
+  rulesDocument,
+  contentComponent,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
-        {description &&
-        <meta name="description" content={description} />
-        }
+        {description && <meta name="description" content={description} />}
       </Helmet>
       <H1 title={title} />
       <PageContent className="content" content={content} />
-      <H2 title={"Resources"} />
-      <div className={"content"}>
+      <H2 title={'Resources'} />
+      <div className={'content'}>
         <ul>
           <li>
             <Link to={rulesDocument}>Current rules document</Link>
@@ -42,8 +47,8 @@ RulesPageTemplate.propTypes = {
   }).isRequired,
 }
 
-const RulesPage = ({data}) => {
-  const {siteMetadata: title, markdownRemark: page} = data
+const RulesPage = ({ data }) => {
+  const { siteMetadata: title, markdownRemark: page } = data
 
   return (
     <Layout path={page.fields.slug}>

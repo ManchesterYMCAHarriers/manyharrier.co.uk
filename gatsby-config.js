@@ -9,10 +9,10 @@ module.exports = {
       stripe: process.env.STRIPE_PUBLISHABLE_KEY,
     },
     social: {
-      facebook: "https://facebook.com/ManYMCAHarriers",
-      instagram: "https://instagram.com/ManYMCAHarriers",
-      strava: "https://strava.com/clubs/manyharrier",
-      twitter: "https://twitter.com/ManYMCAHarriers",
+      facebook: 'https://facebook.com/ManYMCAHarriers',
+      instagram: 'https://instagram.com/ManYMCAHarriers',
+      strava: 'https://strava.com/clubs/manyharrier',
+      twitter: 'https://twitter.com/ManYMCAHarriers',
     },
   },
   plugins: [

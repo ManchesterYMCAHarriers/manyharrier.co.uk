@@ -1,25 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
+import Content, { HTMLContent } from '../components/Content'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import Moment from 'moment'
 import Address from '../components/Address'
 import EventBox from '../components/EventBox'
-import {H1, H2} from "../components/Headings";
-import StandardContentContainer from "../components/StandardContentContainer";
+import { H1, H2 } from '../components/Headings'
+import StandardContentContainer from '../components/StandardContentContainer'
 
 export const VenueTemplate = ({
-                                contentComponent,
-                                googleMapsApiKey,
-                                title,
-                                address,
-                                location,
-                                information,
-                                events,
-                              }) => {
+  contentComponent,
+  googleMapsApiKey,
+  title,
+  address,
+  location,
+  information,
+  events,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -28,7 +28,7 @@ export const VenueTemplate = ({
       <div className="subtitle is-size-4">
         <Address address={address} />
       </div>
-      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
+      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
         <GoogleMapsLocation
           googleMapsApiKey={googleMapsApiKey}
           id={'venue-location-map'}
@@ -48,7 +48,7 @@ export const VenueTemplate = ({
       {events.length === 0 && (
         <div>There are no upcoming events at {title}</div>
       )}
-      {events.map(({startsAt, slug, title}, i) => (
+      {events.map(({ startsAt, slug, title }, i) => (
         <EventBox
           key={'venue-event-' + i}
           startsAt={startsAt}
@@ -79,9 +79,16 @@ VenueTemplate.propTypes = {
   title: PropTypes.string,
 }
 
-const Venue = ({data, pageContext}) => {
-  const {site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: venue} = data
-  const {now} = pageContext
+const Venue = ({ data, pageContext }) => {
+  const {
+    site: {
+      siteMetadata: {
+        apiKey: { googleMaps: googleMapsApiKey },
+      },
+    },
+    markdownRemark: venue,
+  } = data
+  const { now } = pageContext
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
 

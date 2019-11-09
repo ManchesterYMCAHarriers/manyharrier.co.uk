@@ -1,40 +1,51 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1, H2} from "../components/Headings";
-import {Helmet} from "react-helmet";
-import PrimaryCallToAction from "../components/PrimaryCallToAction";
+import Content, { HTMLContent } from '../components/Content'
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1, H2 } from '../components/Headings'
+import { Helmet } from 'react-helmet'
+import PrimaryCallToAction from '../components/PrimaryCallToAction'
+import Currency from '../components/Currency'
 
-export const JoinPageTemplate = ({siteTitle, title, description, contentComponent, howToJoinUs, membershipBenefits, yClubFacilities, firstClaimPrice, firstClaimValidTo}) => {
+export const JoinPageTemplate = ({
+  siteTitle,
+  title,
+  description,
+  contentComponent,
+  howToJoinUs,
+  membershipBenefits,
+  yClubFacilities,
+  firstClaimPrice,
+  firstClaimValidTo,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
-        {description &&
-        <meta name="description" content={description} />
-        }
+        {description && <meta name="description" content={description} />}
       </Helmet>
       <H1 title={title} />
       <div className="content">
-        <p>First claim membership until {firstClaimValidTo} is
-          just <strong>{firstClaimPrice}</strong>!</p>
+        <p>
+          First claim membership until {firstClaimValidTo} is just{' '}
+          <strong>{firstClaimPrice}</strong>!
+        </p>
       </div>
-      <H2 title={"How to join us"} />
+      <H2 title={'How to join us'} />
       <PageContent className="content" content={howToJoinUs} />
       <div className="text-center my-8">
-        <PrimaryCallToAction to={"/join/form"} title={"Join us now!"} />
+        <PrimaryCallToAction to={'/join/form'} title={'Join us now!'} />
       </div>
-      <H2 title={"Membership benefits"} />
+      <H2 title={'Membership benefits'} />
       <PageContent className="content" content={membershipBenefits} />
       <div className="text-center my-8">
-        <PrimaryCallToAction to={"/join/form"} title={"Join us now!"} />
+        <PrimaryCallToAction to={'/join/form'} title={'Join us now!'} />
       </div>
-      <H2 title={"A note on the use of Y Club facilities"} />
+      <H2 title={'A note on the use of Y Club facilities'} />
       <PageContent className="content" content={yClubFacilities} />
     </StandardContentContainer>
   )
@@ -52,8 +63,14 @@ JoinPageTemplate.propTypes = {
   firstClaimPrice: PropTypes.string.isRequired,
 }
 
-const JoinPage = ({data}) => {
-  const {site: {siteMetadata: {title}}, markdownRemark: page, stripeSku: firstClaimMembership } = data
+const JoinPage = ({ data }) => {
+  const {
+    site: {
+      siteMetadata: { title },
+    },
+    markdownRemark: page,
+    stripeSku: firstClaimMembership,
+  } = data
 
   return (
     <Layout path={page.fields.slug}>
@@ -65,7 +82,7 @@ const JoinPage = ({data}) => {
         howToJoinUs={page.fields.howToJoinUs}
         membershipBenefits={page.fields.membershipBenefits}
         yClubFacilities={page.fields.yClubFacilities}
-        firstClaimPrice={"£" + (firstClaimMembership.price / 100).toFixed(2)}
+        firstClaimPrice={Currency(firstClaimMembership.price)}
         firstClaimValidTo={firstClaimMembership.attributes.valid_to}
       />
     </Layout>
@@ -98,7 +115,11 @@ export const joinPageQuery = graphql`
         description
       }
     }
-    stripeSku(product: {name: {eq: "membership"}}, attributes: {claim: {eq: "First"}}, active: {eq: true}) {
+    stripeSku(
+      product: { name: { eq: "membership" } }
+      attributes: { claim: { eq: "First" } }
+      active: { eq: true }
+    ) {
       price
       attributes {
         valid_to

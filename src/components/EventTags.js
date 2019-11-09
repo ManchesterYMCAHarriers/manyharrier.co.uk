@@ -32,7 +32,8 @@ class EventTags extends React.Component {
 
     const data = tags.map(tag => {
       let icon = tag.value === 'Social' ? <FaBeer /> : icons[tag.key]
-      let className = tag.value === 'Social' ? 'border-pink-300' : classNames[tag.key]
+      let className =
+        tag.value === 'Social' ? 'border-pink-300' : classNames[tag.key]
       return {
         className: className,
         icon: icon,
@@ -42,10 +43,18 @@ class EventTags extends React.Component {
 
     return (
       <div className="flex flex-wrap">
-        {data.map(({className, icon, value}, i) => (
-          <div className={"flex flex-wrap items-center mt-2 mr-2 leading-relaxed bg-white border-4 rounded-lg " + className} key={key + '-tag-' + i}>
+        {data.map(({ className, icon, value }, i) => (
+          <div
+            className={
+              'flex flex-wrap items-center mt-2 mr-2 leading-relaxed bg-white border-4 rounded-lg ' +
+              className
+            }
+            key={key + '-tag-' + i}
+          >
             <span className="px-2 flex-shrink-0 flex-grow-0">{icon}</span>
-            <span className="flex-shrink-0 flex-grow-0 text-xs px-2">{value}</span>
+            <span className="flex-shrink-0 flex-grow-0 text-xs px-2">
+              {value}
+            </span>
           </div>
         ))}
       </div>

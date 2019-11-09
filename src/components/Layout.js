@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import useSiteMetadata from './SiteMetadata'
 import { withPrefix } from 'gatsby'
-import Breadcrumbs from "./Breadcrumbs";
+import Breadcrumbs from './Breadcrumbs'
 
 const TemplateWrapper = ({ children, path }) => {
   const { title, description } = useSiteMetadata()

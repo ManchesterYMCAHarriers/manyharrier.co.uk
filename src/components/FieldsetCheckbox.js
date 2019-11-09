@@ -87,9 +87,7 @@ class FieldsetCheckbox extends React.Component {
         <ValidationSummary validationIssues={validationIssues} />
         {statements}
         {this.state.validationMessage && (
-          <p className="validation-message">
-            {this.state.validationMessage}
-          </p>
+          <p className="validation-message">{this.state.validationMessage}</p>
         )}
         <label className="checkbox block font-semibold relative cursor-pointer my-4 select-none pl-10">
           <input
@@ -100,7 +98,8 @@ class FieldsetCheckbox extends React.Component {
             value={value}
             {...inputAttributes}
           />
-          <span className="checkmark" />{label}
+          <span className="checkmark" />
+          {label}
         </label>
       </fieldset>
     )

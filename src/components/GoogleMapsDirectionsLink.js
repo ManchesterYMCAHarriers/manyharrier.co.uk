@@ -9,7 +9,10 @@ class GoogleMapsDirectionsLink extends React.Component {
       'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
 
     return (
-      <a className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200" href={googleMapsDirectionsLink}>
+      <a
+        className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+        href={googleMapsDirectionsLink}
+      >
         {text} <span className="text-red-400">&rarr;</span>
       </a>
     )

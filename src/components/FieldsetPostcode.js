@@ -101,9 +101,7 @@ class FieldsetPostcode extends React.Component {
         <ValidationSummary validationIssues={validationIssues} />
         {hint && <p className="hint">{hint}</p>}
         {this.state.validationMessage && (
-          <p className="validation-message">
-            {this.state.validationMessage}
-          </p>
+          <p className="validation-message">{this.state.validationMessage}</p>
         )}
         <div className="w-24">
           <input

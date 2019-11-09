@@ -4,7 +4,9 @@ import { StandardPageTemplate } from '../../templates/standard-page'
 
 const CommitteePagePreview = ({ entry, widgetFor }) => {
   const entryCommitteeMembers = entry.getIn(['data', 'members'])
-  const committeeMembers = entryCommitteeMembers ? entryCommitteeMembers.toJS() : []
+  const committeeMembers = entryCommitteeMembers
+    ? entryCommitteeMembers.toJS()
+    : []
 
   return (
     <StandardPageTemplate

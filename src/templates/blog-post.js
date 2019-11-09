@@ -4,8 +4,8 @@ import Helmet from 'react-helmet'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1} from "../components/Headings";
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1 } from '../components/Headings'
 
 export const BlogPostTemplate = ({
   contentComponent,

@@ -6,8 +6,8 @@ import Content, { HTMLContent } from '../components/Content'
 import GoogleMapsRoute from '../components/GoogleMapsRoute'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1, H2} from "../components/Headings";
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1, H2 } from '../components/Headings'
 
 export const RouteTemplate = ({
   contentComponent,
@@ -22,7 +22,7 @@ export const RouteTemplate = ({
   return (
     <StandardContentContainer>
       <H1 title={title} />
-      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
+      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
         <GoogleMapsRoute
           googleMapsApiKey={googleMapsApiKey}
           id={'route-map'}
@@ -76,7 +76,14 @@ RouteTemplate.propTypes = {
 }
 
 const Route = ({ data, pageContext }) => {
-  const { site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: route } = data
+  const {
+    site: {
+      siteMetadata: {
+        apiKey: { googleMaps: googleMapsApiKey },
+      },
+    },
+    markdownRemark: route,
+  } = data
   const { now } = pageContext
 
   const events = (route.frontmatter.routeEvents || [])

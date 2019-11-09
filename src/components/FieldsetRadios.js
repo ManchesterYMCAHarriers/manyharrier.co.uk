@@ -11,10 +11,10 @@ class FieldsetRadios extends React.Component {
   }
 
   componentDidMount() {
-    const {options, setFormValidationState, validationMessages} = this.props
+    const { options, setFormValidationState, validationMessages } = this.props
 
     document
-      .querySelectorAll(options.map(({id}) => '#' + id).join(', '))
+      .querySelectorAll(options.map(({ id }) => '#' + id).join(', '))
       .forEach(el => {
         el.addEventListener(
           'invalid',
@@ -91,12 +91,13 @@ class FieldsetRadios extends React.Component {
         <ValidationSummary validationIssues={validationIssues} />
         {hint && <p className="hint">{hint}</p>}
         {this.state.validationMessage && (
-          <p className="validation-message">
-            {this.state.validationMessage}
-          </p>
+          <p className="validation-message">{this.state.validationMessage}</p>
         )}
-        {options.map(({id, label, value}, i) => (
-          <label key={name + "-" + i} className="radio block font-semibold relative cursor-pointer my-4 select-none pl-10">
+        {options.map(({ id, label, value }, i) => (
+          <label
+            key={name + '-' + i}
+            className="radio block font-semibold relative cursor-pointer my-4 select-none pl-10"
+          >
             <input
               type="radio"
               className="absolute opacity-0 cursor-pointer h-0 w-0"
@@ -105,7 +106,8 @@ class FieldsetRadios extends React.Component {
               value={value}
               {...inputAttributes}
             />
-            <span className="checkmark" />{label}
+            <span className="checkmark" />
+            {label}
           </label>
         ))}
       </fieldset>

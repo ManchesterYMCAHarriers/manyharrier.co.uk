@@ -1,22 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1} from "../components/Headings";
-import {Helmet} from "react-helmet";
+import Content, { HTMLContent } from '../components/Content'
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1 } from '../components/Headings'
+import { Helmet } from 'react-helmet'
 
-export const StandardPageTemplate = ({siteTitle, title, description, content, contentComponent}) => {
+export const StandardPageTemplate = ({
+  siteTitle,
+  title,
+  description,
+  content,
+  contentComponent,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
-        {description &&
-        <meta name="description" content={description} />
-        }
+        {description && <meta name="description" content={description} />}
       </Helmet>
       <H1 title={title} />
       <PageContent className="content" content={content} />
@@ -31,8 +35,8 @@ StandardPageTemplate.propTypes = {
   contentComponent: PropTypes.func,
 }
 
-const StandardPage = ({data}) => {
-  const {siteMetadata: title, markdownRemark: page} = data
+const StandardPage = ({ data }) => {
+  const { siteMetadata: title, markdownRemark: page } = data
 
   return (
     <Layout path={page.fields.slug}>

@@ -5,8 +5,8 @@ import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1, H2} from "../components/Headings";
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1, H2 } from '../components/Headings'
 
 export const SessionTemplate = ({
   contentComponent,
@@ -20,11 +20,11 @@ export const SessionTemplate = ({
     <StandardContentContainer>
       <H1 title={title} />
       <PageContent content={information} />
-      <H2 title={"Upcoming events"} />
+      <H2 title={'Upcoming events'} />
       {events.length === 0 && (
         <p>There are no upcoming events featuring this session.</p>
       )}
-      {events.map(({startsAt, slug, title, venue}, i) => (
+      {events.map(({ startsAt, slug, title, venue }, i) => (
         <EventBox
           key={'session-event-' + i}
           startsAt={startsAt}
@@ -62,7 +62,7 @@ const Session = ({ data, pageContext }) => {
         startsAt: Moment.utc(event.frontmatter.startsAt),
         slug: event.fields.slug,
         title: event.frontmatter.eventKey,
-        venue: event.frontmatter.venue.frontmatter.venueKey
+        venue: event.frontmatter.venue.frontmatter.venueKey,
       }
     })
     .filter(event => {

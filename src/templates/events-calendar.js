@@ -4,8 +4,8 @@ import Layout from '../components/Layout'
 import EventsCalendarMonth from '../components/EventsCalendarMonth'
 import Moment from 'moment'
 import { graphql } from 'gatsby'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1} from "../components/Headings";
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1 } from '../components/Headings'
 
 export class EventsCalendarTemplate extends React.Component {
   render() {
@@ -18,13 +18,13 @@ export class EventsCalendarTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        <H1 title={"Events calendar"} />
-          <EventsCalendarMonth
-            month={thisMonth}
-            events={events}
-            showPreviousMonthLink={showPreviousMonthLink}
-            showNextMonthLink={showNextMonthLink}
-          />
+        <H1 title={'Events calendar'} />
+        <EventsCalendarMonth
+          month={thisMonth}
+          events={events}
+          showPreviousMonthLink={showPreviousMonthLink}
+          showNextMonthLink={showNextMonthLink}
+        />
       </StandardContentContainer>
     )
   }
@@ -98,7 +98,7 @@ const EventsCalendar = ({ data, pageContext }) => {
   })
 
   return (
-    <Layout path={"/events"}>
+    <Layout path={'/events'}>
       <EventsCalendarTemplate
         events={events}
         showNextMonthLink={showNextMonthLink}

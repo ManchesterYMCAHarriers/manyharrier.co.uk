@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
 import EventBox from './EventBox'
-import {H3} from "./Headings";
+import { H3 } from './Headings'
 
 class EventsCalendarDay extends React.Component {
   render() {
-    const {date, events} = this.props
+    const { date, events } = this.props
 
     return (
       <div className="flex flex-wrap md:flex-no-wrap">
@@ -14,7 +14,7 @@ class EventsCalendarDay extends React.Component {
           <H3 title={date.format('dddd D MMMM')} />
         </div>
         <div className="w-full md:w-1/2 flex-shrink-0 flex-grow">
-          {events.map(({slug, startsAt, title, venue}) => (
+          {events.map(({ slug, startsAt, title, venue }) => (
             <EventBox
               key={slug}
               startsAt={startsAt}

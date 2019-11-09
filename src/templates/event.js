@@ -11,7 +11,7 @@ import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import EventTags from '../components/EventTags'
-import {H1} from "../components/Headings";
+import { H1 } from '../components/Headings'
 
 export const EventTemplate = ({
   contentComponent,
@@ -47,7 +47,7 @@ export const EventTemplate = ({
           <Address address={venue.address} title={venue.title} />
         </div>
       </div>
-      <div className="w-full mt-6 relative" style={{height: "70vh"}}>
+      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
         {track && (
           <GoogleMapsLocationAndRoute
             googleMapsApiKey={googleMapsApiKey}
@@ -74,7 +74,10 @@ export const EventTemplate = ({
           />
         </div>
         <div className="w-full md:w-5/12 md:ml-2 flex-shrink-0 flex-grow">
-          <Link to={venue.slug} className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200">
+          <Link
+            to={venue.slug}
+            className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+          >
             Full venue info <span className="text-red-400">&rarr;</span>
           </Link>
         </div>
@@ -140,7 +143,14 @@ EventTemplate.propTypes = {
 }
 
 const Event = ({ data, pageContext }) => {
-  const { site: {siteMetadata: {apiKey: {googleMaps: googleMapsApiKey}}}, markdownRemark: event } = data
+  const {
+    site: {
+      siteMetadata: {
+        apiKey: { googleMaps: googleMapsApiKey },
+      },
+    },
+    markdownRemark: event,
+  } = data
 
   const startsAt = Moment.utc(event.frontmatter.startsAt)
 

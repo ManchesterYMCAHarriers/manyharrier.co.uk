@@ -6,6 +6,7 @@ import ValidationSummary from './ValidationSummary'
 class FieldsetText extends React.Component {
   render() {
     const {
+      defaultValue,
       hint,
       inputAttributes,
       inputId,
@@ -35,10 +36,11 @@ class FieldsetText extends React.Component {
           </label>
         </legend>
         <InputText
+          defaultValue={defaultValue}
           hint={hint}
           inputAttributes={inputAttributes}
           inputId={inputId}
-          inputSizes={"w-full md:w-1/2"}
+          inputSizes={'w-full md:w-1/2'}
           inputType={inputType}
           setFormValidationState={setFormValidationState}
           validationMessages={validationMessages}
@@ -49,6 +51,7 @@ class FieldsetText extends React.Component {
 }
 
 FieldsetText.propTypes = {
+  defaultValue: PropTypes.string,
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,

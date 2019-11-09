@@ -1,30 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Moment from 'moment'
 
 import Layout from '../components/Layout'
 import EventBox from '../components/EventBox'
-import Content, {HTMLContent} from '../components/Content'
-import StandardContentContainer from "../components/StandardContentContainer";
-import {H1, H2} from "../components/Headings";
+import Content, { HTMLContent } from '../components/Content'
+import StandardContentContainer from '../components/StandardContentContainer'
+import { H1, H2 } from '../components/Headings'
 
 export const IndexPageTemplate = ({
-                                    contentComponent,
-                                    activeChampionships,
-                                    body,
-                                    eventsCalendarSlug,
-                                    nextEvents,
-                                    recentChampionships,
-                                    title,
-                                  }) => {
+  contentComponent,
+  activeChampionships,
+  body,
+  eventsCalendarSlug,
+  nextEvents,
+  recentChampionships,
+  title,
+}) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
       <H1 title={title} />
       <PageContent content={body} />
-      <H2 title={"Coming up..."} />
+      <H2 title={'Coming up...'} />
       {nextEvents.length === 0 && (
         <div>
           <p>We have two regular sessions per week:</p>
@@ -46,9 +46,14 @@ export const IndexPageTemplate = ({
         <p className="my-2">Here's what's happening in the next few weeks:</p>
       )}
       <div className="md:flex md:flex-wrap">
-        {nextEvents.map(({title, startsAt, slug, venue}, i) => (
-          <div key={'next-event-' + i}
-               className={"flex-shrink-0 flex-grow w-full md:w-5/12 " + (i % 2 ? "md:ml-2" : "md:mr-2")}>
+        {nextEvents.map(({ title, startsAt, slug, venue }, i) => (
+          <div
+            key={'next-event-' + i}
+            className={
+              'flex-shrink-0 flex-grow w-full md:w-5/12 ' +
+              (i % 2 ? 'md:ml-2' : 'md:mr-2')
+            }
+          >
             <EventBox
               title={title}
               startsAt={startsAt}
@@ -67,57 +72,57 @@ export const IndexPageTemplate = ({
         </Link>
       </div>
       <div className="flex flex-wrap my-8">
-        <section
-          className="w-full md:w-1/2 flex flex-col p-4 border-2 border-transparent justify-between">
+        <section className="w-full md:w-1/2 flex flex-col p-4 border-2 border-transparent justify-between">
           <div className="flex-shrink-0 flex-grow">
-            <H2 title={"About us"} />
+            <H2 title={'About us'} />
             <div className="content">
               <p>
-                We are affiliated to England Athletics and we frequently
-                take part in races and other running events. We have
-                club championships in cross-country, road, fell and
-                track disciplines. We particularly enjoy taking part in
-                events where we can run as a team!
+                We are affiliated to England Athletics and we frequently take
+                part in races and other running events. We have club
+                championships in cross-country, road, fell and track
+                disciplines. We particularly enjoy taking part in events where
+                we can run as a team!
               </p>
               <p>
-                We're not just about running; we arrange regular socials
-                in Manchester city centre and we are often found
-                travelling further afield for weekend breaks or longer
-                holidays.
+                We're not just about running; we arrange regular socials in
+                Manchester city centre and we are often found travelling further
+                afield for weekend breaks or longer holidays.
               </p>
             </div>
           </div>
           <p className="text-right flex-shrink-0 flex-grow-0">
-            <Link to={'/about'}
-                  className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200">
+            <Link
+              to={'/about'}
+              className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+            >
               Find out more <span className="text-red-400">&rarr;</span>
             </Link>
           </p>
         </section>
-        <section
-          className="w-full md:w-1/2 flex flex-col p-4 border-2 border-red-300 bg-red-100 justify-between">
+        <section className="w-full md:w-1/2 flex flex-col p-4 border-2 border-red-300 bg-red-100 justify-between">
           <div className="flex-shrink-0 flex-grow">
-            <H2 title={"Join us"} />
+            <H2 title={'Join us'} />
             <div className="content">
               <p>
-                We run and we do lots of fun stuff besides running.
-                What's not to like?!
+                We run and we do lots of fun stuff besides running. What's not
+                to like?!
               </p>
               <p>
-                Whether you're a practically a pro, just taking your
-                first running steps, mainly interested in the "après
-                run", or somewhere in between all three, we'd love for
-                you to join us!
+                Whether you're a practically a pro, just taking your first
+                running steps, mainly interested in the "après run", or
+                somewhere in between all three, we'd love for you to join us!
               </p>
               <p>
-                If you like what you see, try us out for size and come
-                and be a part of it!
+                If you like what you see, try us out for size and come and be a
+                part of it!
               </p>
             </div>
           </div>
           <p className="text-right flex-shrink-0 flex-grow-0">
-            <Link to={'/join'}
-                  className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200">
+            <Link
+              to={'/join'}
+              className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
+            >
               Find out more <span className="text-red-400">&rarr;</span>
             </Link>
           </p>
@@ -154,30 +159,30 @@ IndexPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-const IndexPage = ({data, pageContext}) => {
+const IndexPage = ({ data, pageContext }) => {
   const body = data.page.html
-  const {title} = data.page.frontmatter
+  const { title } = data.page.frontmatter
   const now = Moment.utc(pageContext.now)
 
   const nextEvents = []
-  data.nextEvents.edges.forEach(({node}) => {
+  data.nextEvents.edges.forEach(({ node }) => {
     nextEvents.push({
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
       title: node.frontmatter.eventKey,
-      venue: node.frontmatter.venue.frontmatter.venueKey
+      venue: node.frontmatter.venue.frontmatter.venueKey,
     })
   })
 
   let activeChampionshipsBySlug = {}
 
-  data.activeChampionships.edges.forEach(({node}) => {
+  data.activeChampionships.edges.forEach(({ node }) => {
     const slug = node.frontmatter.championship.fields.slug
     const startsAt = Moment.utc(node.frontmatter.startsAt)
     if (!activeChampionshipsBySlug[slug]) {
       activeChampionshipsBySlug[slug] = {
         championshipKey:
-        node.frontmatter.championship.frontmatter.championshipKey,
+          node.frontmatter.championship.frontmatter.championshipKey,
         startsAt: startsAt,
       }
       return
@@ -190,7 +195,7 @@ const IndexPage = ({data, pageContext}) => {
   const recentChampionships = []
   const activeChampionships = []
 
-  for (let [slug, {championshipKey, startsAt}] of Object.entries(
+  for (let [slug, { championshipKey, startsAt }] of Object.entries(
     activeChampionshipsBySlug
   )) {
     if (startsAt.isBefore(now)) {

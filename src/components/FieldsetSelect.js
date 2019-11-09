@@ -88,11 +88,14 @@ class FieldsetSelect extends React.Component {
         <ValidationSummary validationIssues={validationIssues} />
         {hint && <p className="hint">{hint}</p>}
         {this.state.validationMessage && (
-          <p className="validation-message">
-            {this.state.validationMessage}
-          </p>
+          <p className="validation-message">{this.state.validationMessage}</p>
         )}
-        <select id={inputId} name={inputId} className="block w-full md:w-auto max-w-full border border-gray-700" {...inputAttributes}>
+        <select
+          id={inputId}
+          name={inputId}
+          className="block w-full md:w-auto max-w-full border border-gray-700"
+          {...inputAttributes}
+        >
           {children}
         </select>
       </fieldset>

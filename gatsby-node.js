@@ -4,8 +4,8 @@ const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
 const Moment = require('moment')
 const remark = require('remark')
-const recommended  = require('remark-preset-lint-recommended')
-const remarkHtml  = require('remark-html')
+const recommended = require('remark-preset-lint-recommended')
+const remarkHtml = require('remark-html')
 
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
@@ -40,17 +40,26 @@ exports.createPages = async ({ actions, graphql }) => {
     const recent = Moment.utc()
       .subtract(2, 'months')
       .format('YYYY-MM-DD HH:mm')
+    const context = {
+      id,
+      now,
+      recent,
+    }
+
+    const stripeSkuMatch = node.fields.slug.match(
+      /^\/[A-z0-9-]+\/([A-z0-9-]+)\/?$/
+    )
+    if (stripeSkuMatch) {
+      context.stripeSkuName = stripeSkuMatch[1]
+    }
+
     createPage({
       path: node.fields.slug,
       component: path.resolve(
         `src/templates/${String(node.frontmatter.templateKey)}.js`
       ),
       // additional data can be passed via context
-      context: {
-        id,
-        now,
-        recent,
-      },
+      context: context,
     })
   })
 
@@ -149,12 +158,20 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value,
     })
 
-    const {templateKey} = node.frontmatter
+    const { templateKey } = node.frontmatter
 
     if (templateKey === 'join-page') {
-      const {howToJoinUs, membershipBenefits, yClubFacilities} = node.frontmatter
+      const {
+        howToJoinUs,
+        membershipBenefits,
+        yClubFacilities,
+      } = node.frontmatter
 
-      value = remark().use(recommended).use(remarkHtml).processSync(howToJoinUs).toString()
+      value = remark()
+        .use(recommended)
+        .use(remarkHtml)
+        .processSync(howToJoinUs)
+        .toString()
 
       createNodeField({
         name: `howToJoinUs`,
@@ -162,7 +179,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         value,
       })
 
-      value = remark().use(recommended).use(remarkHtml).processSync(membershipBenefits).toString()
+      value = remark()
+        .use(recommended)
+        .use(remarkHtml)
+        .processSync(membershipBenefits)
+        .toString()
 
       createNodeField({
         name: `membershipBenefits`,
@@ -170,7 +191,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         value,
       })
 
-      value = remark().use(recommended).use(remarkHtml).processSync(yClubFacilities).toString()
+      value = remark()
+        .use(recommended)
+        .use(remarkHtml)
+        .processSync(yClubFacilities)
+        .toString()
 
       createNodeField({
         name: `yClubFacilities`,
@@ -180,9 +205,13 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     }
 
     if (templateKey === 'committee-page') {
-      const {intro} = node.frontmatter
+      const { intro } = node.frontmatter
 
-      value = remark().use(recommended).use(remarkHtml).processSync(intro).toString()
+      value = remark()
+        .use(recommended)
+        .use(remarkHtml)
+        .processSync(intro)
+        .toString()
 
       createNodeField({
         name: `intro`,
@@ -192,8 +221,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
       value = []
 
-      node.frontmatter.members.forEach(({description}) => {
-        value.push(remark().use(recommended).use(remarkHtml).processSync(description).toString())
+      node.frontmatter.members.forEach(({ description }) => {
+        value.push(
+          remark()
+            .use(recommended)
+            .use(remarkHtml)
+            .processSync(description)
+            .toString()
+        )
       })
 
       createNodeField({

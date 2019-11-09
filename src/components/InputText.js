@@ -98,7 +98,7 @@ class InputText extends React.Component {
           </label>
         )}
         {hint && <p className="hint">{hint}</p>}
-        {this.state.validationMessage && (
+        {!this.props.hideValidationMessage && this.state.validationMessage && (
           <p className="validation-message">{this.state.validationMessage}</p>
         )}
         <div className={inputSizes}>
@@ -118,7 +118,8 @@ class InputText extends React.Component {
 
 InputText.propTypes = {
   classNames: PropTypes.arrayOf(PropTypes.string),
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.node,
+  hideValidationMessage: PropTypes.bool.isRequired,
   hint: PropTypes.string,
   inputAttributes: PropTypes.object,
   inputId: PropTypes.string.isRequired,
@@ -139,9 +140,10 @@ InputText.propTypes = {
   }),
 }
 
-InputText.defaults = {
+InputText.defaultProps = {
   classNames: [],
-  inputSizes: "w-full md:w-1/2",
+  hideValidationMessage: false,
+  inputSizes: 'w-full md:w-1/2',
   validationMessages: {},
 }
 

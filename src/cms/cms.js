@@ -5,7 +5,7 @@ import CMS from 'netlify-cms-app'
 import StandardPagePreview from './preview-templates/StandardPagePreview'
 import BlogPostPreview from './preview-templates/BlogPostPreview'
 import ChampionshipPreview from './preview-templates/ChampionshipPreview'
-import CommitteePagePreview from "./preview-templates/CommitteePagePreview";
+import CommitteePagePreview from './preview-templates/CommitteePagePreview'
 import EventPreview from './preview-templates/EventPreview'
 import IndexPagePreview from './preview-templates/IndexPagePreview'
 import InfoPreview from './preview-templates/InfoPreview'
@@ -31,4 +31,3 @@ CMS.registerPreviewTemplate('info', InfoPreview)
 CMS.registerPreviewTemplate('joinFirstClaimSuccess', StandardPagePreview)
 CMS.registerPreviewTemplate('joinSecondClaimSuccess', StandardPagePreview)
 CMS.registerPreviewTemplate('joinCancel', StandardPagePreview)
-
