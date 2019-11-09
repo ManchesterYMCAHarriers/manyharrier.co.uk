@@ -122,14 +122,14 @@ export default class CheckoutIndex extends React.Component {
       },
       () => {
         if (this.state.stage < this.state.stages) {
+          let submitValue = "Next"
+          if (this.state.stage === this.state.stages - 1) {
+            submitValue = data.paymentMethod === 'Stripe' ? 'Make payment' : 'Place order'
+          }
           this.setState(
             {
               stage: nextStage,
-              submitValue:
-                this.state.stage === this.state.stages - 1 &&
-                data.paymentMethod === 'Stripe'
-                  ? 'Make payment'
-                  : 'Next',
+              submitValue: submitValue,
             },
             () => {
               // Scroll to page title
