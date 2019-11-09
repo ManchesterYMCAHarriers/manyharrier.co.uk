@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import { H1 } from '../../components/Headings'
+import {H1} from '../../components/Headings'
 import {
   CheckoutAvailable,
   EmptyCart,
@@ -16,7 +16,7 @@ import Currency from '../../components/Currency'
 import InputText from '../../components/InputText'
 import Form from '../../components/Form'
 import FieldsetMulti from '../../components/FieldsetMulti'
-import { graphql, StaticQuery } from 'gatsby'
+import {graphql, StaticQuery} from 'gatsby'
 import FieldsetText from '../../components/FieldsetText'
 import FieldsetRadios from '../../components/FieldsetRadios'
 import Encode from '../../components/Encode'
@@ -26,7 +26,8 @@ export default class CheckoutIndex extends React.Component {
     super(props)
     this.state = {
       checkoutAvailable: false,
-      storageAvailable: false,
+      storageAvailable: null,
+      checkingStorageAvailable: true,
       data: {},
       cart: {
         items: [],
@@ -57,7 +58,7 @@ export default class CheckoutIndex extends React.Component {
 
   redirectToCheckout = async () => {
     return await this.stripe.redirectToCheckout({
-      items: this.state.cart.items.map(({ sku, quantity }) => {
+      items: this.state.cart.items.map(({sku, quantity}) => {
         return {
           sku,
           quantity,
@@ -154,7 +155,7 @@ export default class CheckoutIndex extends React.Component {
             },
             async () => {
               try {
-                const { status, ok } = await this.submitFormData()
+                const {status, ok} = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -180,7 +181,7 @@ export default class CheckoutIndex extends React.Component {
 
               EmptyCart()
 
-              const { error } = await this.redirectToCheckout()
+              const {error} = await this.redirectToCheckout()
               if (error) {
                 console.error('Redirect to checkout error', error)
               }
@@ -234,7 +235,7 @@ export default class CheckoutIndex extends React.Component {
     return this.state.stage <= this.state.stages
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     // Update/remove existing validation issues
     for (let i = 0; i < validationIssues.length; i++) {
@@ -308,12 +309,15 @@ export default class CheckoutIndex extends React.Component {
     if (StorageAvailable('sessionStorage')) {
       this.setState({
         cart: GetCart(),
-        checkoutAvailable: CheckoutAvailable(),
         numberOfItems: NumberOfItems(),
         numberOfLines: NumberOfLines(),
         storageAvailable: true,
       })
     }
+
+    this.setState({
+      checkingStorageAvailable: false,
+    })
   }
 
   render() {
@@ -322,20 +326,27 @@ export default class CheckoutIndex extends React.Component {
         <Layout path={'/checkout'}>
           <StandardContentContainer>
             <H1 title={'Checkout'} />
-            <p>Checkout is not supported on your device.</p>
-            {/* Hidden form inputs needed for Netlify forms */}
-            <form id={'checkout'}
-                  name={'checkout'}
-                  data-netlify={true}
-                  action={'/checkout'}
-                  method={'POST'}>
-              <input type="hidden" name="form-name" value="checkout" />
-              <input type="hidden" name="items" value="" />
-              <input type="hidden" name="firstName" value="" />
-              <input type="hidden" name="lastName" value="" />
-              <input type="hidden" name="email" value="" />
-              <input type="hidden" name="paymentMethod" value="" />
-            </form>
+            {this.state.checkingStorageAvailable && (
+              <p>Loading checkout; please wait...</p>
+            )}
+            {this.state.storageAvailable === false && (
+              <>
+                <p>Sorry - checkout is not available on your device.</p>
+                {/* Hidden form inputs needed for Netlify forms */}
+                <form id={'checkout'}
+                      name={'checkout'}
+                      data-netlify={true}
+                      action={'/checkout'}
+                      method={'POST'}>
+                  <input type="hidden" name="form-name" value="checkout" />
+                  <input type="hidden" name="items" value="" />
+                  <input type="hidden" name="firstName" value="" />
+                  <input type="hidden" name="lastName" value="" />
+                  <input type="hidden" name="email" value="" />
+                  <input type="hidden" name="paymentMethod" value="" />
+                </form>
+              </>
+            )}
           </StandardContentContainer>
         </Layout>
       )
@@ -355,8 +366,8 @@ export default class CheckoutIndex extends React.Component {
             }
           }
         `}
-        render={({ site: data }) => {
-          const { baseUrl } = data.siteMetadata
+        render={({site: data}) => {
+          const {baseUrl} = data.siteMetadata
           const stripePublishableKey = data.siteMetadata.apiKey.stripe
 
           if (!this.state.stripePublishableKey) {
@@ -409,13 +420,15 @@ export default class CheckoutIndex extends React.Component {
                           key={'checkout-item-' + item.id}
                           className="w-full flex flex-wrap sm:flex-no-wrap pb-4 border-b border-gray-500 items-center"
                         >
-                          <div className="flex-shrink md:flex-shrink flex-grow sm:pr-2 font-semibold">
+                          <div
+                            className="flex-shrink md:flex-shrink flex-grow sm:pr-2 font-semibold">
                             {item.description} @{' '}
                             <span className="text-red-600">
                               {Currency(item.price)}
                             </span>
                           </div>
-                          <div className="w-auto flex-shrink-0 flex-grow-0 flex justify-end items-center mt-4 sm:px-2">
+                          <div
+                            className="w-auto flex-shrink-0 flex-grow-0 flex justify-end items-center mt-4 sm:px-2">
                             <button
                               type="button"
                               id={item.id + '-decrement'}
@@ -570,10 +583,12 @@ export default class CheckoutIndex extends React.Component {
                           key={'item-confirm-' + item.id}
                           className="flex items-baseline justify-between py-2 my-2 border-b border-gray-500"
                         >
-                          <div className="w-1/12 flex-shrink-0 flex-grow-0 pr-2">
+                          <div
+                            className="w-1/12 flex-shrink-0 flex-grow-0 pr-2">
                             {item.quantity}
                           </div>
-                          <div className="w-1/12 flex-shrink-0 flex-grow-0 px-2">
+                          <div
+                            className="w-1/12 flex-shrink-0 flex-grow-0 px-2">
                             ×
                           </div>
                           <div className="w-auto flex-shrink flex-grow px-2">
@@ -582,14 +597,16 @@ export default class CheckoutIndex extends React.Component {
                               {Currency(item.price)}
                             </span>
                           </div>
-                          <div className="w-1/5 text-right font-bold flex-shrink-0 flex-grow-0 pl-2">
+                          <div
+                            className="w-1/5 text-right font-bold flex-shrink-0 flex-grow-0 pl-2">
                             {Currency(item.quantity * item.price)}
                           </div>
                         </div>
                       ))}
                       <div className="flex justify-end items-center py-2">
                         <div className="text-right pr-2">Total</div>
-                        <div className="w-1/5 flex-shrink-0 flex-grow-0 text-right font-bold pl-2">
+                        <div
+                          className="w-1/5 flex-shrink-0 flex-grow-0 text-right font-bold pl-2">
                           {Currency(this.state.cart.total)}
                         </div>
                       </div>
@@ -604,9 +621,9 @@ export default class CheckoutIndex extends React.Component {
                         <dd>
                           You have opted to pay by
                           {this.state.data.paymentMethod === 'BACS' &&
-                            ' bank transfer'}
+                          ' bank transfer'}
                           {this.state.data.paymentMethod === 'Stripe' &&
-                            ' credit card, debit card or Apple Pay'}
+                          ' credit card, debit card or Apple Pay'}
                         </dd>
                       </dl>
                       {this.state.data.paymentMethod === 'Stripe' && (
@@ -645,7 +662,7 @@ export default class CheckoutIndex extends React.Component {
                         Use{' '}
                         <strong>
                           {this.state.data.firstName &&
-                            this.state.data.firstName.charAt(0)}{' '}
+                          this.state.data.firstName.charAt(0)}{' '}
                           {this.state.data.lastName}
                         </strong>{' '}
                         as your payment reference.
