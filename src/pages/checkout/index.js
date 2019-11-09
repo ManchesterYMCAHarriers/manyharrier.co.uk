@@ -330,7 +330,7 @@ export default class CheckoutIndex extends React.Component {
                   action={'/checkout'}
                   method={'POST'}>
               <input type="hidden" name="form-name" value="checkout" />
-              <input type="hidden" name="items[]" value="" />
+              <input type="hidden" name="items" value="" />
               <input type="hidden" name="firstName" value="" />
               <input type="hidden" name="lastName" value="" />
               <input type="hidden" name="email" value="" />
@@ -399,16 +399,16 @@ export default class CheckoutIndex extends React.Component {
                         this.state.numberOfItems !== 1 ? 's' : ''
                       }): ${Currency(this.state.cart.total)}`}
                     >
+                      <input
+                        type="hidden"
+                        name="items"
+                        value={JSON.stringify(this.state.cart.items)}
+                      />
                       {this.state.cart.items.map(item => (
                         <div
                           key={'checkout-item-' + item.id}
                           className="w-full flex flex-wrap sm:flex-no-wrap pb-4 border-b border-gray-500 items-center"
                         >
-                          <input
-                            type="hidden"
-                            name="item[]"
-                            value={JSON.stringify(item)}
-                          />
                           <div className="flex-shrink md:flex-shrink flex-grow sm:pr-2 font-semibold">
                             {item.description} @{' '}
                             <span className="text-red-600">
