@@ -323,6 +323,19 @@ export default class CheckoutIndex extends React.Component {
           <StandardContentContainer>
             <H1 title={'Checkout'} />
             <p>Checkout is not supported on your device.</p>
+            {/* Hidden form inputs needed for Netlify forms */}
+            <form id={'checkout'}
+                  name={'checkout'}
+                  data-netlify={true}
+                  action={'/checkout'}
+                  method={'POST'}>
+              <input type="hidden" name="form-name" value="checkout" />
+              <input type="hidden" name="items[]" value="" />
+              <input type="hidden" name="firstName" value="" />
+              <input type="hidden" name="lastName" value="" />
+              <input type="hidden" name="email" value="" />
+              <input type="hidden" name="paymentMethod" value="" />
+            </form>
           </StandardContentContainer>
         </Layout>
       )
