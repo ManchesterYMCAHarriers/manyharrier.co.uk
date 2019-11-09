@@ -22,6 +22,10 @@ const Breadcrumbs = ({ path }) => {
       title: 'Championships',
     },
     {
+      path: '/checkout',
+      title: 'Checkout'
+    },
+    {
       path: '/events',
       title: 'Events',
     },
