@@ -8,7 +8,6 @@ import ChampionshipPreview from './preview-templates/ChampionshipPreview'
 import CommitteePagePreview from './preview-templates/CommitteePagePreview'
 import EventPreview from './preview-templates/EventPreview'
 import IndexPagePreview from './preview-templates/IndexPagePreview'
-import InfoPreview from './preview-templates/InfoPreview'
 import RoutePreview from './preview-templates/RoutePreview'
 import SessionPreview from './preview-templates/SessionPreview'
 import VenuePreview from './preview-templates/VenuePreview'
@@ -27,7 +26,6 @@ CMS.registerPreviewTemplate('championships', ChampionshipPreview)
 CMS.registerPreviewTemplate('venues', VenuePreview)
 CMS.registerPreviewTemplate('routes', RoutePreview)
 CMS.registerPreviewTemplate('sessions', SessionPreview)
-CMS.registerPreviewTemplate('info', InfoPreview)
 CMS.registerPreviewTemplate('joinFirstClaimSuccess', StandardPagePreview)
 CMS.registerPreviewTemplate('joinSecondClaimSuccess', StandardPagePreview)
 CMS.registerPreviewTemplate('joinCancel', StandardPagePreview)

@@ -7,32 +7,46 @@ import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { H1, H2 } from '../components/Headings'
+import {PanelFullWidth, Panels} from "../components/Panels";
+import Hero from "../components/Hero";
 
 export const SessionTemplate = ({
   contentComponent,
   events,
   title,
+  heroImage,
   information,
 }) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <PageContent content={information} />
-      <H2 title={'Upcoming events'} />
-      {events.length === 0 && (
-        <p>There are no upcoming events featuring this session.</p>
-      )}
-      {events.map(({ startsAt, slug, title, venue }, i) => (
-        <EventBox
-          key={'session-event-' + i}
-          startsAt={startsAt}
-          slug={slug}
-          title={title}
-          venue={venue}
-        />
-      ))}
+      {heroImage && <Hero fluidImage={heroImage} title={title} />}
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel bottom-black">
+            {!heroImage && <h1 className="heading-1">{title}</h1>}
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: information}} />
+          </div>
+        </PanelFullWidth>
+      </Panels>
+      <PanelFullWidth>
+        <div className="panel black-bottom">
+          <h2 className="heading-2 mb-4">Upcoming events</h2>
+          {events.length === 0 && (
+            <p className="paragraph">There are no upcoming events featuring this session.</p>
+          )}
+          {events.map(({ startsAt, slug, title }, i) => (
+            <EventBox
+              key={'session-event-' + i}
+              startsAt={startsAt}
+              slug={slug}
+              title={title}
+            />
+          ))}
+        </div>
+      </PanelFullWidth>
     </StandardContentContainer>
   )
 }
@@ -103,6 +117,13 @@ export const sessionQuery = graphql`
         slug
       }
       frontmatter {
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         sessionKey
         sessionEvents {
           fields {

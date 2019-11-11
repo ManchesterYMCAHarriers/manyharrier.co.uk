@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { graphql, navigate } from 'gatsby'
+import {graphql, navigate} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
+import {H1, H2} from '../components/Headings'
 import Form from '../components/Form'
 import FieldsetMulti from '../components/FieldsetMulti'
 import InputText from '../components/InputText'
@@ -17,6 +17,8 @@ import {
   StorageAvailable,
 } from '../components/Cart'
 import Currency from '../components/Currency'
+import Hero from "../components/Hero";
+import {Panel, PanelFullWidth, Panels} from "../components/Panels";
 
 export class ChampionshipTemplate extends React.Component {
   constructor(props) {
@@ -145,7 +147,7 @@ export class ChampionshipTemplate extends React.Component {
     )
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -182,6 +184,8 @@ export class ChampionshipTemplate extends React.Component {
       contentComponent,
       events,
       title,
+      heroImage,
+      intro,
       information,
       stripeSku,
     } = this.props
@@ -189,7 +193,7 @@ export class ChampionshipTemplate extends React.Component {
 
     let hint = ``
     const now = Moment.utc()
-    const remainingEvents = events.filter(({ startsAt }) =>
+    const remainingEvents = events.filter(({startsAt}) =>
       startsAt.isAfter(now)
     )
     if (stripeSku) {
@@ -208,95 +212,110 @@ export class ChampionshipTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        <H1 title={title} />
-        <H2 title={'Fixtures'} />
-        <div className={'mb-8'}>
-          {events.map(({ startsAt, slug, title, venue }, i) => (
-            <EventBox
-              key={'championship-event-' + i}
-              startsAt={startsAt}
-              slug={slug}
-              title={title}
-              venue={venue}
-            />
-          ))}
-        </div>
-        {stripeSku && this.state.storageAvailable && (
-          <>
-            <H2 title={'Championship entry'} />
-            <div className="border-4 border-green-400 bg-green-100 p-4 mb-8">
-              <Form
-                backHandler={this.backHandler}
-                backValue={this.state.backValue}
-                formId={'enter-championship'}
-                method={'POST'}
-                netlify={false}
-                showBack={this.state.stage > 1}
-                showSubmit={true}
-                submitHandler={this.submitHandler}
-                submitValue={this.state.submitValue}
-              >
-                <FieldsetMulti
-                  legend={`Enter now for ${Currency(stripeSku.price)}`}
-                  hint={hint}
-                  validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 1}
-                >
-                  <InputText
-                    inputId={'firstName'}
-                    inputSizes={'w-full md:w-1/2'}
-                    inputType={'text'}
-                    inputAttributes={{ required: true }}
-                    setFormValidationState={this.updateValidationIssues}
-                    validationMessages={{
-                      valueMissing: 'Enter your first name',
-                    }}
-                    label={'First name'}
-                  />
-                  <InputText
-                    inputId={'lastName'}
-                    inputSizes={'w-full md:w-1/2'}
-                    inputType={'text'}
-                    inputAttributes={{ required: true }}
-                    setFormValidationState={this.updateValidationIssues}
-                    validationMessages={{
-                      valueMissing: 'Enter your last name',
-                    }}
-                    label={'Last name'}
-                  />
-                </FieldsetMulti>
-                <FieldsetMulti
-                  legend={`Check your details`}
-                  validationIssues={this.state.validationIssues}
-                  visible={this.state.stage === 2}
-                >
-                  {this.state.cart.items.map(item => (
-                    <div
-                      key={'subcheckout-' + item.id}
-                      className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
-                    >
-                      <p className="w-full md:w-auto mb-2 flex-shrink flex-grow">
-                        {item.description}
-                      </p>
-                      <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
-                        {Currency(stripeSku.price)}
-                      </p>
-                      <div className="flex-shrink-0 flex-grow-0">
-                        <button
-                          type="button"
-                          id={item.id}
-                          className="mb-2 border font-semibold border-red-400 bg-red-200 hover:bg-red-300 focus:bg-red-400 rounded px-4 py-2"
-                          onClick={this.removeItem}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </FieldsetMulti>
-              </Form>
+        {heroImage && <Hero title={title} fluidImage={heroImage} />}
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom">
+              {!heroImage && <h1>{title}</h1>}
+              <div dangerouslySetInnerHTML={{__html: intro}} />
             </div>
-          </>
+          </PanelFullWidth>
+        </Panels>
+        <Panels>
+          <PanelFullWidth>
+            <div className="panel black-bottom">
+              <h2 className="heading-2 mb-4">Fixtures</h2>
+              {events.map(({startsAt, slug, title, venue}, i) => (
+                <EventBox
+                  key={'championship-event-' + i}
+                  startsAt={startsAt}
+                  slug={slug}
+                  title={title}
+                  venue={venue}
+                />
+              ))}
+            </div>
+          </PanelFullWidth>
+        </Panels>
+        {stripeSku && this.state.storageAvailable && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <h2 className="heading-2 mb-4">Championship entry</h2>
+                <Form
+                  backHandler={this.backHandler}
+                  backValue={this.state.backValue}
+                  formId={'enter-championship'}
+                  method={'POST'}
+                  netlify={false}
+                  showBack={this.state.stage > 1}
+                  showSubmit={true}
+                  submitHandler={this.submitHandler}
+                  submitValue={this.state.submitValue}
+                >
+                  <FieldsetMulti
+                    legend={`Enter now for ${Currency(stripeSku.price)}`}
+                    hint={hint}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 1}
+                  >
+                    <InputText
+                      inputId={'firstName'}
+                      inputSizes={'w-full md:w-1/2'}
+                      inputType={'text'}
+                      inputAttributes={{required: true}}
+                      setFormValidationState={this.updateValidationIssues}
+                      validationMessages={{
+                        valueMissing: 'Enter your first name',
+                      }}
+                      label={'First name'}
+                    />
+                    <InputText
+                      inputId={'lastName'}
+                      inputSizes={'w-full md:w-1/2'}
+                      inputType={'text'}
+                      inputAttributes={{required: true}}
+                      setFormValidationState={this.updateValidationIssues}
+                      validationMessages={{
+                        valueMissing: 'Enter your last name',
+                      }}
+                      label={'Last name'}
+                    />
+                  </FieldsetMulti>
+                  <FieldsetMulti
+                    legend={`Check your details`}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 2}
+                  >
+                    {this.state.cart.items.map(item => (
+                      <div
+                        key={'subcheckout-' + item.id}
+                        className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
+                      >
+                        <p
+                          className="w-full md:w-auto mb-2 flex-shrink flex-grow">
+                          {item.description}
+                        </p>
+                        <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
+                          {Currency(stripeSku.price)}
+                        </p>
+                        <div className="flex-shrink-0 flex-grow-0">
+                          <button
+                            type="button"
+                            id={item.id}
+                            className="mb-2 border font-semibold border-red-400 bg-red-200 hover:bg-red-300 focus:bg-red-400 rounded px-4 py-2"
+                            onClick={this.removeItem}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </FieldsetMulti>
+                </Form>
+              </div>
+            </PanelFullWidth>
+          </Panels>
         )}
         <PageContent content={information} />
       </StandardContentContainer>
@@ -321,12 +340,14 @@ ChampionshipTemplate.propTypes = {
     price: PropTypes.number.isRequired,
   }),
   title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
+  intro: PropTypes.node.isRequired,
 }
 
-const Championship = ({ data }) => {
+const Championship = ({data}) => {
   const {
     site: {
-      siteMetadata: { title },
+      siteMetadata: {title},
     },
     stripeSku,
     markdownRemark: championship,
@@ -357,11 +378,15 @@ const Championship = ({ data }) => {
     }
   }
 
+  const heroImage = championship.frontmatter.heroImage ? championship.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={championship.fields.slug}>
       <ChampionshipTemplate
         contentComponent={HTMLContent}
         events={events}
+        heroImage={heroImage}
+        intro={championship.fields.intro}
         information={championship.html}
         stripeSku={stripeSkuData}
         title={championship.frontmatter.championshipKey}
@@ -398,6 +423,7 @@ export const championshipQuery = graphql`
       id
       html
       fields {
+        intro
         slug
       }
       frontmatter {
@@ -417,6 +443,13 @@ export const championshipQuery = graphql`
           }
         }
         championshipKey
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         terrain
       }
     }

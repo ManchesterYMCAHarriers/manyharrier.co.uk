@@ -6,12 +6,12 @@ class Address extends React.Component {
     const { address, title } = this.props
 
     return (
-      <div>
-        {title && <div className="is-size-5 has-text-weight-bold">{title}</div>}
+      <>
+        {title && <div className="font-semibold">{title}</div>}
         {address.map((line, i) => (
           <div key={'address-line-' + i}>{line}</div>
         ))}
-      </div>
+      </>
     )
   }
 }

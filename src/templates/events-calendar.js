@@ -5,7 +5,6 @@ import EventsCalendarMonth from '../components/EventsCalendarMonth'
 import Moment from 'moment'
 import { graphql } from 'gatsby'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1 } from '../components/Headings'
 
 export class EventsCalendarTemplate extends React.Component {
   render() {
@@ -18,7 +17,7 @@ export class EventsCalendarTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        <H1 title={'Events calendar'} />
+        <h1 className="heading-1 mb-4">Events calendar</h1>
         <EventsCalendarMonth
           month={thisMonth}
           events={events}

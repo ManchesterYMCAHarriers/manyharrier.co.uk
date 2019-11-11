@@ -1,22 +1,9 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
 
-class GoogleMapsDirectionsLink extends React.Component {
-  render() {
-    const { location, text } = this.props
+const GoogleMapsDirectionsLink = ({location}) => {
     const { lat, lng } = location
-    const googleMapsDirectionsLink =
-      'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
-
-    return (
-      <a
-        className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-        href={googleMapsDirectionsLink}
-      >
-        {text} <span className="text-red-400">&rarr;</span>
-      </a>
-    )
-  }
+    return 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng
 }
 
 GoogleMapsDirectionsLink.propTypes = {
@@ -24,7 +11,6 @@ GoogleMapsDirectionsLink.propTypes = {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
   }).isRequired,
-  text: PropTypes.string.isRequired,
 }
 
 export default GoogleMapsDirectionsLink

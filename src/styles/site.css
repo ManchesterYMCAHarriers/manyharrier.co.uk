@@ -12,51 +12,101 @@ dd {
     @apply my-2 ml-2
 }
 
-.content h1 {
-    @apply text-2xl mt-4 mb-2
-}
-
-.content h2 {
-    @apply text-xl mt-4 mb-2
-}
-
-.content h3 {
-    @apply text-lg mt-4 mb-2
-}
-
-.content p {
-    @apply my-2
-}
-
 .content ol, .content ul {
     @apply my-4 ml-6
 }
 
 .content ul li {
-    @apply list-disc
+    @apply list-disc mb-2
 }
 
 .content ol li {
-    @apply list-decimal
+    @apply list-decimal mb-2
 }
 
 .content ol ul li {
-    @apply list-disc
+    @apply list-disc mb-2
 }
 
 .content ul ol li {
-    @apply list-decimal
+    @apply list-decimal mb-2
 }
 
 .content a {
-    @apply text-red-700
+    @apply text-red-manyharrier opacity-75
 }
 
-.content a:hover {
-    @apply text-red-400 underline
+.content a:hover, .content a:focus {
+    @apply opacity-100 underline
 }
 
 @tailwind components;
+
+.heading-1, .content h1 {
+    @apply text-2xl font-extrabold
+}
+
+.heading-2, .content h2 {
+    @apply text-xl font-bold
+}
+
+.heading-3, .content h3 {
+    @apply text-lg font-semibold
+}
+
+.heading-4, .content h4 {
+    @apply text-lg font-normal
+}
+
+.paragraph, .content p {}
+
+.content h1, .content h2, .content h3 {
+    @apply mt-6
+}
+
+.content p {
+    @apply mt-4
+}
+
+.content :first-child {
+    @apply mt-0
+}
+
+.content :last-child {
+    @apply mb-0
+}
+
+@screen md {
+    .heading-1, .content h1 {
+        @apply text-3xl
+    }
+
+    .heading-2, .content h2 {
+        @apply text-2xl
+    }
+
+    .heading-3, .content h3 {
+        @apply text-xl
+    }
+
+    .heading-4, .content h4 {
+        @apply text-xl
+    }
+
+    .paragraph, .content p {}
+}
+
+.panel {
+    @apply w-full p-4 bg-white
+}
+
+.red-bottom {
+   @apply border-b-4 border-red-manyharrier
+}
+
+.black-bottom {
+    @apply border-b-4 border-black-manyharrier
+}
 
 .breadcrumb::after {
     content: '/';
@@ -68,6 +118,10 @@ dd {
 }
 
 .input {
+    @apply p-2 border border-gray-700 w-full
+}
+
+.textarea {
     @apply p-2 border border-gray-700 w-full
 }
 

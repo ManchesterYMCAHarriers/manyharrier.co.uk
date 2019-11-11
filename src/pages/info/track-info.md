@@ -3,7 +3,7 @@ templateKey: info
 infoKey: Track Info
 forEventType: Track
 ---
-# Session format
+## Session format
 
 We will start the formal session at 7:00pm with some dynamic stretches - do a 
 couple of warm up laps if you're ready before this. We will then do the main 

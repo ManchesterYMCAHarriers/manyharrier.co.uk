@@ -8,12 +8,15 @@ import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { H1, H2 } from '../components/Headings'
+import {PanelFullWidth, Panels} from "../components/Panels";
+import Hero from "../components/Hero";
 
 export const RouteTemplate = ({
   contentComponent,
   events,
   googleMapsApiKey,
   title,
+  heroImage,
   routeTrack,
   information,
 }) => {
@@ -21,30 +24,49 @@ export const RouteTemplate = ({
 
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
-        <GoogleMapsRoute
-          googleMapsApiKey={googleMapsApiKey}
-          id={'route-map'}
-          paths={routeTrack}
-          mapContainerClassName={'h-full'}
-          zoom={14}
-        />
-      </div>
-      <PageContent content={information} />
-      <H2 title="Upcoming events" />
-      {events.length === 0 && (
-        <p>There are no upcoming events on the {title} route.</p>
-      )}
-      {events.map((event, i) => (
-        <EventBox
-          key={'route-event-' + i}
-          startsAt={event.startsAt}
-          slug={event.slug}
-          title={event.title}
-          tags={event.tags}
-        />
-      ))}
+      <Panels>
+        <PanelFullWidth>
+          {heroImage ? (
+            <Hero fluidImage={heroImage} title={title} />)
+          : (
+            <div className="panel red-bottom">
+              <h1 className="heading-1">{title}</h1>
+            </div>
+          )}
+        </PanelFullWidth>
+        <PanelFullWidth>
+          <div className="w-full relative" style={{ height: '70vh' }}>
+            <GoogleMapsRoute
+              googleMapsApiKey={googleMapsApiKey}
+              id={'route-map'}
+              paths={routeTrack}
+              mapContainerClassName={'h-full'}
+              zoom={14}
+            />
+          </div>
+        </PanelFullWidth>
+        {information && (
+          <PanelFullWidth>
+            <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: information}} />
+          </PanelFullWidth>
+        )}
+        <PanelFullWidth>
+          <div className="panel black-bottom">
+            <h2 className="heading-2 mb-4">Upcoming events</h2>
+            {events.length === 0 && (
+              <p className="paragraph">There are no upcoming events on the {title} route.</p>
+            )}
+            {events.map(({ startsAt, slug, title }, i) => (
+              <EventBox
+                key={'route-event-' + i}
+                startsAt={startsAt}
+                slug={slug}
+                title={title}
+              />
+            ))}
+          </div>
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
@@ -154,6 +176,8 @@ const Route = ({ data, pageContext }) => {
     }
   )
 
+  const heroImage = route.frontmatter.heroImage ? route.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={route.fields.slug}>
       <RouteTemplate
@@ -163,6 +187,7 @@ const Route = ({ data, pageContext }) => {
         information={route.html}
         routeTrack={routeTrack}
         title={route.frontmatter.routeKey}
+        heroImage={heroImage}
       />
     </Layout>
   )
@@ -192,6 +217,13 @@ export const routeQuery = graphql`
         slug
       }
       frontmatter {
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         routeEvents {
           id
           fields {

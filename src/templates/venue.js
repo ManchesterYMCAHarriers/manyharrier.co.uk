@@ -8,12 +8,15 @@ import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import Moment from 'moment'
 import Address from '../components/Address'
 import EventBox from '../components/EventBox'
-import { H1, H2 } from '../components/Headings'
 import StandardContentContainer from '../components/StandardContentContainer'
+import {PanelFullWidth, Panels} from "../components/Panels";
+import {CallToActionLink} from "../components/CallToAction";
+import Hero from "../components/Hero";
 
 export const VenueTemplate = ({
   contentComponent,
   googleMapsApiKey,
+  heroImage,
   title,
   address,
   location,
@@ -24,38 +27,52 @@ export const VenueTemplate = ({
 
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <div className="subtitle is-size-4">
-        <Address address={address} />
-      </div>
-      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
-        <GoogleMapsLocation
-          googleMapsApiKey={googleMapsApiKey}
-          id={'venue-location-map'}
-          zoom={14}
-          location={location}
-          mapContainerClassName={'h-full'}
-        />
-      </div>
-      <div className="mt-2 mb-4">
-        <GoogleMapsDirectionsLink
-          location={location}
-          text={'Navigate to ' + title + ' with Google Maps'}
-        />
-      </div>
-      {information && <PageContent content={information} />}
-      <H2 title={'Upcoming events at ' + title} />
-      {events.length === 0 && (
-        <div>There are no upcoming events at {title}</div>
-      )}
-      {events.map(({ startsAt, slug, title }, i) => (
-        <EventBox
-          key={'venue-event-' + i}
-          startsAt={startsAt}
-          slug={slug}
-          title={title}
-        />
-      ))}
+      {heroImage && <Hero fluidImage={heroImage} />}
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h1 className="heading-1">{title}</h1>
+            <Address address={address} />
+          </div>
+        </PanelFullWidth>
+        <PanelFullWidth>
+          <div className="w-full relative" style={{ height: '70vh' }}>
+            <GoogleMapsLocation
+              googleMapsApiKey={googleMapsApiKey}
+              id={'venue-location-map'}
+              zoom={14}
+              location={location}
+              mapContainerClassName={'h-full'}
+            />
+          </div>
+        </PanelFullWidth>
+        <PanelFullWidth>
+          <div className="panel black-bottom">
+            <CallToActionLink to={GoogleMapsDirectionsLink({location})} title={`Navigate to ${title} with Google Maps`} />
+          </div>
+        </PanelFullWidth>
+        {information && (
+          <PanelFullWidth>
+            <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: information}} />
+          </PanelFullWidth>
+        )}
+        <PanelFullWidth>
+          <div className="panel black-bottom">
+            <h2 className="heading-2 mb-4">Upcoming events at {title}</h2>
+            {events.length === 0 && (
+              <p className="paragraph">There are no upcoming events at {title}.</p>
+            )}
+            {events.map(({ startsAt, slug, title }, i) => (
+              <EventBox
+                key={'venue-event-' + i}
+                startsAt={startsAt}
+                slug={slug}
+                title={title}
+              />
+            ))}
+          </div>
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
@@ -76,7 +93,8 @@ VenueTemplate.propTypes = {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
   }),
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
 }
 
 const Venue = ({ data, pageContext }) => {
@@ -115,6 +133,8 @@ const Venue = ({ data, pageContext }) => {
       return a.startsAt.isBefore(b.startsAt) ? -1 : 1
     })
 
+  const heroImage = venue.frontmatter.heroImage ? venue.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={venue.fields.slug}>
       <VenueTemplate
@@ -125,6 +145,7 @@ const Venue = ({ data, pageContext }) => {
         address={venue.frontmatter.address.split('\n')}
         location={location}
         title={venue.frontmatter.venueKey}
+        heroImage={heroImage}
       />
     </Layout>
   )
@@ -153,6 +174,13 @@ export const venueQuery = graphql`
       }
       frontmatter {
         address
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         location
         venueEvents {
           id

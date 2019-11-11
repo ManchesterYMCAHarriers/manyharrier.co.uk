@@ -25,6 +25,7 @@ export default class Form extends React.Component {
       addressSelectorOptionsMap: [],
       baseUrl: null,
       data: {},
+      externalError: null,
       formAction: '/join/form',
       getAddressApiError: false,
       getAddressApiKey: null,
@@ -38,14 +39,6 @@ export default class Form extends React.Component {
       submitValue: 'Next',
       validationIssues: [],
     }
-  }
-
-  showBack = () => {
-    return this.state.stage > 1 && this.state.stage <= this.state.stages
-  }
-
-  showSubmit = () => {
-    return this.state.stage <= this.state.stages
   }
 
   getPossibleAddresses = async () => {
@@ -324,7 +317,7 @@ export default class Form extends React.Component {
           )
         }
         // ...or proceed to payment
-        else {
+        else if (this.state.stage === this.state.stages) {
           data['form-name'] = ev.target.getAttribute('name')
           this.setState(
             {
@@ -336,17 +329,25 @@ export default class Form extends React.Component {
 
                 if (!ok) {
                   console.error('Submit form data error', status)
+                  this.setState({
+                    externalError: true,
+                  })
                   return
                 }
               } catch (err) {
                 console.error('Submit form data network error', err)
+                this.setState({
+                  externalError: true,
+                })
                 return
               }
 
               if (this.state.data.paymentMethod === 'BACS') {
                 this.setState(
                   {
+                    externalError: false,
                     stage: nextStage,
+                    submitValue: "Back to Home",
                   },
                   () => {
                     document.querySelector('h1').scrollIntoView()
@@ -357,10 +358,15 @@ export default class Form extends React.Component {
 
               const { error } = await this.redirectToCheckout()
               if (error) {
+                this.setState({
+                  externalError: true,
+                })
                 console.error('Redirect to checkout error', error)
               }
             }
           )
+        } else {
+          window.location.href = "/"
         }
       }
     )
@@ -516,8 +522,9 @@ export default class Form extends React.Component {
                   method={'POST'}
                   backHandler={this.backHandler}
                   backValue={'Back'}
-                  showBack={this.showBack()}
-                  showSubmit={this.showSubmit()}
+                  externalError={this.state.externalError}
+                  showBack={this.state.stage > 1 && this.state.stage <= this.state.stages}
+                  showSubmit={true}
                   submitHandler={this.submitHandler}
                   submitValue={this.state.submitValue}
                 >

@@ -10,7 +10,7 @@ const TemplateWrapper = ({ children, path }) => {
   const { title, description } = useSiteMetadata()
 
   return (
-    <div className="bg-white">
+    <div className="bg-green-400">
       <Helmet>
         <html lang="en" />
         <title>{title}</title>

@@ -3,7 +3,6 @@ import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
 import {H1} from '../../components/Headings'
 import {
-  CheckoutAvailable,
   EmptyCart,
   GetCart,
   NumberOfItems,
@@ -36,6 +35,7 @@ export default class CheckoutIndex extends React.Component {
         lastName: null,
         email: null,
       },
+      externalError: null,
       formAction: '/checkout',
       numberOfItems: 0,
       numberOfLines: 0,
@@ -147,7 +147,7 @@ export default class CheckoutIndex extends React.Component {
           )
         }
         // ...or proceed to checkout
-        else {
+        else if (this.state.stage === this.state.stages) {
           data['form-name'] = ev.target.getAttribute('name')
           this.setState(
             {
@@ -159,17 +159,25 @@ export default class CheckoutIndex extends React.Component {
 
                 if (!ok) {
                   console.error('Submit form data error', status)
+                  this.setState({
+                    externalError: true,
+                  })
                   return
                 }
               } catch (err) {
                 console.error('Submit form data network error', err)
+                this.setState({
+                  externalError: true,
+                })
                 return
               }
 
               if (this.state.data.paymentMethod === 'BACS') {
                 this.setState(
                   {
+                    externalError: false,
                     stage: nextStage,
+                    submitValue: "Back to Home",
                   },
                   () => {
                     EmptyCart()
@@ -183,10 +191,15 @@ export default class CheckoutIndex extends React.Component {
 
               const {error} = await this.redirectToCheckout()
               if (error) {
+                this.setState({
+                  externalError: true,
+                })
                 console.error('Redirect to checkout error', error)
               }
             }
           )
+        } else {
+          window.location.href = "/"
         }
       }
     )
@@ -225,14 +238,6 @@ export default class CheckoutIndex extends React.Component {
       quantityInput.value = quantity + 1
       quantityInput.dispatchEvent(new Event('change'))
     }
-  }
-
-  showBack = () => {
-    return this.state.stage > 1 && this.state.stage <= this.state.stages
-  }
-
-  showSubmit = () => {
-    return this.state.stage <= this.state.stages
   }
 
   updateValidationIssues = ({id, message}) => {
@@ -393,11 +398,12 @@ export default class CheckoutIndex extends React.Component {
                   <Form
                     backHandler={this.backHandler}
                     backValue={'Back'}
+                    externalError={this.state.externalError}
                     formId={'checkout'}
                     method={'POST'}
                     netlify={true}
-                    showBack={this.showBack()}
-                    showSubmit={this.showSubmit()}
+                    showBack={this.state.stage > 1 && this.state.stage <= this.state.stages}
+                    showSubmit={true}
                     submitHandler={this.submitHandler}
                     submitValue={this.state.submitValue}
                   >

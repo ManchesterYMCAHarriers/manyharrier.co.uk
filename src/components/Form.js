@@ -17,6 +17,7 @@ class Form extends React.Component {
       backHandler,
       backValue,
       children,
+      externalError,
       formAttributes,
       formId,
       method,
@@ -38,6 +39,12 @@ class Form extends React.Component {
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value={formId} />
+        {externalError && (
+          <div className="w-full border border-red-400 bg-red-100 p-4">
+            <p className="text-xl">There was an error processing this form.</p>
+            <p>Sorry for the inconvenience caused. Please try again later.</p>
+          </div>
+        )}
         {children}
         <div className="flex flex-no-wrap w-full items-baseline justify-between mt-8">
           <div className="flex-shrink-0 flex-grow order-last text-right">
@@ -74,6 +81,7 @@ Form.propTypes = {
   backHandler: PropTypes.func.isRequired,
   backValue: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  externalError: PropTypes.bool,
   formAttributes: PropTypes.object,
   formId: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
@@ -86,6 +94,7 @@ Form.propTypes = {
 
 Form.defaults = {
   backValue: 'Back',
+  externalError: false,
   method: 'POST',
   nextValue: 'Next',
   submitValue: 'Submit',

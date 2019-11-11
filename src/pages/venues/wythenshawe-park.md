@@ -7,9 +7,9 @@ address: |-
   M23 0PH
 location: '{"type":"Point","coordinates":[-2.287183,53.405500]}'
 ---
-# Car Parking
+## Car Parking
 
-## Athletics facility car park
+### Athletics facility car park
 
 The car park by the athletics facility is closest to the race start area, but
 will likely be full.
@@ -19,16 +19,16 @@ Additional parking *may* be available in the field next to the track, however
 
 Postcode for sat-navs: **M23 0PH**
 
-## Stables car park
+### Stables car park
 
 There is another car park near to the Courtyard Café - a few hundred metres from
 the start area.
 
 Postcode for sat-navs: **M23 0AB**
 
-# Public transport
+## Public transport
 
-## Tram
+### Tram
 
 The nearest tram stop is the appropriately-named Wythenshawe Park tram stop,
 which is in Metrolink zone 3 on the Manchester Airport line.
@@ -41,7 +41,7 @@ to the start area.
 
 * [Wythenshawe Park live tram times](https://tfgm.com/public-transport/tram/stops/wythenshawe-park-tram)
 
-## Bus
+### Bus
 
 The 101 bus goes from Manchester city-centre, down Princess Parkway. Get off the
 bus at Palatine Road/Britannia Hotel and then follow the road under Princess 
@@ -53,7 +53,7 @@ stop on the Manchester-bound slip-road onto Princess Parkway.
 
 * [Bus times to Manchester](https://tfgm.com/public-transport/bus/stops/1800SB42011/)
 
-# Facilities
+## Facilities
 
 Men's toilets, showers and changing are in the quadrant building in the car park
 next to the athletics track.

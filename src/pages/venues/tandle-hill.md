@@ -7,9 +7,9 @@ address: |-
   OL2 5UX
 location: '{"type":"Point","coordinates":[-2.1399103,53.5770719]}'
 ---
-# Car parking
+## Car parking
 
-## On-street
+### On-street
 
 As the race is on farmland next to Tandle Hill Country Park rather than in the park itself,
 the best place to park is on Tandle Hill Road or on the streets off it.
@@ -18,13 +18,13 @@ As always, please park with consideration for local residents.
 
 Postcode for sat-navs: **OL2 5UX**
 
-## Tandle Hill Country Park
+### Tandle Hill Country Park
 
 There is also car parking available in Tandle Hill Country Park itself. 
 
 Postcode for sat-navs: **OL2 5UX**
 
-# Public transport
+## Public transport
 
 It is a tram and bus combination to get to this one!
 
@@ -38,7 +38,7 @@ Then, it's a 5-10 minute walk to the start area.
 * [409 bus times from Oldham King Street towards Tandle Hill](https://tfgm.com/public-transport/bus/stops/1800ED15291/409)
 * [409 bus times from Tandle Hill Road towards Oldham](https://tfgm.com/public-transport/bus/stops/1800ED16941/409)
 
-# Facilties
+## Facilties
 
 There are toilet facilities and a café in Tandle Hill Country Park - about a
 10-minute walk from the start area.

@@ -7,6 +7,12 @@ const remark = require('remark')
 const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
 
+const toMarkdown = input => remark()
+  .use(recommended)
+  .use(remarkHtml)
+  .processSync(input)
+  .toString()
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
@@ -35,6 +41,11 @@ exports.createPages = async ({ actions, graphql }) => {
   }
 
   pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const {templateKey} = node.frontmatter
+    if (templateKey === 'info') {
+      return
+    }
+
     const id = node.id
     const now = Moment.utc().format('YYYY-MM-DD HH:mm')
     const recent = Moment.utc()
@@ -148,93 +159,106 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   fmImagesToRelative(node) // convert image paths for gatsby images
 
-  let value
-
   if (node.internal.type === `MarkdownRemark`) {
-    value = createFilePath({ node, getNode })
+    const { templateKey } = node.frontmatter
+
+    if (templateKey === 'info') {
+      return
+    }
+
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: createFilePath({ node, getNode }),
     })
 
-    const { templateKey } = node.frontmatter
-
-    if (templateKey === 'join-page') {
+    if (templateKey === 'index-page') {
       const {
-        howToJoinUs,
-        membershipBenefits,
-        yClubFacilities,
+        intro,
+        nextEventsDefault,
+        firstPanelBody,
+        secondPanelBody,
       } = node.frontmatter
-
-      value = remark()
-        .use(recommended)
-        .use(remarkHtml)
-        .processSync(howToJoinUs)
-        .toString()
-
-      createNodeField({
-        name: `howToJoinUs`,
-        node,
-        value,
-      })
-
-      value = remark()
-        .use(recommended)
-        .use(remarkHtml)
-        .processSync(membershipBenefits)
-        .toString()
-
-      createNodeField({
-        name: `membershipBenefits`,
-        node,
-        value,
-      })
-
-      value = remark()
-        .use(recommended)
-        .use(remarkHtml)
-        .processSync(yClubFacilities)
-        .toString()
-
-      createNodeField({
-        name: `yClubFacilities`,
-        node,
-        value,
-      })
-    }
-
-    if (templateKey === 'committee-page') {
-      const { intro } = node.frontmatter
-
-      value = remark()
-        .use(recommended)
-        .use(remarkHtml)
-        .processSync(intro)
-        .toString()
 
       createNodeField({
         name: `intro`,
         node,
-        value,
+        value: toMarkdown(intro),
       })
 
-      value = []
+      createNodeField({
+        name: `nextEventsDefault`,
+        node,
+        value: toMarkdown(nextEventsDefault),
+      })
 
-      node.frontmatter.members.forEach(({ description }) => {
-        value.push(
-          remark()
-            .use(recommended)
-            .use(remarkHtml)
-            .processSync(description)
-            .toString()
-        )
+      createNodeField({
+        name: `firstPanelBody`,
+        node,
+        value: toMarkdown(firstPanelBody),
+      })
+
+      createNodeField({
+        name: `secondPanelBody`,
+        node,
+        value: toMarkdown(secondPanelBody),
+      })
+    }
+
+    if (templateKey === 'join-page') {
+      const {
+        howToJoinUs,
+        membershipBenefitsIntro,
+        membershipBenefits,
+        yClubFacilities,
+      } = node.frontmatter
+
+      createNodeField({
+        name: `howToJoinUs`,
+        node,
+        value: toMarkdown(howToJoinUs)
+      })
+
+      createNodeField({
+        name: `membershipBenefitsIntro`,
+        node,
+        value: toMarkdown(membershipBenefitsIntro),
+      })
+
+      createNodeField({
+        name: `membershipBenefits`,
+        node,
+        value: membershipBenefits.map(({body}) => {
+          return toMarkdown(body)
+        })
+      })
+    }
+
+    if (templateKey === 'committee-page') {
+      const { intro, members } = node.frontmatter
+
+      createNodeField({
+        name: `intro`,
+        node,
+        value: toMarkdown(intro),
       })
 
       createNodeField({
         name: `memberDescriptions`,
         node,
-        value,
+        value: members.map(({description}) => {
+          return toMarkdown(description)
+        })
+      })
+    }
+
+    if (templateKey === 'championship') {
+      const { intro } = node.frontmatter
+
+      createNodeField({
+        name: `intro`,
+        node,
+        value: toMarkdown(intro),
       })
     }
   }

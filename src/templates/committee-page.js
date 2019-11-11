@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
-import { Helmet } from 'react-helmet'
+import {Helmet} from 'react-helmet'
+import {PanelFullWidth, Panels} from "../components/Panels";
+import Img from "gatsby-image";
 
 export const CommitteePageTemplate = ({
-  siteTitle,
-  title,
-  description,
-  intro,
-  members,
-  contentComponent,
-}) => {
+                                        siteTitle,
+                                        title,
+                                        description,
+                                        intro,
+                                        members,
+                                        contentComponent,
+                                      }) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -23,34 +24,37 @@ export const CommitteePageTemplate = ({
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      <H1 title={title} />
-      <PageContent className="content" content={intro} />
-      <H2 title={'Committee members'} />
-      {members.map(({ name, role, description, image }, i) => (
-        <div
-          key={'committee-member-' + i}
-          className="flex flex-wrap md:flex-no-wrap my-4 pb-4 border-b-2 border-gray-700 last:border-b-0"
-        >
-          <div
-            className={
-              'mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2'
-            }
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h1 className="heading-1 mb-4">{title}</h1>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: intro}} />
+          </div>
+        </PanelFullWidth>
+      </Panels>
+      <Panels>
+        {members.map(({name, role, description, image}, i) => (
+          <PanelFullWidth
+            key={'committee-member-' + i}
           >
-            <img
-              src={image.publicURL}
-              alt={'Photo of ' + name}
-              className={'border-2 border-gray-700'}
-            />
-          </div>
-          <div className="flex-shrink flex-grow md:order-1">
-            <h3 className="font-semibold text-lg">
-              <span>{name}</span> -{' '}
-              <span className="text-gray-700">{role}</span>
-            </h3>
-            <PageContent className="content" content={description} />
-          </div>
-        </div>
-      ))}
+            <div
+              className={`flex panel black-bottom`}>
+              <div className={`mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2`}>
+                <Img fixed={image} alt={'Photo of ' + name} className={`border-2 border-black-manyharrier`}/>
+              </div>
+              <div className="flex-shrink flex-grow md:order-1">
+                <h3 className="heading-3 mb-4">
+                  <span>{name}</span> -{' '}
+                  <span className="text-gray-700">{role}</span>
+                </h3>
+                <div className="content"
+                     dangerouslySetInnerHTML={{__html: description}} />
+              </div>
+            </div>
+          </PanelFullWidth>
+        ))}
+      </Panels>
     </StandardContentContainer>
   )
 }
@@ -66,18 +70,17 @@ CommitteePageTemplate.propTypes = {
       name: PropTypes.string.isRequired,
       role: PropTypes.string.isRequired,
       description: PropTypes.node.isRequired,
-      image: PropTypes.shape({
-        publicURL: PropTypes.string.isRequired,
-      }).isRequired,
+      image: PropTypes.object,
     })
   ),
 }
 
-const CommitteePage = ({ data }) => {
-  const { siteMetadata: title, markdownRemark: page } = data
+const CommitteePage = ({data}) => {
+  const {siteMetadata: title, markdownRemark: page} = data
 
   const members = page.frontmatter.members.map((member, i) => {
     member.description = page.fields.memberDescriptions[i]
+    member.image = member.doubleImage ? member.doubleImage.childImageSharp.fixed : member.singleImage.childImageSharp.fixed
     return member
   })
 
@@ -121,8 +124,19 @@ export const committeePageQuery = graphql`
         members {
           name
           role
-          image {
-            publicURL
+          singleImage {
+            childImageSharp {
+              fixed(width: 200, height: 250) {
+                ...GatsbyImageSharpFixed_withWebp_tracedSVG
+              }
+            }
+          }
+          doubleImage {
+            childImageSharp {
+              fixed(width: 400, height: 250) {
+                ...GatsbyImageSharpFixed_withWebp_tracedSVG
+              }
+            }
           }
         }
       }

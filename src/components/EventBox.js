@@ -10,7 +10,7 @@ class EventBox extends React.Component {
     return (
       <Link
         to={slug}
-        className="w-full md:mx-2 flex flex-col border-b-2 border-gray-400 hover:border-red-400 hover:bg-gray-200 p-4 pb-2"
+        className="w-full flex flex-col border-b-2 border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 hover:bg-gray-200 focus:border-red-manyharrier focus:opacity-100 focus:bg-gray-200 p-4 pb-2"
       >
         <h3 className="text-xl order-2 font-semibold">{title}</h3>
         <p className="text-sm order-1 font-medium">

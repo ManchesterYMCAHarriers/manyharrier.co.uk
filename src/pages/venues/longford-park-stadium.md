@@ -8,20 +8,20 @@ address: |-
   M21 9TA
 location: '{"type":"Point","coordinates":[-2.290575,53.445895]}'
 ---
-# Cost
+## Cost
 
 You will need to pay to enter the track; it costs £3.00 and **only cash payment
 is accepted**.
 
-# Car parking
+## Car parking
 
 There is a large free car park next to the stadium.
 
 Postcode for sat-navs: **M21 9TA**
 
-# Public transport
+## Public transport
 
-## Tram
+### Tram
 
 Stretford tram stop and Chorlton tram stop are both about a 15-minute walk away 
 from Longford Park Stadium.
@@ -33,7 +33,7 @@ lines.
 * [Stretford live tram times](https://tfgm.com/public-transport/tram/stops/stretford-tram)
 * [Chorlton live tram times](https://tfgm.com/public-transport/tram/stops/chorlton-tram)
 
-# Facilities
+## Facilities
 
 There are showers, changing rooms and toilets available to use at no additional
 cost.

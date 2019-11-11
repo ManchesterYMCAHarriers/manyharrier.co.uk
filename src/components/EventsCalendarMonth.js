@@ -1,10 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import Moment from 'moment'
-import { Link } from 'gatsby'
+import {Link} from 'gatsby'
 import EventsCalendarDay from './EventsCalendarDay'
-import { uniq } from 'lodash'
-import { H2 } from './Headings'
+import {uniq} from 'lodash'
+import {CallToActionBackLink, CallToActionLink} from "./CallToAction";
+import {PanelFullWidth, Panels} from "./Panels";
 
 class EventsCalendarMonth extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class EventsCalendarMonth extends React.Component {
     const nextMonth = month.clone().add(1, 'month')
 
     let days = []
-    events.forEach(({ startsAt }) => {
+    events.forEach(({startsAt}) => {
       days.push(startsAt.format('YYYY-MM-DD'))
     })
 
@@ -34,78 +35,59 @@ class EventsCalendarMonth extends React.Component {
     })
 
     return (
-      <>
-        <div className="flex flex-wrap justify-between items-baseline pb-8 border-b-2 border-gray-700">
-          <div className="w-full md:w-auto flex-shrink-0 flex-grow order-1 md:order-2 text-center">
-            <H2 title={month.format('MMMM YYYY')} />
-          </div>
-          <div className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-2 md:order-1">
-            {showPreviousMonthLink && (
-              <Link
-                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-                to={
-                  '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
-                }
-              >
-                <span className="mr-1 text-red-400" aria-hidden="true">
-                  &larr;
-                </span>
-                {previousMonth.format('MMMM YYYY')}
-              </Link>
-            )}
-          </div>
-          <div className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-3 text-right">
-            {showNextMonthLink && (
-              <Link
-                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-                to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
-              >
-                {nextMonth.format('MMMM YYYY')}
-                <span className="ml-1 text-red-400" aria-hidden="true">
-                  &rarr;
-                </span>
-              </Link>
-            )}
-          </div>
-        </div>
-        <div className="mt-8">
-          {days.map(day => (
-            <div className="mt-8">
-              <EventsCalendarDay date={day.date} events={day.events} />
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel">
+            <div
+              className="flex flex-wrap justify-between items-baseline pb-8 border-b-2 border-black-manyharrier">
+              <div
+                className="w-full md:w-auto flex-shrink-0 flex-grow order-1 md:order-2 text-center">
+                <h2 className="heading-2 mb-4">{month.format('MMMM YYYY')}</h2>
+              </div>
+              <div
+                className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-2 md:order-1">
+                {showPreviousMonthLink && (
+                  <CallToActionBackLink
+                    to={`/events/${previousMonth.format('MMMM-YYYY').toLowerCase()}`}
+                    title={previousMonth.format('MMMM YYYY')} />
+                )}
+              </div>
+              <div
+                className="w-1/2 md:w-1/4 flex-shrink-0 flex-grow-0 order-3 text-right">
+                {showNextMonthLink && (
+                  <CallToActionLink
+                    to={`/events/${nextMonth.format('MMMM-YYYY').toLowerCase()}`}
+                    title={nextMonth.format('MMMM YYYY')} />
+                )}
+              </div>
             </div>
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-between items-baseline my-8 border-t-2 border-gray-700 pt-8">
-          <div className="w-1/2 flex-shrink-0 flex-grow-0">
-            {showPreviousMonthLink && (
-              <Link
-                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-                to={
-                  '/events/' + previousMonth.format('MMMM-YYYY').toLowerCase()
-                }
-              >
-                <span className="mr-1 text-red-400" aria-hidden="true">
-                  &larr;
-                </span>
-                {previousMonth.format('MMMM YYYY')}
-              </Link>
-            )}
+            <div className="my-8">
+              {days.map(day => (
+                <div className="mt-8">
+                  <EventsCalendarDay date={day.date} events={day.events} />
+                </div>
+              ))}
+            </div>
+            <div
+              className="flex flex-wrap justify-between items-baseline mb-2 border-t-2 border-gray-700 pt-8">
+              <div className="w-1/2 flex-shrink-0 flex-grow-0">
+                {showPreviousMonthLink && (
+                  <CallToActionBackLink
+                    to={`/events/${previousMonth.format('MMMM-YYYY').toLowerCase()}`}
+                    title={previousMonth.format('MMMM YYYY')} />
+                )}
+              </div>
+              <div className="w-1/2 flex-shrink-0 flex-grow-0 text-right">
+                {showNextMonthLink && (
+                  <CallToActionLink
+                    to={`/events/${nextMonth.format('MMMM-YYYY').toLowerCase()}`}
+                    title={nextMonth.format('MMMM YYYY')} />
+                )}
+              </div>
+            </div>
           </div>
-          <div className="w-1/2 flex-shrink-0 flex-grow-0 text-right">
-            {showNextMonthLink && (
-              <Link
-                className="border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-                to={'/events/' + nextMonth.format('MMMM-YYYY').toLowerCase()}
-              >
-                {nextMonth.format('MMMM YYYY')}
-                <span className="ml-1 text-red-400" aria-hidden="true">
-                  &rarr;
-                </span>
-              </Link>
-            )}
-          </div>
-        </div>
-      </>
+        </PanelFullWidth>
+      </Panels>
     )
   }
 }

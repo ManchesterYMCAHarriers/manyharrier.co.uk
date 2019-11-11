@@ -1,147 +1,99 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql, Link } from 'gatsby'
+import {graphql, Link} from 'gatsby'
 import Moment from 'moment'
 
 import Layout from '../components/Layout'
 import EventBox from '../components/EventBox'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
+import Hero from "../components/Hero";
+import {Panel, Panels} from "../components/Panels";
+import {Card} from "../components/Card";
+import {CallToActionLink} from "../components/CallToAction";
 
 export const IndexPageTemplate = ({
-  contentComponent,
-  activeChampionships,
-  body,
-  eventsCalendarSlug,
-  nextEvents,
-  recentChampionships,
-  title,
-}) => {
+                                    contentComponent,
+                                    title,
+                                    intro,
+                                    nextEvents,
+                                    nextEventsDefault,
+                                    eventsCalendarSlug,
+                                    heroImage,
+                                    firstPanelImage,
+                                    firstPanelTitle,
+                                    firstPanelBody,
+                                    firstPanelLink,
+                                    firstPanelCTA,
+                                    secondPanelImage,
+                                    secondPanelTitle,
+                                    secondPanelBody,
+                                    secondPanelLink,
+                                    secondPanelCTA,
+                                    activeChampionships,
+                                    recentChampionships,
+                                  }) => {
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <PageContent content={body} />
-      <H2 title={'Coming up...'} />
-      {nextEvents.length === 0 && (
-        <div>
-          <p>We have two regular sessions per week:</p>
-          <ul>
-            <li>
-              Tuesday evenings at 7:00pm at the{' '}
-              <Link to={'/venues/manchester-regional-arena/'}>
-                Manchester Regional Arena
-              </Link>
-            </li>
-            <li>
-              Thuesday evenings at 6:30pm at{' '}
-              <Link to={'/venues/the-y-club'}>The Y Club</Link>
-            </li>
-          </ul>
+      <Hero title={title} fluidImage={heroImage} />
+      <div className="content bg-white p-4 mt-4 border-b-4 border-black-manyharrier"
+           dangerouslySetInnerHTML={{__html: intro}} />
+      <div className="bg-white p-4 mt-4 border-b-4 border-red-manyharrier">
+        <h2 className="heading-2">Coming up...</h2>
+        {nextEvents.length === 0 && (
+          <div className="content"
+               dangerouslySetInnerHTML={{__html: nextEventsDefault}} />
+        )}
+        <Panels className="mt-4">
+          {nextEvents.map(({title, startsAt, slug, venue}, i) => (
+            <Panel key={'next-event-' + i}>
+              <EventBox
+                title={title}
+                startsAt={startsAt}
+                slug={slug}
+                venue={venue}
+              />
+            </Panel>
+          ))}
+        </Panels>
+        <div className="content mt-4">
+          <p>For a full list of what we've got coming up, check out our events calendar.</p>
         </div>
-      )}
-      {nextEvents.length > 0 && (
-        <p className="my-2">Here's what's happening in the next few weeks:</p>
-      )}
-      <div className="md:flex md:flex-wrap">
-        {nextEvents.map(({ title, startsAt, slug, venue }, i) => (
-          <div
-            key={'next-event-' + i}
-            className={
-              'flex-shrink-0 flex-grow w-full md:w-5/12 ' +
-              (i % 2 ? 'md:ml-2' : 'md:mr-2')
-            }
-          >
-            <EventBox
-              title={title}
-              startsAt={startsAt}
-              slug={slug}
-              venue={venue}
-            />
-          </div>
-        ))}
+        <div className="text-right mt-4">
+          <CallToActionLink to={eventsCalendarSlug} title={"Events calendar"} />
+        </div>
       </div>
-      <div className="text-right mt-4 mb-8">
-        <Link
-          to={eventsCalendarSlug}
-          className="text-lg mt-4 p-2 border-b-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-        >
-          More events <span className="text-red-400">&rarr;</span>
-        </Link>
-      </div>
-      <div className="flex flex-wrap my-8">
-        <section className="w-full md:w-1/2 flex flex-col p-4 border-2 border-transparent justify-between">
-          <div className="flex-shrink-0 flex-grow">
-            <H2 title={'About us'} />
-            <div className="content">
-              <p>
-                We are affiliated to England Athletics and we frequently take
-                part in races and other running events. We have club
-                championships in cross-country, road, fell and track
-                disciplines. We particularly enjoy taking part in events where
-                we can run as a team!
-              </p>
-              <p>
-                We're not just about running; we arrange regular socials in
-                Manchester city centre and we are often found travelling further
-                afield for weekend breaks or longer holidays.
-              </p>
-            </div>
-          </div>
-          <p className="text-right flex-shrink-0 flex-grow-0">
-            <Link
-              to={'/about'}
-              className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-            >
-              Find out more <span className="text-red-400">&rarr;</span>
-            </Link>
-          </p>
-        </section>
-        <section className="w-full md:w-1/2 flex flex-col p-4 border-2 border-red-300 bg-red-100 justify-between">
-          <div className="flex-shrink-0 flex-grow">
-            <H2 title={'Join us'} />
-            <div className="content">
-              <p>
-                We run and we do lots of fun stuff besides running. What's not
-                to like?!
-              </p>
-              <p>
-                Whether you're a practically a pro, just taking your first
-                running steps, mainly interested in the "après run", or
-                somewhere in between all three, we'd love for you to join us!
-              </p>
-              <p>
-                If you like what you see, try us out for size and come and be a
-                part of it!
-              </p>
-            </div>
-          </div>
-          <p className="text-right flex-shrink-0 flex-grow-0">
-            <Link
-              to={'/join'}
-              className="inline-block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-            >
-              Find out more <span className="text-red-400">&rarr;</span>
-            </Link>
-          </p>
-        </section>
-      </div>
+      <Panels>
+        <Panel>
+          <Card image={firstPanelImage} title={firstPanelTitle}
+                callToAction={<CallToActionLink to={firstPanelLink}
+                                                title={firstPanelCTA} />}
+                borderColorClassName={`border-black-manyharrier`}>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: firstPanelBody}} />
+          </Card>
+        </Panel>
+        <Panel>
+          <Card image={secondPanelImage} title={secondPanelTitle}
+                callToAction={<CallToActionLink to={secondPanelLink}
+                                                title={secondPanelCTA} />}
+                borderColorClassName={`border-red-manyharrier`}>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: secondPanelBody}} />
+          </Card>
+        </Panel>
+      </Panels>
     </StandardContentContainer>
   )
 }
 
 IndexPageTemplate.propTypes = {
-  activeChampionships: PropTypes.arrayOf(
-    PropTypes.shape({
-      championshipKey: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-    })
-  ),
-  body: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
-  eventsCalendarSlug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object.isRequired,
+  intro: PropTypes.node.isRequired,
   nextEvents: PropTypes.arrayOf(
     PropTypes.shape({
       startsAt: PropTypes.instanceOf(Moment).isRequired,
@@ -150,22 +102,37 @@ IndexPageTemplate.propTypes = {
       venue: PropTypes.string.isRequired,
     })
   ),
+  nextEventsDefault: PropTypes.node.isRequired,
+  eventsCalendarSlug: PropTypes.string.isRequired,
+  firstPanelImage: PropTypes.object,
+  firstPanelTitle: PropTypes.string.isRequired,
+  firstPanelBody: PropTypes.node.isRequired,
+  firstPanelCTA: PropTypes.string.isRequired,
+  secondPanelImage: PropTypes.object,
+  secondPanelTitle: PropTypes.string.isRequired,
+  secondPanelBody: PropTypes.node.isRequired,
+  secondPanelCTA: PropTypes.string.isRequired,
   recentChampionships: PropTypes.arrayOf(
     PropTypes.shape({
       championshipKey: PropTypes.string.isRequired,
       slug: PropTypes.string.isRequired,
     })
   ),
-  title: PropTypes.string.isRequired,
+  activeChampionships: PropTypes.arrayOf(
+    PropTypes.shape({
+      championshipKey: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+    })
+  ),
 }
 
-const IndexPage = ({ data, pageContext }) => {
-  const body = data.page.html
-  const { title } = data.page.frontmatter
+const IndexPage = ({data, pageContext}) => {
+  const {intro, nextEventsDefault, firstPanelBody, secondPanelBody} = data.page.fields
+  const {title, heroImage, firstPanelImage, firstPanelTitle, firstPanelLink, firstPanelCTA, secondPanelImage, secondPanelTitle, secondPanelLink, secondPanelCTA} = data.page.frontmatter
   const now = Moment.utc(pageContext.now)
 
   const nextEvents = []
-  data.nextEvents.edges.forEach(({ node }) => {
+  data.nextEvents.edges.forEach(({node}) => {
     nextEvents.push({
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
@@ -176,13 +143,13 @@ const IndexPage = ({ data, pageContext }) => {
 
   let activeChampionshipsBySlug = {}
 
-  data.activeChampionships.edges.forEach(({ node }) => {
+  data.activeChampionships.edges.forEach(({node}) => {
     const slug = node.frontmatter.championship.fields.slug
     const startsAt = Moment.utc(node.frontmatter.startsAt)
     if (!activeChampionshipsBySlug[slug]) {
       activeChampionshipsBySlug[slug] = {
         championshipKey:
-          node.frontmatter.championship.frontmatter.championshipKey,
+        node.frontmatter.championship.frontmatter.championshipKey,
         startsAt: startsAt,
       }
       return
@@ -195,7 +162,7 @@ const IndexPage = ({ data, pageContext }) => {
   const recentChampionships = []
   const activeChampionships = []
 
-  for (let [slug, { championshipKey, startsAt }] of Object.entries(
+  for (let [slug, {championshipKey, startsAt}] of Object.entries(
     activeChampionshipsBySlug
   )) {
     if (startsAt.isBefore(now)) {
@@ -231,28 +198,29 @@ const IndexPage = ({ data, pageContext }) => {
     <Layout>
       <IndexPageTemplate
         contentComponent={HTMLContent}
+        title={title}
+        heroImage={heroImage.childImageSharp.fluid}
+        intro={intro}
         eventsCalendarSlug={'/events/' + now.format('MMMM-YYYY').toLowerCase()}
-        body={body}
         nextEvents={nextEvents}
+        nextEventsDefault={nextEventsDefault}
+        firstPanelImage={firstPanelImage.childImageSharp.fluid}
+        firstPanelTitle={firstPanelTitle}
+        firstPanelBody={firstPanelBody} firstPanelLink={firstPanelLink}
+        firstPanelCTA={firstPanelCTA}
+        secondPanelImage={secondPanelImage.childImageSharp.fluid}
+        secondPanelTitle={secondPanelTitle}
+        secondPanelBody={secondPanelBody} secondPanelLink={secondPanelLink}
+        secondPanelCTA={secondPanelCTA}
         activeChampionships={activeChampionships}
         recentChampionships={recentChampionships}
-        title={title}
       />
     </Layout>
   )
 }
 
 IndexPage.propTypes = {
-  data: PropTypes.shape({
-    page: PropTypes.shape({
-      html: PropTypes.node,
-      frontmatter: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-      }),
-    }),
-    nextEvents: PropTypes.object,
-    activeChamionships: PropTypes.object,
-  }),
+  data: PropTypes.object,
 }
 
 export default IndexPage
@@ -261,8 +229,41 @@ export const indexPageQuery = graphql`
   query IndexPageQuery($id: String!, $now: Date!, $recent: Date!) {
     page: markdownRemark(id: { eq: $id }) {
       html
+      fields {
+        intro
+        nextEventsDefault
+        firstPanelBody
+        secondPanelBody
+      }
       frontmatter {
         title
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
+        firstPanelImage {
+          childImageSharp {
+            fluid(maxWidth: 672, maxHeight: 448) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
+        firstPanelTitle
+        firstPanelLink
+        firstPanelCTA
+        secondPanelImage {
+          childImageSharp {
+            fluid(maxWidth: 672, maxHeight: 448) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
+        secondPanelTitle
+        secondPanelLink
+        secondPanelCTA
       }
     }
     nextEvents: allMarkdownRemark(

@@ -65,7 +65,7 @@ const Footer = class extends React.Component {
             },
           },
         }) => (
-          <footer className="bg-black text-white mt-8">
+          <footer className="bg-black-manyharrier text-white">
             <div className="max-w-6xl mx-auto flex flex-wrap">
               <div className="w-full md:w-auto mt-8 md:ml-4 flex-shrink-0 flex-grow flex flex-wrap md:flex-no-wrap md:flex-col items-center md:items-start justify-center md:justify-between">
                 <FooterLogo />
@@ -92,7 +92,7 @@ const Footer = class extends React.Component {
                 <FooterMenuLink title={'Contact'} to={'/contact'} />
                 <FooterMenuLink title={'Join'} to={'/join'} />
               </div>
-              <div className="w-full my-8 mx-2 flex-shrink-0 flex-grow-0 text-center">
+              <div className="w-full my-8 px-2flex-shrink-0 flex-grow-0 text-center">
                 <span className="whitespace-no-wrap">
                   Copyright &copy; {new Date().getUTCFullYear()}
                 </span>{' '}

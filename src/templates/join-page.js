@@ -1,25 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
-import { Helmet } from 'react-helmet'
+import {H1, H2} from '../components/Headings'
+import {Helmet} from 'react-helmet'
 import PrimaryCallToAction from '../components/PrimaryCallToAction'
 import Currency from '../components/Currency'
+import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import {CallToActionLink} from "../components/CallToAction";
+import {Card} from "../components/Card";
+import Hero from "../components/Hero";
 
 export const JoinPageTemplate = ({
-  siteTitle,
-  title,
-  description,
-  contentComponent,
-  howToJoinUs,
-  membershipBenefits,
-  yClubFacilities,
-  firstClaimPrice,
-  firstClaimValidTo,
-}) => {
+                                   siteTitle,
+                                   title,
+                                   heroImage,
+                                   description,
+                                   contentComponent,
+                                   howToJoinUs,
+                                   membershipBenefitsIntro,
+                                   membershipBenefits,
+                                   yClubFacilities,
+                                   firstClaimPrice,
+                                   firstClaimValidTo,
+                                 }) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -28,25 +34,54 @@ export const JoinPageTemplate = ({
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      <H1 title={title} />
-      <div className="content">
-        <p>
-          First claim membership until {firstClaimValidTo} is just{' '}
-          <strong>{firstClaimPrice}</strong>!
-        </p>
-      </div>
-      <H2 title={'How to join us'} />
-      <PageContent className="content" content={howToJoinUs} />
-      <div className="text-center my-8">
-        <PrimaryCallToAction to={'/join/form'} title={'Join us now!'} />
-      </div>
-      <H2 title={'Membership benefits'} />
-      <PageContent className="content" content={membershipBenefits} />
-      <div className="text-center my-8">
-        <PrimaryCallToAction to={'/join/form'} title={'Join us now!'} />
-      </div>
-      <H2 title={'A note on the use of Y Club facilities'} />
-      <PageContent className="content" content={yClubFacilities} />
+      <Hero title={title}
+            subtitle={`First claim membership until ${firstClaimValidTo} is just ${firstClaimPrice}!`}
+            fluidImage={heroImage} />
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h2 className="heading-2">How to join us</h2>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: howToJoinUs}} />
+            <div className="text-right my-8">
+              <CallToActionLink to={'/join/form'} title={'Join now!'} />
+            </div>
+          </div>
+        </PanelFullWidth>
+      </Panels>
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel black-bottom">
+            <h2 className="heading-2">Membership benefits</h2>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: membershipBenefitsIntro}} />
+          </div>
+        </PanelFullWidth>
+      </Panels>
+      <Panels>
+        {membershipBenefits.map(({title, image, body, callToActionLink, callToActionTitle}, i) => (
+          <Panel>
+            <Card
+              borderColorClassName={(i % 2 === 0 ? 'border-red-manyharrier' : 'border-black-manyharrier')}
+              title={title} image={image} callToAction={callToActionLink &&
+            <CallToActionLink to={callToActionLink}
+                              title={callToActionTitle} />}>
+              <div className="content"
+                   dangerouslySetInnerHTML={{__html: body}} />
+            </Card>
+          </Panel>
+        ))}
+      </Panels>
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h2 className="heading-2">A note on the use of Y Club
+              facilities</h2>
+            <div className="content"
+                 dangerouslySetInnerHTML={{__html: yClubFacilities}} />
+          </div>
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
@@ -57,20 +92,31 @@ JoinPageTemplate.propTypes = {
   description: PropTypes.string,
   contentComponent: PropTypes.func,
   howToJoinUs: PropTypes.node.isRequired,
-  membershipBenefits: PropTypes.node.isRequired,
+  membershipBenefitsIntro: PropTypes.node.isRequired,
+  membershipBenefits: PropTypes.arrayOf(PropTypes.node.isRequired).isRequired,
   yClubFacilities: PropTypes.node.isRequired,
   firstClaimValidTo: PropTypes.string.isRequired,
   firstClaimPrice: PropTypes.string.isRequired,
 }
 
-const JoinPage = ({ data }) => {
+const JoinPage = ({data}) => {
   const {
     site: {
-      siteMetadata: { title },
+      siteMetadata: {title},
     },
     markdownRemark: page,
     stripeSku: firstClaimMembership,
   } = data
+
+  const membershipBenefits = page.frontmatter.membershipBenefits.map(({title, image, callToActionLink, callToActionTitle}, i) => {
+    return {
+      title,
+      image: image && image.childImageSharp.fluid,
+      body: page.fields.membershipBenefits[i],
+      callToActionLink,
+      callToActionTitle,
+    }
+  })
 
   return (
     <Layout path={page.fields.slug}>
@@ -78,9 +124,11 @@ const JoinPage = ({ data }) => {
         contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
+        heroImage={page.frontmatter.heroImage.childImageSharp.fluid}
         description={page.frontmatter.description}
         howToJoinUs={page.fields.howToJoinUs}
-        membershipBenefits={page.fields.membershipBenefits}
+        membershipBenefitsIntro={page.fields.membershipBenefitsIntro}
+        membershipBenefits={membershipBenefits}
         yClubFacilities={page.fields.yClubFacilities}
         firstClaimPrice={Currency(firstClaimMembership.price)}
         firstClaimValidTo={firstClaimMembership.attributes.valid_to}
@@ -106,13 +154,32 @@ export const joinPageQuery = graphql`
       html
       fields {
         howToJoinUs
+        membershipBenefitsIntro
         membershipBenefits
         slug
-        yClubFacilities
       }
       frontmatter {
         title
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 1344, maxHeight: 756) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         description
+        membershipBenefits {
+          title
+          image {
+            childImageSharp {
+              fluid(maxWidth: 672, maxHeight: 448) {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
+            }
+          }
+          callToActionLink
+          callToActionTitle
+        }
       }
     }
     stripeSku(

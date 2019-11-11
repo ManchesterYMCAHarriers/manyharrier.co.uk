@@ -1,100 +1,138 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql, Link } from 'gatsby'
+import {graphql, Link} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { get } from 'lodash'
+import {get} from 'lodash'
 import Address from '../components/Address'
-import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute'
+import GoogleMapsLocationAndRoute
+  from '../components/GoogleMapsLocationAndRoute'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import EventTags from '../components/EventTags'
-import { H1 } from '../components/Headings'
+import {H1} from '../components/Headings'
+import Hero from "../components/Hero";
+import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import {CallToActionLink} from "../components/CallToAction";
 
 export const EventTemplate = ({
-  contentComponent,
-  championship,
-  eventInfo,
-  googleMapsApiKey,
-  infoForChampionship,
-  infoForCompetition,
-  infoForEventType,
-  infoForTerrain,
-  route,
-  session,
-  startsAt,
-  tags,
-  title,
-  venue,
-}) => {
+                                contentComponent,
+                                championship,
+                                eventInfo,
+                                googleMapsApiKey,
+                                infoForChampionship,
+                                infoForCompetition,
+                                infoForEventType,
+                                infoForTerrain,
+                                route,
+                                session,
+                                startsAt,
+                                tags,
+                                title,
+                                heroImage,
+                                venue,
+                              }) => {
   const track = route ? route.track : null
 
   const PageContent = contentComponent || Content
 
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <div className="flex flex-wrap md:flex-no-wrap">
-        <div className="flex-shrink-0 flex-grow">
-          <p className="text-lg leading-relaxed">
-            {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
-          </p>
-          <EventTags reactKey={'event'} tags={tags} />
-        </div>
-        <div className="flex-shrink-0 flex-grow-0 w-full md:w-auto mt-4 md:mt-0 md:text-right">
-          <Address address={venue.address} title={venue.title} />
-        </div>
-      </div>
-      <div className="w-full mt-6 relative" style={{ height: '70vh' }}>
-        {track && (
-          <GoogleMapsLocationAndRoute
-            googleMapsApiKey={googleMapsApiKey}
-            track={track}
-            id={'event-location-and-route'}
-            location={venue.location}
-            mapContainerClassName={'h-full'}
-          />
-        )}
-        {!track && (
-          <GoogleMapsLocation
-            googleMapsApiKey={googleMapsApiKey}
-            id={'event-location'}
-            location={venue.location}
-            mapContainerClassName={'h-full'}
-          />
-        )}
-      </div>
-      <div className="flex flex-wrap md:flex-no-wrap mt-2">
-        <div className="w-full md:w-5/12 md:mr-2 flex-shrink-0 flex-grow">
-          <GoogleMapsDirectionsLink
-            location={venue.location}
-            text={'Navigate to ' + venue.title + ' with Google Maps'}
-          />
-        </div>
-        <div className="w-full md:w-5/12 md:ml-2 flex-shrink-0 flex-grow">
-          <Link
-            to={venue.slug}
-            className="block border-b-2 p-2 border-gray-400 hover:border-red-400 hover:bg-gray-200"
-          >
-            Full venue info <span className="text-red-400">&rarr;</span>
-          </Link>
-        </div>
-      </div>
-      {eventInfo && <PageContent content={eventInfo} className={'content'} />}
-      {session && <PageContent content={session} className={'content'} />}
+      {heroImage && <Hero title={title} fluidImage={heroImage} />}
+      {!heroImage && <h1 className="heading-1">{title}</h1>}
+      <Panels>
+        <Panel>
+          <div className="panel red-bottom">
+            <p className="text-lg leading-relaxed">
+              {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
+            </p>
+            <EventTags reactKey={'event'} tags={tags} />
+          </div>
+        </Panel>
+        <Panel>
+          <div className="panel black-bottom md:text-right">
+            <Address address={venue.address} title={venue.title} />
+          </div>
+        </Panel>
+      </Panels>
+      <Panels>
+        <PanelFullWidth>
+          <div className="w-full relative" style={{height: '70vh'}}>
+            {track && (
+              <GoogleMapsLocationAndRoute
+                googleMapsApiKey={googleMapsApiKey}
+                track={track}
+                id={'event-location-and-route'}
+                location={venue.location}
+                mapContainerClassName={'h-full'}
+              />
+            )}
+            {!track && (
+              <GoogleMapsLocation
+                googleMapsApiKey={googleMapsApiKey}
+                id={'event-location'}
+                location={venue.location}
+                mapContainerClassName={'h-full'}
+              />
+            )}
+          </div>
+        </PanelFullWidth>
+      </Panels>
+      <Panels>
+        <Panel>
+          <div className="panel black-bottom">
+            <CallToActionLink to={GoogleMapsDirectionsLink(venue)} title={`Navigate to ${venue.title} with Google Maps`} />
+          </div>
+        </Panel>
+        <Panel>
+          <div className="panel black-bottom">
+            <CallToActionLink to={venue.slug} title={`Full venue info`}/>
+          </div>
+        </Panel>
+      </Panels>
+      {eventInfo && (
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: eventInfo}} />
+          </PanelFullWidth>
+        </Panels>
+      )}
+      {session && (
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: session}} />
+          </PanelFullWidth>
+        </Panels>
+      )}
       {infoForTerrain && (
-        <PageContent content={infoForTerrain} className={'content'} />
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForTerrain}} />
+          </PanelFullWidth>
+        </Panels>
       )}
       {infoForEventType && (
-        <PageContent content={infoForEventType} className={'content'} />
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForEventType}} />
+          </PanelFullWidth>
+        </Panels>
       )}
       {infoForCompetition && (
-        <PageContent content={infoForCompetition} className={'content'} />
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForCompetition}} />
+          </PanelFullWidth>
+        </Panels>
       )}
       {infoForChampionship && (
-        <PageContent content={infoForChampionship} className={'content'} />
+        <Panels>
+          <PanelFullWidth>
+            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForChampionship}} />
+          </PanelFullWidth>
+        </Panels>
       )}
     </StandardContentContainer>
   )
@@ -142,11 +180,11 @@ EventTemplate.propTypes = {
   }).isRequired,
 }
 
-const Event = ({ data, pageContext }) => {
+const Event = ({data, pageContext}) => {
   const {
     site: {
       siteMetadata: {
-        apiKey: { googleMaps: googleMapsApiKey },
+        apiKey: {googleMaps: googleMapsApiKey},
       },
     },
     markdownRemark: event,

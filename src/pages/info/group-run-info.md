@@ -3,7 +3,7 @@ templateKey: info
 infoKey: Group Run Info
 forEventType: Group Run
 ---
-# Session format
+## Session format
 
 We meet at the Y Club reception at 6:30pm. After a quick warm up, the Captains 
 will gather the group together for club notices, after which we’ll split into 

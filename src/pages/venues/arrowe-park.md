@@ -9,17 +9,17 @@ address: |-
   CH49 5LW
 location: '{"type":"Point","coordinates":[-3.095393,53.3657957]}'
 ---
-# Car parking
+## Car parking
 
 There is a car park a short walk from the race start, which is behind the Toby Carvery on the A551. 
 
 Postcode for sat-navs: **CH49 5LW**
 
-# Public transport
+## Public transport
 
 This one isn't exactly around the corner from us!
 
-## Train
+### Train
 
 The nearest train station to Arrowe Park is Upton (Merseyside), which is about two miles from the race start.
 

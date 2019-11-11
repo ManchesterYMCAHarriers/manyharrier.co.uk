@@ -6,6 +6,8 @@ import Content, { HTMLContent } from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { H1, H2 } from '../components/Headings'
 import { Helmet } from 'react-helmet'
+import {PanelFullWidth, Panels} from "../components/Panels";
+import {CallToActionLink} from "../components/CallToAction";
 
 export const RulesPageTemplate = ({
   siteTitle,
@@ -23,16 +25,20 @@ export const RulesPageTemplate = ({
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      <H1 title={title} />
-      <PageContent className="content" content={content} />
-      <H2 title={'Resources'} />
-      <div className={'content'}>
-        <ul>
-          <li>
-            <Link to={rulesDocument}>Current rules document</Link>
-          </li>
-        </ul>
-      </div>
+      <Panels>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h1 className="heading-1 mb-4">{title}</h1>
+            <div className="content" dangerouslySetInnerHTML={{__html: content}} />
+          </div>
+        </PanelFullWidth>
+        <PanelFullWidth>
+          <div className="panel black-bottom">
+            <h2 className="heading-2 mb-4">Resources</h2>
+            <CallToActionLink to={rulesDocument} title={"Current rules document"}/>
+          </div>
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
