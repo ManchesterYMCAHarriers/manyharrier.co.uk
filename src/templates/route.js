@@ -154,14 +154,14 @@ const Route = ({ data, pageContext }) => {
       return a.startsAt.isBefore(b.startsAt) ? -1 : 1
     })
 
-  const routeTrack = JSON.parse(route.frontmatter.routeTrack).coordinates.map(
+  const routeTrack = route.frontmatter.routeTrack ? JSON.parse(route.frontmatter.routeTrack).coordinates.map(
     coords => {
       return {
         lat: coords[1],
         lng: coords[0],
       }
     }
-  )
+  ) : []
 
   const heroImage = route.frontmatter.heroImage ? route.frontmatter.heroImage.childImageSharp.fluid : null
 
