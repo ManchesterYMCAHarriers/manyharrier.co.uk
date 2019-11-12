@@ -1,12 +1,10 @@
-import React, {useEffect} from 'react'
-import PropTypes from 'prop-types'
-import {graphql, navigate} from 'gatsby'
+import React from 'react'
+import * as PropTypes from 'prop-types'
+import {graphql} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {H1, H2} from '../components/Headings'
 import Form from '../components/Form'
 import FieldsetMulti from '../components/FieldsetMulti'
 import InputText from '../components/InputText'
@@ -18,7 +16,8 @@ import {
 } from '../components/Cart'
 import Currency from '../components/Currency'
 import Hero from "../components/Hero";
-import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import {PanelFullWidth, Panels} from "../components/Panels";
+import {CallToActionBackButton} from "../components/CallToAction";
 
 export class ChampionshipTemplate extends React.Component {
   constructor(props) {
@@ -26,7 +25,7 @@ export class ChampionshipTemplate extends React.Component {
 
     const storageAvailable = StorageAvailable('sessionStorage')
 
-    const items = storageAvailable ? GetSkuItems(props.stripeSku.id) : []
+    const items = storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
 
     this.state = {
       backValue: 'Add another',
@@ -181,7 +180,6 @@ export class ChampionshipTemplate extends React.Component {
 
   render() {
     const {
-      contentComponent,
       events,
       title,
       heroImage,
@@ -189,8 +187,6 @@ export class ChampionshipTemplate extends React.Component {
       information,
       stripeSku,
     } = this.props
-    const PageContent = contentComponent || Content
-
     let hint = ``
     const now = Moment.utc()
     const remainingEvents = events.filter(({startsAt}) =>
@@ -212,11 +208,11 @@ export class ChampionshipTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        {heroImage && <Hero title={title} fluidImage={heroImage} />}
+        {heroImage ? <Hero fluidImage={heroImage} title={title} /> :
+          <h1 className="heading-1">{title}</h1>}
         <Panels>
           <PanelFullWidth>
             <div className="content panel red-bottom">
-              {!heroImage && <h1>{title}</h1>}
               <div dangerouslySetInnerHTML={{__html: intro}} />
             </div>
           </PanelFullWidth>
@@ -300,14 +296,12 @@ export class ChampionshipTemplate extends React.Component {
                           {Currency(stripeSku.price)}
                         </p>
                         <div className="flex-shrink-0 flex-grow-0">
-                          <button
+                          <CallToActionBackButton
                             type="button"
                             id={item.id}
-                            className="mb-2 border font-semibold border-red-400 bg-red-200 hover:bg-red-300 focus:bg-red-400 rounded px-4 py-2"
                             onClick={this.removeItem}
-                          >
-                            Remove
-                          </button>
+                            title={"Remove"}
+                          />
                         </div>
                       </div>
                     ))}
@@ -317,14 +311,20 @@ export class ChampionshipTemplate extends React.Component {
             </PanelFullWidth>
           </Panels>
         )}
-        <PageContent content={information} />
+        {information && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel black-bottom"
+                   dangerouslySetInnerHTML={{__html: information}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
       </StandardContentContainer>
     )
   }
 }
 
 ChampionshipTemplate.propTypes = {
-  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(
     PropTypes.shape({
       startsAt: PropTypes.instanceOf(Moment).isRequired,
@@ -383,7 +383,6 @@ const Championship = ({data}) => {
   return (
     <Layout path={championship.fields.slug}>
       <ChampionshipTemplate
-        contentComponent={HTMLContent}
         events={events}
         heroImage={heroImage}
         intro={championship.fields.intro}
@@ -411,7 +410,7 @@ export const championshipQuery = graphql`
     stripeSku(
       active: { eq: true }
       attributes: { name: { eq: $stripeSkuName } }
-      product: { name: { eq: "championship" } }
+      product: { name: { eq: "Championship" } }
     ) {
       attributes {
         name
@@ -445,9 +444,7 @@ export const championshipQuery = graphql`
         championshipKey
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         terrain

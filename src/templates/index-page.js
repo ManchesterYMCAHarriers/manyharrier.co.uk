@@ -1,19 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import * as PropTypes from 'prop-types'
+import {graphql} from 'gatsby'
 import Moment from 'moment'
-
 import Layout from '../components/Layout'
 import EventBox from '../components/EventBox'
-import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
 import Hero from "../components/Hero";
-import {Panel, Panels} from "../components/Panels";
-import {Card} from "../components/Card";
-import {CallToActionLink} from "../components/CallToAction";
+import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import {Card, CardCTA} from "../components/Card";
+import {CallToActionLink, CallToActionText} from "../components/CallToAction";
 
 export const IndexPageTemplate = ({
-                                    contentComponent,
                                     title,
                                     intro,
                                     nextEvents,
@@ -32,40 +29,47 @@ export const IndexPageTemplate = ({
                                     secondPanelCTA,
                                     activeChampionships,
                                     recentChampionships,
+                                    eventEntryPromos,
                                   }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Hero title={title} fluidImage={heroImage} />
-      <div className="content bg-white p-4 mt-4 border-b-4 border-black-manyharrier"
-           dangerouslySetInnerHTML={{__html: intro}} />
-      <div className="bg-white p-4 mt-4 border-b-4 border-red-manyharrier">
-        <h2 className="heading-2">Coming up...</h2>
-        {nextEvents.length === 0 && (
-          <div className="content"
-               dangerouslySetInnerHTML={{__html: nextEventsDefault}} />
-        )}
-        <Panels className="mt-4">
-          {nextEvents.map(({title, startsAt, slug, venue}, i) => (
-            <Panel key={'next-event-' + i}>
-              <EventBox
-                title={title}
-                startsAt={startsAt}
-                slug={slug}
-                venue={venue}
-              />
-            </Panel>
-          ))}
-        </Panels>
-        <div className="content mt-4">
-          <p>For a full list of what we've got coming up, check out our events calendar.</p>
-        </div>
-        <div className="text-right mt-4">
-          <CallToActionLink to={eventsCalendarSlug} title={"Events calendar"} />
-        </div>
-      </div>
       <Panels>
+        <PanelFullWidth>
+          <div
+            className="content panel black-bottom"
+            dangerouslySetInnerHTML={{__html: intro}} />
+        </PanelFullWidth>
+        <PanelFullWidth>
+          <div className="panel red-bottom">
+            <h2 className="heading-2">Coming up...</h2>
+            {nextEvents.length === 0 && (
+              <div className="content"
+                   dangerouslySetInnerHTML={{__html: nextEventsDefault}} />
+            )}
+            <Panels className="mt-4">
+              {nextEvents.map(({title, startsAt, slug, venue}, i) => (
+                <Panel key={'next-event-' + i}>
+                  <EventBox
+                    title={title}
+                    startsAt={startsAt}
+                    slug={slug}
+                    venue={venue}
+                  />
+                </Panel>
+              ))}
+            </Panels>
+            <div className="content mt-4">
+              <p>For a full list of what we've got coming up, check out our
+                events
+                calendar.</p>
+            </div>
+            <div className="text-right mt-4">
+              <CallToActionLink to={eventsCalendarSlug}
+                                title={"Events calendar"} />
+            </div>
+          </div>
+        </PanelFullWidth>
         <Panel>
           <Card image={firstPanelImage} title={firstPanelTitle}
                 callToAction={<CallToActionLink to={firstPanelLink}
@@ -85,12 +89,38 @@ export const IndexPageTemplate = ({
           </Card>
         </Panel>
       </Panels>
+      {eventEntryPromos.length > 0 && (
+        <Panels>
+          <PanelFullWidth>
+            <div className="panel black-bottom">
+              <h2 className="heading-2">Enter now...</h2>
+              <Panels>
+                {eventEntryPromos.map(({title, slug, heroImage, venue, startsAt}) => (
+                  <Panel key={`event-promo-${slug}`}>
+                    <CardCTA to={slug} image={heroImage}
+                             borderColorClassName={`border-gray-400`}
+                             borderColorHoverClassName={`border-red-manyharrier`}
+                             title={title} callToAction={<CallToActionText
+                      title={"More info"} />}>
+                      {venue && (
+                        <div className="text-sm">
+                          <p className="font-semibold">{startsAt.format('dddd Do MMMM YYYY, h:mm:a')}</p>
+                          <p className="font-light">{venue}</p>
+                        </div>
+                      )}
+                    </CardCTA>
+                  </Panel>
+                ))}
+              </Panels>
+            </div>
+          </PanelFullWidth>
+        </Panels>
+      )}
     </StandardContentContainer>
   )
 }
 
 IndexPageTemplate.propTypes = {
-  contentComponent: PropTypes.func,
   title: PropTypes.string.isRequired,
   heroImage: PropTypes.object.isRequired,
   intro: PropTypes.node.isRequired,
@@ -124,6 +154,15 @@ IndexPageTemplate.propTypes = {
       slug: PropTypes.string.isRequired,
     })
   ),
+  eventEntryPromos: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+      entryAvailable: PropTypes.bool.isRequired,
+      startsAt: PropTypes.instanceOf(Moment).isRequired,
+      venue: PropTypes.string,
+    })
+  )
 }
 
 const IndexPage = ({data, pageContext}) => {
@@ -131,14 +170,35 @@ const IndexPage = ({data, pageContext}) => {
   const {title, heroImage, firstPanelImage, firstPanelTitle, firstPanelLink, firstPanelCTA, secondPanelImage, secondPanelTitle, secondPanelLink, secondPanelCTA} = data.page.frontmatter
   const now = Moment.utc(pageContext.now)
 
+  const stripeSkus = data.stripeSkus.edges.map(({node}) => {
+    return {
+      name: node.attributes.name,
+      price: node.price,
+      sku: node.id,
+      product: node.product.name,
+    }
+  })
+
+  const eventEntryPromos = []
+
   const nextEvents = []
-  data.nextEvents.edges.forEach(({node}) => {
-    nextEvents.push({
+  data.nextEvents.edges.forEach(({node}, i) => {
+    const event = {
+      entryAvailable: stripeSkus.findIndex(({name, product}) => {
+        return name === node.frontmatter.eventKey && product === "Event"
+      }) > -1,
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
       title: node.frontmatter.eventKey,
       venue: node.frontmatter.venue.frontmatter.venueKey,
-    })
+      heroImage: node.frontmatter.heroImage ? node.frontmatter.heroImage.childImageSharp.fluid : null,
+    }
+    if (i < 4) {
+      nextEvents.push(event)
+    }
+    if (event.entryAvailable) {
+      eventEntryPromos.push(event)
+    }
   })
 
   let activeChampionshipsBySlug = {}
@@ -148,37 +208,63 @@ const IndexPage = ({data, pageContext}) => {
     const startsAt = Moment.utc(node.frontmatter.startsAt)
     if (!activeChampionshipsBySlug[slug]) {
       activeChampionshipsBySlug[slug] = {
-        championshipKey:
-        node.frontmatter.championship.frontmatter.championshipKey,
+        championshipKey: node.frontmatter.championship.frontmatter.championshipKey,
+        entryAvailable: stripeSkus.findIndex(({name, product}) => name === node.frontmatter.championship.frontmatter.championshipKey && product === "Championship") > -1,
         startsAt: startsAt,
+        endsAt: startsAt,
+        heroImage: node.frontmatter.championship.frontmatter.heroImage ? node.frontmatter.championship.frontmatter.heroImage.childImageSharp.fluid : null,
       }
       return
     }
-    if (activeChampionshipsBySlug[slug].startsAt.isBefore(startsAt)) {
+    if (startsAt.isBefore(activeChampionshipsBySlug[slug].startsAt)) {
       activeChampionshipsBySlug[slug].startsAt = startsAt
+    }
+    if (startsAt.isAfter(activeChampionshipsBySlug[slug].endsAt)) {
+      activeChampionshipsBySlug[slug].endsAt = startsAt
     }
   })
 
   const recentChampionships = []
   const activeChampionships = []
 
-  for (let [slug, {championshipKey, startsAt}] of Object.entries(
+  for (let [slug, {championshipKey, startsAt, endsAt, entryAvailable, heroImage}] of Object.entries(
     activeChampionshipsBySlug
   )) {
-    if (startsAt.isBefore(now)) {
-      recentChampionships.push({
-        slug: slug,
-        championshipKey: championshipKey,
-        startsAt: startsAt,
+    if (entryAvailable) {
+      eventEntryPromos.push({
+        slug,
+        title: championshipKey,
+        startsAt,
+        entryAvailable,
+        heroImage,
+      })
+    }
+
+    if (endsAt.isAfter(now)) {
+      activeChampionships.push({
+        slug,
+        championshipKey,
+        startsAt,
+        entryAvailable,
+        heroImage,
       })
       continue
     }
-    activeChampionships.push({
-      slug: slug,
-      championshipKey: championshipKey,
-      startsAt: startsAt,
+    recentChampionships.push({
+      slug,
+      championshipKey,
+      startsAt,
+      entryAvailable,
+      heroImage,
     })
   }
+
+  eventEntryPromos.sort((a, b) => {
+    if (a.startsAt.isSame(b.startsAt)) {
+      return a.title < b.title ? -1 : 1
+    }
+    return a.startsAt.isBefore(b.startsAt) ? -1 : 1
+  })
 
   recentChampionships.sort((a, b) => {
     if (a.startsAt === b.startsAt) {
@@ -197,7 +283,6 @@ const IndexPage = ({data, pageContext}) => {
   return (
     <Layout>
       <IndexPageTemplate
-        contentComponent={HTMLContent}
         title={title}
         heroImage={heroImage.childImageSharp.fluid}
         intro={intro}
@@ -214,6 +299,7 @@ const IndexPage = ({data, pageContext}) => {
         secondPanelCTA={secondPanelCTA}
         activeChampionships={activeChampionships}
         recentChampionships={recentChampionships}
+        eventEntryPromos={eventEntryPromos}
       />
     </Layout>
   )
@@ -239,16 +325,12 @@ export const indexPageQuery = graphql`
         title
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         firstPanelImage {
           childImageSharp {
-            fluid(maxWidth: 672, maxHeight: 448) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...CardImage
           }
         }
         firstPanelTitle
@@ -256,9 +338,7 @@ export const indexPageQuery = graphql`
         firstPanelCTA
         secondPanelImage {
           childImageSharp {
-            fluid(maxWidth: 672, maxHeight: 448) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...CardImage
           }
         }
         secondPanelTitle
@@ -267,7 +347,6 @@ export const indexPageQuery = graphql`
       }
     }
     nextEvents: allMarkdownRemark(
-      limit: 4
       filter: {
         frontmatter: { startsAt: { gt: $now }, templateKey: { eq: "event" } }
       }
@@ -281,6 +360,11 @@ export const indexPageQuery = graphql`
           frontmatter {
             eventKey
             eventType
+            heroImage {
+              childImageSharp {
+                ...CardImage
+              }
+            }
             startsAt
             venue {
               frontmatter {
@@ -310,9 +394,28 @@ export const indexPageQuery = graphql`
               }
               frontmatter {
                 championshipKey
+                heroImage {
+                  childImageSharp {
+                    ...CardImage
+                  }
+                }
               }
             }
             startsAt
+          }
+        }
+      }
+    }
+    stripeSkus: allStripeSku(filter: {active: {eq: true}, product: {name: {in: ["Event", "Championship"]}}}) {
+      edges {
+        node {
+          price
+          attributes {
+            name
+          }
+          id
+          product {
+            name
           }
         }
       }

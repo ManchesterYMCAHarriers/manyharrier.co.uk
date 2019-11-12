@@ -27,6 +27,8 @@ exports.createPages = async ({ actions, graphql }) => {
             }
             frontmatter {
               calendarPage: startsAt(formatString: "YYYY-MM")
+              championshipKey
+              eventKey
               templateKey
             }
           }
@@ -51,17 +53,12 @@ exports.createPages = async ({ actions, graphql }) => {
     const recent = Moment.utc()
       .subtract(2, 'months')
       .format('YYYY-MM-DD HH:mm')
+    const stripeSkuName = node.frontmatter.championshipKey || node.frontmatter.eventKey
     const context = {
       id,
       now,
       recent,
-    }
-
-    const stripeSkuMatch = node.fields.slug.match(
-      /^\/[A-z0-9-]+\/([A-z0-9-]+)\/?$/
-    )
-    if (stripeSkuMatch) {
-      context.stripeSkuName = stripeSkuMatch[1]
+      stripeSkuName,
     }
 
     createPage({

@@ -1,33 +1,32 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
 import {Helmet} from 'react-helmet'
 import {PanelFullWidth, Panels} from "../components/Panels";
 import Img from "gatsby-image";
+import Hero from "../components/Hero";
 
 export const CommitteePageTemplate = ({
                                         siteTitle,
                                         title,
+                                        heroImage,
                                         description,
                                         intro,
                                         members,
-                                        contentComponent,
                                       }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> :
+        <h1 className="heading-1">{title}</h1>}
       <Panels>
         <PanelFullWidth>
           <div className="panel red-bottom">
-            <h1 className="heading-1 mb-4">{title}</h1>
             <div className="content"
                  dangerouslySetInnerHTML={{__html: intro}} />
           </div>
@@ -40,8 +39,10 @@ export const CommitteePageTemplate = ({
           >
             <div
               className={`flex panel black-bottom`}>
-              <div className={`mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2`}>
-                <Img fixed={image} alt={'Photo of ' + name} className={`border-2 border-black-manyharrier`}/>
+              <div
+                className={`mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2`}>
+                <Img fixed={image} alt={'Photo of ' + name}
+                     className={`border-2 border-black-manyharrier`} />
               </div>
               <div className="flex-shrink flex-grow md:order-1">
                 <h3 className="heading-3 mb-4">
@@ -63,7 +64,6 @@ CommitteePageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   content: PropTypes.string,
-  contentComponent: PropTypes.func,
   intro: PropTypes.node,
   members: PropTypes.arrayOf(
     PropTypes.shape({
@@ -84,13 +84,15 @@ const CommitteePage = ({data}) => {
     return member
   })
 
+  const heroImage = page.frontmatter.heroImage ? page.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={page.fields.slug}>
       <CommitteePageTemplate
-        contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
         description={page.frontmatter.description}
+        heroImage={heroImage}
         intro={page.fields.intro}
         members={members}
       />
@@ -121,6 +123,11 @@ export const committeePageQuery = graphql`
       frontmatter {
         title
         description
+        heroImage {
+          childImageSharp {
+            ...HeroImage
+          }
+        }
         members {
           name
           role

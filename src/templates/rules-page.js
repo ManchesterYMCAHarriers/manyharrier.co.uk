@@ -1,34 +1,31 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql, Link } from 'gatsby'
+import * as PropTypes from 'prop-types'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
 import { Helmet } from 'react-helmet'
 import {PanelFullWidth, Panels} from "../components/Panels";
 import {CallToActionLink} from "../components/CallToAction";
+import Hero from "../components/Hero";
 
 export const RulesPageTemplate = ({
   siteTitle,
   title,
+  heroImage,
   description,
   content,
   rulesDocument,
-  contentComponent,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
       <Panels>
         <PanelFullWidth>
           <div className="panel red-bottom">
-            <h1 className="heading-1 mb-4">{title}</h1>
             <div className="content" dangerouslySetInnerHTML={{__html: content}} />
           </div>
         </PanelFullWidth>
@@ -47,7 +44,6 @@ RulesPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   content: PropTypes.string.isRequired,
-  contentComponent: PropTypes.func,
   rulesDocument: PropTypes.shape({
     publicURL: PropTypes.string.isRequired,
   }).isRequired,
@@ -59,7 +55,6 @@ const RulesPage = ({ data }) => {
   return (
     <Layout path={page.fields.slug}>
       <RulesPageTemplate
-        contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
         description={page.frontmatter.description}
@@ -90,6 +85,11 @@ export const rulesPageQuery = graphql`
       }
       frontmatter {
         title
+        heroImage {
+          childImageSharp {
+            ...HeroImage
+          }
+        }
         description
         rulesDocument {
           publicURL

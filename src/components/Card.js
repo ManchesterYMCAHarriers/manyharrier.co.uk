@@ -8,7 +8,7 @@ export const CardCTA = ({to, image, imageAlt, title, children, callToAction, bor
   borderColorHoverClassName = borderColorHoverClassName || `border-red-manyharrier`
 
   return (
-    <Link to={to} className={`w-full bg-white-manyharrier flex flex-col justify-between border-b-4 opacity-75 ${borderColorClassName} hover:${borderColorHoverClassName} hover:opacity-100 focus:${borderColorHoverClassName} focus:opacity-100`}>
+    <Link to={to} className={`w-full bg-white-manyharrier flex flex-col justify-between border-b-4 opacity-75 ${borderColorClassName} hover:${borderColorHoverClassName} hover:opacity-100 hover:bg-gray-200 focus:${borderColorHoverClassName} focus:opacity-100 focus:bg-gray-200`}>
       {image && (
         <div className="w-full flex-shrink-0 flex-grow-0">
           <Img fluid={image} alt={imageAlt} />
@@ -38,7 +38,7 @@ CardCTA.propTypes = {
   image: PropTypes.object,
   imageAlt: PropTypes.string,
   title: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   callToAction: PropTypes.node,
   borderColorClassName: PropTypes.string,
   borderColorHoverClassName: PropTypes.string,
@@ -77,7 +77,7 @@ Card.propTypes = {
   image: PropTypes.object,
   imageAlt: PropTypes.string,
   title: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   callToAction: PropTypes.node,
   borderColorClassName: PropTypes.string,
 }

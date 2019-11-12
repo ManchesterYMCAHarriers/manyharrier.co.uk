@@ -1,9 +1,10 @@
 {
   "activeFrom": "2020-04-01T00:00:00",
   "activeUntil": "2021-03-31T23:59:59",
-  "productName": "membership",
+  "productName": "Membership",
   "sku": {
     "attributes": {
+      "name": "2020-21 First Claim Membership",
       "claim": "First",
       "valid_to": "30 April 2021"
     },

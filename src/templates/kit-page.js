@@ -1,49 +1,53 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1 } from '../components/Headings'
 import { Helmet } from 'react-helmet'
+import Hero from "../components/Hero";
+import {PanelFullWidth, Panels} from "../components/Panels";
 
 export const KitPageTemplate = ({
   siteTitle,
   title,
+  heroImage,
   description,
   content,
-  contentComponent,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      <H1 title={title} />
-      <PageContent className="content" content={content} />
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+      <Panels>
+        <PanelFullWidth>
+          <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: content}} />
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
 
 KitPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
   description: PropTypes.string,
   content: PropTypes.string,
-  contentComponent: PropTypes.func,
 }
 
 const KitPage = ({ data }) => {
   const { siteMetadata: title, markdownRemark: post } = data
 
+  const heroImage = post.frontmatter.heroImage ? post.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout>
       <KitPageTemplate
-        contentComponent={HTMLContent}
         siteTitle={title}
         title={post.frontmatter.title}
+        heroImage={heroImage}
         description={post.frontmatter.description}
         content={post.html}
       />
@@ -68,6 +72,11 @@ export const kitPageQuery = graphql`
       html
       frontmatter {
         title
+        heroImage {
+          childImageSharp {
+            ...HeroImage
+          }
+        }
         description
       }
     }

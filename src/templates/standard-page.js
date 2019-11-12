@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
 import {Helmet} from 'react-helmet'
 import Hero from "../components/Hero";
@@ -15,23 +14,17 @@ export const StandardPageTemplate = ({
                                        description,
                                        heroImage,
                                        content,
-                                       contentComponent,
                                      }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      {heroImage && (
-        <Hero title={title} subtitle={subtitle} fluidImage={heroImage} />
-      )}
+      {heroImage ? <Hero title={title} subtitle={subtitle} fluidImage={heroImage} /> : <h1 className="heading-1">{title}</h1>}
       <Panels>
         <PanelFullWidth>
           <div className="panel bottom-black">
-            {!heroImage && <h1 className="heading-1">{title}</h1>}
             <div className="content"
                  dangerouslySetInnerHTML={{__html: content}} />
           </div>
@@ -47,7 +40,6 @@ StandardPageTemplate.propTypes = {
   heroImage: PropTypes.object,
   description: PropTypes.string,
   content: PropTypes.string,
-  contentComponent: PropTypes.func,
 }
 
 const StandardPage = ({data}) => {
@@ -58,7 +50,6 @@ const StandardPage = ({data}) => {
   return (
     <Layout path={page.fields.slug}>
       <StandardPageTemplate
-        contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
         subtitle={page.frontmatter.subtitle}
@@ -93,9 +84,7 @@ export const standardPageQuery = graphql`
         description
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
       }

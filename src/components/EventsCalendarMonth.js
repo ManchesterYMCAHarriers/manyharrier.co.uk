@@ -1,7 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import Moment from 'moment'
-import {Link} from 'gatsby'
 import EventsCalendarDay from './EventsCalendarDay'
 import {uniq} from 'lodash'
 import {CallToActionBackLink, CallToActionLink} from "./CallToAction";
@@ -63,7 +62,7 @@ class EventsCalendarMonth extends React.Component {
             </div>
             <div className="my-8">
               {days.map(day => (
-                <div className="mt-8">
+                <div key={`events-${day.date.format("YYYY-MM-DD")}`} className="mt-8">
                   <EventsCalendarDay date={day.date} events={day.events} />
                 </div>
               ))}

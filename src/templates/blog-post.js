@@ -1,55 +1,47 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
+import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1 } from '../components/Headings'
+import Hero from "../components/Hero";
+import {PanelFullWidth, Panels} from "../components/Panels";
 
 export const BlogPostTemplate = ({
-  contentComponent,
   content,
   title,
-  helmet,
+  heroImage,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
-      <H1 title={title} />
-      <PageContent content={content} />
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+      <Panels>
+        <PanelFullWidth>
+          <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: content}} />
+        </PanelFullWidth>
+      </Panels>
     </StandardContentContainer>
   )
 }
 
 BlogPostTemplate.propTypes = {
-  contentComponent: PropTypes.func,
   content: PropTypes.node.isRequired,
   description: PropTypes.string,
   title: PropTypes.string.isRequired,
-  helmet: PropTypes.object,
+  heroImage: PropTypes.object,
 }
 
 const BlogPost = ({ data }) => {
   const { markdownRemark: post } = data
 
+  const heroImage = post.frontmatter.heroImage ? post.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={post.fields.slug}>
       <BlogPostTemplate
-        contentComponent={HTMLContent}
         content={post.html}
         description={post.frontmatter.description}
-        helmet={
-          <Helmet titleTemplate="%s | Blog">
-            <title>{`${post.frontmatter.blogKey}`}</title>
-            <meta
-              name="description"
-              content={`${post.frontmatter.description}`}
-            />
-          </Helmet>
-        }
         title={post.frontmatter.blogKey}
+        heroImage={heroImage}
       />
     </Layout>
   )
@@ -75,6 +67,11 @@ export const pageQuery = graphql`
         blogKey
         date(formatString: "Do MMMM YYYY")
         description
+        heroImage {
+          childImageSharp {
+            ...HeroImage
+          }
+        }
       }
     }
   }

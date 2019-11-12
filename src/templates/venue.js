@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import Moment from 'moment'
@@ -14,7 +13,6 @@ import {CallToActionLink} from "../components/CallToAction";
 import Hero from "../components/Hero";
 
 export const VenueTemplate = ({
-  contentComponent,
   googleMapsApiKey,
   heroImage,
   title,
@@ -23,16 +21,13 @@ export const VenueTemplate = ({
   information,
   events,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
-      {heroImage && <Hero fluidImage={heroImage} />}
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
       <Panels>
         <PanelFullWidth>
           <div className="panel red-bottom">
-            <h1 className="heading-1">{title}</h1>
-            <Address address={address} />
+            <Address title={title} address={address} />
           </div>
         </PanelFullWidth>
         <PanelFullWidth>
@@ -138,7 +133,6 @@ const Venue = ({ data, pageContext }) => {
   return (
     <Layout path={venue.fields.slug}>
       <VenueTemplate
-        contentComponent={HTMLContent}
         events={events}
         googleMapsApiKey={googleMapsApiKey}
         information={venue.html}
@@ -176,9 +170,7 @@ export const venueQuery = graphql`
         address
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         location

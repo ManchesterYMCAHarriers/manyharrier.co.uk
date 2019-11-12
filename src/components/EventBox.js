@@ -1,26 +1,26 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import Moment from 'moment'
-import { Link } from 'gatsby'
+import {CardCTA} from "./Card";
+import {CallToActionText} from "./CallToAction";
 
 class EventBox extends React.Component {
   render() {
     const { startsAt, slug, title, venue } = this.props
 
     return (
-      <Link
+      <CardCTA
         to={slug}
-        className="w-full flex flex-col border-b-2 border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 hover:bg-gray-200 focus:border-red-manyharrier focus:opacity-100 focus:bg-gray-200 p-4 pb-2"
+        borderColorClassName={`border-gray-400`}
+        borderColorHoverClassName={`border-red-manyharrier`}
+        title={title}
+        callToAction={<CallToActionText title={"Full details"} />}
       >
-        <h3 className="text-xl order-2 font-semibold">{title}</h3>
-        <p className="text-sm order-1 font-medium">
+        <p className="text-sm font-medium">
           {startsAt.format('dddd Do MMMM YYYY')}, {startsAt.format('h:mma')}
         </p>
-        {venue && <p className="text-sm order-3 font-light">{venue}</p>}
-        <div className="text-xs order-last text-right">
-          Full details <span className="text-red-400">&rarr;</span>
-        </div>
-      </Link>
+        {venue && <p className="text-sm font-light">{venue}</p>}
+      </CardCTA>
     )
   }
 }

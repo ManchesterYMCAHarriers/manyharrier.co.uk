@@ -2,30 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
 import {PanelFullWidth, Panels} from "../components/Panels";
 import Hero from "../components/Hero";
 
 export const SessionTemplate = ({
-  contentComponent,
   events,
   title,
   heroImage,
   information,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
-      {heroImage && <Hero fluidImage={heroImage} title={title} />}
+      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
       <Panels>
         <PanelFullWidth>
           <div className="panel bottom-black">
-            {!heroImage && <h1 className="heading-1">{title}</h1>}
             <div className="content"
                  dangerouslySetInnerHTML={{__html: information}} />
           </div>
@@ -52,7 +46,6 @@ export const SessionTemplate = ({
 }
 
 SessionTemplate.propTypes = {
-  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
@@ -63,6 +56,7 @@ SessionTemplate.propTypes = {
   ),
   information: PropTypes.node,
   title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
 }
 
 const Session = ({ data, pageContext }) => {
@@ -92,7 +86,6 @@ const Session = ({ data, pageContext }) => {
   return (
     <Layout path={session.fields.slug}>
       <SessionTemplate
-        contentComponent={HTMLContent}
         events={events}
         information={session.html}
         title={session.frontmatter.sessionKey}
@@ -119,9 +112,7 @@ export const sessionQuery = graphql`
       frontmatter {
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         sessionKey

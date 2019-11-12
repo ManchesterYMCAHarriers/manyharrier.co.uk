@@ -1,18 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import GoogleMapsRoute from '../components/GoogleMapsRoute'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { H1, H2 } from '../components/Headings'
 import {PanelFullWidth, Panels} from "../components/Panels";
 import Hero from "../components/Hero";
 
 export const RouteTemplate = ({
-  contentComponent,
   events,
   googleMapsApiKey,
   title,
@@ -20,21 +17,11 @@ export const RouteTemplate = ({
   routeTrack,
   information,
 }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
-      <Panels>
-        <PanelFullWidth>
-          {heroImage ? (
-            <Hero fluidImage={heroImage} title={title} />)
-          : (
-            <div className="panel red-bottom">
-              <h1 className="heading-1">{title}</h1>
-            </div>
-          )}
-        </PanelFullWidth>
-        <PanelFullWidth>
+     {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+     <Panels>
+       <PanelFullWidth>
           <div className="w-full relative" style={{ height: '70vh' }}>
             <GoogleMapsRoute
               googleMapsApiKey={googleMapsApiKey}
@@ -72,7 +59,6 @@ export const RouteTemplate = ({
 }
 
 RouteTemplate.propTypes = {
-  contentComponent: PropTypes.func,
   events: PropTypes.arrayOf(
     PropTypes.shape({
       slug: PropTypes.string.isRequired,
@@ -95,6 +81,7 @@ RouteTemplate.propTypes = {
     })
   ).isRequired,
   title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
 }
 
 const Route = ({ data, pageContext }) => {
@@ -181,7 +168,6 @@ const Route = ({ data, pageContext }) => {
   return (
     <Layout path={route.fields.slug}>
       <RouteTemplate
-        contentComponent={HTMLContent}
         events={events}
         googleMapsApiKey={googleMapsApiKey}
         information={route.html}
@@ -219,9 +205,7 @@ export const routeQuery = graphql`
       frontmatter {
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         routeEvents {

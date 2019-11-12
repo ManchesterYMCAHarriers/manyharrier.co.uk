@@ -2,7 +2,6 @@ import React from 'react'
 
 import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import {H1, H2, H3} from '../../components/Headings'
 import {graphql, Link} from 'gatsby'
 import * as Moment from 'moment'
 import Hero from "../../components/Hero";
@@ -42,10 +41,7 @@ const ChampionshipsIndex = ({data}) => {
       let enterNow = false
 
       if (future > 0) {
-        const stripeSkuMatch = slug.match(/^\/championships\/([A-z0-9-]+)\/?$/)
-        if (stripeSkuMatch) {
-          enterNow = stripeSkus.includes(stripeSkuMatch[1])
-        }
+        enterNow = stripeSkus.includes(championshipKey)
       }
 
       const championship = {
@@ -245,7 +241,7 @@ export const championshipsQuery = graphql`
     }
     allStripeSku(
       filter: {
-        product: { name: { eq: "championship" }, active: { eq: true } }
+        product: { name: { eq: "Championship" }, active: { eq: true } }
       }
     ) {
       edges {
@@ -258,9 +254,7 @@ export const championshipsQuery = graphql`
     }
     file(relativePath: {eq: "championships-hero.jpg"}) {
       childImageSharp {
-        fluid(maxWidth: 1344, maxHeight: 756) {
-          ...GatsbyImageSharpFluid_withWebp_tracedSVG
-        }
+        ...HeroImage
       }
     }
   }

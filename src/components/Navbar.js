@@ -106,7 +106,7 @@ export default class Navbar extends React.Component {
           </div>
           <div
             className={
-              'flex-shrink-0 flex-grow w-full -ml-4 -mr-4 -mb-4 md:w-auto flex-wrap items-center justify-between md:mx-4 ' +
+              'flex-shrink-0 flex-grow w-full -ml-4 -mr-4 -mb-4 md:mb-0 md:w-auto flex-wrap items-center justify-between md:mx-4 ' +
               this.state.menuOpenClassName
             }
           >

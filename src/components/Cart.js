@@ -1,4 +1,3 @@
-import React from 'react'
 import * as PropTypes from 'prop-types'
 
 const emptyCart = {
@@ -74,6 +73,18 @@ export const AddToCart = ({
   window.sessionStorage.setItem(cartKey, JSON.stringify(cart))
 }
 
+AddToCart.propTypes = {
+  id: PropTypes.string.isRequired,
+  sku: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  maxQuantity: PropTypes.number,
+  price: PropTypes.number.isRequired,
+  description: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+}
+
 export const RemoveFromCart = ({ id, quantity }) => {
   const cart = GetCart()
 
@@ -103,6 +114,11 @@ export const RemoveFromCart = ({ id, quantity }) => {
   window.sessionStorage.setItem(cartKey, JSON.stringify(cart))
 }
 
+RemoveFromCart.propTypes = {
+  id: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+}
+
 export const UpdateQuantity = ({ id, quantity }) => {
   const cart = GetCart()
 
@@ -123,6 +139,11 @@ export const UpdateQuantity = ({ id, quantity }) => {
   window.sessionStorage.setItem(cartKey, JSON.stringify(cart))
 }
 
+UpdateQuantity.propTypes = {
+  id: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+}
+
 export const EmptyCart = () => {
   window.sessionStorage.setItem(cartKey, JSON.stringify(emptyCart))
 }
@@ -137,6 +158,10 @@ export const GetSkuItems = sku => {
   const cart = GetCart()
 
   return cart.items.filter(item => item.sku === sku)
+}
+
+GetSkuItems.propTypes = {
+  sku: PropTypes.string.isRequired,
 }
 
 export const StorageAvailable = type => {
@@ -169,6 +194,10 @@ export const StorageAvailable = type => {
   }
 }
 
+StorageAvailable.propTypes = {
+  type: PropTypes.oneOf(['localStorage', 'sessionStorage']),
+}
+
 export const NumberOfItems = () => {
   const cart = GetCart()
 
@@ -182,8 +211,4 @@ export const NumberOfLines = () => {
   const cart = GetCart()
 
   return cart.items.length
-}
-
-StorageAvailable.propTypes = {
-  type: PropTypes.oneOf(['localStorage', 'sessionStorage']),
 }

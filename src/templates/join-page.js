@@ -1,12 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {H1, H2} from '../components/Headings'
 import {Helmet} from 'react-helmet'
-import PrimaryCallToAction from '../components/PrimaryCallToAction'
 import Currency from '../components/Currency'
 import {Panel, PanelFullWidth, Panels} from "../components/Panels";
 import {CallToActionLink} from "../components/CallToAction";
@@ -18,7 +15,6 @@ export const JoinPageTemplate = ({
                                    title,
                                    heroImage,
                                    description,
-                                   contentComponent,
                                    howToJoinUs,
                                    membershipBenefitsIntro,
                                    membershipBenefits,
@@ -26,8 +22,6 @@ export const JoinPageTemplate = ({
                                    firstClaimPrice,
                                    firstClaimValidTo,
                                  }) => {
-  const PageContent = contentComponent || Content
-
   return (
     <StandardContentContainer>
       <Helmet>
@@ -72,16 +66,6 @@ export const JoinPageTemplate = ({
           </Panel>
         ))}
       </Panels>
-      <Panels>
-        <PanelFullWidth>
-          <div className="panel red-bottom">
-            <h2 className="heading-2">A note on the use of Y Club
-              facilities</h2>
-            <div className="content"
-                 dangerouslySetInnerHTML={{__html: yClubFacilities}} />
-          </div>
-        </PanelFullWidth>
-      </Panels>
     </StandardContentContainer>
   )
 }
@@ -89,6 +73,7 @@ export const JoinPageTemplate = ({
 JoinPageTemplate.propTypes = {
   siteTitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
   description: PropTypes.string,
   contentComponent: PropTypes.func,
   howToJoinUs: PropTypes.node.isRequired,
@@ -121,7 +106,6 @@ const JoinPage = ({data}) => {
   return (
     <Layout path={page.fields.slug}>
       <JoinPageTemplate
-        contentComponent={HTMLContent}
         siteTitle={title}
         title={page.frontmatter.title}
         heroImage={page.frontmatter.heroImage.childImageSharp.fluid}
@@ -162,9 +146,7 @@ export const joinPageQuery = graphql`
         title
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 1344, maxHeight: 756) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
+            ...HeroImage
           }
         }
         description
@@ -183,7 +165,7 @@ export const joinPageQuery = graphql`
       }
     }
     stripeSku(
-      product: { name: { eq: "membership" } }
+      product: { name: { eq: "Membership" } }
       attributes: { claim: { eq: "First" } }
       active: { eq: true }
     ) {

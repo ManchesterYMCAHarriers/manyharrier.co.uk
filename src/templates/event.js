@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import {graphql} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
-import Content, {HTMLContent} from '../components/Content'
 import StandardContentContainer from '../components/StandardContentContainer'
 import {get} from 'lodash'
 import Address from '../components/Address'
@@ -12,130 +11,400 @@ import GoogleMapsLocationAndRoute
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import EventTags from '../components/EventTags'
-import {H1} from '../components/Headings'
 import Hero from "../components/Hero";
 import {Panel, PanelFullWidth, Panels} from "../components/Panels";
-import {CallToActionLink} from "../components/CallToAction";
+import {
+  CallToActionBackButton,
+  CallToActionLink, CallToActionText
+} from "../components/CallToAction";
+import Form from "../components/Form";
+import FieldsetMulti from "../components/FieldsetMulti";
+import Currency from "../components/Currency";
+import InputText from "../components/InputText";
+import {
+  AddToCart,
+  GetSkuItems,
+  RemoveFromCart,
+  StorageAvailable
+} from "../components/Cart";
+import {CardCTA} from "../components/Card";
 
-export const EventTemplate = ({
-                                contentComponent,
-                                championship,
-                                eventInfo,
-                                googleMapsApiKey,
-                                infoForChampionship,
-                                infoForCompetition,
-                                infoForEventType,
-                                infoForTerrain,
-                                route,
-                                session,
-                                startsAt,
-                                tags,
-                                title,
-                                heroImage,
-                                venue,
-                              }) => {
-  const track = route ? route.track : null
+export class EventTemplate extends React.Component {
+  constructor(props) {
+    super(props)
 
-  const PageContent = contentComponent || Content
+    const storageAvailable = StorageAvailable('sessionStorage')
 
-  return (
-    <StandardContentContainer>
-      {heroImage && <Hero title={title} fluidImage={heroImage} />}
-      {!heroImage && <h1 className="heading-1">{title}</h1>}
-      <Panels>
-        <Panel>
-          <div className="panel red-bottom">
-            <p className="text-lg leading-relaxed">
-              {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
-            </p>
-            <EventTags reactKey={'event'} tags={tags} />
-          </div>
-        </Panel>
-        <Panel>
-          <div className="panel black-bottom md:text-right">
-            <Address address={venue.address} title={venue.title} />
-          </div>
-        </Panel>
-      </Panels>
-      <Panels>
-        <PanelFullWidth>
-          <div className="w-full relative" style={{height: '70vh'}}>
-            {track && (
-              <GoogleMapsLocationAndRoute
-                googleMapsApiKey={googleMapsApiKey}
-                track={track}
-                id={'event-location-and-route'}
-                location={venue.location}
-                mapContainerClassName={'h-full'}
-              />
-            )}
-            {!track && (
-              <GoogleMapsLocation
-                googleMapsApiKey={googleMapsApiKey}
-                id={'event-location'}
-                location={venue.location}
-                mapContainerClassName={'h-full'}
-              />
-            )}
-          </div>
-        </PanelFullWidth>
-      </Panels>
-      <Panels>
-        <Panel>
-          <div className="panel black-bottom">
-            <CallToActionLink to={GoogleMapsDirectionsLink(venue)} title={`Navigate to ${venue.title} with Google Maps`} />
-          </div>
-        </Panel>
-        <Panel>
-          <div className="panel black-bottom">
-            <CallToActionLink to={venue.slug} title={`Full venue info`}/>
-          </div>
-        </Panel>
-      </Panels>
-      {eventInfo && (
+    const items = storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
+
+    this.state = {
+      backValue: 'Add another',
+      cart: {
+        items: items,
+      },
+      stage: items.length > 0 ? 2 : 1,
+      stages: 2,
+      storageAvailable: storageAvailable,
+      submitValue: items.length > 0 ? 'Checkout' : 'Enter',
+      validationIssues: [],
+    }
+  }
+
+  backHandler = ev => {
+    ev.preventDefault()
+    this.setState({
+      stage: 1,
+      submitValue: 'Enter',
+    })
+  }
+
+  submitHandler = ev => {
+    ev.preventDefault()
+    // Check if visible elements validate
+    let data = {}
+    ev.target
+      .querySelector('fieldset:not(.hidden)')
+      .querySelectorAll('input')
+      .forEach(input => {
+        if (input.checkValidity()) {
+          data[input.getAttribute('name')] = input.value
+        }
+      })
+
+    // If validation fails, don't continue
+    if (this.state.validationIssues.length > 0) {
+      return
+    }
+
+    let nextStage = this.state.stage + 1
+
+    this.setState(
+      {
+        stage: nextStage,
+        submitValue: 'Checkout',
+      },
+      () => {
+        if (this.state.stage === 2) {
+          // Add to cart
+          AddToCart({
+            id:
+              this.props.stripeSku.name +
+              '_' +
+              data.firstName +
+              '_' +
+              data.lastName,
+            sku: this.props.stripeSku.id,
+            maxQuantity: 1,
+            quantity: 1,
+            price: this.props.stripeSku.price,
+            description: `${this.props.title} entry for ${data.firstName} ${data.lastName}`,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          })
+
+          this.setState(
+            {
+              cart: {
+                items: GetSkuItems(this.props.stripeSku.id),
+              },
+            },
+            () => {
+              // Reset form fields for adding additional entries
+              ev.target.reset()
+
+              // Scroll to page title
+              document.querySelector('form#enter-event').scrollIntoView()
+              // Set focus on first visible input
+              const firstVisibleInput = ev.target
+                .querySelector('fieldset:not(.hidden)')
+                .querySelector('button[type="submit"]')
+              if (firstVisibleInput) {
+                firstVisibleInput.focus({
+                  preventScroll: true,
+                })
+              }
+            }
+          )
+        }
+        // ...or proceed to checkout
+        else {
+          window.location.href = '/checkout'
+        }
+      }
+    )
+  }
+
+  removeItem = ev => {
+    RemoveFromCart({
+      id: ev.currentTarget.id,
+      quantity: 1,
+    })
+
+    this.setState(
+      {
+        cart: {
+          items: GetSkuItems(this.props.stripeSku.id),
+        },
+      },
+      () => {
+        if (this.state.cart.items.length === 0) {
+          this.setState({
+            stage: 1,
+          })
+        }
+      }
+    )
+  }
+
+  updateValidationIssues = ({id, message}) => {
+    const validationIssues = this.state.validationIssues
+    for (let i = 0; i < validationIssues.length; i++) {
+      if (validationIssues[i].id === id) {
+        if (!message) {
+          validationIssues.splice(i, 1)
+          this.setState({
+            validationIssues: validationIssues,
+          })
+          return
+        }
+
+        validationIssues[i].message = message
+        this.setState({
+          validationIssues: validationIssues,
+        })
+        return
+      }
+    }
+
+    if (message) {
+      validationIssues.push({
+        id: id,
+        message: message,
+      })
+    }
+
+    this.setState({
+      validationIssues: validationIssues,
+    })
+  }
+
+  render() {
+    const {
+      championship,
+      eventInfo,
+      googleMapsApiKey,
+      infoForChampionship,
+      infoForCompetition,
+      infoForEventType,
+      infoForTerrain,
+      route,
+      session,
+      startsAt,
+      stripeSku,
+      tags,
+      title,
+      heroImage,
+      venue,
+    } = this.props
+    const track = route ? route.track : null
+
+    return (
+      <StandardContentContainer>
+        {heroImage ? <Hero fluidImage={heroImage} title={title} /> :
+          <h1 className="heading-1">{title}</h1>}
+        <Panels>
+          <Panel>
+            <div className="panel red-bottom">
+              <p className="text-lg leading-relaxed">
+                {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
+              </p>
+              <EventTags reactKey={'event'} tags={tags} />
+            </div>
+          </Panel>
+          <Panel>
+            <div className="panel black-bottom md:text-right">
+              <Address address={venue.address} title={venue.title} />
+            </div>
+          </Panel>
+        </Panels>
         <Panels>
           <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: eventInfo}} />
+            <div className="w-full relative" style={{height: '70vh'}}>
+              {track && (
+                <GoogleMapsLocationAndRoute
+                  googleMapsApiKey={googleMapsApiKey}
+                  track={track}
+                  id={'event-location-and-route'}
+                  location={venue.location}
+                  mapContainerClassName={'h-full'}
+                />
+              )}
+              {!track && (
+                <GoogleMapsLocation
+                  googleMapsApiKey={googleMapsApiKey}
+                  id={'event-location'}
+                  location={venue.location}
+                  mapContainerClassName={'h-full'}
+                />
+              )}
+            </div>
           </PanelFullWidth>
         </Panels>
-      )}
-      {session && (
         <Panels>
-          <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: session}} />
-          </PanelFullWidth>
+          <Panel>
+            <div className="panel black-bottom">
+              <CallToActionLink to={GoogleMapsDirectionsLink(venue)}
+                                title={`Navigate to ${venue.title} with Google Maps`} />
+            </div>
+          </Panel>
+          <Panel>
+            <div className="panel black-bottom">
+              <CallToActionLink to={venue.slug} title={`Full venue info`} />
+            </div>
+          </Panel>
         </Panels>
-      )}
-      {infoForTerrain && (
-        <Panels>
-          <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForTerrain}} />
-          </PanelFullWidth>
-        </Panels>
-      )}
-      {infoForEventType && (
-        <Panels>
-          <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForEventType}} />
-          </PanelFullWidth>
-        </Panels>
-      )}
-      {infoForCompetition && (
-        <Panels>
-          <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForCompetition}} />
-          </PanelFullWidth>
-        </Panels>
-      )}
-      {infoForChampionship && (
-        <Panels>
-          <PanelFullWidth>
-            <div className="content panel red-bottom" dangerouslySetInnerHTML={{__html: infoForChampionship}} />
-          </PanelFullWidth>
-        </Panels>
-      )}
-    </StandardContentContainer>
-  )
+        {eventInfo && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: eventInfo}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {stripeSku && this.state.storageAvailable && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <h2 className="heading-2 mb-4">Event entry</h2>
+                <Form
+                  backHandler={this.backHandler}
+                  backValue={this.state.backValue}
+                  formId={'enter-event'}
+                  method={'POST'}
+                  netlify={false}
+                  showBack={this.state.stage > 1}
+                  showSubmit={true}
+                  submitHandler={this.submitHandler}
+                  submitValue={this.state.submitValue}
+                >
+                  <FieldsetMulti
+                    legend={`Enter now for ${Currency(stripeSku.price)}`}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 1}
+                  >
+                    <InputText
+                      inputId={'firstName'}
+                      inputSizes={'w-full md:w-1/2'}
+                      inputType={'text'}
+                      inputAttributes={{required: true}}
+                      setFormValidationState={this.updateValidationIssues}
+                      validationMessages={{
+                        valueMissing: 'Enter your first name',
+                      }}
+                      label={'First name'}
+                    />
+                    <InputText
+                      inputId={'lastName'}
+                      inputSizes={'w-full md:w-1/2'}
+                      inputType={'text'}
+                      inputAttributes={{required: true}}
+                      setFormValidationState={this.updateValidationIssues}
+                      validationMessages={{
+                        valueMissing: 'Enter your last name',
+                      }}
+                      label={'Last name'}
+                    />
+                  </FieldsetMulti>
+                  <FieldsetMulti
+                    legend={`Check your details`}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 2}
+                  >
+                    {this.state.cart.items.map(item => (
+                      <div
+                        key={'subcheckout-' + item.id}
+                        className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
+                      >
+                        <p
+                          className="w-full md:w-auto mb-2 flex-shrink flex-grow">
+                          {item.description}
+                        </p>
+                        <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
+                          {Currency(stripeSku.price)}
+                        </p>
+                        <div className="flex-shrink-0 flex-grow-0">
+                          <CallToActionBackButton
+                            type="button"
+                            id={item.id}
+                            onClick={this.removeItem}
+                            title={"Remove"}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </FieldsetMulti>
+                </Form>
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {session && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: session}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {infoForTerrain && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: infoForTerrain}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {infoForEventType && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: infoForEventType}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {infoForCompetition && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: infoForCompetition}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {championship && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel black-bottom">
+                <h2 className="heading-2 mb-4">Championships</h2>
+                <CardCTA to={championship.slug} borderColorClassName={`border-gray-400`} borderColorHoverClassName={`border-red-manyharrier`} callToAction={<CallToActionText title={"Championship details"} />}>
+                  <div className="content">
+                    <p>This race is on the {championship.title}.</p>
+                  </div>
+                </CardCTA>
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {infoForChampionship && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel red-bottom"
+                   dangerouslySetInnerHTML={{__html: infoForChampionship}} />
+            </PanelFullWidth>
+          </Panels>
+        )}
+      </StandardContentContainer>
+    )
+  }
 }
 
 EventTemplate.propTypes = {
@@ -146,6 +415,7 @@ EventTemplate.propTypes = {
   contentComponent: PropTypes.func,
   eventInfo: PropTypes.node,
   googleMapsApiKey: PropTypes.string.isRequired,
+  heroImage: PropTypes.object,
   infoForChampionship: PropTypes.node,
   infoForCompetition: PropTypes.node,
   infoForEventType: PropTypes.node,
@@ -162,6 +432,11 @@ EventTemplate.propTypes = {
   }),
   session: PropTypes.node,
   startsAt: PropTypes.instanceOf(Moment).isRequired,
+  stripeSku: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }),
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string.isRequired,
@@ -187,6 +462,7 @@ const Event = ({data, pageContext}) => {
         apiKey: {googleMaps: googleMapsApiKey},
       },
     },
+    stripeSku,
     markdownRemark: event,
   } = data
 
@@ -261,13 +537,24 @@ const Event = ({data, pageContext}) => {
     })
   }
 
+  let stripeSkuData
+  if (stripeSku) {
+    stripeSkuData = {
+      id: stripeSku.id,
+      name: stripeSku.attributes.name,
+      price: stripeSku.price,
+    }
+  }
+
+  const heroImage = event.frontmatter.heroImage ? event.frontmatter.heroImage.childImageSharp.fluid : null
+
   return (
     <Layout path={event.fields.slug}>
       <EventTemplate
         championship={championship}
-        contentComponent={HTMLContent}
         eventInfo={event.html}
         googleMapsApiKey={googleMapsApiKey}
+        heroImage={heroImage}
         infoForChampionship={get(event.frontmatter.infoForChampionship, [
           'html',
         ])}
@@ -277,6 +564,7 @@ const Event = ({data, pageContext}) => {
         route={route}
         session={get(event.frontmatter.session, ['html'])}
         startsAt={startsAt}
+        stripeSku={stripeSkuData}
         tags={tags}
         title={event.frontmatter.eventKey}
         venue={venue}
@@ -294,13 +582,24 @@ Event.propTypes = {
 export default Event
 
 export const eventQuery = graphql`
-  query EventByID($id: String!) {
+  query EventByID($id: String!, $stripeSkuName: String!) {
     site {
       siteMetadata {
         apiKey {
           googleMaps
         }
       }
+    }
+    stripeSku(
+      active: { eq: true }
+      attributes: { name: { eq: $stripeSkuName } }
+      product: { name: { eq: "Event" } }
+    ) {
+      attributes {
+        name
+      }
+      id
+      price
     }
     markdownRemark(id: { eq: $id }) {
       id
@@ -322,6 +621,11 @@ export const eventQuery = graphql`
         #        infoForChampionship {
         #          html
         #        }
+        heroImage {
+          childImageSharp {
+            ...HeroImage
+          }
+        }
         infoForCompetition {
           html
         }

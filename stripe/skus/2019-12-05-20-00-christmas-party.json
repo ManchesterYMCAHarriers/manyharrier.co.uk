@@ -1,0 +1,10 @@
+{
+  "activeUntil": "2019-11-01T12:00:00",
+  "productName": "Event",
+  "sku": {
+    "attributes": {
+      "name": "2019 Christmas Party"
+    },
+    "price": 2500
+  }
+}

@@ -72,7 +72,6 @@ async function populate() {
         active,
         activeFrom,
         activeUntil,
-        name,
         productName,
         sku,
       } = skuContainer
@@ -93,10 +92,8 @@ async function populate() {
         }
       }
 
-      sku.attributes = sku.attributes || {}
-      sku.attributes.name = name
+      // Don't populate price or name here... we should always have a price and a name!
       sku.active = active
-      // Don't populate price here... we should always have a price!
       sku.currency = sku.currency || 'gbp'
       sku.inventory = sku.inventory || {
         type: 'infinite',
@@ -104,7 +101,7 @@ async function populate() {
       sku.product = stripeProductIDs[productName]
 
       const stripeIndex = stripeSkus.findIndex(stripeSku => {
-        return stripeSku.attributes.name === name
+        return stripeSku.attributes.name === sku.attributes.name
       })
 
       // Create new SKUs
@@ -249,10 +246,13 @@ function readMaster(path) {
             })
             .then(file => {
               return readJson(file).then(item => {
-                item.name = file.substring(
-                  file.lastIndexOf('/') + 1,
-                  file.lastIndexOf('.json')
-                )
+                if (path.search(/products$/) > -1) {
+                  const name = file.substring(
+                    file.lastIndexOf('/') + 1,
+                    file.lastIndexOf('.json')
+                  )
+                  item.name = name.charAt(0).toUpperCase() + name.substring(1)
+                }
                 items.push(item)
               })
             })
