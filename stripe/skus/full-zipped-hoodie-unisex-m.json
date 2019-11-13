@@ -1,0 +1,17 @@
+{
+  "active": true,
+  "productName": "Kit",
+  "sku": {
+    "attributes": {
+      "name": "Full-zipped hoodie",
+      "gender": "Unisex",
+      "size": "M",
+      "clearance": false
+    },
+    "inventory": {
+      "quantity": 0,
+      "type": "finite"
+    },
+    "price": 2400
+  }
+}

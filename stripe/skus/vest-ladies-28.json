@@ -1,0 +1,17 @@
+{
+  "active": true,
+  "productName": "Kit",
+  "sku": {
+    "attributes": {
+      "name": "Vest",
+      "gender": "Ladies",
+      "size": "28-inch",
+      "clearance": false
+    },
+    "inventory": {
+      "quantity": 0,
+      "type": "finite"
+    },
+    "price": 1800
+  }
+}

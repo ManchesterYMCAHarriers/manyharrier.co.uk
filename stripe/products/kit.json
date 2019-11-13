@@ -1,0 +1,10 @@
+{
+  "attributes": [
+    "name",
+    "gender",
+    "size",
+    "clearance"
+  ],
+  "shippable": false,
+  "type": "good"
+}

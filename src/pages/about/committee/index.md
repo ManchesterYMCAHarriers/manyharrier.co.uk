@@ -26,10 +26,10 @@ members:
    description: |
      Heather's role as Club Treasurer involves managing the club's bank account, maintaining a cash book and producing income and expenditure reports for general club activities and our Blackleach race. Her role also involves producing and delivering an annual statement and report for the club's Annual General Meeting.
    singleImage: /media/committee-Heather-Hughes.jpg
- - name: Craig Jones and Sarah Wilson
+ - name: Sarah Wilson and Craig Jones
    role: Captains
    description: |
-     Craig and Sarah are our leaders "on the pitch".
+     Sarah and Craig are our leaders "on the pitch".
    
      Their role as captains also involves planning the Thursday evening group run and acting as leaders for the session, as well as organising marathon training sessions and routes.
    
@@ -38,7 +38,7 @@ members:
      The captains present awards at presentation evenings and decide upon the annual award for our "most improved runner" as well as the weightings for our Christmas handicap race.
    
      Both Craig and Sarah are excellent marathon runners; Craig's marathon PB is 2:34 and Sarah's is 3:27.
-   doubleImage: /media/committee-Craig-Jones-and-Sarah-Wilson.jpg
+   singleImage: /media/committee-Sarah-Wilson-and-Craig-Jones.jpg
  - name: Jon Paramor
    role: Race Entries Secretary
    description: |

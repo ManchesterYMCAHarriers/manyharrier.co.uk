@@ -38,7 +38,7 @@ export const CommitteePageTemplate = ({
             key={'committee-member-' + i}
           >
             <div
-              className={`flex panel black-bottom`}>
+              className={`flex flex-col md:flex-row panel black-bottom`}>
               <div
                 className={`mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2`}>
                 <Img fixed={image} alt={'Photo of ' + name}
@@ -134,13 +134,6 @@ export const committeePageQuery = graphql`
           singleImage {
             childImageSharp {
               fixed(width: 200, height: 250) {
-                ...GatsbyImageSharpFixed_withWebp_tracedSVG
-              }
-            }
-          }
-          doubleImage {
-            childImageSharp {
-              fixed(width: 400, height: 250) {
                 ...GatsbyImageSharpFixed_withWebp_tracedSVG
               }
             }

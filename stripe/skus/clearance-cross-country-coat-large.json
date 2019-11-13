@@ -1,0 +1,17 @@
+{
+  "active": true,
+  "productName": "Kit",
+  "sku": {
+    "attributes": {
+      "name": "Cross country coat",
+      "gender": "Unisex",
+      "size": "L",
+      "clearance": true
+    },
+    "inventory": {
+      "quantity": 0,
+      "type": "finite"
+    },
+    "price": 800
+  }
+}
