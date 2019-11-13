@@ -6,12 +6,12 @@ import logo from '../img/logo-inverse.svg'
 import { FaFacebookF, FaInstagram, FaTwitter, FaStrava } from 'react-icons/fa'
 
 const FooterLogo = () => (
-  <a
-    href="/"
+  <Link
+    to="/"
     className="w-auto flex-shrink-0 flex-grow-0 bg-transparent hover:bg-gray-800 focus:bg-gray-800 border-2 rounded-full border-transparent hover:border-white focus:border-white focus:outline-none"
   >
     <img className="h-40 w-40" src={logo} alt="" />
-  </a>
+  </Link>
 )
 
 const FooterMenuLink = ({ title, to }) => (

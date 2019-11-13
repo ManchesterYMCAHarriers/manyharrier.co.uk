@@ -44,12 +44,25 @@ CallToActionBackButton.defaultProps = {
   type: "button",
 }
 
-export const CallToActionLink = ({to, title, className}) => (
-  <Link to={to} className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-    <span className="text-black-manyharrier">{title}</span>
-    <span className="text-red-manyharrier ml-4">&rarr;</span>
-  </Link>
-)
+export const CallToActionLink = ({to, title, className}) => {
+  if (to.charAt(0) === "/") {
+    return (
+      <Link to={to}
+          className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+        <span className="text-black-manyharrier">{title}</span>
+        <span className="text-red-manyharrier ml-4">&rarr;</span>
+      </Link>
+    )
+  }
+
+  return (
+    <a href={to}
+        className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <span className="text-black-manyharrier">{title}</span>
+      <span className="text-red-manyharrier ml-4">&rarr;</span>
+    </a>
+  )
+}
 
 CallToActionLink.propTypes = {
   className: PropTypes.string,
@@ -61,12 +74,25 @@ CallToActionLink.defaultProps = {
   className: "",
 }
 
-export const CallToActionBackLink = ({to, title, className}) => (
-  <Link to={to} className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-    <span className="text-red-manyharrier mr-4">&larr;</span>
-    <span className="text-black-manyharrier">{title}</span>
-  </Link>
-)
+export const CallToActionBackLink = ({to, title, className}) => {
+  if (to.charAt(0) === "/") {
+    return (
+      <Link to={to}
+            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+        <span className="text-red-manyharrier mr-4">&larr;</span>
+        <span className="text-black-manyharrier">{title}</span>
+      </Link>
+    )
+  }
+
+  return (
+    <a href={to}
+          className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <span className="text-red-manyharrier mr-4">&larr;</span>
+      <span className="text-black-manyharrier">{title}</span>
+    </a>
+  )
+}
 
 CallToActionBackLink.propTypes = {
   className: PropTypes.string,

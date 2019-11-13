@@ -1,6 +1,6 @@
 ---
 templateKey: session
-sessionKey: 400m and 800m with 200m recovery
+sessionKey: 400m and 800m efforts with 200m recovery
 ---
 This is a 30-minute session, where we repeat the following pattern:
 
