@@ -2,7 +2,7 @@ import React from "react";
 import * as PropTypes from "prop-types";
 import {Link} from "gatsby";
 
-const CTAClassNames = "pb-2 border-b-2 border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 focus:border-red-manyharrier focus:opacity-100"
+const CTAClassNames = "pb-2 border-b-2 leading-loose border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 focus:border-red-manyharrier focus:opacity-100"
 
 export const CallToActionButton = ({type, onClick, title, id, className}) => (
   <button type={type} id={id} onClick={onClick} className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>

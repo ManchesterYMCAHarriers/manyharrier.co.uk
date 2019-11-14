@@ -9,7 +9,9 @@ import {PanelFullWidth, Panels} from "../components/Panels";
 export const BlogPostTemplate = ({
   content,
   title,
+  description,
   heroImage,
+  date,
 }) => {
   return (
     <StandardContentContainer>
@@ -25,6 +27,7 @@ export const BlogPostTemplate = ({
 
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
+  date: PropTypes.string,
   description: PropTypes.string,
   title: PropTypes.string.isRequired,
   heroImage: PropTypes.object,

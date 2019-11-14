@@ -45,7 +45,7 @@ export const CommitteePageTemplate = ({
                      className={`border-2 border-black-manyharrier`} />
               </div>
               <div className="flex-shrink flex-grow md:order-1">
-                <h3 className="heading-3 mb-4">
+                <h3 className="heading-3 mb-4 text-center md:text-left">
                   <span>{name}</span> -{' '}
                   <span className="text-gray-700">{role}</span>
                 </h3>

@@ -259,7 +259,7 @@ export class EventTemplate extends React.Component {
           </Panel>
           <Panel>
             <div className="panel black-bottom">
-              <CallToActionLink to={venue.slug} title={`Full venue info`} />
+              <CallToActionLink to={venue.slug} title={`${venue.title} information`} />
             </div>
           </Panel>
         </Panels>
