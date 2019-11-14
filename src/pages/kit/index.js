@@ -1,7 +1,3 @@
-import React from "react";
-import * as PropTypes from "prop-types";
-import {graphql} from "gatsby";
-
 import React from 'react'
 import * as PropTypes from "prop-types";
 import Layout from '../../components/Layout'
@@ -33,11 +29,11 @@ const KitIndex = ({data}) => {
   }, {})
 
   return (
-    <Layout path={'/routes'}>
+    <Layout path={'/kit'}>
       <StandardContentContainer>
-        <h1 className="heading-1">Routes</h1>
+        <h1 className="heading-1">Kit</h1>
         <Panels>
-          {routes.map(({title, image, slug}) => (
+          {kitTypes.map(({title, image, slug}) => (
             <Panel key={slug}>
               <CardCTA to={slug} title={title} image={image}
                        borderColorClassName={`border-gray-400`}
