@@ -1,8 +1,8 @@
 ---
-templateKey: blog-post
+templateKey: "blog-post"
 blogKey: "Easter 2020: Running on the Isle of Man"
-date: 2019-09-02T21:56:54.000Z
-description: Steph Goodchild extols the virtues of an Easter trip to the Isle of Man for a spot of running!
+description: "Steph Goodchild extols the virtues of an Easter trip to the Isle of Man for a spot of running!"
+publishedAt: "2019-09-02T22:56:31.000Z"
 ---
 Easter on the Isle of Man offers opportunities for every runner combined with a short break on this charming, old-fashioned island.
 

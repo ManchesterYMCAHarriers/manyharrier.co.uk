@@ -16,6 +16,7 @@ class Form extends React.Component {
     const {
       action,
       backHandler,
+      backHighlighted,
       backValue,
       children,
       externalError,
@@ -25,6 +26,7 @@ class Form extends React.Component {
       netlify,
       showBack,
       showSubmit,
+      submitHighlighted,
       submitValue,
     } = this.props
 
@@ -53,6 +55,7 @@ class Form extends React.Component {
               type="submit"
               className={`${!showSubmit && `hidden'`}`}
               title={submitValue}
+              highlighted={submitHighlighted}
             />
           </div>
           <div className="flex-shrink-0 flex-grow order-first">
@@ -61,6 +64,7 @@ class Form extends React.Component {
               className={`${!showBack && `hidden`}`}
               onClick={backHandler}
               title={backValue}
+              highlighted={backHighlighted}
             />
           </div>
         </div>
@@ -72,6 +76,7 @@ class Form extends React.Component {
 Form.propTypes = {
   action: PropTypes.string,
   backHandler: PropTypes.func.isRequired,
+  backHighlighted: PropTypes.string,
   backValue: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   externalError: PropTypes.bool,
@@ -82,6 +87,7 @@ Form.propTypes = {
   showBack: PropTypes.bool.isRequired,
   showSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,
+  submitHighlighted: PropTypes.string,
   submitValue: PropTypes.string.isRequired,
 }
 

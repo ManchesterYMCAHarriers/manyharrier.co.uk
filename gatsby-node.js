@@ -42,10 +42,16 @@ exports.createPages = async ({ actions, graphql }) => {
     return Promise.reject(result.errors)
   }
 
+  let blogPosts = 0;
+
   pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
     const {templateKey} = node.frontmatter
     if (templateKey === 'info') {
       return
+    }
+
+    if (templateKey === 'blog-post') {
+      blogPosts++;
     }
 
     const id = node.id
@@ -102,6 +108,19 @@ exports.createPages = async ({ actions, graphql }) => {
       },
     })
   })
+
+  // Blog index pages
+  for (let i = 0; i < blogPosts; i += 10) {
+    const blogIndexPath = i > 0 ? `/blog/${(i + 10) / 10}` : `/blog`
+    createPage({
+      path: blogIndexPath,
+      component: path.resolve(`src/templates/blog-index.js`),
+      context: {
+        skip: i,
+        totalBlogPosts: blogPosts,
+      },
+    })
+  }
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {

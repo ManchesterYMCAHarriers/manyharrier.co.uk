@@ -18,7 +18,6 @@ export const JoinPageTemplate = ({
                                    howToJoinUs,
                                    membershipBenefitsIntro,
                                    membershipBenefits,
-                                   yClubFacilities,
                                    firstClaimPrice,
                                    firstClaimValidTo,
                                  }) => {
@@ -154,9 +153,7 @@ export const joinPageQuery = graphql`
           title
           image {
             childImageSharp {
-              fluid(maxWidth: 672, maxHeight: 448) {
-                ...GatsbyImageSharpFluid_withWebp_tracedSVG
-              }
+              ...CardImage
             }
           }
           callToActionLink

@@ -11,7 +11,7 @@ export const BlogPostTemplate = ({
   title,
   description,
   heroImage,
-  date,
+  publishedAt,
 }) => {
   return (
     <StandardContentContainer>
@@ -27,7 +27,7 @@ export const BlogPostTemplate = ({
 
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
-  date: PropTypes.string,
+  publishedAt: PropTypes.string,
   description: PropTypes.string,
   title: PropTypes.string.isRequired,
   heroImage: PropTypes.object,
@@ -42,6 +42,7 @@ const BlogPost = ({ data }) => {
     <Layout path={post.fields.slug}>
       <BlogPostTemplate
         content={post.html}
+        date={post.frontmatter.publishedAt}
         description={post.frontmatter.description}
         title={post.frontmatter.blogKey}
         heroImage={heroImage}
@@ -68,7 +69,7 @@ export const pageQuery = graphql`
       }
       frontmatter {
         blogKey
-        date(formatString: "Do MMMM YYYY")
+        publishedAt(formatString: "Do MMMM YYYY")
         description
         heroImage {
           childImageSharp {

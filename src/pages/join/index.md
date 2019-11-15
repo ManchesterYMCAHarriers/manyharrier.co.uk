@@ -8,13 +8,15 @@ howToJoinUs: |
   down to one of our Thursday evening club runs and "try before
   you buy".
   
-  If you're coming down for the first time and you need
-  somewhere to get changed, give the Y Club membership team a
+  You can use the Y Club's facilities free of charge by prior arrangement
+  if you're coming along for the first time. Give the Y Club membership team a
   call on [0161 837 3535](tel:+441618373535) and they
-  will make arrangements for you to use the changing facilities
-  free of charge. Otherwise, there's no need to let anyone know
+  will make arrangements. Otherwise, there's no need to let anyone know
   that you're coming - just turn up at the Y Club reception in
   your running kit at 6:30pm.
+  
+  If you do want to ask us a question or get in touch with us
+  before you run with us, please use [our contact form](/contact).
 
   Once you decide we are the club for you, join the club using
   our online membership form.

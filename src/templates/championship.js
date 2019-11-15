@@ -240,6 +240,7 @@ export class ChampionshipTemplate extends React.Component {
                 <h2 className="heading-2 mb-4">Championship entry</h2>
                 <Form
                   backHandler={this.backHandler}
+                  backHighlighted={"+"}
                   backValue={this.state.backValue}
                   formId={'enter-championship'}
                   method={'POST'}
@@ -301,6 +302,7 @@ export class ChampionshipTemplate extends React.Component {
                             id={item.id}
                             onClick={this.removeItem}
                             title={"Remove"}
+                            highlighted={"-"}
                           />
                         </div>
                       </div>

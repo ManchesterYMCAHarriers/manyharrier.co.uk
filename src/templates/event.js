@@ -251,17 +251,11 @@ export class EventTemplate extends React.Component {
           </PanelFullWidth>
         </Panels>
         <Panels>
-          <Panel>
+          <PanelFullWidth>
             <div className="panel black-bottom">
-              <CallToActionLink to={GoogleMapsDirectionsLink(venue)}
-                                title={`Navigate to ${venue.title} with Google Maps`} />
+              <CallToActionLink to={venue.slug} title={`${venue.title} facilities, directions, parking and travel information`} />
             </div>
-          </Panel>
-          <Panel>
-            <div className="panel black-bottom">
-              <CallToActionLink to={venue.slug} title={`${venue.title} information`} />
-            </div>
-          </Panel>
+          </PanelFullWidth>
         </Panels>
         {eventInfo && (
           <Panels>
@@ -278,6 +272,7 @@ export class EventTemplate extends React.Component {
                 <h2 className="heading-2 mb-4">Event entry</h2>
                 <Form
                   backHandler={this.backHandler}
+                  backHighlighted={"+"}
                   backValue={this.state.backValue}
                   formId={'enter-event'}
                   method={'POST'}
@@ -338,6 +333,7 @@ export class EventTemplate extends React.Component {
                             id={item.id}
                             onClick={this.removeItem}
                             title={"Remove"}
+                            highlighted={"-"}
                           />
                         </div>
                       </div>

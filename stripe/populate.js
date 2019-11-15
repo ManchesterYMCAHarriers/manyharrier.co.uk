@@ -120,6 +120,12 @@ async function populate() {
 
       for (let [key, masterValue] in Object.entries(sku)) {
         if (!isEqual(stripeSku[key], masterValue)) {
+          if (key === "inventory") {
+            // Don't update stock from raw load
+            if (stripeSku[key].type === masterValue.type) {
+              continue
+            }
+          }
           skuUpdate[key] = masterValue
         }
       }

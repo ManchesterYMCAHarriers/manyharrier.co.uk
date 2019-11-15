@@ -4,12 +4,17 @@ import {Link} from "gatsby";
 
 const CTAClassNames = "pb-2 border-b-2 leading-loose border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 focus:border-red-manyharrier focus:opacity-100"
 
-export const CallToActionButton = ({type, onClick, title, id, className}) => (
-  <button type={type} id={id} onClick={onClick} className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-    <span className="text-black-manyharrier">{title}</span>
-    <span className="text-red-manyharrier ml-4">&rarr;</span>
-  </button>
-)
+export const CallToActionButton = ({type, onClick, title, id, className, highlighted}) => {
+  highlighted = highlighted || `&rarr;`;
+  return (
+    <button type={type} id={id} onClick={onClick}
+            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <span className="text-black-manyharrier">{title}</span>
+      <span className="text-red-manyharrier ml-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
+    </button>
+  )
+}
 
 CallToActionButton.propTypes = {
   className: PropTypes.string,
@@ -24,12 +29,17 @@ CallToActionButton.defaultProps = {
   type: "button"
 }
 
-export const CallToActionBackButton = ({type, onClick, title, id, className}) => (
-  <button type={type} onClick={onClick} id={id} className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-    <span className="text-red-manyharrier mr-4">&larr;</span>
-    <span className="text-black-manyharrier">{title}</span>
-  </button>
-)
+export const CallToActionBackButton = ({type, onClick, title, id, className, highlighted}) => {
+  highlighted = highlighted || `&larr;`
+  return (
+    <button type={type} onClick={onClick} id={id}
+            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <span className="text-red-manyharrier mr-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span className="text-black-manyharrier">{title}</span>
+    </button>
+  )
+}
 
 CallToActionBackButton.propTypes = {
   className: PropTypes.string,
@@ -44,22 +54,26 @@ CallToActionBackButton.defaultProps = {
   type: "button",
 }
 
-export const CallToActionLink = ({to, title, className}) => {
+export const CallToActionLink = ({to, title, className, highlighted}) => {
+  highlighted = highlighted || `&rarr;`;
+
   if (to.charAt(0) === "/") {
     return (
       <Link to={to}
-          className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
         <span className="text-black-manyharrier">{title}</span>
-        <span className="text-red-manyharrier ml-4">&rarr;</span>
+        <span className="text-red-manyharrier ml-4"
+              dangerouslySetInnerHTML={{__html: highlighted}} />
       </Link>
     )
   }
 
   return (
     <a href={to}
-        className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+       className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
       <span className="text-black-manyharrier">{title}</span>
-      <span className="text-red-manyharrier ml-4">&rarr;</span>
+      <span className="text-red-manyharrier ml-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
     </a>
   )
 }
@@ -74,12 +88,15 @@ CallToActionLink.defaultProps = {
   className: "",
 }
 
-export const CallToActionBackLink = ({to, title, className}) => {
+export const CallToActionBackLink = ({to, title, className, highlighted}) => {
+  highlighted = highlighted || `&larr;`
+
   if (to.charAt(0) === "/") {
     return (
       <Link to={to}
             className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-        <span className="text-red-manyharrier mr-4">&larr;</span>
+        <span className="text-red-manyharrier mr-4"
+              dangerouslySetInnerHTML={{__html: highlighted}} />
         <span className="text-black-manyharrier">{title}</span>
       </Link>
     )
@@ -87,8 +104,9 @@ export const CallToActionBackLink = ({to, title, className}) => {
 
   return (
     <a href={to}
-          className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-      <span className="text-red-manyharrier mr-4">&larr;</span>
+       className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <span className="text-red-manyharrier mr-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
       <span className="text-black-manyharrier">{title}</span>
     </a>
   )
@@ -104,12 +122,16 @@ CallToActionBackLink.defaultProps = {
   className: "",
 }
 
-export const CallToActionText = ({title, className}) => (
-  <div className={className}>
-    <span className="text-black-manyharrier">{title}</span>
-    <span className="text-red-manyharrier ml-4">&rarr;</span>
-  </div>
-)
+export const CallToActionText = ({title, className, highlighted}) => {
+  highlighted = highlighted || `&rarr;`
+  return (
+    <div className={className}>
+      <span className="text-black-manyharrier">{title}</span>
+      <span className="text-red-manyharrier ml-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
+    </div>
+  )
+}
 
 CallToActionText.propTypes = {
   className: PropTypes.string,
@@ -120,12 +142,17 @@ CallToActionText.defaultProps = {
   className: "",
 }
 
-export const CallToActionBackText = ({title, className}) => (
-  <div className={className}>
-    <span className="text-red-manyharrier mr-4">&larr;</span>
-    <span className="text-black-manyharrier">{title}</span>
-  </div>
-)
+export const CallToActionBackText = ({title, className, highlighted}) => {
+  highlighted = highlighted || `&larr;`
+
+  return (
+    <div className={className}>
+      <span className="text-red-manyharrier mr-4"
+            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span className="text-black-manyharrier">{title}</span>
+    </div>
+  )
+}
 
 CallToActionBackText.propTypes = {
   className: PropTypes.string,

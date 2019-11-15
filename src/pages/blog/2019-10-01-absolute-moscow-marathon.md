@@ -1,8 +1,8 @@
 ---
-templateKey: blog-post
-blogKey: Absolute Moscow Marathon
-date: 2019-10-01T21:56:54.000Z
-description: On Sunday 22 September 2019, Carol O'Hare and Steph Goodchild's did the Absolute Moscow Marathon. Read all about their (mis-)adventures...!
+templateKey: "blog-post"
+blogKey: "Absolute Moscow Marathon"
+description: "On Sunday 22 September 2019, Carol O'Hare and Steph Goodchild's did the Absolute Moscow Marathon. Read all about their (mis-)adventures...!"
+publishedAt: "2019-10-01T21:56:54.000Z"
 ---
 ## ...or "Where are we?" or "Lost in Translation!" or "I'm Still Hungry!"
 
@@ -29,3 +29,4 @@ On Tuesday morning, keen to get some fresh air before travelling home, we set of
 Overall the trip was an adventure we are glad we experienced but we are very happy to be back amongst friendly faces in smiley Manchester!
   
 &mdash; Carol O'Hare and Steph Goodchild
+
