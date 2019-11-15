@@ -29,9 +29,9 @@ const KitIndex = ({data}) => {
   }, {})
 
   return (
-    <Layout path={'/routes'}>
+    <Layout path={'/kit'}>
       <StandardContentContainer>
-        <h1 className="heading-1">Routes</h1>
+        <h1 className="heading-1">Kit</h1>
         <Panels>
           {kitTypes.map(({title, image, slug}) => (
             <Panel key={slug}>
