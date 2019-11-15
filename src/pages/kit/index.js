@@ -3,37 +3,39 @@ import * as PropTypes from "prop-types";
 import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
 import {graphql} from "gatsby";
-import {Panel, Panels} from "../../components/Panels";
+import {Panel, PanelFullWidth, Panels} from "../../components/Panels";
 import {CardCTA} from "../../components/Card";
 import {CallToActionText} from "../../components/CallToAction";
 
 const KitIndex = ({data}) => {
-  const kitTypes = data.allStripeSku.edges.reduce((acc, {node}) => {
-    if (node.inventory.type === "finite" && node.inventory.quantity === 0) {
-      return acc
-    }
-    let key = ""
-    if (node.attributes.gender !== "Unisex") {
-      key += node.attributes.gender
-    }
-    key += node.attributes.name
-    if (node.attributes.clearance === "true") {
-      key += " (Clearance)"
-    }
-    if (!acc[key]) {
-      acc[key] = 1
-    } else {
-      acc[key]++
-    }
-    return acc
-  }, {})
+  // const kitTypes = data.allStripeSku.edges.reduce((acc, {node}) => {
+  //   if (node.inventory.type === "finite" && node.inventory.quantity === 0) {
+  //     return acc
+  //   }
+  //   let key = ""
+  //   if (node.attributes.gender !== "Unisex") {
+  //     key += node.attributes.gender
+  //   }
+  //   key += node.attributes.name
+  //   if (node.attributes.clearance === "true") {
+  //     key += " (Clearance)"
+  //   }
+  //   if (!acc[key]) {
+  //     acc[key] = 1
+  //   } else {
+  //     acc[key]++
+  //   }
+  //   return acc
+  // }, {})
+
+  const kitTypes = null
 
   return (
     <Layout path={'/kit'}>
       <StandardContentContainer>
         <h1 className="heading-1">Kit</h1>
         <Panels>
-          {kitTypes.map(({title, image, slug}) => (
+          {kitTypes ? kitTypes.map(({title, image, slug}) => (
             <Panel key={slug}>
               <CardCTA to={slug} title={title} image={image}
                        borderColorClassName={`border-gray-400`}
@@ -41,7 +43,13 @@ const KitIndex = ({data}) => {
                        callToAction={<CallToActionText
                          title={"More details"} />} />
             </Panel>
-          ))}
+          )) : (
+            <PanelFullWidth>
+              <div className="content panel black-bottom">
+                <h3>Kit coming soon..!</h3>
+              </div>
+            </PanelFullWidth>
+          )}
         </Panels>
       </StandardContentContainer>
     </Layout>
