@@ -9,7 +9,6 @@ import Address from '../components/Address'
 import GoogleMapsLocationAndRoute
   from '../components/GoogleMapsLocationAndRoute'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
-import GoogleMapsDirectionsLink from '../components/GoogleMapsDirectionsLink'
 import EventTags from '../components/EventTags'
 import Hero from "../components/Hero";
 import {Panel, PanelFullWidth, Panels} from "../components/Panels";

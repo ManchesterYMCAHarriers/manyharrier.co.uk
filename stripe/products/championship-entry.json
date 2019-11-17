@@ -1,7 +1,9 @@
 {
   "attributes": [
-    "name"
+    "name",
+    "category"
   ],
+  "name": "Championship entry",
   "shippable": false,
   "type": "good"
 }

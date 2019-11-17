@@ -1,9 +1,10 @@
 {
   "activeUntil": "2020-01-05T23:59:59",
-  "productName": "Event",
+  "productName": "Race entry",
   "sku": {
     "attributes": {
-      "name": "2020 Northern Cross Country Championships"
+      "name": "2020 Northern Cross Country Championships",
+      "category": "Race"
     },
     "price": 800
   }

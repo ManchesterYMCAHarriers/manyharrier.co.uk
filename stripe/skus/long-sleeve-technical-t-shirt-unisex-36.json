@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Long-sleeve technical T-shirt",
   "sku": {
     "attributes": {
-      "name": "Long-sleeve technical T-shirt",
+      "name": "36-inch unisex long-sleeve technical T-shirt",
       "gender": "Unisex",
-      "size": "34-inch",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "size": "36-inch",
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 2300
   }

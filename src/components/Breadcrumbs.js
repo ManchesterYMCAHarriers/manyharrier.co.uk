@@ -38,6 +38,10 @@ const Breadcrumbs = ({path}) => {
       title: 'Join us',
     },
     {
+      path: '/kit',
+      title: 'Kit',
+    },
+    {
       path: '/routes',
       title: 'Routes',
     },

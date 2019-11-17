@@ -4,11 +4,15 @@ import ValidationSummary from './ValidationSummary'
 
 class FieldsetMulti extends React.Component {
   render() {
-    const { children, hint, legend, validationIssues, visible } = this.props
-    const fieldsetClassNames = ['fieldset-multi']
+    const { children, className, hint, legend, validationIssues, visible } = this.props
+    let fieldsetClassNames = ['fieldset-multi']
 
     if (!visible) {
       fieldsetClassNames.push('hidden')
+    }
+
+    if (className) {
+      fieldsetClassNames = fieldsetClassNames.concat(className.split(" "));
     }
 
     return (
@@ -26,6 +30,7 @@ class FieldsetMulti extends React.Component {
 
 FieldsetMulti.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   hint: PropTypes.string,
   legend: PropTypes.string.isRequired,
   validationIssues: PropTypes.arrayOf(

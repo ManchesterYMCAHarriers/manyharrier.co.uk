@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Vest",
   "sku": {
     "attributes": {
-      "name": "Vest",
+      "name": "42-inch mens vest",
       "gender": "Mens",
       "size": "42-inch",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 1800
   }

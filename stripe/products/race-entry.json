@@ -1,11 +1,9 @@
 {
   "attributes": [
     "name",
-    "claim",
-    "valid_to",
     "category"
   ],
-  "name": "Membership",
+  "name": "Race entry",
   "shippable": false,
   "type": "good"
 }

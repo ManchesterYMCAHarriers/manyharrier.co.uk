@@ -88,8 +88,9 @@ const Footer = class extends React.Component {
                 <FooterMenuLink title={'Events calendar'} to={'/events'} />
                 <FooterMenuLink title={'Championships'} to={'/championships'} />
                 <FooterMenuLink title={'Blog'} to={'/blog'} />
-                <FooterMenuLink title={'About'} to={'/about'} />
+                <FooterMenuLink title={'Kit'} to={'/kit'} />
                 <FooterMenuLink title={'Contact'} to={'/contact'} />
+                <FooterMenuLink title={'About'} to={'/about'} />
                 <FooterMenuLink title={'Join'} to={'/join'} />
               </div>
               <div className="w-full my-8 px-2flex-shrink-0 flex-grow-0 text-center">

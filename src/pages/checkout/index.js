@@ -209,7 +209,7 @@ export default class CheckoutIndex extends React.Component {
     ev.preventDefault()
     const itemId = ev.currentTarget.id.replace('-decrement', '')
     const quantityInput = document.getElementById(itemId + '-quantity')
-    if (quantityInput.value.search(/^[\d+]$/) > -1) {
+    if (quantityInput.value.search(/^[\d]+$/) > -1) {
       const quantity = parseInt(quantityInput.value, 10)
       if (quantity > 1) {
         quantityInput.value = quantity - 1
@@ -233,7 +233,7 @@ export default class CheckoutIndex extends React.Component {
     ev.preventDefault()
     const itemId = ev.currentTarget.id.replace('-increment', '')
     const quantityInput = document.getElementById(itemId + '-quantity')
-    if (quantityInput.value.search(/^[\d+]$/) > -1) {
+    if (quantityInput.value.search(/^[\d]+$/) > -1) {
       const quantity = parseInt(quantityInput.value, 10)
       quantityInput.value = quantity + 1
       quantityInput.dispatchEvent(new Event('change'))

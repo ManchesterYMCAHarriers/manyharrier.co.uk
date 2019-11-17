@@ -3,8 +3,10 @@
     "name",
     "gender",
     "size",
-    "clearance"
+    "clearance",
+    "category"
   ],
+  "name": "Old-style vest",
   "shippable": false,
   "type": "good"
 }

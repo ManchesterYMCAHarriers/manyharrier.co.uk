@@ -53,7 +53,7 @@ export const JoinPageTemplate = ({
       </Panels>
       <Panels>
         {membershipBenefits.map(({title, image, body, callToActionLink, callToActionTitle}, i) => (
-          <Panel>
+          <Panel key={`member-benefit-${i}`}>
             <Card
               borderColorClassName={(i % 2 === 0 ? 'border-red-manyharrier' : 'border-black-manyharrier')}
               title={title} image={image} callToAction={callToActionLink &&
@@ -77,8 +77,7 @@ JoinPageTemplate.propTypes = {
   contentComponent: PropTypes.func,
   howToJoinUs: PropTypes.node.isRequired,
   membershipBenefitsIntro: PropTypes.node.isRequired,
-  membershipBenefits: PropTypes.arrayOf(PropTypes.node.isRequired).isRequired,
-  yClubFacilities: PropTypes.node.isRequired,
+  membershipBenefits: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   firstClaimValidTo: PropTypes.string.isRequired,
   firstClaimPrice: PropTypes.string.isRequired,
 }

@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Short-sleeve technical T-shirt",
   "sku": {
     "attributes": {
-      "name": "Short-sleeve technical T-shirt",
+      "name": "38-inch unisex short-sleeve technical T-shirt",
       "gender": "Unisex",
       "size": "38-inch",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 2200
   }

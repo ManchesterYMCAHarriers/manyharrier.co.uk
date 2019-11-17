@@ -70,6 +70,36 @@ export const IndexPageTemplate = ({
             </div>
           </div>
         </PanelFullWidth>
+      </Panels>
+      {eventEntryPromos.length > 0 && (
+        <Panels>
+          <PanelFullWidth>
+            <div className="panel black-bottom">
+              <h2 className="heading-2">Enter now...</h2>
+              <Panels>
+                {eventEntryPromos.map(({title, slug, heroImage, venue, startsAt}) => (
+                  <Panel key={`event-promo-${slug}`}>
+                    <CardCTA to={slug} image={heroImage}
+                             borderColorClassName={`border-gray-400`}
+                             borderColorHoverClassName={`border-red-manyharrier`}
+                             title={title} callToAction={<CallToActionText
+                      title={"More info"} />}>
+                      {venue && (
+                        <div className="text-sm">
+                          <p
+                            className="font-semibold">{startsAt.format('dddd Do MMMM YYYY, h:mm:a')}</p>
+                          <p className="font-light">{venue}</p>
+                        </div>
+                      )}
+                    </CardCTA>
+                  </Panel>
+                ))}
+              </Panels>
+            </div>
+          </PanelFullWidth>
+        </Panels>
+      )}
+      <Panels>
         <Panel>
           <Card image={firstPanelImage} title={firstPanelTitle}
                 callToAction={<CallToActionLink to={firstPanelLink}
@@ -89,33 +119,6 @@ export const IndexPageTemplate = ({
           </Card>
         </Panel>
       </Panels>
-      {eventEntryPromos.length > 0 && (
-        <Panels>
-          <PanelFullWidth>
-            <div className="panel black-bottom">
-              <h2 className="heading-2">Enter now...</h2>
-              <Panels>
-                {eventEntryPromos.map(({title, slug, heroImage, venue, startsAt}) => (
-                  <Panel key={`event-promo-${slug}`}>
-                    <CardCTA to={slug} image={heroImage}
-                             borderColorClassName={`border-gray-400`}
-                             borderColorHoverClassName={`border-red-manyharrier`}
-                             title={title} callToAction={<CallToActionText
-                      title={"More info"} />}>
-                      {venue && (
-                        <div className="text-sm">
-                          <p className="font-semibold">{startsAt.format('dddd Do MMMM YYYY, h:mm:a')}</p>
-                          <p className="font-light">{venue}</p>
-                        </div>
-                      )}
-                    </CardCTA>
-                  </Panel>
-                ))}
-              </Panels>
-            </div>
-          </PanelFullWidth>
-        </Panels>
-      )}
     </StandardContentContainer>
   )
 }
@@ -185,7 +188,7 @@ const IndexPage = ({data, pageContext}) => {
   data.nextEvents.edges.forEach(({node}, i) => {
     const event = {
       entryAvailable: stripeSkus.findIndex(({name, product}) => {
-        return name === node.frontmatter.eventKey && product === "Event"
+        return name === node.frontmatter.eventKey && product === "Race entry"
       }) > -1,
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
@@ -209,7 +212,7 @@ const IndexPage = ({data, pageContext}) => {
     if (!activeChampionshipsBySlug[slug]) {
       activeChampionshipsBySlug[slug] = {
         championshipKey: node.frontmatter.championship.frontmatter.championshipKey,
-        entryAvailable: stripeSkus.findIndex(({name, product}) => name === node.frontmatter.championship.frontmatter.championshipKey && product === "Championship") > -1,
+        entryAvailable: stripeSkus.findIndex(({name, product}) => name === node.frontmatter.championship.frontmatter.championshipKey && product === "Championship entry") > -1,
         startsAt: startsAt,
         endsAt: startsAt,
         heroImage: node.frontmatter.championship.frontmatter.heroImage ? node.frontmatter.championship.frontmatter.heroImage.childImageSharp.fluid : null,
@@ -406,12 +409,13 @@ export const indexPageQuery = graphql`
         }
       }
     }
-    stripeSkus: allStripeSku(filter: {active: {eq: true}, product: {name: {in: ["Event", "Championship"]}}}) {
+    stripeSkus: allStripeSku(filter: {active: {eq: true}, attributes: { category: {in: ["Race", "Championship", "Social"]}}}) {
       edges {
         node {
           price
           attributes {
-            name
+            name,
+            category
           }
           id
           product {

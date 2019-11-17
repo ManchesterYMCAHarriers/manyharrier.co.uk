@@ -26,7 +26,7 @@ const NavbarCheckout = () => (
 
 const NavbarLink = ({title, to}) => (
   <Link
-    className="w-full md:w-auto text-center p-2 md:mr-4 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
+    className="w-full md:w-auto md:text-sm lg:text-base text-center p-2 md:mr-4 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
     to={to}
   >
     {title}
@@ -115,6 +115,8 @@ export default class Navbar extends React.Component {
             <NavbarLink to={eventsCalendarSlug} title={'Events calendar'} />
             <NavbarLink to={'/championships'} title={'Championships'} />
             <NavbarLink to={'/blog'} title={'Blog'} />
+            <NavbarLink to={'/kit'} title={'Kit'} />
+            <NavbarLink to={'/contact'} title={'Contact'} />
             <NavbarLink to={'/about'} title={'About'} />
           </div>
         </nav>

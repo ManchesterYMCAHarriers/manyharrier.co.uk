@@ -1,9 +1,10 @@
 {
   "activeUntil": "2019-11-16T23:59:59",
-  "productName": "Event",
+  "productName": "Race entry",
   "sku": {
     "attributes": {
-      "name": "2019 Greater Manchester Cross Country Championships"
+      "name": "2019 Greater Manchester Cross Country Championships",
+      "category": "Race"
     },
     "price": 600
   }

@@ -6,6 +6,7 @@ const Moment = require('moment')
 const remark = require('remark')
 const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
+const {kebabCase} = require('lodash')
 
 const toMarkdown = input => remark()
   .use(recommended)
@@ -30,6 +31,18 @@ exports.createPages = async ({ actions, graphql }) => {
               championshipKey
               eventKey
               templateKey
+            }
+          }
+        }
+      },
+      allStripeSku(filter: {active: {eq: true}}) {
+        edges {
+          node {
+            attributes {
+              clearance
+            }
+            product {
+              name
             }
           }
         }
@@ -121,6 +134,33 @@ exports.createPages = async ({ actions, graphql }) => {
       },
     })
   }
+
+  // Kit pages
+  const kit = []
+
+  pages.data.allStripeSku.edges.forEach(({node}) => {
+    if (kit.findIndex(({productName, clearance}) => {
+      return productName === node.product.name && clearance === node.attributes.clearance;
+    }) === -1) {
+      kit.push({
+        clearance: node.attributes.clearance,
+        productName: node.product.name,
+      })
+    }
+  })
+
+  kit.forEach(({productName, clearance}) => {
+    const slug = clearance === "true" ? `/kit/clearance/${kebabCase(productName)}` : `/kit/${kebabCase(productName)}`
+    createPage({
+      path: slug,
+      component: path.resolve(`src/templates/kit.js`),
+      context: {
+        slug,
+        productName,
+        clearance
+      }
+    })
+  })
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {

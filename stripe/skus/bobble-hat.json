@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Bobble hat",
   "sku": {
     "attributes": {
-      "name": "Bobble hat",
+      "name": "One-size unisex bobble hat",
       "gender": "Unisex",
       "size": "One size",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 800
   }

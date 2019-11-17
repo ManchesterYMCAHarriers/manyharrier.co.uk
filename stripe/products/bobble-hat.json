@@ -1,11 +1,12 @@
 {
   "attributes": [
     "name",
-    "claim",
-    "valid_to",
+    "gender",
+    "size",
+    "clearance",
     "category"
   ],
-  "name": "Membership",
+  "name": "Bobble hat",
   "shippable": false,
   "type": "good"
 }

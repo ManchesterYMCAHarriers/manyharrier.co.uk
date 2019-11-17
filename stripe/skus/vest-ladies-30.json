@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Vest",
   "sku": {
     "attributes": {
-      "name": "Vest",
+      "name": "30-inch ladies vest",
       "gender": "Ladies",
       "size": "30-inch",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 1800
   }

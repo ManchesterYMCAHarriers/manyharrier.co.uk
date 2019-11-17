@@ -1,3 +1,3 @@
-const Populate = require('./populate')
+const {deleteAll, populate} = require('./populate');
 
-return Populate()
+return populate();

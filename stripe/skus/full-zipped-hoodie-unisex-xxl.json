@@ -1,16 +1,13 @@
 {
   "active": true,
-  "productName": "Kit",
+  "productName": "Hoodie",
   "sku": {
     "attributes": {
-      "name": "Full-zipped hoodie",
+      "name": "Extra-extra-large unisex full-zipped hoodie",
       "gender": "Unisex",
       "size": "XXL",
-      "clearance": false
-    },
-    "inventory": {
-      "quantity": 0,
-      "type": "finite"
+      "clearance": false,
+      "category": "Kit"
     },
     "price": 2400
   }

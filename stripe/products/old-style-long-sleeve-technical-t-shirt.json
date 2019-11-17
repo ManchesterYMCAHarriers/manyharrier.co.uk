@@ -1,0 +1,12 @@
+{
+  "attributes": [
+    "name",
+    "gender",
+    "size",
+    "clearance",
+    "category"
+  ],
+  "name": "Old-style long-sleeve technical T-shirt",
+  "shippable": false,
+  "type": "good"
+}

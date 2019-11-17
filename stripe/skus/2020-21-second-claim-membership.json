@@ -6,7 +6,8 @@
     "attributes": {
       "name": "2020-21 Second Claim Membership",
       "claim": "Second",
-      "valid_to": "30 April 2021"
+      "valid_to": "30 April 2021",
+      "category": "Membership"
     },
     "price": 1100
   }

@@ -31,20 +31,13 @@ export const AddToCart = ({
 }) => {
   const cart = GetCart()
 
-  const sameItemInCart = cart.items.filter(item => item.id === id)
-  if (sameItemInCart.length === maxQuantity) {
-    return
-  }
+  const itemInCartIndex = cart.items.findIndex(item => item.id === id)
 
-  if (sameItemInCart.id === id) {
-    cart.items = cart.items.map(item => {
-      if (item.id !== id) {
-        return item
-      }
-
-      item.quantity += quantity
-      return item
-    })
+  if (itemInCartIndex > -1) {
+    if (cart.items[itemInCartIndex].quantity === maxQuantity) {
+      return
+    }
+    cart.items[itemInCartIndex].quantity += quantity
   } else {
     cart.items.push({
       id,
