@@ -15,7 +15,10 @@ const crypto = require('crypto');
 const lineCharLength = 72;
 
 exports.handler = async (event, context, callback) => {
-  const body = JSON.parse(event.body).payload;
+  const body = JSON.parse(event.body)
+
+  console.log("body", body)
+  console.log("context", context)
 
   // Join form
   if (body['form-name'] === 'join') {
