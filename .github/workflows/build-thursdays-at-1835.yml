@@ -1,7 +1,7 @@
-name: Build nightly at 1930
+name: Build Thursdays at 1835
 on:
   schedule:
-    - cron: '45 20 * * *'
+    - cron: '35 18 * * 4'
 
 jobs:
   Ubuntu:
