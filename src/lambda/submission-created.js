@@ -15,45 +15,41 @@ const crypto = require('crypto');
 const lineCharLength = 72;
 
 exports.handler = async (event, context, callback) => {
-  const body = JSON.parse(event.body)
-
-  console.log("body", body.payload)
-  console.log("form_name", body.form_name)
-  console.log("context", context)
+  const {form_name, data} = JSON.parse(event.body).payload
 
   // Join form
-  if (body['form-name'] === 'join') {
-    await processJoinOrRenewalForm('join', body);
+  if (form_name === 'join') {
+    await processJoinOrRenewalForm('join', data);
     return {
       statusCode: 200
     };
   }
 
   // Renewal form
-  if (body['form-name'] === 'renew') {
-    await processJoinOrRenewalForm('renew', body);
+  if (form_name === 'renew') {
+    await processJoinOrRenewalForm('renew', data);
     return {
       statusCode: 200
     };
   }
 
   // Contact form
-  if (body['form-name'] === 'contact') {
-    await processContactForm(body);
+  if (form_name === 'contact') {
+    await processContactForm(data);
     return {
       statusCode: 200
     };
   }
 
   // Cart checkout
-  if (body['form-name'] === 'checkout') {
-    await processCheckout(body);
+  if (form_name === 'checkout') {
+    await processCheckout(data);
     return {
       statusCode: 200
     };
   }
 
-  throw new Error(`Unhandled form submission for ${body['form-name']}`)
+  throw new Error(`Unhandled form submission for ${form_name}`)
 };
 
 async function processJoinOrRenewalForm(action, body) {
