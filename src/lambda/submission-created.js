@@ -160,7 +160,7 @@ async function processCheckout(body) {
   });
 
   total = `Total: ${toCurrency(total)}`;
-  const totalLine = ' '.repeat(lineCharLength - total.length);
+  const totalLine = ' '.repeat(lineCharLength - total.length) + total;
 
   // Create email body
   let message = `Hello!
@@ -175,7 +175,8 @@ Last name:        ${body.lastName}
 Email:            ${body.email}
 
 ORDER
-=====`;
+=====
+`;
 
   items.forEach(({line}) => {
     message += line + "\n"
