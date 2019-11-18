@@ -17,49 +17,39 @@ const lineCharLength = 72;
 exports.handler = async (event, context, callback) => {
   const body = JSON.parse(event.body).payload;
 
-  try {
-    // Join form
-    if (body['form-name'] === 'join') {
-      await processJoinOrRenewalForm('join', body);
-      callback(null, {
-        statusCode: 200
-      });
-      return
-    }
-
-    // Renewal form
-    if (body['form-name'] === 'renew') {
-      await processJoinOrRenewalForm('renew', body);
-      callback(null, {
-        statusCode: 200
-      });
-      return
-    }
-
-    // Contact form
-    if (body['form-name'] === 'contact') {
-      await processContactForm(body);
-      callback(null, {
-        statusCode: 200
-      });
-      return
-    }
-
-    // Cart checkout
-    if (body['form-name'] === 'checkout') {
-      await processCheckout(body);
-      callback(null, {
-        statusCode: 200
-      });
-      return
-    }
-
-    callback(null, {
-      statusCode: 404
-    })
-  } catch (err) {
-    callback(err)
+  // Join form
+  if (body['form-name'] === 'join') {
+    await processJoinOrRenewalForm('join', body);
+    return {
+      statusCode: 200
+    };
   }
+
+  // Renewal form
+  if (body['form-name'] === 'renew') {
+    await processJoinOrRenewalForm('renew', body);
+    return {
+      statusCode: 200
+    };
+  }
+
+  // Contact form
+  if (body['form-name'] === 'contact') {
+    await processContactForm(body);
+    return {
+      statusCode: 200
+    };
+  }
+
+  // Cart checkout
+  if (body['form-name'] === 'checkout') {
+    await processCheckout(body);
+    return {
+      statusCode: 200
+    };
+  }
+
+  throw new Error(`Unhandled form submission for ${body['form-name']}`)
 };
 
 async function processJoinOrRenewalForm(action, body) {
