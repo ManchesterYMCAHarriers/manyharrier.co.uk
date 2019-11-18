@@ -8,12 +8,12 @@ const mailgun = require("mailgun-js")({
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const mailchimpApiKey = process.env.MAILCHIMP_API_KEY;
 const mailchimpSubscribeURL = process.env.MAILCHIMP_SUBSCRIBE_URL;
-const fetch = require('node-fetch');
+const fetch = require('node-fetch').default;
 const crypto = require('crypto');
 const lineCharLength = 72;
 
-exports.handler = async (event, context, callback) => {
-  const {form_name, data} = JSON.parse(event.body).payload
+exports.handler = async ({body}) => {
+  const {form_name, data} = JSON.parse(body).payload
 
   // Join form
   if (form_name === 'join') {
@@ -73,9 +73,9 @@ Address:          ${body.addressLine1}
                   ${body.addressLine2}
                   ${body.addressLine3}
                   ${body.addressLine4}
-                  ${body.locality}
-                  ${body.town}
-                  ${body.county}
+                  ${body.addressLocality}
+                  ${body.addressTown}
+                  ${body.addressCounty}
                   ${body.postcode}
                 
 Telephone:        ${body.telephone !== "" ? body.telephone : "Not provided"}
