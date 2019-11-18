@@ -411,8 +411,7 @@ export const championshipQuery = graphql`
     }
     stripeSku(
       active: { eq: true }
-      attributes: { name: { eq: $stripeSkuName } }
-      product: { name: { eq: "Championship" } }
+      attributes: { name: { eq: $stripeSkuName }, category: { eq: "Championship" } }
     ) {
       attributes {
         name

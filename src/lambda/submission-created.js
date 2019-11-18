@@ -137,8 +137,8 @@ async function processCheckout(body) {
   const items = [];
 
   for (let item of body.items) {
+    item = JSON.parse(item);
     const stripeSku = await getStripeSku(item.sku);
-    const item = JSON.parse(item);
     item.price = stripeSku.price;
     total += item.price * item.quantity;
     const line = `${item.quantity} x ${item.description} @ ${toCurrency(item.price)}`;

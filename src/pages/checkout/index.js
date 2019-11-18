@@ -148,7 +148,7 @@ export default class CheckoutIndex extends React.Component {
         }
         // ...or proceed to checkout
         else if (this.state.stage === this.state.stages) {
-          data['form-name'] = ev.target.getAttribute('name')
+          data['form-name'] = ev.target.getAttribute('name');
           this.setState(
             {
               data: data,

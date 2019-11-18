@@ -587,8 +587,7 @@ export const eventQuery = graphql`
     }
     stripeSku(
       active: { eq: true }
-      attributes: { name: { eq: $stripeSkuName } }
-      product: { name: { eq: "Event" } }
+      attributes: { name: { eq: $stripeSkuName }, category: { in: ["Race", "Social"] } }
     ) {
       attributes {
         name
