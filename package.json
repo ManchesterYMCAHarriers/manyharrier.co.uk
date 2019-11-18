@@ -27,8 +27,7 @@
     "mailgun-js": "^0.22.0",
     "moment": "latest",
     "netlify-cms-app": "^2.9.6",
-    "netlify-cms-media-library-cloudinary": "^1.3.2",
-    "netlify-cms-media-library-uploadcare": "^0.5.2",
+    "node-fetch": "^2.6.0",
     "node-sass": "^4.11.0",
     "parcel-bundler": "^1.12.4",
     "prop-types": "^15.6.0",
@@ -49,17 +48,20 @@
   "main": "n/a",
   "scripts": {
     "clean": "gatsby clean",
-    "start": "npm run develop",
-    "build": "npm run clean && gatsby build",
-    "develop": "npm run clean && gatsby develop",
+    "build": "gatsby build && netlify-lambda build src/lambda",
+    "build:app": "gatsby build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js,stripe/**/*.js}\"",
     "populate-stripe": "node ./stripe/index.js",
+    "start": "run-p start:**",
+    "start:app": "npm run develop",
+    "start:lambda": "netlify-lambda serve src/lambda",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "axios": "^0.19.0",
     "gatsby-plugin-postcss": "^2.1.13",
-    "node-fetch": "^2.6.0",
+    "netlify-lambda": "^1.6.3",
     "prettier": "^1.15.3",
     "tailwindcss": "^1.1.3"
   }
