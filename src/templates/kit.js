@@ -161,7 +161,7 @@ export class KitPageTemplate extends React.Component {
       stripeSkus,
     } = this.props
 
-    if (this.state.storageAvailable) {
+    if (!this.state.storageAvailable) {
       return (
         <StandardContentContainer>
           {heroImage ? <Hero fluidImage={heroImage} title={productName} /> :
