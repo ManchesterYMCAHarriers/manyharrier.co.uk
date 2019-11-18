@@ -136,6 +136,8 @@ async function processCheckout(body) {
 
   const items = [];
 
+  console.log("Raw body", body)
+
   const submittedItems = JSON.parse(body.items);
 
   console.log("Submitted items", submittedItems)
