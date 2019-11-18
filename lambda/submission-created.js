@@ -1,4 +1,4 @@
-import Currency from "../src/components/Currency";
+const Currency = require("../src/components/Currency");
 
 const joinFormRecipients = process.env.JOIN_FORM_RECIPIENTS;
 const contactFormRecipients = process.env.CONTACT_FORM_RECIPIENTS;
@@ -108,6 +108,10 @@ MEMBERSHIP INFO
 Claim:            ${membership.attributes.claim}
 First claim club: ${membership.attributes.claim === "First" ? "Manchester YMCA Harriers" : body.firstClaimClub}
 Valid until:      ${membership.attributes.valid_to}
+
+Y CLUB MEMBERSHIP
+=================
+Y Club member:    ${body.yClubMembership}
 
 DECLARATIONS
 ============
