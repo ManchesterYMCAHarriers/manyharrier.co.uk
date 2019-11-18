@@ -17,7 +17,8 @@ const lineCharLength = 72;
 exports.handler = async (event, context, callback) => {
   const body = JSON.parse(event.body)
 
-  console.log("body", body)
+  console.log("body", body.payload)
+  console.log("form_name", body.form_name)
   console.log("context", context)
 
   // Join form
