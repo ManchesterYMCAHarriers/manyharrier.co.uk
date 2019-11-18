@@ -1,0 +1,17 @@
+name: Build nightly at 1930
+on:
+  schedule:
+    - cron: '35 20 * * * *'
+
+jobs:
+  Ubuntu:
+    name: Rebuild
+    runs-on: ubuntu-latest
+    env:
+      REBUILD_WEBHOOK_URL: ${{ secrets.REBUILD_WEBHOOK_URL }}
+    steps:
+      - name: POST to webhook
+        run: curl -X POST -d {} $REBUILD_WEBHOOK_URL
+
+
+
