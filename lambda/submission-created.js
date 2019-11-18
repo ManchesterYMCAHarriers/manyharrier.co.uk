@@ -14,7 +14,7 @@ const fetch = require('node-fetch');
 const crypto = require('crypto');
 const lineCharLength = 72;
 
-module.exports.handler = async (event, context, callback) => {
+exports.handler = async (event, context, callback) => {
   const body = JSON.parse(event.body);
 
   try {
