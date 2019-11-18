@@ -1,5 +1,3 @@
-const Currency = require("../components/Currency");
-
 const joinFormRecipients = process.env.JOIN_FORM_RECIPIENTS;
 const contactFormRecipients = process.env.CONTACT_FORM_RECIPIENTS;
 const checkoutRecipients = process.env.CHECKOUT_RECIPIENTS;
@@ -109,7 +107,7 @@ Accepted:         Yes
 
 PAYMENT
 =======
-Amount due:       ${Currency(membership.price)}
+Amount due:       ${toCurrency(membership.price)}
 Payment method:   ${body.paymentMethod}
 
 Thanks!
@@ -143,8 +141,8 @@ async function processCheckout(body) {
     const item = JSON.parse(item);
     item.price = stripeSku.price;
     total += item.price * item.quantity;
-    const line = `${item.quantity} x ${item.description} @ ${Currency(item.price)}`;
-    const subtotal = `${Currency(item.quantity * item.price)}`;
+    const line = `${item.quantity} x ${item.description} @ ${toCurrency(item.price)}`;
+    const subtotal = `${toCurrency(item.quantity * item.price)}`;
     const spaces = lineCharLength - (line.length + subtotal.length);
     items.push({
       sortKey: item.description,
@@ -156,7 +154,7 @@ async function processCheckout(body) {
     return a.sortKey < b.sortKey ? -1 : 1
   });
 
-  total = `Total: ${Currency(total)}`;
+  total = `Total: ${toCurrency(total)}`;
   const totalLine = ' '.repeat(lineCharLength - total.length);
 
   // Create email body
@@ -289,4 +287,8 @@ async function unsubscribeFromMailingList(email) {
   if (!unsubscribe.ok) {
     throw new Error(`cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}`)
   }
+}
+
+function toCurrency(val) {
+  return '£' + (parseInt(val, 10) / 100).toFixed(2)
 }
