@@ -21,21 +21,29 @@ export class KitPageTemplate extends React.Component {
 
     const storageAvailable = StorageAvailable('sessionStorage')
 
-    const stripeSkus = this.props.stripeSkus
+    let items
+    let itemsInCart
 
-    const items = stripeSkus.reduce((acc, {products}) => {
-      products.forEach(product => {
-        acc[product.id] = product
-      })
-      return acc
-    }, {})
+    if (storageAvailable) {
+      const stripeSkus = this.props.stripeSkus
 
-    const cart = GetCart()
+      items = stripeSkus.reduce((acc, {products}) => {
+        products.forEach(product => {
+          acc[product.id] = product
+        })
+        return acc
+      }, {})
 
-    const itemsInCart = cart.items.reduce((acc, {id, quantity}) => {
-      acc[id] = quantity
-      return acc
-    }, {})
+      const cart = GetCart()
+
+      itemsInCart = cart.items.reduce((acc, {id, quantity}) => {
+        acc[id] = quantity
+        return acc
+      }, {})
+    } else {
+      items = {}
+      itemsInCart = {}
+    }
 
     this.state = {
       items: items,
@@ -152,6 +160,22 @@ export class KitPageTemplate extends React.Component {
       heroImage,
       stripeSkus,
     } = this.props
+
+    if (this.state.storageAvailable) {
+      return (
+        <StandardContentContainer>
+          {heroImage ? <Hero fluidImage={heroImage} title={productName} /> :
+            <h1 className="heading-1">{productName}</h1>}
+          <Panels>
+            <PanelFullWidth>
+              <div className="content panel black-bottom">
+                <p>Sorry - our shopping cart is not supported on your device.</p>
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        </StandardContentContainer>
+      )
+    }
 
     return (
       <StandardContentContainer>

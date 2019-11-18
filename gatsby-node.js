@@ -35,7 +35,7 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       },
-      allStripeSku(filter: {active: {eq: true}}) {
+      allStripeSku(filter: {active: {eq: true}, attributes: {category: {eq: "Kit"}}}) {
         edges {
           node {
             attributes {

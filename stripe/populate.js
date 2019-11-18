@@ -7,7 +7,7 @@ const Bottleneck = require('bottleneck');
 
 async function populate() {
   const limiter = new Bottleneck({
-    minTime: 40,
+    minTime: 50,
   });
 
   try {
