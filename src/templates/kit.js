@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {graphql, Link} from 'gatsby'
+import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
 import Hero from "../components/Hero";
@@ -274,6 +274,7 @@ KitPageTemplate.propTypes = {
     gender: PropTypes.string.isRequired,
     products: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
+      sku: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       size: PropTypes.string.isRequired,
@@ -300,6 +301,7 @@ const Kit = ({data, pageContext}) => {
         products: [
           {
             id: node.id,
+            sku: node.id,
             price: node.price,
             name: node.attributes.name,
             size: node.attributes.size,
@@ -311,6 +313,7 @@ const Kit = ({data, pageContext}) => {
     } else {
       acc[genderItemsIndex].products.push({
         id: node.id,
+        sku: node.id,
         price: node.price,
         name: node.attributes.name,
         size: node.attributes.size,

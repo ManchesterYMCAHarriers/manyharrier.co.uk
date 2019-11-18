@@ -138,6 +138,8 @@ async function processCheckout(body) {
 
   const submittedItems = JSON.parse(body.items);
 
+  console.log("Submitted items", submittedItems)
+
   for (let item of submittedItems) {
     const stripeSku = await getStripeSku(item.sku);
     item.price = stripeSku.price;
@@ -204,9 +206,9 @@ async function sendMessageWithMailgun(to, from, subject, body) {
   return mailgun.messages().send(data)
 }
 
-async function getStripeSku(sku) {
+async function getStripeSku(id) {
   return new Promise((resolve, reject) => {
-    stripe.skus.retrieve(sku, (err, sku) => {
+    stripe.skus.retrieve(id, (err, sku) => {
       if (err) {
         reject(err);
         return
