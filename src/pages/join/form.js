@@ -214,7 +214,7 @@ export default class Form extends React.Component {
 
         if (error) {
           this.updateValidationIssues({
-            inputId: 'postcode',
+            id: 'postcode',
             message: 'Enter a valid UK postcode',
           })
           return
