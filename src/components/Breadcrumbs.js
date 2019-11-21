@@ -1,9 +1,9 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {Link} from 'gatsby'
+import { Link } from 'gatsby'
 import * as Moment from 'moment'
 
-const Breadcrumbs = ({path}) => {
+const Breadcrumbs = ({ path }) => {
   if (path === '/') {
     return null
   }
@@ -23,7 +23,7 @@ const Breadcrumbs = ({path}) => {
     },
     {
       path: '/checkout',
-      title: 'Checkout'
+      title: 'Checkout',
     },
     {
       path: '/events',
@@ -78,7 +78,7 @@ const Breadcrumbs = ({path}) => {
       })
     } else {
       crumbs.push(
-        firstParents.find(({path}) => path === firstParentMatches[1])
+        firstParents.find(({ path }) => path === firstParentMatches[1])
       )
     }
   }
@@ -90,15 +90,15 @@ const Breadcrumbs = ({path}) => {
   return (
     <div className="bg-black-manyharrier text-white-manyharrier w-full">
       <nav className="max-w-6xl mx-auto px-4 py-2 text-sm">
-        {crumbs.map(({path, title}, i) => (
+        {crumbs.map(({ path, title }, i) => (
           <span className="breadcrumb" key={`breadcrumb-${i}`}>
-          <Link
-            className="pb-1 border-b border-white-manyharrier hover:border-red-manyharrier focus:border-red-manyharrier"
-            to={path}
-          >
-            {title}
-          </Link>
-        </span>
+            <Link
+              className="pb-1 border-b border-white-manyharrier hover:border-red-manyharrier focus:border-red-manyharrier"
+              to={path}
+            >
+              {title}
+            </Link>
+          </span>
         ))}
       </nav>
     </div>

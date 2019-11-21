@@ -2,35 +2,35 @@ import React from 'react'
 
 import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import {graphql, Link} from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import * as Moment from 'moment'
-import Hero from "../../components/Hero";
-import {Panel, PanelFullWidth, Panels} from "../../components/Panels";
-import {Card, CardCTA} from "../../components/Card";
-import {CallToActionText} from "../../components/CallToAction";
+import Hero from '../../components/Hero'
+import { Panel, PanelFullWidth, Panels } from '../../components/Panels'
+import { Card, CardCTA } from '../../components/Card'
+import { CallToActionText } from '../../components/CallToAction'
 
-const ChampionshipsIndex = ({data}) => {
-  const stripeSkus = data.allStripeSku.edges.map(({node}) => {
+const ChampionshipsIndex = ({ data }) => {
+  const stripeSkus = data.allStripeSku.edges.map(({ node }) => {
     const {
-      attributes: {name},
+      attributes: { name },
     } = node
 
     return name
   })
 
   const championships = data.allMarkdownRemark.edges.reduce(
-    (acc, {node}) => {
+    (acc, { node }) => {
       const {
-        fields: {slug},
+        fields: { slug },
       } = node
       const {
-        frontmatter: {championshipKey, championshipEvents},
+        frontmatter: { championshipKey, championshipEvents },
       } = node
 
       const now = Moment.utc()
       let previous = 0
       let future = 0
-      championshipEvents.forEach(({frontmatter: {startsAt}}) =>
+      championshipEvents.forEach(({ frontmatter: { startsAt } }) =>
         Moment(startsAt, 'YYYY-MM-DD HH:mm')
           .utc()
           .isBefore(now)
@@ -69,14 +69,14 @@ const ChampionshipsIndex = ({data}) => {
     }
   )
 
-  const {current, future, previous} = championships
+  const { current, future, previous } = championships
 
   const heroImage = data.file.childImageSharp.fluid
 
   return (
     <Layout path={'/championships'}>
       <StandardContentContainer>
-        <Hero title={"Championships"} fluidImage={heroImage} />
+        <Hero title={'Championships'} fluidImage={heroImage} />
         {current.length > 0 && (
           <Panels>
             <PanelFullWidth>
@@ -97,7 +97,7 @@ const ChampionshipsIndex = ({data}) => {
                       to={slug}
                       key={`current-${i}`}
                       title={championshipKey}
-                      callToAction={<CallToActionText title={"More info"} />}
+                      callToAction={<CallToActionText title={'More info'} />}
                       borderColorClassName={`border-gray-400`}
                       borderColorHoverClassName={`border-red-manyharrier`}
                     >
@@ -119,18 +119,16 @@ const ChampionshipsIndex = ({data}) => {
             <PanelFullWidth>
               <div className="panel black-bottom">
                 <h2 className="heading-2">Coming up</h2>
-                {future.map(({slug, championshipKey, enterNow}, i) => (
+                {future.map(({ slug, championshipKey, enterNow }, i) => (
                   <CardCTA
                     to={slug}
                     key={`current-${i}`}
                     title={championshipKey}
-                    callToAction={<CallToActionText title={"More info"} />}
+                    callToAction={<CallToActionText title={'More info'} />}
                     borderColorClassName={`border-gray-400`}
                     borderColorHoverClassName={`border-red-manyharrier`}
                   >
-                    {enterNow && (
-                      <p className="font-semibold">Enter now!</p>
-                    )}
+                    {enterNow && <p className="font-semibold">Enter now!</p>}
                   </CardCTA>
                 ))}
               </div>
@@ -139,8 +137,10 @@ const ChampionshipsIndex = ({data}) => {
         )}
         <Panels>
           <Panel>
-            <Card borderColorClassName={`border-black-manyharrier`}
-                  title={"Cross country championship"}>
+            <Card
+              borderColorClassName={`border-black-manyharrier`}
+              title={'Cross country championship'}
+            >
               <div className="content">
                 <p>
                   Our cross country championship takes place each winter,
@@ -148,40 +148,39 @@ const ChampionshipsIndex = ({data}) => {
                 </p>
                 <p>
                   The championship normally consists of nine races; five from
-                  the
-                  Manchester Area Cross Country League and four from the South
-                  East Lancs Cross Country League.
+                  the Manchester Area Cross Country League and four from the
+                  South East Lancs Cross Country League.
                 </p>
                 <p>
                   Participants need to complete any five of the nine races in
-                  order
-                  to qualify for the championship.
+                  order to qualify for the championship.
                 </p>
               </div>
             </Card>
           </Panel>
           <Panel>
-            <Card borderColorClassName={`border-red-manyharrier`}
-                  title={"Summer championship"}>
+            <Card
+              borderColorClassName={`border-red-manyharrier`}
+              title={'Summer championship'}
+            >
               <div className="content">
                 <p>
                   Our summer championship starts in May and finishes in October.
                 </p>
                 <p>
                   The championship consists of nine races; three road, three
-                  trail
-                  and three fell, with a short, medium and long distance race
-                  from
-                  each terrain.
+                  trail and three fell, with a short, medium and long distance
+                  race from each terrain.
                 </p>
                 <p>
                   Participants need to complete any five of the nine races in
-                  order
-                  to qualify for the championship. Those who qualify for the
-                  Summer championship stand a better chance of being awarded our
-                  club's <Link to={"/about/london-marathon-place"}>London
-                  Marathon
-                  place</Link>.
+                  order to qualify for the championship. Those who qualify for
+                  the Summer championship stand a better chance of being awarded
+                  our club's{' '}
+                  <Link to={'/about/london-marathon-place'}>
+                    London Marathon place
+                  </Link>
+                  .
                 </p>
               </div>
             </Card>
@@ -192,12 +191,12 @@ const ChampionshipsIndex = ({data}) => {
             <PanelFullWidth>
               <div className="panel red-bottom">
                 <h2 className="heading-2">Past results</h2>
-                {previous.map(({slug, championshipKey}, i) => (
+                {previous.map(({ slug, championshipKey }, i) => (
                   <CardCTA
                     to={slug}
                     key={`current-${i}`}
                     title={championshipKey}
-                    callToAction={<CallToActionText title={"More info"} />}
+                    callToAction={<CallToActionText title={'More info'} />}
                     borderColorClassName={`border-gray-400`}
                     borderColorHoverClassName={`border-red-manyharrier`}
                   />
@@ -252,7 +251,7 @@ export const championshipsQuery = graphql`
         }
       }
     }
-    file(relativePath: {eq: "championships-hero.jpg"}) {
+    file(relativePath: { eq: "championships-hero.jpg" }) {
       childImageSharp {
         ...HeroImage
       }

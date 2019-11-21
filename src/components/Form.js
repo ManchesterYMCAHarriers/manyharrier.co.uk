@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {CallToActionBackButton, CallToActionButton} from "./CallToAction";
+import { CallToActionBackButton, CallToActionButton } from './CallToAction'
 
 class Form extends React.Component {
   componentDidMount() {

@@ -1,9 +1,9 @@
-import React from "react";
-import * as PropTypes from "prop-types";
-import Img from "gatsby-image";
-import {Link} from "gatsby";
+import React from 'react'
+import * as PropTypes from 'prop-types'
+import Img from 'gatsby-image'
+import { Link } from 'gatsby'
 
-const CardContent = ({image, imageAlt, title, children, callToAction}) => (
+const CardContent = ({ image, imageAlt, title, children, callToAction }) => (
   <>
     {image && (
       <div className="w-full flex-shrink-0 flex-grow-0">
@@ -16,9 +16,7 @@ const CardContent = ({image, imageAlt, title, children, callToAction}) => (
           <h3 className="heading-3">{title}</h3>
         </div>
       )}
-      <div className="w-full flex-shrink flex-grow">
-        {children}
-      </div>
+      <div className="w-full flex-shrink flex-grow">{children}</div>
       {callToAction && (
         <div className="w-full flex-shrink-0 flex-grow-0 text-right pb-2">
           {callToAction}
@@ -28,17 +26,31 @@ const CardContent = ({image, imageAlt, title, children, callToAction}) => (
   </>
 )
 
-export const CardCTA = ({to, image, imageAlt, title, children, callToAction, borderColorClassName, borderColorHoverClassName}) => {
+export const CardCTA = ({
+  to,
+  image,
+  imageAlt,
+  title,
+  children,
+  callToAction,
+  borderColorClassName,
+  borderColorHoverClassName,
+}) => {
   borderColorClassName = borderColorClassName || `border-transparent`
-  borderColorHoverClassName = borderColorHoverClassName || `border-red-manyharrier`
+  borderColorHoverClassName =
+    borderColorHoverClassName || `border-red-manyharrier`
 
   const className = `w-full bg-white-manyharrier flex flex-col justify-between border-b-4 opacity-75 ${borderColorClassName} hover:${borderColorHoverClassName} hover:opacity-100 hover:bg-gray-200 focus:${borderColorHoverClassName} focus:opacity-100 focus:bg-gray-200`
 
-  if (to.charAt(0) === "/") {
+  if (to.charAt(0) === '/') {
     return (
       <Link to={to} className={className}>
-        <CardContent image={image} imageAlt={imageAlt} title={title}
-                     callToAction={callToAction}>
+        <CardContent
+          image={image}
+          imageAlt={imageAlt}
+          title={title}
+          callToAction={callToAction}
+        >
           {children}
         </CardContent>
       </Link>
@@ -47,7 +59,12 @@ export const CardCTA = ({to, image, imageAlt, title, children, callToAction, bor
 
   return (
     <a href={to} className={className}>
-      <CardContent image={image} imageAlt={imageAlt} title={title} callToAction={callToAction}>
+      <CardContent
+        image={image}
+        imageAlt={imageAlt}
+        title={title}
+        callToAction={callToAction}
+      >
         {children}
       </CardContent>
     </a>
@@ -65,12 +82,26 @@ CardCTA.propTypes = {
   borderColorHoverClassName: PropTypes.string,
 }
 
-export const Card = ({image, imageAlt, title, children, callToAction, borderColorClassName}) => {
+export const Card = ({
+  image,
+  imageAlt,
+  title,
+  children,
+  callToAction,
+  borderColorClassName,
+}) => {
   borderColorClassName = borderColorClassName || `border-transparent`
 
   return (
-    <div className={`w-full bg-white-manyharrier flex flex-col justify-between border-b-4 ${borderColorClassName}`}>
-      <CardContent image={image} imageAlt={imageAlt} title={title} callToAction={callToAction}>
+    <div
+      className={`w-full bg-white-manyharrier flex flex-col justify-between border-b-4 ${borderColorClassName}`}
+    >
+      <CardContent
+        image={image}
+        imageAlt={imageAlt}
+        title={title}
+        callToAction={callToAction}
+      >
         {children}
       </CardContent>
     </div>

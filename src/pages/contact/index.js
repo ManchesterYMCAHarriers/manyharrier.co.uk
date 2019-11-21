@@ -3,12 +3,12 @@ import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
 import Form from '../../components/Form'
 import FieldsetMulti from '../../components/FieldsetMulti'
-import {graphql, StaticQuery} from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import FieldsetText from '../../components/FieldsetText'
 import Encode from '../../components/Encode'
-import FieldsetSelect from "../../components/FieldsetSelect";
-import FieldsetTextarea from "../../components/FieldsetTextarea";
-import {PanelFullWidth, Panels} from "../../components/Panels";
+import FieldsetSelect from '../../components/FieldsetSelect'
+import FieldsetTextarea from '../../components/FieldsetTextarea'
+import { PanelFullWidth, Panels } from '../../components/Panels'
 
 export default class CheckoutIndex extends React.Component {
   constructor(props) {
@@ -87,7 +87,8 @@ export default class CheckoutIndex extends React.Component {
           this.setState(
             {
               stage: nextStage,
-              submitValue: this.state.stage === this.state.stages - 1 ? "Submit" : "Next",
+              submitValue:
+                this.state.stage === this.state.stages - 1 ? 'Submit' : 'Next',
             },
             () => {
               // Scroll to page title
@@ -113,7 +114,7 @@ export default class CheckoutIndex extends React.Component {
             },
             async () => {
               try {
-                const {status, ok} = await this.submitFormData()
+                const { status, ok } = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -126,7 +127,7 @@ export default class CheckoutIndex extends React.Component {
                 this.setState({
                   externalError: false,
                   stage: nextStage,
-                  submitValue: "Back to Home",
+                  submitValue: 'Back to Home',
                 })
               } catch (err) {
                 console.error('Submit form data network error', err)
@@ -137,23 +138,22 @@ export default class CheckoutIndex extends React.Component {
             }
           )
         } else {
-          window.location.href = "/"
+          window.location.href = '/'
         }
       }
     )
   }
 
-  updateValidationIssues = ({id, message}) => {
+  updateValidationIssues = ({ id, message }) => {
     const validationIssues = this.state.validationIssues
     // Update/remove existing validation issues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
         if (!message) {
           validationIssues.splice(i, 1)
-          this.setState(
-            {
-              validationIssues: validationIssues,
-            })
+          this.setState({
+            validationIssues: validationIssues,
+          })
           return
         }
 
@@ -190,7 +190,7 @@ export default class CheckoutIndex extends React.Component {
             }
           }
         `}
-        render={({site: data}) => {
+        render={({ site: data }) => {
           return (
             <Layout path={'/contact'}>
               <StandardContentContainer>
@@ -205,24 +205,29 @@ export default class CheckoutIndex extends React.Component {
                         formId={'contact'}
                         method={'POST'}
                         netlify={true}
-                        showBack={this.state.stage > 1 && this.state.stage <= this.state.stages}
+                        showBack={
+                          this.state.stage > 1 &&
+                          this.state.stage <= this.state.stages
+                        }
                         showSubmit={true}
                         submitHandler={this.submitHandler}
                         submitValue={this.state.submitValue}
                       >
                         {/* Name */}
-                        <FieldsetText inputId={"name"} inputType={"text"}
-                                      label={"What is your name?"}
-                                      setFormValidationState={this.updateValidationIssues}
-                                      validationIssues={this.state.validationIssues}
-                                      visible={this.state.stage === 1}
-                                      validationMessages={{
-                                        valueMissing: "Enter your name"
-                                      }}
-                                      inputAttributes={{
-                                        autoComplete: "name",
-                                        required: true,
-                                      }}
+                        <FieldsetText
+                          inputId={'name'}
+                          inputType={'text'}
+                          label={'What is your name?'}
+                          setFormValidationState={this.updateValidationIssues}
+                          validationIssues={this.state.validationIssues}
+                          visible={this.state.stage === 1}
+                          validationMessages={{
+                            valueMissing: 'Enter your name',
+                          }}
+                          inputAttributes={{
+                            autoComplete: 'name',
+                            required: true,
+                          }}
                         />
 
                         {/* Email */}
@@ -258,33 +263,30 @@ export default class CheckoutIndex extends React.Component {
                             valueMissing: 'Select an option',
                           }}
                         >
-                          <option value="">
-                            (Select a reason)
-                          </option>
+                          <option value="">(Select a reason)</option>
                           <option value="I'm interested in joining the club">
                             I'm interested in joining the club
                           </option>
                           <option value="I am promoting an event">
                             I am promoting an event
                           </option>
-                          <option value="Something else">
-                            Something else
-                          </option>
+                          <option value="Something else">Something else</option>
                         </FieldsetSelect>
 
                         {/* Message */}
-                        <FieldsetTextarea inputId={"message"}
-                                          label={"What is your message"}
-                                          setFormValidationState={this.updateValidationIssues}
-                                          validationIssues={this.state.validationIssues}
-                                          visible={this.state.stage === 4}
-                                          rows={5}
-                                          validationMessages={{
-                                            valueMissing: "Enter your message"
-                                          }}
-                                          inputAttributes={{
-                                            required: true,
-                                          }}
+                        <FieldsetTextarea
+                          inputId={'message'}
+                          label={'What is your message'}
+                          setFormValidationState={this.updateValidationIssues}
+                          validationIssues={this.state.validationIssues}
+                          visible={this.state.stage === 4}
+                          rows={5}
+                          validationMessages={{
+                            valueMissing: 'Enter your message',
+                          }}
+                          inputAttributes={{
+                            required: true,
+                          }}
                         />
 
                         {/* Review */}
@@ -298,9 +300,7 @@ export default class CheckoutIndex extends React.Component {
                         >
                           <dl>
                             <dt>Name</dt>
-                            <dd>
-                              {this.state.data.name}
-                            </dd>
+                            <dd>{this.state.data.name}</dd>
                             <dt>Email address</dt>
                             <dd>{this.state.data.email}</dd>
                             <dt>Reason for getting in touch</dt>

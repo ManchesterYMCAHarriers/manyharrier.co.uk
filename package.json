@@ -48,7 +48,7 @@
   "main": "n/a",
   "scripts": {
     "clean": "gatsby clean",
-    "build": "gatsby build && netlify-lambda build src/lambda && npm run populate-stripe",
+    "build": "npm run populate-stripe && gatsby build && netlify-lambda build src/lambda",
     "build:app": "gatsby build",
     "build:lambda": "netlify-lambda build src/lambda",
     "develop": "gatsby develop",

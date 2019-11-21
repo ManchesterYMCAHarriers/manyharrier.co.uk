@@ -6,13 +6,14 @@ const Moment = require('moment')
 const remark = require('remark')
 const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
-const {kebabCase} = require('lodash')
+const { kebabCase } = require('lodash')
 
-const toMarkdown = input => remark()
-  .use(recommended)
-  .use(remarkHtml)
-  .processSync(input)
-  .toString()
+const toMarkdown = input =>
+  remark()
+    .use(recommended)
+    .use(remarkHtml)
+    .processSync(input)
+    .toString()
 
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
@@ -34,8 +35,13 @@ exports.createPages = async ({ actions, graphql }) => {
             }
           }
         }
-      },
-      allStripeSku(filter: {active: {eq: true}, attributes: {category: {eq: "Kit"}}}) {
+      }
+      allStripeSku(
+        filter: {
+          active: { eq: true }
+          attributes: { category: { eq: "Kit" } }
+        }
+      ) {
         edges {
           node {
             attributes {
@@ -55,16 +61,16 @@ exports.createPages = async ({ actions, graphql }) => {
     return Promise.reject(result.errors)
   }
 
-  let blogPosts = 0;
+  let blogPosts = 0
 
   pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    const {templateKey} = node.frontmatter
+    const { templateKey } = node.frontmatter
     if (templateKey === 'info') {
       return
     }
 
     if (templateKey === 'blog-post') {
-      blogPosts++;
+      blogPosts++
     }
 
     const id = node.id
@@ -72,7 +78,8 @@ exports.createPages = async ({ actions, graphql }) => {
     const recent = Moment.utc()
       .subtract(2, 'months')
       .format('YYYY-MM-DD HH:mm')
-    const stripeSkuName = node.frontmatter.championshipKey || node.frontmatter.eventKey
+    const stripeSkuName =
+      node.frontmatter.championshipKey || node.frontmatter.eventKey
     const context = {
       id,
       now,
@@ -138,10 +145,15 @@ exports.createPages = async ({ actions, graphql }) => {
   // Kit pages
   const kit = []
 
-  pages.data.allStripeSku.edges.forEach(({node}) => {
-    if (kit.findIndex(({productName, clearance}) => {
-      return productName === node.product.name && clearance === node.attributes.clearance;
-    }) === -1) {
+  pages.data.allStripeSku.edges.forEach(({ node }) => {
+    if (
+      kit.findIndex(({ productName, clearance }) => {
+        return (
+          productName === node.product.name &&
+          clearance === node.attributes.clearance
+        )
+      }) === -1
+    ) {
       kit.push({
         clearance: node.attributes.clearance,
         productName: node.product.name,
@@ -149,16 +161,19 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   })
 
-  kit.forEach(({productName, clearance}) => {
-    const slug = clearance === "true" ? `/kit/clearance/${kebabCase(productName)}` : `/kit/${kebabCase(productName)}`
+  kit.forEach(({ productName, clearance }) => {
+    const slug =
+      clearance === 'true'
+        ? `/kit/clearance/${kebabCase(productName)}`
+        : `/kit/${kebabCase(productName)}`
     createPage({
       path: slug,
       component: path.resolve(`src/templates/kit.js`),
       context: {
         slug,
         productName,
-        clearance
-      }
+        clearance,
+      },
     })
   })
 }
@@ -272,7 +287,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         name: `howToJoinUs`,
         node,
-        value: toMarkdown(howToJoinUs)
+        value: toMarkdown(howToJoinUs),
       })
 
       createNodeField({
@@ -284,9 +299,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         name: `membershipBenefits`,
         node,
-        value: membershipBenefits.map(({body}) => {
+        value: membershipBenefits.map(({ body }) => {
           return toMarkdown(body)
-        })
+        }),
       })
     }
 
@@ -302,9 +317,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         name: `memberDescriptions`,
         node,
-        value: members.map(({description}) => {
+        value: members.map(({ description }) => {
           return toMarkdown(description)
-        })
+        }),
       })
     }
 

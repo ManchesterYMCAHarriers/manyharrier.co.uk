@@ -1,32 +1,38 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {Helmet} from 'react-helmet'
-import Hero from "../components/Hero";
-import {PanelFullWidth, Panels} from "../components/Panels";
+import { Helmet } from 'react-helmet'
+import Hero from '../components/Hero'
+import { PanelFullWidth, Panels } from '../components/Panels'
 
 export const StandardPageTemplate = ({
-                                       siteTitle,
-                                       title,
+  siteTitle,
+  title,
   subtitle,
-                                       description,
-                                       heroImage,
-                                       content,
-                                     }) => {
+  description,
+  heroImage,
+  content,
+}) => {
   return (
     <StandardContentContainer>
       <Helmet>
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      {heroImage ? <Hero title={title} subtitle={subtitle} fluidImage={heroImage} /> : <h1 className="heading-1">{title}</h1>}
+      {heroImage ? (
+        <Hero title={title} subtitle={subtitle} fluidImage={heroImage} />
+      ) : (
+        <h1 className="heading-1">{title}</h1>
+      )}
       <Panels>
         <PanelFullWidth>
           <div className="panel bottom-black">
-            <div className="content"
-                 dangerouslySetInnerHTML={{__html: content}} />
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           </div>
         </PanelFullWidth>
       </Panels>
@@ -42,10 +48,12 @@ StandardPageTemplate.propTypes = {
   content: PropTypes.string,
 }
 
-const StandardPage = ({data}) => {
-  const {siteMetadata: title, markdownRemark: page} = data
+const StandardPage = ({ data }) => {
+  const { siteMetadata: title, markdownRemark: page } = data
 
-  const heroImage = page.frontmatter.heroImage ? page.frontmatter.heroImage.childImageSharp.fluid : null
+  const heroImage = page.frontmatter.heroImage
+    ? page.frontmatter.heroImage.childImageSharp.fluid
+    : null
 
   return (
     <Layout path={page.fields.slug}>

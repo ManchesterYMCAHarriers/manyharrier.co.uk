@@ -73,7 +73,14 @@ module.exports = {
               withWebP: {
                 quality: 50,
               },
-              wrapperStyle: fluidResult => `border: 0.5em solid #272725; padding: 0.25em; ${fluidResult.aspectRatio < 1 ? `height: 70vh; width: ` + Math.round((fluidResult.aspectRatio * 70 * 100) / 100) + `vh` : ``};`,
+              wrapperStyle: fluidResult =>
+                `border: 0.5em solid #272725; padding: 0.25em; ${
+                  fluidResult.aspectRatio < 1
+                    ? `height: 70vh; width: ` +
+                      Math.round((fluidResult.aspectRatio * 70 * 100) / 100) +
+                      `vh`
+                    : ``
+                };`,
             },
           },
           {

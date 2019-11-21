@@ -8,9 +8,9 @@ import Moment from 'moment'
 import Address from '../components/Address'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {PanelFullWidth, Panels} from "../components/Panels";
-import {CallToActionLink} from "../components/CallToAction";
-import Hero from "../components/Hero";
+import { PanelFullWidth, Panels } from '../components/Panels'
+import { CallToActionLink } from '../components/CallToAction'
+import Hero from '../components/Hero'
 
 export const VenueTemplate = ({
   googleMapsApiKey,
@@ -23,7 +23,11 @@ export const VenueTemplate = ({
 }) => {
   return (
     <StandardContentContainer>
-      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+      {heroImage ? (
+        <Hero fluidImage={heroImage} title={title} />
+      ) : (
+        <h1 className="heading-1">{title}</h1>
+      )}
       <Panels>
         <PanelFullWidth>
           <div className="panel red-bottom">
@@ -43,19 +47,27 @@ export const VenueTemplate = ({
         </PanelFullWidth>
         <PanelFullWidth>
           <div className="panel black-bottom">
-            <CallToActionLink to={GoogleMapsDirectionsLink({location})} title={`Navigate to ${title} with Google Maps`} />
+            <CallToActionLink
+              to={GoogleMapsDirectionsLink({ location })}
+              title={`Navigate to ${title} with Google Maps`}
+            />
           </div>
         </PanelFullWidth>
         {information && (
           <PanelFullWidth>
-            <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: information}} />
+            <div
+              className="content panel black-bottom"
+              dangerouslySetInnerHTML={{ __html: information }}
+            />
           </PanelFullWidth>
         )}
         <PanelFullWidth>
           <div className="panel black-bottom">
             <h2 className="heading-2 mb-4">Upcoming events at {title}</h2>
             {events.length === 0 && (
-              <p className="paragraph">There are no upcoming events at {title}.</p>
+              <p className="paragraph">
+                There are no upcoming events at {title}.
+              </p>
             )}
             {events.map(({ startsAt, slug, title }, i) => (
               <EventBox
@@ -128,7 +140,9 @@ const Venue = ({ data, pageContext }) => {
       return a.startsAt.isBefore(b.startsAt) ? -1 : 1
     })
 
-  const heroImage = venue.frontmatter.heroImage ? venue.frontmatter.heroImage.childImageSharp.fluid : null
+  const heroImage = venue.frontmatter.heroImage
+    ? venue.frontmatter.heroImage.childImageSharp.fluid
+    : null
 
   return (
     <Layout path={venue.fields.slug}>

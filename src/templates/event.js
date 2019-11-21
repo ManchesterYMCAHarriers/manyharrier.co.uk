@@ -1,32 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {get} from 'lodash'
+import { get } from 'lodash'
 import Address from '../components/Address'
-import GoogleMapsLocationAndRoute
-  from '../components/GoogleMapsLocationAndRoute'
+import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import EventTags from '../components/EventTags'
-import Hero from "../components/Hero";
-import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import Hero from '../components/Hero'
+import { Panel, PanelFullWidth, Panels } from '../components/Panels'
 import {
   CallToActionBackButton,
-  CallToActionLink, CallToActionText
-} from "../components/CallToAction";
-import Form from "../components/Form";
-import FieldsetMulti from "../components/FieldsetMulti";
-import Currency from "../components/Currency";
-import InputText from "../components/InputText";
+  CallToActionLink,
+  CallToActionText,
+} from '../components/CallToAction'
+import Form from '../components/Form'
+import FieldsetMulti from '../components/FieldsetMulti'
+import Currency from '../components/Currency'
+import InputText from '../components/InputText'
 import {
   AddToCart,
   GetSkuItems,
   RemoveFromCart,
-  StorageAvailable
-} from "../components/Cart";
-import {CardCTA} from "../components/Card";
+  StorageAvailable,
+} from '../components/Cart'
+import { CardCTA } from '../components/Card'
 
 export class EventTemplate extends React.Component {
   constructor(props) {
@@ -34,7 +34,8 @@ export class EventTemplate extends React.Component {
 
     const storageAvailable = StorageAvailable('sessionStorage')
 
-    const items = storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
+    const items =
+      storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
 
     this.state = {
       backValue: 'Add another',
@@ -155,7 +156,7 @@ export class EventTemplate extends React.Component {
     )
   }
 
-  updateValidationIssues = ({id, message}) => {
+  updateValidationIssues = ({ id, message }) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -209,8 +210,11 @@ export class EventTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        {heroImage ? <Hero fluidImage={heroImage} title={title} /> :
-          <h1 className="heading-1">{title}</h1>}
+        {heroImage ? (
+          <Hero fluidImage={heroImage} title={title} />
+        ) : (
+          <h1 className="heading-1">{title}</h1>
+        )}
         <Panels>
           <Panel>
             <div className="panel red-bottom">
@@ -228,7 +232,7 @@ export class EventTemplate extends React.Component {
         </Panels>
         <Panels>
           <PanelFullWidth>
-            <div className="w-full relative" style={{height: '70vh'}}>
+            <div className="w-full relative" style={{ height: '70vh' }}>
               {track && (
                 <GoogleMapsLocationAndRoute
                   googleMapsApiKey={googleMapsApiKey}
@@ -252,15 +256,20 @@ export class EventTemplate extends React.Component {
         <Panels>
           <PanelFullWidth>
             <div className="panel black-bottom">
-              <CallToActionLink to={venue.slug} title={`${venue.title} facilities, directions, parking and travel information`} />
+              <CallToActionLink
+                to={venue.slug}
+                title={`${venue.title} facilities, directions, parking and travel information`}
+              />
             </div>
           </PanelFullWidth>
         </Panels>
         {eventInfo && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: eventInfo}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: eventInfo }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
@@ -271,7 +280,7 @@ export class EventTemplate extends React.Component {
                 <h2 className="heading-2 mb-4">Event entry</h2>
                 <Form
                   backHandler={this.backHandler}
-                  backHighlighted={"+"}
+                  backHighlighted={'+'}
                   backValue={this.state.backValue}
                   formId={'enter-event'}
                   method={'POST'}
@@ -290,7 +299,7 @@ export class EventTemplate extends React.Component {
                       inputId={'firstName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{required: true}}
+                      inputAttributes={{ required: true }}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your first name',
@@ -301,7 +310,7 @@ export class EventTemplate extends React.Component {
                       inputId={'lastName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{required: true}}
+                      inputAttributes={{ required: true }}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your last name',
@@ -319,8 +328,7 @@ export class EventTemplate extends React.Component {
                         key={'subcheckout-' + item.id}
                         className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
                       >
-                        <p
-                          className="w-full md:w-auto mb-2 flex-shrink flex-grow">
+                        <p className="w-full md:w-auto mb-2 flex-shrink flex-grow">
                           {item.description}
                         </p>
                         <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
@@ -331,8 +339,8 @@ export class EventTemplate extends React.Component {
                             type="button"
                             id={item.id}
                             onClick={this.removeItem}
-                            title={"Remove"}
-                            highlighted={"-"}
+                            title={'Remove'}
+                            highlighted={'-'}
                           />
                         </div>
                       </div>
@@ -346,32 +354,40 @@ export class EventTemplate extends React.Component {
         {session && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: session}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: session }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
         {infoForTerrain && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: infoForTerrain}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: infoForTerrain }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
         {infoForEventType && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: infoForEventType}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: infoForEventType }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
         {infoForCompetition && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: infoForCompetition}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: infoForCompetition }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
@@ -380,7 +396,14 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div className="panel black-bottom">
                 <h2 className="heading-2 mb-4">Championships</h2>
-                <CardCTA to={championship.slug} borderColorClassName={`border-gray-400`} borderColorHoverClassName={`border-red-manyharrier`} callToAction={<CallToActionText title={"Championship details"} />}>
+                <CardCTA
+                  to={championship.slug}
+                  borderColorClassName={`border-gray-400`}
+                  borderColorHoverClassName={`border-red-manyharrier`}
+                  callToAction={
+                    <CallToActionText title={'Championship details'} />
+                  }
+                >
                   <div className="content">
                     <p>This race is on the {championship.title}.</p>
                   </div>
@@ -392,8 +415,10 @@ export class EventTemplate extends React.Component {
         {infoForChampionship && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel red-bottom"
-                   dangerouslySetInnerHTML={{__html: infoForChampionship}} />
+              <div
+                className="content panel red-bottom"
+                dangerouslySetInnerHTML={{ __html: infoForChampionship }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
@@ -450,11 +475,11 @@ EventTemplate.propTypes = {
   }).isRequired,
 }
 
-const Event = ({data, pageContext}) => {
+const Event = ({ data, pageContext }) => {
   const {
     site: {
       siteMetadata: {
-        apiKey: {googleMaps: googleMapsApiKey},
+        apiKey: { googleMaps: googleMapsApiKey },
       },
     },
     stripeSku,
@@ -541,7 +566,9 @@ const Event = ({data, pageContext}) => {
     }
   }
 
-  const heroImage = event.frontmatter.heroImage ? event.frontmatter.heroImage.childImageSharp.fluid : null
+  const heroImage = event.frontmatter.heroImage
+    ? event.frontmatter.heroImage.childImageSharp.fluid
+    : null
 
   return (
     <Layout path={event.fields.slug}>
@@ -587,7 +614,10 @@ export const eventQuery = graphql`
     }
     stripeSku(
       active: { eq: true }
-      attributes: { name: { eq: $stripeSkuName }, category: { in: ["Race", "Social"] } }
+      attributes: {
+        name: { eq: $stripeSkuName }
+        category: { in: ["Race", "Social"] }
+      }
     ) {
       attributes {
         name

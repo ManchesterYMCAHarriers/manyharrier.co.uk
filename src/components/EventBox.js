@@ -1,8 +1,8 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import Moment from 'moment'
-import {CardCTA} from "./Card";
-import {CallToActionText} from "./CallToAction";
+import { CardCTA } from './Card'
+import { CallToActionText } from './CallToAction'
 
 class EventBox extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class EventBox extends React.Component {
         borderColorClassName={`border-gray-400`}
         borderColorHoverClassName={`border-red-manyharrier`}
         title={title}
-        callToAction={<CallToActionText title={"Full details"} />}
+        callToAction={<CallToActionText title={'Full details'} />}
       >
         <p className="text-sm font-medium">
           {startsAt.format('dddd Do MMMM YYYY')}, {startsAt.format('h:mma')}

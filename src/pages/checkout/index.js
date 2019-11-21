@@ -14,11 +14,11 @@ import Currency from '../../components/Currency'
 import InputText from '../../components/InputText'
 import Form from '../../components/Form'
 import FieldsetMulti from '../../components/FieldsetMulti'
-import {graphql, StaticQuery} from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import FieldsetText from '../../components/FieldsetText'
 import FieldsetRadios from '../../components/FieldsetRadios'
 import Encode from '../../components/Encode'
-import {PanelFullWidth, Panels} from "../../components/Panels";
+import { PanelFullWidth, Panels } from '../../components/Panels'
 
 export default class CheckoutIndex extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ export default class CheckoutIndex extends React.Component {
 
   redirectToCheckout = async () => {
     return await this.stripe.redirectToCheckout({
-      items: this.state.cart.items.map(({sku, quantity}) => {
+      items: this.state.cart.items.map(({ sku, quantity }) => {
         return {
           sku,
           quantity,
@@ -122,9 +122,10 @@ export default class CheckoutIndex extends React.Component {
       },
       () => {
         if (this.state.stage < this.state.stages) {
-          let submitValue = "Next"
+          let submitValue = 'Next'
           if (this.state.stage === this.state.stages - 1) {
-            submitValue = data.paymentMethod === 'Stripe' ? 'Make payment' : 'Place order'
+            submitValue =
+              data.paymentMethod === 'Stripe' ? 'Make payment' : 'Place order'
           }
           this.setState(
             {
@@ -148,14 +149,14 @@ export default class CheckoutIndex extends React.Component {
         }
         // ...or proceed to checkout
         else if (this.state.stage === this.state.stages) {
-          data['form-name'] = ev.target.getAttribute('name');
+          data['form-name'] = ev.target.getAttribute('name')
           this.setState(
             {
               data: data,
             },
             async () => {
               try {
-                const {status, ok} = await this.submitFormData()
+                const { status, ok } = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -177,7 +178,7 @@ export default class CheckoutIndex extends React.Component {
                   {
                     externalError: false,
                     stage: nextStage,
-                    submitValue: "Back to Home",
+                    submitValue: 'Back to Home',
                   },
                   () => {
                     EmptyCart()
@@ -189,7 +190,7 @@ export default class CheckoutIndex extends React.Component {
 
               EmptyCart()
 
-              const {error} = await this.redirectToCheckout()
+              const { error } = await this.redirectToCheckout()
               if (error) {
                 this.setState({
                   externalError: true,
@@ -199,7 +200,7 @@ export default class CheckoutIndex extends React.Component {
             }
           )
         } else {
-          window.location.href = "/"
+          window.location.href = '/'
         }
       }
     )
@@ -240,7 +241,7 @@ export default class CheckoutIndex extends React.Component {
     }
   }
 
-  updateValidationIssues = ({id, message}) => {
+  updateValidationIssues = ({ id, message }) => {
     const validationIssues = this.state.validationIssues
     // Update/remove existing validation issues
     for (let i = 0; i < validationIssues.length; i++) {
@@ -341,13 +342,18 @@ export default class CheckoutIndex extends React.Component {
                     <>
                       <p>Sorry - checkout is not available on your device.</p>
                       {/* Hidden form inputs needed for Netlify forms */}
-                      <form id={'checkout'}
-                            name={'checkout'}
-                            data-netlify={true}
-                            action={'/checkout'}
-                            method={'POST'}>
-                        <input type="hidden" name="form-name"
-                               value="checkout" />
+                      <form
+                        id={'checkout'}
+                        name={'checkout'}
+                        data-netlify={true}
+                        action={'/checkout'}
+                        method={'POST'}
+                      >
+                        <input
+                          type="hidden"
+                          name="form-name"
+                          value="checkout"
+                        />
                         <input type="hidden" name="items" value="" />
                         <input type="hidden" name="firstName" value="" />
                         <input type="hidden" name="lastName" value="" />
@@ -378,8 +384,8 @@ export default class CheckoutIndex extends React.Component {
             }
           }
         `}
-        render={({site: data}) => {
-          const {baseUrl} = data.siteMetadata
+        render={({ site: data }) => {
+          const { baseUrl } = data.siteMetadata
           const stripePublishableKey = data.siteMetadata.apiKey.stripe
 
           if (!this.state.stripePublishableKey) {
@@ -412,7 +418,10 @@ export default class CheckoutIndex extends React.Component {
                           formId={'checkout'}
                           method={'POST'}
                           netlify={true}
-                          showBack={this.state.stage > 1 && this.state.stage <= this.state.stages}
+                          showBack={
+                            this.state.stage > 1 &&
+                            this.state.stage <= this.state.stages
+                          }
                           showSubmit={true}
                           submitHandler={this.submitHandler}
                           submitValue={this.state.submitValue}
@@ -436,15 +445,13 @@ export default class CheckoutIndex extends React.Component {
                                 key={'checkout-item-' + item.id}
                                 className="w-full flex flex-wrap sm:flex-no-wrap pb-4 border-b border-gray-500 items-center"
                               >
-                                <div
-                                  className="flex-shrink md:flex-shrink flex-grow sm:pr-2 font-semibold">
+                                <div className="flex-shrink md:flex-shrink flex-grow sm:pr-2 font-semibold">
                                   {item.description} @{' '}
                                   <span className="text-red-600">
-                              {Currency(item.price)}
-                            </span>
+                                    {Currency(item.price)}
+                                  </span>
                                 </div>
-                                <div
-                                  className="w-auto flex-shrink-0 flex-grow-0 flex justify-end items-center mt-4 sm:px-2">
+                                <div className="w-auto flex-shrink-0 flex-grow-0 flex justify-end items-center mt-4 sm:px-2">
                                   <button
                                     type="button"
                                     id={item.id + '-decrement'}
@@ -471,7 +478,9 @@ export default class CheckoutIndex extends React.Component {
                                       }}
                                       validationMessages={{
                                         rangeOverflow:
-                                          'Enter ' + item.maxQuantity + ' or less',
+                                          'Enter ' +
+                                          item.maxQuantity +
+                                          ' or less',
                                         rangeUnderflow: 'Enter 0 or more',
                                         stepMismatch: 'Enter a round number',
                                         typeMismatch: 'Enter a number',
@@ -488,7 +497,9 @@ export default class CheckoutIndex extends React.Component {
                                     }`}
                                     id={item.id + '-increment'}
                                     onClick={this.incrementItem}
-                                    disabled={item.quantity === item.maxQuantity}
+                                    disabled={
+                                      item.quantity === item.maxQuantity
+                                    }
                                   >
                                     +
                                   </button>
@@ -516,7 +527,9 @@ export default class CheckoutIndex extends React.Component {
                               validationMessages={{
                                 valueMissing: 'Enter your first name',
                               }}
-                              setFormValidationState={this.updateValidationIssues}
+                              setFormValidationState={
+                                this.updateValidationIssues
+                              }
                             />
                             <InputText
                               defaultValue={this.state.cart.lastName}
@@ -531,7 +544,9 @@ export default class CheckoutIndex extends React.Component {
                               validationMessages={{
                                 valueMissing: 'Enter your last name',
                               }}
-                              setFormValidationState={this.updateValidationIssues}
+                              setFormValidationState={
+                                this.updateValidationIssues
+                              }
                             />
                           </FieldsetMulti>
 
@@ -559,7 +574,9 @@ export default class CheckoutIndex extends React.Component {
                             inputAttributes={{
                               required: true,
                             }}
-                            legend={'How would you like to pay for your membership?'}
+                            legend={
+                              'How would you like to pay for your membership?'
+                            }
                             hint={
                               'It saves the club some money if you pay by bank transfer'
                             }
@@ -599,38 +616,34 @@ export default class CheckoutIndex extends React.Component {
                                 key={'item-confirm-' + item.id}
                                 className="flex items-baseline justify-between py-2 my-2 border-b border-gray-500"
                               >
-                                <div
-                                  className="w-1/12 flex-shrink-0 flex-grow-0 pr-2">
+                                <div className="w-1/12 flex-shrink-0 flex-grow-0 pr-2">
                                   {item.quantity}
                                 </div>
-                                <div
-                                  className="w-1/12 flex-shrink-0 flex-grow-0 px-2">
+                                <div className="w-1/12 flex-shrink-0 flex-grow-0 px-2">
                                   ×
                                 </div>
-                                <div
-                                  className="w-auto flex-shrink flex-grow px-2">
+                                <div className="w-auto flex-shrink flex-grow px-2">
                                   {item.description} @{' '}
                                   <span className="text-red-600 font-bold">
-                              {Currency(item.price)}
-                            </span>
+                                    {Currency(item.price)}
+                                  </span>
                                 </div>
-                                <div
-                                  className="w-1/5 text-right font-bold flex-shrink-0 flex-grow-0 pl-2">
+                                <div className="w-1/5 text-right font-bold flex-shrink-0 flex-grow-0 pl-2">
                                   {Currency(item.quantity * item.price)}
                                 </div>
                               </div>
                             ))}
                             <div className="flex justify-end items-center py-2">
                               <div className="text-right pr-2">Total</div>
-                              <div
-                                className="w-1/5 flex-shrink-0 flex-grow-0 text-right font-bold pl-2">
+                              <div className="w-1/5 flex-shrink-0 flex-grow-0 text-right font-bold pl-2">
                                 {Currency(this.state.cart.total)}
                               </div>
                             </div>
                             <dl>
                               <dt>Name</dt>
                               <dd>
-                                {this.state.data.firstName} {this.state.data.lastName}
+                                {this.state.data.firstName}{' '}
+                                {this.state.data.lastName}
                               </dd>
                               <dt>Email address</dt>
                               <dd>{this.state.data.email}</dd>
@@ -638,16 +651,15 @@ export default class CheckoutIndex extends React.Component {
                               <dd>
                                 You have opted to pay by
                                 {this.state.data.paymentMethod === 'BACS' &&
-                                ' bank transfer'}
+                                  ' bank transfer'}
                                 {this.state.data.paymentMethod === 'Stripe' &&
-                                ' credit card, debit card or Apple Pay'}
+                                  ' credit card, debit card or Apple Pay'}
                               </dd>
                             </dl>
                             {this.state.data.paymentMethod === 'Stripe' && (
                               <p>
                                 When you click the "Make payment" button, you
-                                will be
-                                transferred to our Stripe checkout page.
+                                will be transferred to our Stripe checkout page.
                               </p>
                             )}
                           </FieldsetMulti>
@@ -666,8 +678,8 @@ export default class CheckoutIndex extends React.Component {
                             </p>
                             <p>
                               Now, please send payment of{' '}
-                              <strong>{Currency(this.state.cart.total)}</strong> from
-                              your bank account to our account.
+                              <strong>{Currency(this.state.cart.total)}</strong>{' '}
+                              from your bank account to our account.
                             </p>
                             <p>Our account details are:</p>
                             <dl>
@@ -680,7 +692,7 @@ export default class CheckoutIndex extends React.Component {
                               Use{' '}
                               <strong>
                                 {this.state.data.firstName &&
-                                this.state.data.firstName.charAt(0)}{' '}
+                                  this.state.data.firstName.charAt(0)}{' '}
                                 {this.state.data.lastName}
                               </strong>{' '}
                               as your payment reference.

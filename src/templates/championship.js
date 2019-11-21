@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import EventBox from '../components/EventBox'
@@ -15,9 +15,9 @@ import {
   StorageAvailable,
 } from '../components/Cart'
 import Currency from '../components/Currency'
-import Hero from "../components/Hero";
-import {PanelFullWidth, Panels} from "../components/Panels";
-import {CallToActionBackButton} from "../components/CallToAction";
+import Hero from '../components/Hero'
+import { PanelFullWidth, Panels } from '../components/Panels'
+import { CallToActionBackButton } from '../components/CallToAction'
 
 export class ChampionshipTemplate extends React.Component {
   constructor(props) {
@@ -25,7 +25,8 @@ export class ChampionshipTemplate extends React.Component {
 
     const storageAvailable = StorageAvailable('sessionStorage')
 
-    const items = storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
+    const items =
+      storageAvailable && props.stripeSku ? GetSkuItems(props.stripeSku.id) : []
 
     this.state = {
       backValue: 'Add another',
@@ -146,7 +147,7 @@ export class ChampionshipTemplate extends React.Component {
     )
   }
 
-  updateValidationIssues = ({id, message}) => {
+  updateValidationIssues = ({ id, message }) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -189,7 +190,7 @@ export class ChampionshipTemplate extends React.Component {
     } = this.props
     let hint = ``
     const now = Moment.utc()
-    const remainingEvents = events.filter(({startsAt}) =>
+    const remainingEvents = events.filter(({ startsAt }) =>
       startsAt.isAfter(now)
     )
     if (stripeSku) {
@@ -208,12 +209,15 @@ export class ChampionshipTemplate extends React.Component {
 
     return (
       <StandardContentContainer>
-        {heroImage ? <Hero fluidImage={heroImage} title={title} /> :
-          <h1 className="heading-1">{title}</h1>}
+        {heroImage ? (
+          <Hero fluidImage={heroImage} title={title} />
+        ) : (
+          <h1 className="heading-1">{title}</h1>
+        )}
         <Panels>
           <PanelFullWidth>
             <div className="content panel red-bottom">
-              <div dangerouslySetInnerHTML={{__html: intro}} />
+              <div dangerouslySetInnerHTML={{ __html: intro }} />
             </div>
           </PanelFullWidth>
         </Panels>
@@ -221,7 +225,7 @@ export class ChampionshipTemplate extends React.Component {
           <PanelFullWidth>
             <div className="panel black-bottom">
               <h2 className="heading-2 mb-4">Fixtures</h2>
-              {events.map(({startsAt, slug, title, venue}, i) => (
+              {events.map(({ startsAt, slug, title, venue }, i) => (
                 <EventBox
                   key={'championship-event-' + i}
                   startsAt={startsAt}
@@ -240,7 +244,7 @@ export class ChampionshipTemplate extends React.Component {
                 <h2 className="heading-2 mb-4">Championship entry</h2>
                 <Form
                   backHandler={this.backHandler}
-                  backHighlighted={"+"}
+                  backHighlighted={'+'}
                   backValue={this.state.backValue}
                   formId={'enter-championship'}
                   method={'POST'}
@@ -260,7 +264,7 @@ export class ChampionshipTemplate extends React.Component {
                       inputId={'firstName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{required: true}}
+                      inputAttributes={{ required: true }}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your first name',
@@ -271,7 +275,7 @@ export class ChampionshipTemplate extends React.Component {
                       inputId={'lastName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{required: true}}
+                      inputAttributes={{ required: true }}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your last name',
@@ -289,8 +293,7 @@ export class ChampionshipTemplate extends React.Component {
                         key={'subcheckout-' + item.id}
                         className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
                       >
-                        <p
-                          className="w-full md:w-auto mb-2 flex-shrink flex-grow">
+                        <p className="w-full md:w-auto mb-2 flex-shrink flex-grow">
                           {item.description}
                         </p>
                         <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
@@ -301,8 +304,8 @@ export class ChampionshipTemplate extends React.Component {
                             type="button"
                             id={item.id}
                             onClick={this.removeItem}
-                            title={"Remove"}
-                            highlighted={"-"}
+                            title={'Remove'}
+                            highlighted={'-'}
                           />
                         </div>
                       </div>
@@ -316,8 +319,10 @@ export class ChampionshipTemplate extends React.Component {
         {information && (
           <Panels>
             <PanelFullWidth>
-              <div className="content panel black-bottom"
-                   dangerouslySetInnerHTML={{__html: information}} />
+              <div
+                className="content panel black-bottom"
+                dangerouslySetInnerHTML={{ __html: information }}
+              />
             </PanelFullWidth>
           </Panels>
         )}
@@ -346,10 +351,10 @@ ChampionshipTemplate.propTypes = {
   intro: PropTypes.node.isRequired,
 }
 
-const Championship = ({data}) => {
+const Championship = ({ data }) => {
   const {
     site: {
-      siteMetadata: {title},
+      siteMetadata: { title },
     },
     stripeSku,
     markdownRemark: championship,
@@ -380,7 +385,9 @@ const Championship = ({data}) => {
     }
   }
 
-  const heroImage = championship.frontmatter.heroImage ? championship.frontmatter.heroImage.childImageSharp.fluid : null
+  const heroImage = championship.frontmatter.heroImage
+    ? championship.frontmatter.heroImage.childImageSharp.fluid
+    : null
 
   return (
     <Layout path={championship.fields.slug}>
@@ -411,7 +418,10 @@ export const championshipQuery = graphql`
     }
     stripeSku(
       active: { eq: true }
-      attributes: { name: { eq: $stripeSkuName }, category: { eq: "Championship" } }
+      attributes: {
+        name: { eq: $stripeSkuName }
+        category: { eq: "Championship" }
+      }
     ) {
       attributes {
         name

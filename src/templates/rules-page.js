@@ -4,9 +4,9 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { Helmet } from 'react-helmet'
-import {PanelFullWidth, Panels} from "../components/Panels";
-import {CallToActionLink} from "../components/CallToAction";
-import Hero from "../components/Hero";
+import { PanelFullWidth, Panels } from '../components/Panels'
+import { CallToActionLink } from '../components/CallToAction'
+import Hero from '../components/Hero'
 
 export const RulesPageTemplate = ({
   siteTitle,
@@ -22,17 +22,27 @@ export const RulesPageTemplate = ({
         <title>{title + ` | ` + siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Helmet>
-      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+      {heroImage ? (
+        <Hero fluidImage={heroImage} title={title} />
+      ) : (
+        <h1 className="heading-1">{title}</h1>
+      )}
       <Panels>
         <PanelFullWidth>
           <div className="panel red-bottom">
-            <div className="content" dangerouslySetInnerHTML={{__html: content}} />
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           </div>
         </PanelFullWidth>
         <PanelFullWidth>
           <div className="panel black-bottom">
             <h2 className="heading-2 mb-4">Resources</h2>
-            <CallToActionLink to={rulesDocument} title={"Current rules document"}/>
+            <CallToActionLink
+              to={rulesDocument}
+              title={'Current rules document'}
+            />
           </div>
         </PanelFullWidth>
       </Panels>

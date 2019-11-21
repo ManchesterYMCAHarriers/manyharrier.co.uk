@@ -2,35 +2,37 @@ import React from 'react'
 import * as PropTypes from 'prop-types'
 import Layout from '../components/Layout'
 import Moment from 'moment'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {Panel, PanelFullWidth, Panels} from "../components/Panels";
+import { Panel, PanelFullWidth, Panels } from '../components/Panels'
 import {
-  CallToActionBackLink, CallToActionLink,
-  CallToActionText
-} from "../components/CallToAction";
-import {CardCTA} from "../components/Card";
+  CallToActionBackLink,
+  CallToActionLink,
+  CallToActionText,
+} from '../components/CallToAction'
+import { CardCTA } from '../components/Card'
 
 export class BlogIndexTemplate extends React.Component {
   render() {
-    const {
-      posts,
-      previousIndexLink,
-      nextIndexLink,
-    } = this.props
+    const { posts, previousIndexLink, nextIndexLink } = this.props
 
     return (
       <StandardContentContainer>
         <h1 className="heading-1 mb-4">Blog</h1>
         <Panels>
-          {posts.map(({slug, publishedAt, title, excerpt, heroImage}) => (
+          {posts.map(({ slug, publishedAt, title, excerpt, heroImage }) => (
             <Panel key={`blog-index-${slug}`}>
-              <CardCTA title={title} image={heroImage} to={slug}
-                       callToAction={<CallToActionText title={"Read"} />}
-                       borderColorClassName={"border-gray-400"}
-                       borderColorHoverClassName={"border-red-manyharrier"}>
-                <p
-                  className="text-right text-sm text-gray-600 mb-4">{publishedAt}</p>
+              <CardCTA
+                title={title}
+                image={heroImage}
+                to={slug}
+                callToAction={<CallToActionText title={'Read'} />}
+                borderColorClassName={'border-gray-400'}
+                borderColorHoverClassName={'border-red-manyharrier'}
+              >
+                <p className="text-right text-sm text-gray-600 mb-4">
+                  {publishedAt}
+                </p>
                 <p className="mb-4 font-light">{excerpt}</p>
               </CardCTA>
             </Panel>
@@ -39,8 +41,16 @@ export class BlogIndexTemplate extends React.Component {
         <Panels>
           <PanelFullWidth>
             <div className="panel black-bottom flex justify-between">
-              {previousIndexLink ? <CallToActionBackLink title={"Newer"} to={previousIndexLink}/> : <span />}
-              {nextIndexLink ? <CallToActionLink title={"Older"} to={nextIndexLink}/> : <span />}
+              {previousIndexLink ? (
+                <CallToActionBackLink title={'Newer'} to={previousIndexLink} />
+              ) : (
+                <span />
+              )}
+              {nextIndexLink ? (
+                <CallToActionLink title={'Older'} to={nextIndexLink} />
+              ) : (
+                <span />
+              )}
             </div>
           </PanelFullWidth>
         </Panels>
@@ -63,17 +73,27 @@ BlogIndexTemplate.propTypes = {
   previousIndexLink: PropTypes.string,
 }
 
-const BlogIndex = ({data, pageContext}) => {
-  const previousIndexLink = pageContext.skip > 0 ? (pageContext.skip > 10 ? `/blog/${pageContext.skip / 10}` : `/blog`) : null
-  const nextIndexLink = pageContext.skip + 10 < pageContext.totalBlogPosts ? `/blog/${(pageContext.skip + 20) / 10}` : null
+const BlogIndex = ({ data, pageContext }) => {
+  const previousIndexLink =
+    pageContext.skip > 0
+      ? pageContext.skip > 10
+        ? `/blog/${pageContext.skip / 10}`
+        : `/blog`
+      : null
+  const nextIndexLink =
+    pageContext.skip + 10 < pageContext.totalBlogPosts
+      ? `/blog/${(pageContext.skip + 20) / 10}`
+      : null
 
-  const posts = data.allMarkdownRemark.edges.map(({node}) => {
+  const posts = data.allMarkdownRemark.edges.map(({ node }) => {
     return {
       slug: node.fields.slug,
       publishedAt: node.frontmatter.publishedAt,
       title: node.frontmatter.blogKey,
       excerpt: node.excerpt,
-      heroImage: node.frontmatter.heroImage ? node.frontmatter.heroImage.childImageSharp.fluid : null,
+      heroImage: node.frontmatter.heroImage
+        ? node.frontmatter.heroImage.childImageSharp.fluid
+        : null,
     }
   })
 
@@ -96,7 +116,12 @@ export default BlogIndex
 
 export const blogIndexQuery = graphql`
   query BlogIndexQuery($skip: Int!) {
-    allMarkdownRemark(limit: 10, sort: {fields: frontmatter___publishedAt, order: DESC}, filter: {frontmatter: {templateKey: {eq: "blog-post"}}}, skip: $skip) {
+    allMarkdownRemark(
+      limit: 10
+      sort: { fields: frontmatter___publishedAt, order: DESC }
+      filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+      skip: $skip
+    ) {
       edges {
         node {
           fields {

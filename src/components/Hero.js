@@ -1,8 +1,8 @@
-import React from "react"
-import * as PropTypes from "prop-types"
-import Img from "gatsby-image"
+import React from 'react'
+import * as PropTypes from 'prop-types'
+import Img from 'gatsby-image'
 
-const Hero = ({fluidImage, title, subtitle}) => (
+const Hero = ({ fluidImage, title, subtitle }) => (
   <div className="-ml-4 -mr-4 -mt-4">
     <div className="w-full relative">
       <Img fluid={fluidImage} />
@@ -19,7 +19,7 @@ const Hero = ({fluidImage, title, subtitle}) => (
 Hero.propTypes = {
   fluidImage: PropTypes.object,
   title: PropTypes.string,
-  subtitle: PropTypes.string
+  subtitle: PropTypes.string,
 }
 
 export default Hero

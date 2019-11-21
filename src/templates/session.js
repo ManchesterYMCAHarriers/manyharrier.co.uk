@@ -5,23 +5,24 @@ import Layout from '../components/Layout'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {PanelFullWidth, Panels} from "../components/Panels";
-import Hero from "../components/Hero";
+import { PanelFullWidth, Panels } from '../components/Panels'
+import Hero from '../components/Hero'
 
-export const SessionTemplate = ({
-  events,
-  title,
-  heroImage,
-  information,
-}) => {
+export const SessionTemplate = ({ events, title, heroImage, information }) => {
   return (
     <StandardContentContainer>
-      {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
+      {heroImage ? (
+        <Hero fluidImage={heroImage} title={title} />
+      ) : (
+        <h1 className="heading-1">{title}</h1>
+      )}
       <Panels>
         <PanelFullWidth>
           <div className="panel bottom-black">
-            <div className="content"
-                 dangerouslySetInnerHTML={{__html: information}} />
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: information }}
+            />
           </div>
         </PanelFullWidth>
       </Panels>
@@ -29,7 +30,9 @@ export const SessionTemplate = ({
         <div className="panel black-bottom">
           <h2 className="heading-2 mb-4">Upcoming events</h2>
           {events.length === 0 && (
-            <p className="paragraph">There are no upcoming events featuring this session.</p>
+            <p className="paragraph">
+              There are no upcoming events featuring this session.
+            </p>
           )}
           {events.map(({ startsAt, slug, title }, i) => (
             <EventBox

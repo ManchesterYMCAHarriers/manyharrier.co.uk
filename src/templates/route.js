@@ -6,8 +6,8 @@ import GoogleMapsRoute from '../components/GoogleMapsRoute'
 import Moment from 'moment'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import {PanelFullWidth, Panels} from "../components/Panels";
-import Hero from "../components/Hero";
+import { PanelFullWidth, Panels } from '../components/Panels'
+import Hero from '../components/Hero'
 
 export const RouteTemplate = ({
   events,
@@ -19,9 +19,13 @@ export const RouteTemplate = ({
 }) => {
   return (
     <StandardContentContainer>
-     {heroImage ? <Hero fluidImage={heroImage} title={title} /> : <h1 className="heading-1">{title}</h1>}
-     <Panels>
-       <PanelFullWidth>
+      {heroImage ? (
+        <Hero fluidImage={heroImage} title={title} />
+      ) : (
+        <h1 className="heading-1">{title}</h1>
+      )}
+      <Panels>
+        <PanelFullWidth>
           <div className="w-full relative" style={{ height: '70vh' }}>
             <GoogleMapsRoute
               googleMapsApiKey={googleMapsApiKey}
@@ -34,14 +38,19 @@ export const RouteTemplate = ({
         </PanelFullWidth>
         {information && (
           <PanelFullWidth>
-            <div className="content panel black-bottom" dangerouslySetInnerHTML={{__html: information}} />
+            <div
+              className="content panel black-bottom"
+              dangerouslySetInnerHTML={{ __html: information }}
+            />
           </PanelFullWidth>
         )}
         <PanelFullWidth>
           <div className="panel black-bottom">
             <h2 className="heading-2 mb-4">Upcoming events</h2>
             {events.length === 0 && (
-              <p className="paragraph">There are no upcoming events on the {title} route.</p>
+              <p className="paragraph">
+                There are no upcoming events on the {title} route.
+              </p>
             )}
             {events.map(({ startsAt, slug, title }, i) => (
               <EventBox
@@ -154,16 +163,18 @@ const Route = ({ data, pageContext }) => {
       return a.startsAt.isBefore(b.startsAt) ? -1 : 1
     })
 
-  const routeTrack = route.frontmatter.routeTrack ? JSON.parse(route.frontmatter.routeTrack).coordinates.map(
-    coords => {
-      return {
-        lat: coords[1],
-        lng: coords[0],
-      }
-    }
-  ) : []
+  const routeTrack = route.frontmatter.routeTrack
+    ? JSON.parse(route.frontmatter.routeTrack).coordinates.map(coords => {
+        return {
+          lat: coords[1],
+          lng: coords[0],
+        }
+      })
+    : []
 
-  const heroImage = route.frontmatter.heroImage ? route.frontmatter.heroImage.childImageSharp.fluid : null
+  const heroImage = route.frontmatter.heroImage
+    ? route.frontmatter.heroImage.childImageSharp.fluid
+    : null
 
   return (
     <Layout path={route.fields.slug}>

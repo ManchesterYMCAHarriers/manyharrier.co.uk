@@ -1,17 +1,33 @@
-import React from "react";
-import * as PropTypes from "prop-types";
-import {Link} from "gatsby";
+import React from 'react'
+import * as PropTypes from 'prop-types'
+import { Link } from 'gatsby'
 
-const CTAClassNames = "pb-2 border-b-2 leading-loose border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 focus:border-red-manyharrier focus:opacity-100"
+const CTAClassNames =
+  'pb-2 border-b-2 leading-loose border-gray-400 opacity-75 hover:border-red-manyharrier hover:opacity-100 focus:border-red-manyharrier focus:opacity-100'
 
-export const CallToActionButton = ({type, onClick, title, id, className, highlighted}) => {
-  highlighted = highlighted || `&rarr;`;
+export const CallToActionButton = ({
+  type,
+  onClick,
+  title,
+  id,
+  className,
+  highlighted,
+}) => {
+  highlighted = highlighted || `&rarr;`
   return (
-    <button type={type} id={id} onClick={onClick}
-            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+    <button
+      type={type}
+      id={id}
+      onClick={onClick}
+      className={CTAClassNames.split(' ')
+        .concat(className.split(' '))
+        .join(' ')}
+    >
       <span className="text-black-manyharrier">{title}</span>
-      <span className="text-red-manyharrier ml-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span
+        className="text-red-manyharrier ml-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
     </button>
   )
 }
@@ -25,17 +41,32 @@ CallToActionButton.propTypes = {
 }
 
 CallToActionButton.defaultProps = {
-  className: "",
-  type: "button"
+  className: '',
+  type: 'button',
 }
 
-export const CallToActionBackButton = ({type, onClick, title, id, className, highlighted}) => {
+export const CallToActionBackButton = ({
+  type,
+  onClick,
+  title,
+  id,
+  className,
+  highlighted,
+}) => {
   highlighted = highlighted || `&larr;`
   return (
-    <button type={type} onClick={onClick} id={id}
-            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-      <span className="text-red-manyharrier mr-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+    <button
+      type={type}
+      onClick={onClick}
+      id={id}
+      className={CTAClassNames.split(' ')
+        .concat(className.split(' '))
+        .join(' ')}
+    >
+      <span
+        className="text-red-manyharrier mr-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
       <span className="text-black-manyharrier">{title}</span>
     </button>
   )
@@ -50,30 +81,42 @@ CallToActionBackButton.propTypes = {
 }
 
 CallToActionBackButton.defaultProps = {
-  className: "",
-  type: "button",
+  className: '',
+  type: 'button',
 }
 
-export const CallToActionLink = ({to, title, className, highlighted}) => {
-  highlighted = highlighted || `&rarr;`;
+export const CallToActionLink = ({ to, title, className, highlighted }) => {
+  highlighted = highlighted || `&rarr;`
 
-  if (to.charAt(0) === "/") {
+  if (to.charAt(0) === '/') {
     return (
-      <Link to={to}
-            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+      <Link
+        to={to}
+        className={CTAClassNames.split(' ')
+          .concat(className.split(' '))
+          .join(' ')}
+      >
         <span className="text-black-manyharrier">{title}</span>
-        <span className="text-red-manyharrier ml-4"
-              dangerouslySetInnerHTML={{__html: highlighted}} />
+        <span
+          className="text-red-manyharrier ml-4"
+          dangerouslySetInnerHTML={{ __html: highlighted }}
+        />
       </Link>
     )
   }
 
   return (
-    <a href={to}
-       className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
+    <a
+      href={to}
+      className={CTAClassNames.split(' ')
+        .concat(className.split(' '))
+        .join(' ')}
+    >
       <span className="text-black-manyharrier">{title}</span>
-      <span className="text-red-manyharrier ml-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span
+        className="text-red-manyharrier ml-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
     </a>
   )
 }
@@ -85,28 +128,40 @@ CallToActionLink.propTypes = {
 }
 
 CallToActionLink.defaultProps = {
-  className: "",
+  className: '',
 }
 
-export const CallToActionBackLink = ({to, title, className, highlighted}) => {
+export const CallToActionBackLink = ({ to, title, className, highlighted }) => {
   highlighted = highlighted || `&larr;`
 
-  if (to.charAt(0) === "/") {
+  if (to.charAt(0) === '/') {
     return (
-      <Link to={to}
-            className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-        <span className="text-red-manyharrier mr-4"
-              dangerouslySetInnerHTML={{__html: highlighted}} />
+      <Link
+        to={to}
+        className={CTAClassNames.split(' ')
+          .concat(className.split(' '))
+          .join(' ')}
+      >
+        <span
+          className="text-red-manyharrier mr-4"
+          dangerouslySetInnerHTML={{ __html: highlighted }}
+        />
         <span className="text-black-manyharrier">{title}</span>
       </Link>
     )
   }
 
   return (
-    <a href={to}
-       className={CTAClassNames.split(" ").concat(className.split(" ")).join(" ")}>
-      <span className="text-red-manyharrier mr-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+    <a
+      href={to}
+      className={CTAClassNames.split(' ')
+        .concat(className.split(' '))
+        .join(' ')}
+    >
+      <span
+        className="text-red-manyharrier mr-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
       <span className="text-black-manyharrier">{title}</span>
     </a>
   )
@@ -119,36 +174,40 @@ CallToActionBackLink.propTypes = {
 }
 
 CallToActionBackLink.defaultProps = {
-  className: "",
+  className: '',
 }
 
-export const CallToActionText = ({title, className, highlighted}) => {
+export const CallToActionText = ({ title, className, highlighted }) => {
   highlighted = highlighted || `&rarr;`
   return (
     <div className={className}>
       <span className="text-black-manyharrier">{title}</span>
-      <span className="text-red-manyharrier ml-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span
+        className="text-red-manyharrier ml-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
     </div>
   )
 }
 
 CallToActionText.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 CallToActionText.defaultProps = {
-  className: "",
+  className: '',
 }
 
-export const CallToActionBackText = ({title, className, highlighted}) => {
+export const CallToActionBackText = ({ title, className, highlighted }) => {
   highlighted = highlighted || `&larr;`
 
   return (
     <div className={className}>
-      <span className="text-red-manyharrier mr-4"
-            dangerouslySetInnerHTML={{__html: highlighted}} />
+      <span
+        className="text-red-manyharrier mr-4"
+        dangerouslySetInnerHTML={{ __html: highlighted }}
+      />
       <span className="text-black-manyharrier">{title}</span>
     </div>
   )
@@ -156,9 +215,9 @@ export const CallToActionBackText = ({title, className, highlighted}) => {
 
 CallToActionBackText.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 CallToActionBackText.defaultProps = {
-  className: "",
+  className: '',
 }

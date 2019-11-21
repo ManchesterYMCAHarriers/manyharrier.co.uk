@@ -1,36 +1,36 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import EventBox from '../components/EventBox'
 import StandardContentContainer from '../components/StandardContentContainer'
-import Hero from "../components/Hero";
-import {Panel, PanelFullWidth, Panels} from "../components/Panels";
-import {Card, CardCTA} from "../components/Card";
-import {CallToActionLink, CallToActionText} from "../components/CallToAction";
+import Hero from '../components/Hero'
+import { Panel, PanelFullWidth, Panels } from '../components/Panels'
+import { Card, CardCTA } from '../components/Card'
+import { CallToActionLink, CallToActionText } from '../components/CallToAction'
 
 export const IndexPageTemplate = ({
-                                    title,
-                                    intro,
-                                    nextEvents,
-                                    nextEventsDefault,
-                                    eventsCalendarSlug,
-                                    heroImage,
-                                    firstPanelImage,
-                                    firstPanelTitle,
-                                    firstPanelBody,
-                                    firstPanelLink,
-                                    firstPanelCTA,
-                                    secondPanelImage,
-                                    secondPanelTitle,
-                                    secondPanelBody,
-                                    secondPanelLink,
-                                    secondPanelCTA,
-                                    activeChampionships,
-                                    recentChampionships,
-                                    eventEntryPromos,
-                                  }) => {
+  title,
+  intro,
+  nextEvents,
+  nextEventsDefault,
+  eventsCalendarSlug,
+  heroImage,
+  firstPanelImage,
+  firstPanelTitle,
+  firstPanelBody,
+  firstPanelLink,
+  firstPanelCTA,
+  secondPanelImage,
+  secondPanelTitle,
+  secondPanelBody,
+  secondPanelLink,
+  secondPanelCTA,
+  activeChampionships,
+  recentChampionships,
+  eventEntryPromos,
+}) => {
   return (
     <StandardContentContainer>
       <Hero title={title} fluidImage={heroImage} />
@@ -38,17 +38,20 @@ export const IndexPageTemplate = ({
         <PanelFullWidth>
           <div
             className="content panel black-bottom"
-            dangerouslySetInnerHTML={{__html: intro}} />
+            dangerouslySetInnerHTML={{ __html: intro }}
+          />
         </PanelFullWidth>
         <PanelFullWidth>
           <div className="panel red-bottom">
             <h2 className="heading-2">Coming up...</h2>
             {nextEvents.length === 0 && (
-              <div className="content"
-                   dangerouslySetInnerHTML={{__html: nextEventsDefault}} />
+              <div
+                className="content"
+                dangerouslySetInnerHTML={{ __html: nextEventsDefault }}
+              />
             )}
             <Panels className="mt-4">
-              {nextEvents.map(({title, startsAt, slug, venue}, i) => (
+              {nextEvents.map(({ title, startsAt, slug, venue }, i) => (
                 <Panel key={'next-event-' + i}>
                   <EventBox
                     title={title}
@@ -60,13 +63,16 @@ export const IndexPageTemplate = ({
               ))}
             </Panels>
             <div className="content mt-4">
-              <p>For a full list of what we've got coming up, check out our
-                events
-                calendar.</p>
+              <p>
+                For a full list of what we've got coming up, check out our
+                events calendar.
+              </p>
             </div>
             <div className="text-right mt-4">
-              <CallToActionLink to={eventsCalendarSlug}
-                                title={"Events calendar"} />
+              <CallToActionLink
+                to={eventsCalendarSlug}
+                title={'Events calendar'}
+              />
             </div>
           </div>
         </PanelFullWidth>
@@ -77,23 +83,29 @@ export const IndexPageTemplate = ({
             <div className="panel black-bottom">
               <h2 className="heading-2">Enter now...</h2>
               <Panels>
-                {eventEntryPromos.map(({title, slug, heroImage, venue, startsAt}) => (
-                  <Panel key={`event-promo-${slug}`}>
-                    <CardCTA to={slug} image={heroImage}
-                             borderColorClassName={`border-gray-400`}
-                             borderColorHoverClassName={`border-red-manyharrier`}
-                             title={title} callToAction={<CallToActionText
-                      title={"More info"} />}>
-                      {venue && (
-                        <div className="text-sm">
-                          <p
-                            className="font-semibold">{startsAt.format('dddd Do MMMM YYYY, h:mm:a')}</p>
-                          <p className="font-light">{venue}</p>
-                        </div>
-                      )}
-                    </CardCTA>
-                  </Panel>
-                ))}
+                {eventEntryPromos.map(
+                  ({ title, slug, heroImage, venue, startsAt }) => (
+                    <Panel key={`event-promo-${slug}`}>
+                      <CardCTA
+                        to={slug}
+                        image={heroImage}
+                        borderColorClassName={`border-gray-400`}
+                        borderColorHoverClassName={`border-red-manyharrier`}
+                        title={title}
+                        callToAction={<CallToActionText title={'More info'} />}
+                      >
+                        {venue && (
+                          <div className="text-sm">
+                            <p className="font-semibold">
+                              {startsAt.format('dddd Do MMMM YYYY, h:mm:a')}
+                            </p>
+                            <p className="font-light">{venue}</p>
+                          </div>
+                        )}
+                      </CardCTA>
+                    </Panel>
+                  )
+                )}
               </Panels>
             </div>
           </PanelFullWidth>
@@ -101,21 +113,33 @@ export const IndexPageTemplate = ({
       )}
       <Panels>
         <Panel>
-          <Card image={firstPanelImage} title={firstPanelTitle}
-                callToAction={<CallToActionLink to={firstPanelLink}
-                                                title={firstPanelCTA} />}
-                borderColorClassName={`border-black-manyharrier`}>
-            <div className="content"
-                 dangerouslySetInnerHTML={{__html: firstPanelBody}} />
+          <Card
+            image={firstPanelImage}
+            title={firstPanelTitle}
+            callToAction={
+              <CallToActionLink to={firstPanelLink} title={firstPanelCTA} />
+            }
+            borderColorClassName={`border-black-manyharrier`}
+          >
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: firstPanelBody }}
+            />
           </Card>
         </Panel>
         <Panel>
-          <Card image={secondPanelImage} title={secondPanelTitle}
-                callToAction={<CallToActionLink to={secondPanelLink}
-                                                title={secondPanelCTA} />}
-                borderColorClassName={`border-red-manyharrier`}>
-            <div className="content"
-                 dangerouslySetInnerHTML={{__html: secondPanelBody}} />
+          <Card
+            image={secondPanelImage}
+            title={secondPanelTitle}
+            callToAction={
+              <CallToActionLink to={secondPanelLink} title={secondPanelCTA} />
+            }
+            borderColorClassName={`border-red-manyharrier`}
+          >
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: secondPanelBody }}
+            />
           </Card>
         </Panel>
       </Panels>
@@ -165,15 +189,31 @@ IndexPageTemplate.propTypes = {
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       venue: PropTypes.string,
     })
-  )
+  ),
 }
 
-const IndexPage = ({data, pageContext}) => {
-  const {intro, nextEventsDefault, firstPanelBody, secondPanelBody} = data.page.fields
-  const {title, heroImage, firstPanelImage, firstPanelTitle, firstPanelLink, firstPanelCTA, secondPanelImage, secondPanelTitle, secondPanelLink, secondPanelCTA} = data.page.frontmatter
+const IndexPage = ({ data, pageContext }) => {
+  const {
+    intro,
+    nextEventsDefault,
+    firstPanelBody,
+    secondPanelBody,
+  } = data.page.fields
+  const {
+    title,
+    heroImage,
+    firstPanelImage,
+    firstPanelTitle,
+    firstPanelLink,
+    firstPanelCTA,
+    secondPanelImage,
+    secondPanelTitle,
+    secondPanelLink,
+    secondPanelCTA,
+  } = data.page.frontmatter
   const now = Moment.utc(pageContext.now)
 
-  const stripeSkus = data.stripeSkus.edges.map(({node}) => {
+  const stripeSkus = data.stripeSkus.edges.map(({ node }) => {
     return {
       name: node.attributes.name,
       price: node.price,
@@ -185,16 +225,19 @@ const IndexPage = ({data, pageContext}) => {
   const eventEntryPromos = []
 
   const nextEvents = []
-  data.nextEvents.edges.forEach(({node}, i) => {
+  data.nextEvents.edges.forEach(({ node }, i) => {
     const event = {
-      entryAvailable: stripeSkus.findIndex(({name, product}) => {
-        return name === node.frontmatter.eventKey && product === "Race entry"
-      }) > -1,
+      entryAvailable:
+        stripeSkus.findIndex(({ name, product }) => {
+          return name === node.frontmatter.eventKey && product === 'Race entry'
+        }) > -1,
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
       title: node.frontmatter.eventKey,
       venue: node.frontmatter.venue.frontmatter.venueKey,
-      heroImage: node.frontmatter.heroImage ? node.frontmatter.heroImage.childImageSharp.fluid : null,
+      heroImage: node.frontmatter.heroImage
+        ? node.frontmatter.heroImage.childImageSharp.fluid
+        : null,
     }
     if (i < 4) {
       nextEvents.push(event)
@@ -206,16 +249,26 @@ const IndexPage = ({data, pageContext}) => {
 
   let activeChampionshipsBySlug = {}
 
-  data.activeChampionships.edges.forEach(({node}) => {
+  data.activeChampionships.edges.forEach(({ node }) => {
     const slug = node.frontmatter.championship.fields.slug
     const startsAt = Moment.utc(node.frontmatter.startsAt)
     if (!activeChampionshipsBySlug[slug]) {
       activeChampionshipsBySlug[slug] = {
-        championshipKey: node.frontmatter.championship.frontmatter.championshipKey,
-        entryAvailable: stripeSkus.findIndex(({name, product}) => name === node.frontmatter.championship.frontmatter.championshipKey && product === "Championship entry") > -1,
+        championshipKey:
+          node.frontmatter.championship.frontmatter.championshipKey,
+        entryAvailable:
+          stripeSkus.findIndex(
+            ({ name, product }) =>
+              name ===
+                node.frontmatter.championship.frontmatter.championshipKey &&
+              product === 'Championship entry'
+          ) > -1,
         startsAt: startsAt,
         endsAt: startsAt,
-        heroImage: node.frontmatter.championship.frontmatter.heroImage ? node.frontmatter.championship.frontmatter.heroImage.childImageSharp.fluid : null,
+        heroImage: node.frontmatter.championship.frontmatter.heroImage
+          ? node.frontmatter.championship.frontmatter.heroImage.childImageSharp
+              .fluid
+          : null,
       }
       return
     }
@@ -230,9 +283,10 @@ const IndexPage = ({data, pageContext}) => {
   const recentChampionships = []
   const activeChampionships = []
 
-  for (let [slug, {championshipKey, startsAt, endsAt, entryAvailable, heroImage}] of Object.entries(
-    activeChampionshipsBySlug
-  )) {
+  for (let [
+    slug,
+    { championshipKey, startsAt, endsAt, entryAvailable, heroImage },
+  ] of Object.entries(activeChampionshipsBySlug)) {
     if (entryAvailable) {
       eventEntryPromos.push({
         slug,
@@ -294,11 +348,13 @@ const IndexPage = ({data, pageContext}) => {
         nextEventsDefault={nextEventsDefault}
         firstPanelImage={firstPanelImage.childImageSharp.fluid}
         firstPanelTitle={firstPanelTitle}
-        firstPanelBody={firstPanelBody} firstPanelLink={firstPanelLink}
+        firstPanelBody={firstPanelBody}
+        firstPanelLink={firstPanelLink}
         firstPanelCTA={firstPanelCTA}
         secondPanelImage={secondPanelImage.childImageSharp.fluid}
         secondPanelTitle={secondPanelTitle}
-        secondPanelBody={secondPanelBody} secondPanelLink={secondPanelLink}
+        secondPanelBody={secondPanelBody}
+        secondPanelLink={secondPanelLink}
         secondPanelCTA={secondPanelCTA}
         activeChampionships={activeChampionships}
         recentChampionships={recentChampionships}
@@ -409,12 +465,17 @@ export const indexPageQuery = graphql`
         }
       }
     }
-    stripeSkus: allStripeSku(filter: {active: {eq: true}, attributes: { category: {in: ["Race", "Championship", "Social"]}}}) {
+    stripeSkus: allStripeSku(
+      filter: {
+        active: { eq: true }
+        attributes: { category: { in: ["Race", "Championship", "Social"] } }
+      }
+    ) {
       edges {
         node {
           price
           attributes {
-            name,
+            name
             category
           }
           id

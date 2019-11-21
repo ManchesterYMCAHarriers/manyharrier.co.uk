@@ -1,9 +1,9 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import {Link} from 'gatsby'
+import { Link } from 'gatsby'
 import logo from '../img/logo-inverse.svg'
 import * as Moment from 'moment'
-import {CheckoutAvailable} from './Cart'
+import { CheckoutAvailable } from './Cart'
 
 const NavbarBrand = () => (
   <Link
@@ -24,7 +24,7 @@ const NavbarCheckout = () => (
   </Link>
 )
 
-const NavbarLink = ({title, to}) => (
+const NavbarLink = ({ title, to }) => (
   <Link
     className="w-full md:w-auto md:text-sm lg:text-base text-center p-2 md:mr-4 flex-shrink-0 flex-grow-0 border-b-2 border-gray-700 hover:border-white focus:border-white bg-transparent hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
     to={to}
@@ -40,7 +40,7 @@ NavbarLink.propTypes = {
 
 const NavbarSpacer = () => <div className="flex-shrink flex-grow" />
 
-const NavbarToggle = ({callback}) => (
+const NavbarToggle = ({ callback }) => (
   <button
     className="flex-shrink-0 flex-grow-0 mr-6 border-2 p-2 border-gray-800 text-gray-200 hover:text-white hover:bg-gray-800 hover:border-white focus:bg-gray-800 focus:border-white focus:outline-none md:hidden"
     onClick={callback}
