@@ -221,22 +221,6 @@ export class ChampionshipTemplate extends React.Component {
             </div>
           </PanelFullWidth>
         </Panels>
-        <Panels>
-          <PanelFullWidth>
-            <div className="panel black-bottom">
-              <h2 className="heading-2 mb-4">Fixtures</h2>
-              {events.map(({ startsAt, slug, title, venue }, i) => (
-                <EventBox
-                  key={'championship-event-' + i}
-                  startsAt={startsAt}
-                  slug={slug}
-                  title={title}
-                  venue={venue}
-                />
-              ))}
-            </div>
-          </PanelFullWidth>
-        </Panels>
         {stripeSku && this.state.storageAvailable && (
           <Panels>
             <PanelFullWidth>
@@ -316,6 +300,22 @@ export class ChampionshipTemplate extends React.Component {
             </PanelFullWidth>
           </Panels>
         )}
+        <Panels>
+          <PanelFullWidth>
+            <div className="panel black-bottom">
+              <h2 className="heading-2 mb-4">Fixtures</h2>
+              {events.map(({ startsAt, slug, title, venue }, i) => (
+                <EventBox
+                  key={'championship-event-' + i}
+                  startsAt={startsAt}
+                  slug={slug}
+                  title={title}
+                  venue={venue}
+                />
+              ))}
+            </div>
+          </PanelFullWidth>
+        </Panels>
         {information && (
           <Panels>
             <PanelFullWidth>
