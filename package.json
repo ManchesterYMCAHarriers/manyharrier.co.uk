@@ -54,6 +54,7 @@
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js,stripe/**/*.js}\"",
     "populate-stripe": "node ./stripe/index.js",
+    "serve": "gatsby serve",
     "start": "run-p start:**",
     "start:app": "npm run develop",
     "start:lambda": "netlify-lambda serve src/lambda",
