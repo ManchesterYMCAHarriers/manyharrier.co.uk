@@ -34,7 +34,7 @@ Speedwork sessions are meant to be hard; you will need to push yourself, but you
 
 - [Events calendar](/events)
 - [Manchester Regional Arena](/venues/manchester-regional-arena)
-- [Longford Park Stadium](/venues/longford-park)
+- [Longford Park Stadium](/venues/longford-park-stadium)
 
 ### Group runs
 

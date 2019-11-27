@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Manchester YMCA Harriers',
-    description: 'Alpha',
+    description: 'A friendly running club based in Manchester city centre. Training on Tuesday and Thursday evenings. All abilities welcome!',
     baseUrl: process.env.URL,
     apiKey: {
       getAddress: process.env.GET_ADDRESS_API_KEY,
