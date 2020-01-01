@@ -27,6 +27,8 @@ import {
   StorageAvailable,
 } from '../components/Cart'
 import { CardCTA } from '../components/Card'
+import Result from "../components/Result";
+import Results from "../components/Results";
 
 export class EventTemplate extends React.Component {
   constructor(props) {
@@ -197,6 +199,9 @@ export class EventTemplate extends React.Component {
       infoForCompetition,
       infoForEventType,
       infoForTerrain,
+      results,
+      resultsLink,
+      resultsType,
       route,
       session,
       startsAt,
@@ -270,6 +275,24 @@ export class EventTemplate extends React.Component {
                 className="content panel red-bottom"
                 dangerouslySetInnerHTML={{ __html: eventInfo }}
               />
+            </PanelFullWidth>
+          </Panels>
+        )}
+        {results && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <h2 className="heading-2 mb-4">Results</h2>
+                {resultsType === "Gendered" && (
+                  <div className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
+                    <Results title={"Men"} results={results.men} />
+                    <Results title={"Women"} results={results.women} />
+                  </div>
+                )}
+                {resultsLink && (
+                  <CallToActionLink title={"Full results"} to={resultsLink} />
+                )}
+              </div>
             </PanelFullWidth>
           </Panels>
         )}
@@ -440,6 +463,8 @@ EventTemplate.propTypes = {
   infoForCompetition: PropTypes.node,
   infoForEventType: PropTypes.node,
   infoForTerrain: PropTypes.node,
+  results: PropTypes.node,
+  resultsType: PropTypes.string,
   route: PropTypes.shape({
     description: PropTypes.node,
     title: PropTypes.string,
@@ -484,6 +509,11 @@ const Event = ({ data, pageContext }) => {
     },
     stripeSku,
     markdownRemark: event,
+    member: {
+      allMember: {
+        data: members,
+      }
+    }
   } = data
 
   const startsAt = Moment.utc(event.frontmatter.startsAt)
@@ -524,6 +554,54 @@ const Event = ({ data, pageContext }) => {
       },
       slug: event.frontmatter.venue.fields.slug,
       title: event.frontmatter.venue.frontmatter.venueKey,
+    }
+  }
+
+  let results
+
+  if (event.frontmatter.results) {
+    if (!event.frontmatter.resultsType) {
+      throw new Error("No resultsType specified")
+    }
+
+    if (event.frontmatter.resultsType === "Gendered") {
+      results = {
+        men: [],
+        women: []
+      }
+
+      event.frontmatter.results.forEach(({urn, time}) => {
+        const timeMoment = Moment.utc(time)
+        const runner = members.find(member => {
+          return member.urn === urn
+        })
+
+        if (!runner) {
+          throw new Error(`Member for URN ${urn} not found`)
+        }
+
+        const { firstName, lastName, gender, dateOfBirth } = runner
+
+        const result = {
+          name: `${firstName} ${lastName}`,
+          time: time,
+          timeForSorting: timeMoment,
+        }
+
+        if (gender === "F") {
+          results.women.push(result)
+        } else {
+          results.men.push(result)
+        }
+      })
+
+      results.women.sort((a, b) => {
+        return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+      })
+
+      results.men.sort((a, b) => {
+        return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+      })
     }
   }
 
@@ -583,6 +661,9 @@ const Event = ({ data, pageContext }) => {
         infoForCompetition={get(event.frontmatter.infoForCompetition, ['html'])}
         infoForEventType={get(event.frontmatter.infoForEventType, ['html'])}
         infoForTerrain={get(event.frontmatter.infoForChampionship, ['html'])}
+        results={results}
+        resultsLink={event.frontmatter.resultsLink}
+        resultsType={event.frontmatter.resultsType}
         route={route}
         session={get(event.frontmatter.session, ['html'])}
         startsAt={startsAt}
@@ -596,9 +677,7 @@ const Event = ({ data, pageContext }) => {
 }
 
 Event.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
+  data: PropTypes.object,
 }
 
 export default Event
@@ -659,6 +738,12 @@ export const eventQuery = graphql`
         infoForTerrain {
           html
         }
+        resultsLink
+        resultsType
+        results {
+          urn
+          time
+        }
         route {
           html
           frontmatter {
@@ -686,6 +771,17 @@ export const eventQuery = graphql`
             location
             venueKey
           }
+        }
+      }
+    }
+    member {
+      allMember(_size: 1000) {
+        data {
+          urn
+          firstName
+          lastName
+          gender
+          dateOfBirth
         }
       }
     }

@@ -49,6 +49,17 @@ module.exports = {
         downloadFiles: true,
       },
     },
+    {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: "Member",
+        fieldName: "member",
+        url: `https://graphql.fauna.com/graphql`,
+        headers: {
+          Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`
+        }
+      }
+    },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {

@@ -5,6 +5,15 @@ venueForeignKey: Boggart Hole Clough
 eventType: Race
 terrain: Cross Country
 startsAt: '2019-12-14 13:15'
+resultsType: Gendered
+resultsLink: 'https://www.race-results.co.uk/results/2019/2019%20gmaa%20cross%20country%20results.pdf'
+results:
+  - urn: 3094437
+    time: 38:06
+  - urn: 2781287
+    time: 44:07
+  - urn: 3876293
+    time: 52:54
 ---
 ## Start times and race details
 

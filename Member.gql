@@ -1,0 +1,11 @@
+type Member {
+  urn: Int!
+  firstName: String!
+  lastName: String!
+  gender: String!
+  dateOfBirth: Date!
+}
+
+type Query {
+  allMember: [Member!]!
+}
