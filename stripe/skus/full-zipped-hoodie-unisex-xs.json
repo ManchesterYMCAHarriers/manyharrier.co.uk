@@ -6,7 +6,7 @@
       "name": "Extra-small unisex full-zipped hoodie",
       "gender": "Unisex",
       "size": "XS",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 2400

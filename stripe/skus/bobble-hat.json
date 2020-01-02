@@ -6,7 +6,7 @@
       "name": "One-size unisex bobble hat",
       "gender": "Unisex",
       "size": "One size",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 800

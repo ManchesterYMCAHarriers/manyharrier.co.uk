@@ -6,7 +6,7 @@
       "name": "40-inch ladies vest",
       "gender": "Ladies",
       "size": "40-inch",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 1800

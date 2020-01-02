@@ -6,7 +6,7 @@
       "name": "Old-style 36-inch ladies vest",
       "gender": "Ladies",
       "size": "36-inch",
-      "clearance": true,
+      "clearance": "true",
       "category": "Kit"
     },
     "price": 800

@@ -6,7 +6,7 @@
       "name": "Large unisex cross-country coat",
       "gender": "Unisex",
       "size": "L",
-      "clearance": true,
+      "clearance": "true",
       "category": "Kit"
     },
     "price": 800

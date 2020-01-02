@@ -6,7 +6,7 @@
       "name": "Extra-extra-large unisex full-zipped hoodie",
       "gender": "Unisex",
       "size": "XXL",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 2400

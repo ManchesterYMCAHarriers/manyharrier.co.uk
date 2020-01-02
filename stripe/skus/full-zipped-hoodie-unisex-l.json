@@ -6,7 +6,7 @@
       "name": "Large unisex full-zipped hoodie",
       "gender": "Unisex",
       "size": "L",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 2400

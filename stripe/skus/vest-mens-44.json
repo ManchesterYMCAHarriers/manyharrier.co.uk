@@ -6,7 +6,7 @@
       "name": "44-inch mens vest",
       "gender": "Mens",
       "size": "44-inch",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 1800

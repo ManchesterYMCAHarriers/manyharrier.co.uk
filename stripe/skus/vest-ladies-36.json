@@ -6,7 +6,7 @@
       "name": "36-inch ladies vest",
       "gender": "Ladies",
       "size": "36-inch",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 1800

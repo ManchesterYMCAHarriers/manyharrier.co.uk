@@ -147,7 +147,7 @@ async function populate() {
 
       const skuUpdate = {}
 
-      for (let [key, masterValue] in Object.entries(sku)) {
+      for (let [key, masterValue] of Object.entries(sku)) {
         if (!isEqual(stripeSku[key], masterValue)) {
           if (key === 'inventory') {
             // Don't update stock from raw load
@@ -162,7 +162,7 @@ async function populate() {
       if (Object.keys(skuUpdate).length > 0) {
         try {
           console.log(`Updating SKU ${sku.attributes.name}`)
-          await limiter.schedule(() => updateStripeSku(sku.id, skuUpdate))
+          await limiter.schedule(() => updateStripeSku(stripeSku.id, skuUpdate))
           updatedSkus++
           console.log(`Updated SKU ${sku.attributes.name}`)
         } catch (err) {

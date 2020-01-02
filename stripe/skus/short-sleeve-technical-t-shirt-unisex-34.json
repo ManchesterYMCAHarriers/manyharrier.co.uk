@@ -6,7 +6,7 @@
       "name": "34-inch unisex short-sleeve technical T-shirt",
       "gender": "Unisex",
       "size": "34-inch",
-      "clearance": false,
+      "clearance": "false",
       "category": "Kit"
     },
     "price": 2200

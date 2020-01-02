@@ -6,7 +6,7 @@
       "name": "38-inch unisex old-style long-sleeve technical T-shirt",
       "gender": "Unisex",
       "size": "38-inch",
-      "clearance": true,
+      "clearance": "true",
       "category": "Kit"
     },
     "price": 800
