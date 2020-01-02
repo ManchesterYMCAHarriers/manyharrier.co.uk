@@ -24,8 +24,8 @@ Postcode for sat-navs: **WA16 6QN**
 ## Public transport
 
 The nearest train station to Tatton Park is Knutsford, which has a direct
-hourly service from Manchester Piccadilly. Note that it is a two-mile walk from
-the railway station to the start area, so be sure to allow time for this.
+hourly service from Manchester Piccadilly. Note that it is a three-mile walk 
+from the railway station to the start area, so be sure to allow time for this.
 
 * [National Rail Enquiries online journey planner](http://ojp.nationalrail.co.uk/service/timesandfares/MAN/KNF/110120/1300/arr/110120/1500/dep)
 
