@@ -1,7 +1,7 @@
 ---
 templateKey: event
 eventKey: 1000m efforts with 400m recovery
-venueForeignKey: Manchester Regional Arena
+venueForeignKey: Longford Park
 eventType: Speedwork
 sessionForeignKey: 1000m efforts with 400m recovery
 terrain: Track
