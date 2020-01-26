@@ -1,6 +1,9 @@
-const joinFormRecipients = process.env.JOIN_FORM_RECIPIENTS
-const contactFormRecipients = process.env.CONTACT_FORM_RECIPIENTS
-const checkoutRecipients = process.env.CHECKOUT_RECIPIENTS
+const recipientHello = process.env.RECIPIENT_HELLO
+const recipientWebmaster = process.env.RECIPIENT_WEBMASTER
+const recipientKit = process.env.RECIPIENT_KIT
+const recipientClubSecretary = process.env.RECIPIENT_CLUB_SECRETARY
+const recipientTreasurer = process.env.RECIPIENT_TREASURER
+const recipientEntriesSecretary = process.env.RECIPIENT_ENTRIES_SECRETARY
 const mailgun = require('mailgun-js')({
   apiKey: process.env.MAILGUN_API_KEY,
   domain: process.env.MAILGUN_DOMAIN,
@@ -127,14 +130,12 @@ Amount due:       ${toCurrency(membership.price)}
 Payment method:   ${body.paymentMethod}
 
 Thanks!
-
-The Manchester YMCA Harriers website
 `
 
   // Send to recipients
   await sendMessageWithMailgun(
-    joinFormRecipients,
-    `Manchester YMCA Harriers Website <webmaster@manyharrier.co.uk>`,
+    `${recipientClubSecretary},${recipientTreasurer},${recipientWebmaster}`,
+    `${body.firstName} ${body.lastName} <${body.email}>`,
     `${
       action === 'join' ? 'New' : 'Renewal for'
     } ${membership.attributes.claim.toLowerCase()}-claim member: ${
@@ -153,7 +154,7 @@ The Manchester YMCA Harriers website
 
 async function processContactForm(body) {
   await sendMessageWithMailgun(
-    contactFormRecipients,
+    `${recipientHello},${recipientWebmaster}`,
     `${body.name} <${body.email}>`,
     body.reason,
     body.message
@@ -166,11 +167,7 @@ async function processCheckout(body) {
 
   const items = []
 
-  console.log('Raw body', body)
-
   const submittedItems = JSON.parse(body.items)
-
-  console.log('Submitted items', submittedItems)
 
   for (let item of submittedItems) {
     const stripeSku = await getStripeSku(item.sku)
@@ -179,10 +176,12 @@ async function processCheckout(body) {
     const line = `${item.quantity} x ${item.description} @ ${toCurrency(
       item.price
     )}`
+    item.category = stripeSku.attributes.category
     const subtotal = `${toCurrency(item.quantity * item.price)}`
     const spaces = lineCharLength - (line.length + subtotal.length)
     items.push({
       sortKey: item.description,
+      category: item.category,
       line: `${line}${' '.repeat(Math.max(spaces, 1))}${subtotal}`,
     })
   }
@@ -194,7 +193,7 @@ async function processCheckout(body) {
   total = `Total: ${toCurrency(total)}`
   const totalLine = ' '.repeat(lineCharLength - total.length) + total
 
-  // Create email body
+  // Create email body for whole order
   let message = `Hello!
   
 An order has been placed through the website:
@@ -223,16 +222,91 @@ ORDER
 Payment method: ${body.paymentMethod}
 
 Thanks!
-
-The Manchester YMCA Harriers website
 `
-
   await sendMessageWithMailgun(
-    checkoutRecipients,
-    `Manchester YMCA Harriers Website <webmaster@manyharrier.co.uk>`,
+    `${recipientTreasurer},${recipientWebmaster}`,
+    `${body.firstName} ${body.lastName} <${body.email}>`,
     `Order received from ${body.firstName} ${body.lastName}`,
     message
   )
+
+  // Create email body for kit
+  let kitItemCount = 0
+
+  message = `Hello!
+  
+An order has been placed through the website:
+
+CUSTOMER DETAILS
+================
+
+First name:       ${body.firstName}
+Last name:        ${body.lastName}
+Email:            ${body.email}
+
+ORDER
+=====
+`
+
+  items.forEach(({ category, line }) => {
+    if (category === 'Kit') {
+      message += line + '\n'
+      kitItemCount++
+    }
+  })
+
+  message += `
+
+Thanks!
+`
+
+  if (kitItemCount > 0) {
+    await sendMessageWithMailgun(
+      `${recipientKit},${recipientWebmaster}`,
+      `${body.firstName} ${body.lastName} <${body.email}>`,
+      `Order received from ${body.firstName} ${body.lastName}`,
+      message
+    )
+  }
+
+  // Create email body for kit
+  let entryItemCount = 0
+
+  message = `Hello!
+  
+An order has been placed through the website:
+
+CUSTOMER DETAILS
+================
+
+First name:       ${body.firstName}
+Last name:        ${body.lastName}
+Email:            ${body.email}
+
+ORDER
+=====
+`
+
+  items.forEach(({ category, line }) => {
+    if (category === 'Race' || category === 'Presentation') {
+      message += line + '\n'
+      entryItemCount++
+    }
+  })
+
+  message += `
+
+Thanks!
+`
+
+  if (entryItemCount > 0) {
+    await sendMessageWithMailgun(
+      `${recipientEntriesSecretary},${recipientWebmaster}`,
+      `${body.firstName} ${body.lastName} <${body.email}>`,
+      `Order received from ${body.firstName} ${body.lastName}`,
+      message
+    )
+  }
 }
 
 async function sendMessageWithMailgun(to, from, subject, body) {
