@@ -1,7 +1,7 @@
 ---
 templateKey: event
 eventKey: 10 x 2 minutes with 1 minute recovery
-venueForeignKey: Longford Park
+venueForeignKey: Longford Park Stadium
 eventType: Speedwork
 sessionForeignKey: 10 x 2 minutes with 1 minute recovery
 terrain: Track
