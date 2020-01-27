@@ -229,7 +229,7 @@ const IndexPage = ({ data, pageContext }) => {
     const event = {
       entryAvailable:
         stripeSkus.findIndex(({ name, product }) => {
-          return name === node.frontmatter.eventKey && product === 'Race entry'
+          return name === node.frontmatter.eventKey && (product === 'Race entry' || product === 'Social event')
         }) > -1,
       startsAt: Moment.utc(node.frontmatter.startsAt),
       slug: node.fields.slug,
