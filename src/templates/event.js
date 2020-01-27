@@ -695,7 +695,7 @@ export const eventQuery = graphql`
       active: { eq: true }
       attributes: {
         name: { eq: $stripeSkuName }
-        category: { in: ["Race", "Social"] }
+        category: { in: ["Race", "Presentation", "Social"] }
       }
     ) {
       attributes {
