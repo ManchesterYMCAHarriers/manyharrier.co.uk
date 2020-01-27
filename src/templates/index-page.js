@@ -468,7 +468,7 @@ export const indexPageQuery = graphql`
     stripeSkus: allStripeSku(
       filter: {
         active: { eq: true }
-        attributes: { category: { in: ["Race", "Championship", "Social"] } }
+        attributes: { category: { in: ["Race", "Championship", "Presentation", "Social"] } }
       }
     ) {
       edges {
