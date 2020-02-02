@@ -21,5 +21,4 @@ lane leading up to it**.
 
 [Full FRA kit](https://www.peteblandsports.co.uk/dept/fra-kit-requirements_d01336.htm) is required.
 
-There is **no entry on the day** - pre-entry will be £10.00 plus booking fee - 
-link to be announced.
+There is **no entry on the day** - [enter now for £11.00](https://resultsbase.net/event/5372) - entries close on 16th May.

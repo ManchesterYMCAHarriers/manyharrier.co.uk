@@ -10,12 +10,13 @@ intro: |
   
   Entry for the Marple Trail 10K is open and has sold out well in advance in 
   previous years, so you are advised to enter now to avoid missing out. Entry is
-  also open for the Grasmere Gallop and Manchester Half Marathon.
+  also open for the "It's a Piece of Cake 10K", the Grasmere Gallop and the 
+  Manchester Half Marathon.
   
   Entry links for the other fixtures will be added as and when they are 
   available, so keep checking this page!
   
-  Note also that the dates for the Sale Sizzler and the Worsley Woods trail race
-  are provisional at this stage.
+  Note also that the date for the Worsley Woods trail race is provisional at 
+  this stage.
 terrain: Mixed
 ---
