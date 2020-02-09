@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: North Chadderton Social and Bowling Club
+description: The North Chadderton Social and Bowling Club is where the South East Lancs Cross Country League presentation evening is held
 address: |-
   Burnley Lane
   Chadderton

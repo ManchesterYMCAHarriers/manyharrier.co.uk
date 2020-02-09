@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Blackheath Common
+description: Blackheath Common is where the London Marathon starts
 address: |-
   Blackheath
   London

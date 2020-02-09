@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Belvoir Castle
+description: Belvoir Castle is the venue for the Equinox 24
 address: |-
   Grantham
   NG32 1PE

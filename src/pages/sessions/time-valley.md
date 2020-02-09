@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: Time valley
+description: A track training session
 ---
 This is a timed session, with intervals marked by a whistle. You will start with
 a four-minute effort and work your way down to a one-minute effort, then back

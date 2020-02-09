@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: HOME MCR
+description: HOME MCR is a social venue, serving a variety of food and drinks
 address: |-
   2 Tony Wilson Place
   Manchester

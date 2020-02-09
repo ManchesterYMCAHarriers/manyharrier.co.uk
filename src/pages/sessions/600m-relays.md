@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: 600m relays
+description: A track training session
 ---
 This is a 30-minute session, where you need to partner up with someone of a
 similar ability.

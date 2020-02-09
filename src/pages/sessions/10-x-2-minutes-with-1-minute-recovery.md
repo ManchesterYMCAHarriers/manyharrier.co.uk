@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: 10 x 2 minutes with 1 minute recovery
+description: A track training session
 ---
 This speedwork session is 10 sets of two-minute intervals with 1 minute 
 of recovery between each set. Each interval will be marked by a whistle.

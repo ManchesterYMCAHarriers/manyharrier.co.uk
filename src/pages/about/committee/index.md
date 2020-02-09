@@ -2,10 +2,13 @@
 templateKey: 'committee-page'
 path: /about/committee
 title: The Manchester YMCA Harriers Committee
+description: The Manchester YMCA Harriers Committee consists of 11 volunteers who have been elected by the Club's members to manage the Club's affairs
 intro: |
   The Manchester YMCA Harriers Committee is responsible for the day-to-day running of the club and making decisions that will affect the future of the club.
   
   Everybody on the committee is a volunteer who gives their time freely for the benefit of the club and its members.
+  
+  Committee members are elected at the Club's Annual General Meeting.
 members:
  - name: Steph Goodchild
    role: Club President
@@ -24,7 +27,9 @@ members:
  - name: Heather Hughes
    role: Club Treasurer
    description: |
-     Heather's role as Club Treasurer involves managing the club's bank account, maintaining a cash book and producing income and expenditure reports for general club activities and our Blackleach race. Her role also involves producing and delivering an annual statement and report for the club's Annual General Meeting.
+     Heather's role as Club Treasurer involves managing the club's bank account, maintaining a cash book and producing income and expenditure reports for general club activities. Her role also involves producing and delivering an annual statement and report for the club's Annual General Meeting.
+     
+     Heather has been fundamental in bringing the Club's banking into the 21st century, allowing us to take payment by BACS transfer.
    singleImage: /media/committee-Heather-Hughes.jpg
  - name: Sarah Wilson and Craig Jones
    role: Captains
@@ -37,25 +42,23 @@ members:
    
      The captains present awards at presentation evenings and decide upon the annual award for our "most improved runner" as well as the weightings for our Christmas handicap race.
    
-     Both Craig and Sarah are excellent marathon runners; Craig's marathon PB is 2:34 and Sarah's is 3:27.
+     Both Craig and Sarah are excellent marathon runners; [Craig's marathon PB is 2:34](/blog/2019-11-21-buenos-aires-marathon/) and Sarah's is 3:27.
    singleImage: /media/committee-Sarah-Wilson-and-Craig-Jones.jpg
  - name: Jon Paramor
    role: Race Entries Secretary
    description: |
-     Jon's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships and applicable races in the club's summer Road Championship. Jon collects entry money and distributes race numbers.
+     Jon's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships and applicable races in the club's Summer Championship. Jon also distributes race numbers when applicable.
+          
+     Jon attends the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings on the club's behalf.
      
-     Jon is heavily involved in the organisation of our Blackleach Country Park race.
-     
-     Jon also attends the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings on the club's behalf.
-     
-     Jon has been a member of the Club and the Committee for many years; he has previously served as our Club Captain.
+     Jon has been a member of the Club and the Committee for many years; he has previously served as our Club Captain and was heavily involved in the organisation of our Blackleach Country Park race.
    singleImage: /media/committee-Jon-Paramor.jpg
  - name: David Ashton
    role: Committee Member
    description: |
      David is a veteran runner who is particularly passionate and knowledgeable about fell running.
      
-     Beyond general committee business, David is heavily involved in the organisation of our Blackleach Country Park race and he represents the club at the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings.
+     Beyond general committee business, David represents the club at the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings. He was heavily involved in the organisation of our Blackleach Country Park race.
    singleImage: /media/committee-David-Ashton.jpg
  - name: Hannah Brierley
    role: Committee Member

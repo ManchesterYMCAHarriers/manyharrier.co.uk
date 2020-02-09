@@ -3,25 +3,18 @@ import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { Helmet } from 'react-helmet'
 import { PanelFullWidth, Panels } from '../components/Panels'
 import Img from 'gatsby-image'
 import Hero from '../components/Hero'
 
 export const CommitteePageTemplate = ({
-  siteTitle,
   title,
   heroImage,
-  description,
   intro,
   members,
 }) => {
   return (
     <StandardContentContainer>
-      <Helmet>
-        <title>{title + ` | ` + siteTitle}</title>
-        {description && <meta name="description" content={description} />}
-      </Helmet>
       {heroImage ? (
         <Hero fluidImage={heroImage} title={title} />
       ) : (
@@ -70,7 +63,6 @@ export const CommitteePageTemplate = ({
 
 CommitteePageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string,
   content: PropTypes.string,
   intro: PropTypes.node,
   members: PropTypes.arrayOf(
@@ -83,8 +75,8 @@ CommitteePageTemplate.propTypes = {
   ),
 }
 
-const CommitteePage = ({ data }) => {
-  const { siteMetadata: title, markdownRemark: page } = data
+const CommitteePage = ({ data, location }) => {
+  const { markdownRemark: page } = data
 
   const members = page.frontmatter.members.map((member, i) => {
     member.description = page.fields.memberDescriptions[i]
@@ -99,11 +91,9 @@ const CommitteePage = ({ data }) => {
     : null
 
   return (
-    <Layout path={page.fields.slug}>
+    <Layout title={page.frontmatter.title} description={page.frontmatter.description} path={page.fields.slug} location={location}>
       <CommitteePageTemplate
-        siteTitle={title}
         title={page.frontmatter.title}
-        description={page.frontmatter.description}
         heroImage={heroImage}
         intro={page.fields.intro}
         members={members}
@@ -120,11 +110,6 @@ export default CommitteePage
 
 export const committeePageQuery = graphql`
   query CommitteePage($id: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       html
       fields {

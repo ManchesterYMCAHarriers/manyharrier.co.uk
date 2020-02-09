@@ -72,7 +72,7 @@ BlogIndexTemplate.propTypes = {
   previousIndexLink: PropTypes.string,
 }
 
-const BlogIndex = ({ data, pageContext }) => {
+const BlogIndex = ({ data, pageContext, location }) => {
   const previousIndexLink =
     pageContext.skip > 0
       ? pageContext.skip > 10
@@ -97,7 +97,7 @@ const BlogIndex = ({ data, pageContext }) => {
   })
 
   return (
-    <Layout path={'/blog'}>
+    <Layout title={`Blog`} description={`Blog posts and articles written by our members`} path={'/blog'} location={location}>
       <BlogIndexTemplate
         posts={posts}
         nextIndexLink={nextIndexLink}

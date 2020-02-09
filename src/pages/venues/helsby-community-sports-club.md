@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Helsby Community Sports Club
+description: The Helsby Community Sports Club is the start of the Four Villages Half Marathon
 address: |-
   Chester Road
   Helsby

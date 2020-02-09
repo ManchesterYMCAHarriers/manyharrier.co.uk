@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Boggart Hole Clough
+description: Boggart Hole Clough is home to the Manchester Frontrunners' It's a Piece of Cake 10km and some cross-country fixtures
 address: |-
   Charlestown Road
   Blackley

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Grasmere
+description: Grasmere host trail and fell races
 address: |-
   Cumbria
   LA22 9SJ

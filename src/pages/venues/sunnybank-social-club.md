@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Sunnybank Social Club
+description: The Sunnybank Social Club is the race HQ for the Pilgrims Cross fell race
 address: |-
   Helmshore Road
   Helmshore

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Manchester Regional Arena
+description: The Manchester Regional Arena is used for some Manchester YMCA Harriers track training sessions
 address: |-
   Rowsley Street
   Sportcity

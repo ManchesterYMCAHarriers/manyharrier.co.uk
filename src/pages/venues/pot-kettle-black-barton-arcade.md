@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Pot Kettle Black Barton Arcade
+description: PKB is a social venue
 address: |-
   14 Barton Arcade
   Deansgate

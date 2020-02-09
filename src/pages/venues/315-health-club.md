@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: 315 Health Club
+description: The 315 Health Club is the venue for the Trimpell 20 race
 address: |-
   Caton Road
   Lancaster

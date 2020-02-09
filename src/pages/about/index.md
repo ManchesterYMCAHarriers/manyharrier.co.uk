@@ -2,6 +2,7 @@
 templateKey: 'standard-page'
 path: /about
 title: About
+description: The history, affiliations, purpose, management and rules of the Manchester YMCA Harriers
 ---
 The Manchester YMCA Harriers were established in 1882. We are one of the oldest running clubs in the UK, if not the world!
 

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Kenworthy Woods
+description: Kenworthy Woods is a cross-country venue
 address: |-
   Wythenshawe Sports Ground
   Wythenshawe

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Brabyns Park
+description: Brabyns Park is the venue for the Marple 10K Trail Race
 address: |-
   Marple Bridge
   Stockport

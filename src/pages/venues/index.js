@@ -8,7 +8,7 @@ import { CardCTA } from '../../components/Card'
 import { CallToActionText } from '../../components/CallToAction'
 import Address from '../../components/Address'
 
-const VenuesIndex = ({ data }) => {
+const VenuesIndex = ({ data, location }) => {
   const venues = data.allMarkdownRemark.edges
     .map(({ node }) => {
       return {
@@ -31,7 +31,7 @@ const VenuesIndex = ({ data }) => {
     })
 
   return (
-    <Layout path={'/venues'}>
+    <Layout title={'Venues'} description={'Venues and locations for Manchester YMCA Harriers events'} path={'/venues'} location={location}>
       <StandardContentContainer>
         <h1 className="heading-1">Venues</h1>
         <Panels>

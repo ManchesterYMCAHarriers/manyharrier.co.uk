@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Emirates Old Trafford
+description: The Emirates Old Trafford is the home of the event village for the Manchester Marathon and Manchester Half Marathon
 address: |-
   Talbot Road
   Old Trafford

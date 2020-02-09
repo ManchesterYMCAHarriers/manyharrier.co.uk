@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Knighton Social Club
+description: Knighton Social Club is the race HQ for the Knighton 20 race
 address: |-
   High Street
   Knighton

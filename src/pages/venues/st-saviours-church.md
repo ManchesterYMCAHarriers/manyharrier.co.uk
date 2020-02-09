@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: "St Saviour's Church"
+descripton: "St Saviour's Church is the race HQ for the Eddie's Revenge fell race"
 address: |-
   Buckstones Road
   Shaw

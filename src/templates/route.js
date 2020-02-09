@@ -93,7 +93,7 @@ RouteTemplate.propTypes = {
   heroImage: PropTypes.object,
 }
 
-const Route = ({ data, pageContext }) => {
+const Route = ({ data, pageContext, location }) => {
   const {
     site: {
       siteMetadata: {
@@ -177,7 +177,7 @@ const Route = ({ data, pageContext }) => {
     : null
 
   return (
-    <Layout path={route.fields.slug}>
+    <Layout title={route.frontmatter.routeKey} description={route.frontmatter.description} path={route.fields.slug} location={location}>
       <RouteTemplate
         events={events}
         googleMapsApiKey={googleMapsApiKey}
@@ -214,6 +214,7 @@ export const routeQuery = graphql`
         slug
       }
       frontmatter {
+        description
         heroImage {
           childImageSharp {
             ...HeroImage

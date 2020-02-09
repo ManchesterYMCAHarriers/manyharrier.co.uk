@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Tandle Hill
+description: Tandle Hill is a cross country venue
 address: |-
   Tandle Hill Road
   Oldham

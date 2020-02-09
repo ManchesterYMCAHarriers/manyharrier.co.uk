@@ -499,7 +499,7 @@ EventTemplate.propTypes = {
   }).isRequired,
 }
 
-const Event = ({ data, pageContext }) => {
+const Event = ({ data, location }) => {
   const {
     site: {
       siteMetadata: {
@@ -603,6 +603,19 @@ const Event = ({ data, pageContext }) => {
   }
 
   const tags = []
+  let description = 'Manchester YMCA Harriers '
+  if (event.frontmatter.competitionForeignKey) {
+    description += `and ${event.frontmatter.competitionForeignKey} `
+  }
+  if (event.frontmatter.championship) {
+    description += `${event.frontmatter.championship.frontmatter.championshipKey} `
+  }
+  if (event.frontmatter.eventType) {
+    description += `${event.frontmatter.eventType.toLowerCase()} `
+  } else {
+    description += 'event '
+  }
+  description += `on ${startsAt.format("Do MMMM YYYY")} at ${startsAt.format("h:mma")} at ${event.frontmatter.venue.frontmatter.venueKey}`
 
   if (event.frontmatter.eventType) {
     tags.push({
@@ -618,10 +631,10 @@ const Event = ({ data, pageContext }) => {
     })
   }
 
-  if (event.frontmatter.championshipForeignKey) {
+  if (event.frontmatter.championship) {
     tags.push({
       key: 'championship',
-      value: event.frontmatter.championshipForeignKey,
+      value: event.frontmatter.championship.frontmatter.championshipKey,
     })
   }
 
@@ -646,7 +659,7 @@ const Event = ({ data, pageContext }) => {
     : null
 
   return (
-    <Layout path={event.fields.slug}>
+    <Layout title={event.frontmatter.eventKey} description={description} path={event.fields.slug} location={location}>
       <EventTemplate
         championship={championship}
         eventInfo={event.html}
@@ -716,6 +729,7 @@ export const eventQuery = graphql`
             championshipKey
           }
         }
+        competitionForeignKey
         eventKey
         eventType
         #        infoForChampionship {

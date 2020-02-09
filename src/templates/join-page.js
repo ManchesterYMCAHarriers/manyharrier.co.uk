@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { Helmet } from 'react-helmet'
 import Currency from '../components/Currency'
 import { Panel, PanelFullWidth, Panels } from '../components/Panels'
 import { CallToActionLink } from '../components/CallToAction'
@@ -11,10 +10,8 @@ import { Card } from '../components/Card'
 import Hero from '../components/Hero'
 
 export const JoinPageTemplate = ({
-  siteTitle,
   title,
   heroImage,
-  description,
   howToJoinUs,
   membershipBenefitsIntro,
   membershipBenefits,
@@ -23,10 +20,6 @@ export const JoinPageTemplate = ({
 }) => {
   return (
     <StandardContentContainer>
-      <Helmet>
-        <title>{title + ` | ` + siteTitle}</title>
-        {description && <meta name="description" content={description} />}
-      </Helmet>
       <Hero
         title={title}
         subtitle={`First claim membership until ${firstClaimValidTo} is just ${firstClaimPrice}!`}
@@ -92,7 +85,6 @@ export const JoinPageTemplate = ({
 }
 
 JoinPageTemplate.propTypes = {
-  siteTitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   heroImage: PropTypes.object,
   description: PropTypes.string,
@@ -104,11 +96,8 @@ JoinPageTemplate.propTypes = {
   firstClaimPrice: PropTypes.string.isRequired,
 }
 
-const JoinPage = ({ data }) => {
+const JoinPage = ({ data, location }) => {
   const {
-    site: {
-      siteMetadata: { title },
-    },
     markdownRemark: page,
     stripeSku: firstClaimMembership,
   } = data
@@ -126,12 +115,10 @@ const JoinPage = ({ data }) => {
   )
 
   return (
-    <Layout path={page.fields.slug}>
+    <Layout title={page.frontmatter.title} description={page.frontmatter.description} path={page.fields.slug} location={location}>
       <JoinPageTemplate
-        siteTitle={title}
         title={page.frontmatter.title}
         heroImage={page.frontmatter.heroImage.childImageSharp.fluid}
-        description={page.frontmatter.description}
         howToJoinUs={page.fields.howToJoinUs}
         membershipBenefitsIntro={page.fields.membershipBenefitsIntro}
         membershipBenefits={membershipBenefits}
@@ -151,11 +138,6 @@ export default JoinPage
 
 export const joinPageQuery = graphql`
   query JoinPage($id: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       html
       fields {

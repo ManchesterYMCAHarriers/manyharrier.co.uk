@@ -192,7 +192,7 @@ IndexPageTemplate.propTypes = {
   ),
 }
 
-const IndexPage = ({ data, pageContext }) => {
+const IndexPage = ({ data, pageContext, location }) => {
   const {
     intro,
     nextEventsDefault,
@@ -338,7 +338,7 @@ const IndexPage = ({ data, pageContext }) => {
   })
 
   return (
-    <Layout>
+    <Layout location={location}>
       <IndexPageTemplate
         title={title}
         heroImage={heroImage.childImageSharp.fluid}

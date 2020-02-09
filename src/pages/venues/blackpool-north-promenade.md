@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Blackpool North Promenade
+description: Blackpool North Promenade is where the Great North West half marathon starts
 address: |-
   Blackpool
   FY1 2JQ

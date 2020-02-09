@@ -62,7 +62,7 @@ SessionTemplate.propTypes = {
   heroImage: PropTypes.object,
 }
 
-const Session = ({ data, pageContext }) => {
+const Session = ({ data, pageContext, location }) => {
   const { markdownRemark: session } = data
 
   const { now } = pageContext
@@ -87,7 +87,7 @@ const Session = ({ data, pageContext }) => {
     })
 
   return (
-    <Layout path={session.fields.slug}>
+    <Layout title={session.frontmatter.sessionKey} description={session.frontmatter.description} path={session.fields.slug} location={location}>
       <SessionTemplate
         events={events}
         information={session.html}
@@ -113,6 +113,7 @@ export const sessionQuery = graphql`
         slug
       }
       frontmatter {
+        description
         heroImage {
           childImageSharp {
             ...HeroImage

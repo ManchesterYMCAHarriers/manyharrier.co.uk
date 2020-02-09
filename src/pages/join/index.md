@@ -2,6 +2,7 @@
 templateKey: join-page
 path: /join
 title: Join us
+description: Looking for a Manchester city centre running club? The Manchester YMCA Harriers might just be the club for you!
 heroImage: /media/join-hero.jpg
 howToJoinUs: |
   If you are interested in joining us, we encourage you to come

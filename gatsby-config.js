@@ -3,6 +3,16 @@ module.exports = {
     title: 'Manchester YMCA Harriers',
     description: 'A friendly running club based in Manchester city centre. Training on Tuesday and Thursday evenings. All abilities welcome!',
     baseUrl: process.env.URL,
+    locale: 'en_GB',
+    openGraphImage: {
+      path: '/og-image.png',
+      type: 'image/png',
+      width: 1200,
+      height: 630,
+    },
+    twitter: {
+      site: '@ManYMCAHarriers',
+    },
     apiKey: {
       getAddress: process.env.GET_ADDRESS_API_KEY,
       googleMaps: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,

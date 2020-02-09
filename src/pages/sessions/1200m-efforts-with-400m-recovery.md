@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: 1200m efforts with 400m recovery
+description: A track training session
 ---
 This is a 30-minute session, where we repeat the following pattern:
 

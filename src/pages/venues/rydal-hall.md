@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Rydal Hall
+description: Rydal Hall is where the Fairfield Horseshow fell race starts and finishes
 address: |-
   Rydal Hall
   Ambleside

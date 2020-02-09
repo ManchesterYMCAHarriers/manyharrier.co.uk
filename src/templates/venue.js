@@ -104,7 +104,7 @@ VenueTemplate.propTypes = {
   heroImage: PropTypes.object,
 }
 
-const Venue = ({ data, pageContext }) => {
+const Venue = ({ data, pageContext, location }) => {
   const {
     site: {
       siteMetadata: {
@@ -117,7 +117,7 @@ const Venue = ({ data, pageContext }) => {
 
   const coords = JSON.parse(venue.frontmatter.location).coordinates
 
-  const location = {
+  const geoLocation = {
     lat: coords[1],
     lng: coords[0],
   }
@@ -145,13 +145,13 @@ const Venue = ({ data, pageContext }) => {
     : null
 
   return (
-    <Layout path={venue.fields.slug}>
+    <Layout title={venue.frontmatter.venueKey} description={venue.frontmatter.description} path={venue.fields.slug} location={location}>
       <VenueTemplate
         events={events}
         googleMapsApiKey={googleMapsApiKey}
         information={venue.html}
         address={venue.frontmatter.address.split('\n')}
-        location={location}
+        location={geoLocation}
         title={venue.frontmatter.venueKey}
         heroImage={heroImage}
       />
@@ -182,6 +182,7 @@ export const venueQuery = graphql`
       }
       frontmatter {
         address
+        description
         heroImage {
           childImageSharp {
             ...HeroImage

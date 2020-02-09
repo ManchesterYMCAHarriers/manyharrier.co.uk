@@ -49,7 +49,7 @@ EventsCalendarTemplate.propTypes = {
   thisMonth: PropTypes.instanceOf(Moment).isRequired,
 }
 
-const EventsCalendar = ({ data, pageContext }) => {
+const EventsCalendar = ({ data, pageContext, location }) => {
   const showPreviousMonthLink =
     data.showPrevious.group.length > 0 &&
     data.showPrevious.group[0].totalCount > 0
@@ -97,7 +97,7 @@ const EventsCalendar = ({ data, pageContext }) => {
   })
 
   return (
-    <Layout path={'/events'}>
+    <Layout title={`Events for ${thisMonth.format('MMMM YYYY')}`} description={`Manchester YMCA Harriers races, group runs, track training sessions and socials in ${thisMonth.format('MMMM YYYY')}`} path={'/events'} location={location}>
       <EventsCalendarTemplate
         events={events}
         showNextMonthLink={showNextMonthLink}

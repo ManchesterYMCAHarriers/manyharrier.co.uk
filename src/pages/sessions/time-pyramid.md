@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: Time pyramid
+description: A track training session
 ---
 This is a timed session, with intervals marked by a whistle. You will start with
 a one-minute effort and work your way up to a five-minute effort, then back

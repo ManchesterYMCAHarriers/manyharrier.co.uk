@@ -9,7 +9,7 @@ import { CallToActionText } from '../../components/CallToAction'
 import { kebabCase } from 'lodash'
 import Currency from '../../components/Currency'
 
-const KitIndex = ({ data }) => {
+const KitIndex = ({ data, location }) => {
   const regularKit = data.regular.edges
     .reduce((acc, { node }) => {
       const productIdx = acc.findIndex(({ title }) => {
@@ -59,7 +59,7 @@ const KitIndex = ({ data }) => {
     })
 
   return (
-    <Layout path={'/kit'}>
+    <Layout title={'Kit'} description={'Order your Manchester YMCA Harriers club kit here. We have vests, T-shirts, hoodies and bobble hats in stock.'} path={'/kit'} location={location}>
       <StandardContentContainer>
         <h1 className="heading-1">Kit</h1>
         <Panels>

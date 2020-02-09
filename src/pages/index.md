@@ -8,9 +8,9 @@ intro: |
    heart of Manchester city centre. If you're looking for a central Manchester
    running club, then we might just be the one for you!
 nextEventDefault: |
-  We have two regular training sessions each week:
+  We currently have three regular training sessions each week:
   
-   - **Speedwork:** Tuesday, 7:00pm at the [Manchester Regional Arena](/venues/manchester-regional-arena)
+   - **Speedwork:** Tuesday, 7:00pm at [Longford Park](/venues/longford-park-stadium)
    - **Group run:** Thursday, 6:30pm from [the Y Club](/venues/the-y-club)
   
    Come along and join us for a run!

@@ -7,7 +7,7 @@ import { Panel, Panels } from '../../components/Panels'
 import { CardCTA } from '../../components/Card'
 import { CallToActionText } from '../../components/CallToAction'
 
-const SessionsIndex = ({ data }) => {
+const SessionsIndex = ({ data, location }) => {
   const sessions = data.allMarkdownRemark.edges
     .map(({ node }) => {
       return {
@@ -29,7 +29,7 @@ const SessionsIndex = ({ data }) => {
     })
 
   return (
-    <Layout path={'/sessions'}>
+    <Layout title={'Sessions'} description={'The Manchester YMCA Harriers session plans'} path={'/sessions'} location={location}>
       <StandardContentContainer>
         <h1 className="heading-1">Sessions</h1>
         <Panels>

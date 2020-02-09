@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Tatton Park
+description: Tatton Park is a cross country venue
 address: |-
   Mereheath Drive
   Knutsford

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Arrowe Park
+description: Arrowe Park is a cross-country venue
 address: |-
   Arrowe Park Road
   Woodchurch

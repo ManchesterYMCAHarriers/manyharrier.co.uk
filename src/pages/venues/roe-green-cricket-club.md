@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Roe Green Cricket Club
+description: Roe Green Cricket Club is where the Worsley Woods trail race starts and finishes
 address: |-
   Greenleach Lane
   Roe Green

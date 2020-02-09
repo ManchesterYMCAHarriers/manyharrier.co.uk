@@ -8,6 +8,17 @@ const useSiteMetadata = () => {
           siteMetadata {
             title
             description
+            baseUrl
+            locale
+            openGraphImage {
+              path
+              type
+              width
+              height
+            }
+            twitter {
+              site
+            }
           }
         }
       }

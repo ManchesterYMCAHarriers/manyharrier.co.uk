@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Cask
+description: Cask is a venue for club socials, serving a large selection of beers.
 address: |-
   29 Liverpool Road
   Manchester

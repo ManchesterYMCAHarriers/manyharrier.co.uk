@@ -1,6 +1,7 @@
 ---
 templateKey: championship
 championshipKey: 2020 Summer Championship
+description: Our 2020 Summer Championship consists of nine races that take place between May and October 2020
 intro: |
   The 2020 Summer Championship consists of three road, three trail and three
   fell races, with a short, medium and long distance race for each terrain.

@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Longford Park Stadium
+description: Longford Park Stadium is used for some Manchester YMCA Harriers track training sessions
 address: |-
   Ryebank Road
   Stretford

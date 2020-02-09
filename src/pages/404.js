@@ -6,7 +6,7 @@ import { PanelFullWidth, Panels } from '../components/Panels'
 import { CallToActionBackLink } from '../components/CallToAction'
 
 const NotFoundPage = () => (
-  <Layout>
+  <Layout title={'Page not found'} description={'The page you are looking for does not exist'}>
     <StandardContentContainer>
       <Panels>
         <PanelFullWidth>

@@ -7,12 +7,8 @@ We'll start processing your membership right away!
 
 ## What happens now?
 
-Our Club Secretary will register you as an athlete with England
-Athletics and in the next few weeks they will send you a welcome
-pack which contains - amongst other things - your England Athletics
-membership card. Your membership card will have your England
-Athletics registration number on it, which you may need to provide
-when entering races to receive a discount.
+As you have joined with second claim membership, you will already be
+registered with England Athletics by your first claim club.
 
 Remember - you will only be able to represent the Manchester YMCA
 Harriers in disciplines in which your first claim club does not

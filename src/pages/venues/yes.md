@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: YES
+description: YES is a social venue, serving food and drinks
 address: |-
   38 Charles Street
   Manchester

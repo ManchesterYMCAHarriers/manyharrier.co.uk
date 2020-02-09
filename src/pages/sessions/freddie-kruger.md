@@ -1,6 +1,7 @@
 ---
 templateKey: session
 sessionKey: Freddie Kruger
+description: A track training session
 ---
 This is a distance based session, consisting of a 1-mile effort followed by
 four 200m efforts.

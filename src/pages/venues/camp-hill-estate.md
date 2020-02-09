@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Camp Hill Estate
+description: Camp Hill Estate is a Northern Athletics cross country venue
 address: |-
   Kirklington
   Bedale

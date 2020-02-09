@@ -9,7 +9,7 @@ import { Panel, PanelFullWidth, Panels } from '../../components/Panels'
 import { Card, CardCTA } from '../../components/Card'
 import { CallToActionText } from '../../components/CallToAction'
 
-const ChampionshipsIndex = ({ data }) => {
+const ChampionshipsIndex = ({ data, location }) => {
   const stripeSkus = data.allStripeSku.edges.map(({ node }) => {
     const {
       attributes: { name },
@@ -74,7 +74,7 @@ const ChampionshipsIndex = ({ data }) => {
   const heroImage = data.file.childImageSharp.fluid
 
   return (
-    <Layout path={'/championships'}>
+    <Layout title={'Championships'} description={'Manchester YMCA Harriers club championship fixtures, entries and standings'} path={'/championships'} location={location}>
       <StandardContentContainer>
         <Hero title={'Championships'} fluidImage={heroImage} />
         {current.length > 0 && (
@@ -214,11 +214,6 @@ export default ChampionshipsIndex
 
 export const championshipsQuery = graphql`
   query championshipsQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(
       filter: { frontmatter: { templateKey: { eq: "championship" } } }
     ) {

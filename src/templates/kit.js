@@ -307,8 +307,8 @@ KitPageTemplate.propTypes = {
   ),
 }
 
-const Kit = ({ data, pageContext }) => {
-  const { siteMetadata: title, allStripeSku: skus } = data
+const Kit = ({ data, pageContext, location }) => {
+  const { allStripeSku: skus } = data
   const { slug } = pageContext
 
   const productName = skus.edges[0].node.product.name
@@ -351,9 +351,8 @@ const Kit = ({ data, pageContext }) => {
   const heroImage = null
 
   return (
-    <Layout path={slug}>
+    <Layout title={productName} description={`Order ${productName} from the Manchester YMCA Harriers online kit shop`} path={slug} location={location}>
       <KitPageTemplate
-        siteTitle={title}
         productName={productName}
         heroImage={heroImage}
         stripeSkus={stripeSkus}
@@ -370,11 +369,6 @@ export default Kit
 
 export const kitQuery = graphql`
   query KitPage($productName: String!, $clearance: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allStripeSku(
       filter: {
         active: { eq: true }

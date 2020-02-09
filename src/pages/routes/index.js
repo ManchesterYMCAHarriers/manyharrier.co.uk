@@ -7,7 +7,7 @@ import { Panel, Panels } from '../../components/Panels'
 import { CardCTA } from '../../components/Card'
 import { CallToActionText } from '../../components/CallToAction'
 
-const RoutesIndex = ({ data }) => {
+const RoutesIndex = ({ data, location }) => {
   const routes = data.allMarkdownRemark.edges
     .map(({ node }) => {
       return {
@@ -29,7 +29,7 @@ const RoutesIndex = ({ data }) => {
     })
 
   return (
-    <Layout path={'/routes'}>
+    <Layout title={'Routes'} description={'Routes for group runs and races'} path={'/routes'} location={location}>
       <StandardContentContainer>
         <h1 className="heading-1">Routes</h1>
         <Panels>

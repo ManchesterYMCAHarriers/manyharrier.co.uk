@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: John Ruskin School
+description: The John Ruskin School is where the Coniston 14 race starts and ends
 address: |-
   Lake Road
   Coniston

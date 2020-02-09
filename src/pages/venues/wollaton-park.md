@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Wollaton Park
+description: Wollaton Park is an national cross country venue
 address: |-
   Wollaton
   Nottingham

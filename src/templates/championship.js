@@ -213,8 +213,6 @@ export class ChampionshipTemplate extends React.Component {
       }
     }
 
-    console.log(overallStandings)
-
     return (
       <StandardContentContainer>
         {heroImage ? (
@@ -374,7 +372,7 @@ ChampionshipTemplate.propTypes = {
   intro: PropTypes.node.isRequired,
 }
 
-const Championship = ({ data }) => {
+const Championship = ({ data, location }) => {
   const {
     stripeSku,
     markdownRemark: championship,
@@ -494,7 +492,7 @@ const Championship = ({ data }) => {
   }
 
   return (
-    <Layout path={championship.fields.slug}>
+    <Layout title={championship.frontmatter.championshipKey} description={championship.frontmatter.description} path={championship.fields.slug} location={location}>
       <ChampionshipTemplate
         events={events}
         heroImage={heroImage}
@@ -517,11 +515,6 @@ export default Championship
 
 export const championshipQuery = graphql`
   query ChampionshipByID($id: String!, $stripeSkuName: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     stripeSku(
       active: { eq: true }
       attributes: {
@@ -565,6 +558,7 @@ export const championshipQuery = graphql`
         }
         championshipKey
         championshipType
+        description
         heroImage {
           childImageSharp {
             ...HeroImage

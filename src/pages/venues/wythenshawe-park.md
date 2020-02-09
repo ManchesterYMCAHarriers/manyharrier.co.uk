@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Wythenshawe Park
+description: Wythenshawe Park is home to the Sale Sizzlers; it is also a cross-country venue
 address: |-
   Wythenshawe Road
   Manchester

@@ -2,6 +2,7 @@
 templateKey: rules-page
 path: /about/rules
 title: Rules of the Manchester YMCA Harriers Club
+description: The formal Club Rules and Constitution of the Manchester YMCA Harriers
 rulesDocument: /media/Manchester-YMCA-Harriers-Rules-2008.pdf
 ---
 1. That this club be called “The Manchester YMCA Harriers’ Club” hereafter referred to as “the Club” and shall be affiliated to England Athletics or the appropriate Governing Body.

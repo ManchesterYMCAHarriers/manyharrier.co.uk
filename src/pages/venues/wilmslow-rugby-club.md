@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Wilmslow Rugby Club
+description: Wilmslow Rugby Club is where the Wilmslow Half Marathon starts. It is also where the Manchester Area Cross Country League presentation takes place
 address: |-
   Memorial Ground
   Kings Road

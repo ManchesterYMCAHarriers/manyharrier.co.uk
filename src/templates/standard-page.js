@@ -3,24 +3,17 @@ import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { Helmet } from 'react-helmet'
 import Hero from '../components/Hero'
 import { PanelFullWidth, Panels } from '../components/Panels'
 
 export const StandardPageTemplate = ({
-  siteTitle,
   title,
   subtitle,
-  description,
   heroImage,
   content,
 }) => {
   return (
     <StandardContentContainer>
-      <Helmet>
-        <title>{title + ` | ` + siteTitle}</title>
-        {description && <meta name="description" content={description} />}
-      </Helmet>
       {heroImage ? (
         <Hero title={title} subtitle={subtitle} fluidImage={heroImage} />
       ) : (
@@ -48,21 +41,19 @@ StandardPageTemplate.propTypes = {
   content: PropTypes.string,
 }
 
-const StandardPage = ({ data }) => {
-  const { siteMetadata: title, markdownRemark: page } = data
+const StandardPage = ({ data, location }) => {
+  const { markdownRemark: page } = data
 
   const heroImage = page.frontmatter.heroImage
     ? page.frontmatter.heroImage.childImageSharp.fluid
     : null
 
   return (
-    <Layout path={page.fields.slug}>
+    <Layout title={page.frontmatter.title} description={page.frontmatter.description} path={page.fields.slug} location={location}>
       <StandardPageTemplate
-        siteTitle={title}
         title={page.frontmatter.title}
         subtitle={page.frontmatter.subtitle}
         heroImage={heroImage}
-        description={page.frontmatter.description}
         content={page.html}
       />
     </Layout>
@@ -77,11 +68,6 @@ export default StandardPage
 
 export const standardPageQuery = graphql`
   query StandardPage($id: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       html
       fields {

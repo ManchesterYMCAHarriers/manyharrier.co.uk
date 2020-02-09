@@ -3,12 +3,11 @@ import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
 import Form from '../../components/Form'
 import FieldsetMulti from '../../components/FieldsetMulti'
-import { graphql, StaticQuery } from 'gatsby'
 import FieldsetText from '../../components/FieldsetText'
 import Encode from '../../components/Encode'
 import FieldsetSelect from '../../components/FieldsetSelect'
 import FieldsetTextarea from '../../components/FieldsetTextarea'
-import { PanelFullWidth, Panels } from '../../components/Panels'
+import {PanelFullWidth, Panels} from '../../components/Panels'
 
 export default class CheckoutIndex extends React.Component {
   constructor(props) {
@@ -114,7 +113,7 @@ export default class CheckoutIndex extends React.Component {
             },
             async () => {
               try {
-                const { status, ok } = await this.submitFormData()
+                const {status, ok} = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -144,7 +143,7 @@ export default class CheckoutIndex extends React.Component {
     )
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     // Update/remove existing validation issues
     for (let i = 0; i < validationIssues.length; i++) {
@@ -180,156 +179,141 @@ export default class CheckoutIndex extends React.Component {
 
   render() {
     return (
-      <StaticQuery
-        query={graphql`
-          query Contact {
-            site {
-              siteMetadata {
-                title
-              }
-            }
-          }
-        `}
-        render={({ site: data }) => {
-          return (
-            <Layout path={'/contact'}>
-              <StandardContentContainer>
-                <h1 className="heading-1">Contact us</h1>
-                <Panels>
-                  <PanelFullWidth>
-                    <div className="panel red-bottom">
-                      <Form
-                        backHandler={this.backHandler}
-                        backValue={'Back'}
-                        externalError={this.state.externalError}
-                        formId={'contact'}
-                        method={'POST'}
-                        netlify={true}
-                        showBack={
-                          this.state.stage > 1 &&
-                          this.state.stage <= this.state.stages
-                        }
-                        showSubmit={true}
-                        submitHandler={this.submitHandler}
-                        submitValue={this.state.submitValue}
-                      >
-                        {/* Name */}
-                        <FieldsetText
-                          inputId={'name'}
-                          inputType={'text'}
-                          label={'What is your name?'}
-                          setFormValidationState={this.updateValidationIssues}
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 1}
-                          validationMessages={{
-                            valueMissing: 'Enter your name',
-                          }}
-                          inputAttributes={{
-                            autoComplete: 'name',
-                            required: true,
-                          }}
-                        />
+      <Layout title={'Contact us'} description={'Get in touch with the Manchester YMCA Harriers'} path={'/contact'} location={this.props.location}>
+        <StandardContentContainer>
+          <h1 className="heading-1">Contact us</h1>
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <Form
+                  backHandler={this.backHandler}
+                  backValue={'Back'}
+                  externalError={this.state.externalError}
+                  formId={'contact'}
+                  method={'POST'}
+                  netlify={true}
+                  showBack={
+                    this.state.stage > 1 &&
+                    this.state.stage <= this.state.stages
+                  }
+                  showSubmit={true}
+                  submitHandler={this.submitHandler}
+                  submitValue={this.state.submitValue}
+                >
+                  {/* Name */}
+                  <FieldsetText
+                    inputId={'name'}
+                    inputType={'text'}
+                    label={'What is your name?'}
+                    setFormValidationState={this.updateValidationIssues}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 1}
+                    validationMessages={{
+                      valueMissing: 'Enter your name',
+                    }}
+                    inputAttributes={{
+                      autoComplete: 'name',
+                      required: true,
+                    }}
+                  />
 
-                        {/* Email */}
-                        <FieldsetText
-                          inputId={'email'}
-                          inputType={'email'}
-                          label={'What is your email address?'}
-                          setFormValidationState={this.updateValidationIssues}
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 2}
-                          inputAttributes={{
-                            autoComplete: 'email',
-                            required: true,
-                          }}
-                          validationMessages={{
-                            typeMismatch: 'Enter a valid email address',
-                            valueMissing: 'Enter your email address',
-                          }}
-                        />
+                  {/* Email */}
+                  <FieldsetText
+                    inputId={'email'}
+                    inputType={'email'}
+                    label={'What is your email address?'}
+                    setFormValidationState={this.updateValidationIssues}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 2}
+                    inputAttributes={{
+                      autoComplete: 'email',
+                      required: true,
+                    }}
+                    validationMessages={{
+                      typeMismatch: 'Enter a valid email address',
+                      valueMissing: 'Enter your email address',
+                    }}
+                  />
 
-                        {/* Filtering */}
-                        <FieldsetSelect
-                          defaultValue={''}
-                          legend={'What are you contacting us about?'}
-                          inputId={'reason'}
-                          inputAttributes={{
-                            required: true,
-                          }}
-                          setFormValidationState={this.updateValidationIssues}
-                          visible={this.state.stage === 3}
-                          validationIssues={this.state.validationIssues}
-                          validationMessages={{
-                            valueMissing: 'Select an option',
-                          }}
-                        >
-                          <option value="">(Select a reason)</option>
-                          <option value="I'm interested in joining the club">
-                            I'm interested in joining the club
-                          </option>
-                          <option value="I am promoting an event">
-                            I am promoting an event
-                          </option>
-                          <option value="Something else">Something else</option>
-                        </FieldsetSelect>
+                  {/* Filtering */}
+                  <FieldsetSelect
+                    defaultValue={''}
+                    legend={'What are you contacting us about?'}
+                    inputId={'reason'}
+                    inputAttributes={{
+                      required: true,
+                    }}
+                    setFormValidationState={this.updateValidationIssues}
+                    visible={this.state.stage === 3}
+                    validationIssues={this.state.validationIssues}
+                    validationMessages={{
+                      valueMissing: 'Select an option',
+                    }}
+                  >
+                    <option value="">(Select a reason)</option>
+                    <option value="I'm interested in joining the club">
+                      I'm interested in joining the club
+                    </option>
+                    <option value="I am promoting an event">
+                      I am promoting an event
+                    </option>
+                    <option value="Something else">Something else</option>
+                  </FieldsetSelect>
 
-                        {/* Message */}
-                        <FieldsetTextarea
-                          inputId={'message'}
-                          label={'What is your message'}
-                          setFormValidationState={this.updateValidationIssues}
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 4}
-                          rows={5}
-                          validationMessages={{
-                            valueMissing: 'Enter your message',
-                          }}
-                          inputAttributes={{
-                            required: true,
-                          }}
-                        />
+                  {/* Message */}
+                  <FieldsetTextarea
+                    inputId={'message'}
+                    label={'What is your message'}
+                    setFormValidationState={this.updateValidationIssues}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 4}
+                    rows={5}
+                    validationMessages={{
+                      valueMissing: 'Enter your message',
+                    }}
+                    inputAttributes={{
+                      required: true,
+                    }}
+                  />
 
-                        {/* Review */}
-                        <FieldsetMulti
-                          legend={'Is everything correct?'}
-                          hint={
-                            'If not, please use the back button to go back and change it.'
-                          }
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 5}
-                        >
-                          <dl>
-                            <dt>Name</dt>
-                            <dd>{this.state.data.name}</dd>
-                            <dt>Email address</dt>
-                            <dd>{this.state.data.email}</dd>
-                            <dt>Reason for getting in touch</dt>
-                            <dd>{this.state.data.reason}</dd>
-                            <dt>Your message</dt>
-                            <dd className="whitespace-pre-line">
-                              {this.state.data.message}
-                            </dd>
-                          </dl>
-                        </FieldsetMulti>
+                  {/* Review */}
+                  <FieldsetMulti
+                    legend={'Is everything correct?'}
+                    hint={
+                      'If not, please use the back button to go back and change it.'
+                    }
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 5}
+                  >
+                    <dl>
+                      <dt>Name</dt>
+                      <dd>{this.state.data.name}</dd>
+                      <dt>Email address</dt>
+                      <dd>{this.state.data.email}</dd>
+                      <dt>Reason for getting in touch</dt>
+                      <dd>{this.state.data.reason}</dd>
+                      <dt>Your message</dt>
+                      <dd className="whitespace-pre-line">
+                        {this.state.data.message}
+                      </dd>
+                    </dl>
+                  </FieldsetMulti>
 
-                        {/* Thanks */}
-                        <FieldsetMulti
-                          legend={'Thanks for getting in touch!'}
-                          setFormValidationState={this.updateValidationIssues}
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 6}
-                        >
-                          <p>We've received your message.</p>
-                        </FieldsetMulti>
-                      </Form>
-                    </div>
-                  </PanelFullWidth>
-                </Panels>
-              </StandardContentContainer>
-            </Layout>
-          )
-        }}
-      />
+                  {/* Thanks */}
+                  <FieldsetMulti
+                    legend={'Thanks for getting in touch!'}
+                    setFormValidationState={this.updateValidationIssues}
+                    validationIssues={this.state.validationIssues}
+                    visible={this.state.stage === 6}
+                  >
+                    <p>We've received your message.</p>
+                  </FieldsetMulti>
+                </Form>
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        </StandardContentContainer>
+      </Layout>
     )
   }
 }

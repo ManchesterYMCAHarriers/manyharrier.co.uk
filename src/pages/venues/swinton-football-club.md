@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Swinton Football Club
+description: Swinton Football Club has been the home of the Swinton 5.25 mile road races
 address: |-
   Barton Road
   Swinton

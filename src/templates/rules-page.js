@@ -3,25 +3,18 @@ import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { Helmet } from 'react-helmet'
 import { PanelFullWidth, Panels } from '../components/Panels'
 import { CallToActionLink } from '../components/CallToAction'
 import Hero from '../components/Hero'
 
 export const RulesPageTemplate = ({
-  siteTitle,
   title,
   heroImage,
-  description,
   content,
   rulesDocument,
 }) => {
   return (
     <StandardContentContainer>
-      <Helmet>
-        <title>{title + ` | ` + siteTitle}</title>
-        {description && <meta name="description" content={description} />}
-      </Helmet>
       {heroImage ? (
         <Hero fluidImage={heroImage} title={title} />
       ) : (
@@ -59,13 +52,12 @@ RulesPageTemplate.propTypes = {
   }).isRequired,
 }
 
-const RulesPage = ({ data }) => {
-  const { siteMetadata: title, markdownRemark: page } = data
+const RulesPage = ({ data, location }) => {
+  const { markdownRemark: page } = data
 
   return (
-    <Layout path={page.fields.slug}>
+    <Layout title={page.frontmatter.title} description={page.frontmatter.description} path={page.fields.slug} location={location}>
       <RulesPageTemplate
-        siteTitle={title}
         title={page.frontmatter.title}
         description={page.frontmatter.description}
         content={page.html}
@@ -83,11 +75,6 @@ export default RulesPage
 
 export const rulesPageQuery = graphql`
   query RulesPage($id: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(id: { eq: $id }) {
       html
       fields {

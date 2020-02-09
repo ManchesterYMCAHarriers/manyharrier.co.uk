@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Yarrow Valley
+description: Yarrow Valley is a cross-country venue
 address: |-
   Butterworth Brow
   Chorley

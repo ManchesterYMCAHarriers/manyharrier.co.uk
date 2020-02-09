@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: Heaton Park
+description: Heaton Park is a cross-country venue
 address: |-
   Manchester
   M25 2SW

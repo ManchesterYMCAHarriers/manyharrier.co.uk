@@ -1,6 +1,7 @@
 ---
 templateKey: venue
 venueKey: The Y Club
+description: The Y Club is the home of the Manchester YMCA Harriers. We start our group runs and marathon training runs here and it is also the venue for our AGM
 address: |-
   Liverpool Road
   Manchester

@@ -1,12 +1,14 @@
 ---
 templateKey: session
 sessionKey: 12 days of Christmas
+description: A track training session
 ---
 A festive track session where we take on the last verse of the 12 days of
 Christmas.
 
 Efforts are not intended to be "eyeballs out" - complete as much as you can in
-30 minutes.
+30 minutes, or take a bit of extra time to complete the full set if - like most 
+of us - you aren't running at an Olympic standard!
 
 * **1200m effort** (3 laps of the track)
 * 100m jog recovery
