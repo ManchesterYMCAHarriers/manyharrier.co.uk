@@ -27,7 +27,6 @@ import {
   StorageAvailable,
 } from '../components/Cart'
 import { CardCTA } from '../components/Card'
-import Result from "../components/Result";
 import Results from "../components/Results";
 
 export class EventTemplate extends React.Component {
@@ -463,7 +462,7 @@ EventTemplate.propTypes = {
   infoForCompetition: PropTypes.node,
   infoForEventType: PropTypes.node,
   infoForTerrain: PropTypes.node,
-  results: PropTypes.node,
+  results: PropTypes.object,
   resultsType: PropTypes.string,
   route: PropTypes.shape({
     description: PropTypes.node,
@@ -571,7 +570,6 @@ const Event = ({ data, pageContext }) => {
       }
 
       event.frontmatter.results.forEach(({urn, time}) => {
-        const timeMoment = Moment.utc(time)
         const runner = members.find(member => {
           return member.urn === urn
         })
@@ -580,12 +578,11 @@ const Event = ({ data, pageContext }) => {
           throw new Error(`Member for URN ${urn} not found`)
         }
 
-        const { firstName, lastName, gender, dateOfBirth } = runner
+        const { firstName, lastName, gender } = runner
 
         const result = {
           name: `${firstName} ${lastName}`,
           time: time,
-          timeForSorting: timeMoment,
         }
 
         if (gender === "F") {
@@ -596,11 +593,11 @@ const Event = ({ data, pageContext }) => {
       })
 
       results.women.sort((a, b) => {
-        return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+        return a.time < b.time ? -1 : 1
       })
 
       results.men.sort((a, b) => {
-        return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+        return a.time < b.time ? -1 : 1
       })
     }
   }

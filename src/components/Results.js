@@ -14,7 +14,7 @@ class Results extends React.Component {
         ) : (
           <div>
             {results.map(({name, time}) => (
-              <Result name={name} time={time} />
+              <Result key={`results-${name.replace(' ', '-')}`} name={name} time={time} />
             ))}
           </div>
         )}

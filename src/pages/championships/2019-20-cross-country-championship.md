@@ -9,4 +9,9 @@ intro: |
   You need to complete five of the nine races in order to qualify for the
   championship.
 terrain: Cross Country
+championshipType: Gendered
+qualificationCriteria:
+  - numberOfRaces: 5
+veteranCategoryStart: 40
+veteranCategorySize: 5
 ---

@@ -17,7 +17,11 @@ import {
 import Currency from '../components/Currency'
 import Hero from '../components/Hero'
 import { PanelFullWidth, Panels } from '../components/Panels'
-import { CallToActionBackButton } from '../components/CallToAction'
+import {
+  CallToActionBackButton,
+} from '../components/CallToAction'
+import Overall from '../standings/overall'
+import OverallStandings from "../components/OverallStandings";
 
 export class ChampionshipTemplate extends React.Component {
   constructor(props) {
@@ -186,6 +190,8 @@ export class ChampionshipTemplate extends React.Component {
       heroImage,
       intro,
       information,
+      overallStandings,
+      standingsType,
       stripeSku,
     } = this.props
     let hint = ``
@@ -326,6 +332,21 @@ export class ChampionshipTemplate extends React.Component {
             </PanelFullWidth>
           </Panels>
         )}
+        {overallStandings && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <h2 className="heading-2 mb-4">Overall Standings</h2>
+                {standingsType === "Gendered" && (
+                  <div className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
+                    <OverallStandings key={"overall-standings-men"} title={"Men"} standings={overallStandings.men} />
+                    <OverallStandings key={"overall-standings-women"} title={"Women"} standings={overallStandings.women} />
+                  </div>
+                )}
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        )}
       </StandardContentContainer>
     )
   }
@@ -353,16 +374,60 @@ ChampionshipTemplate.propTypes = {
 
 const Championship = ({ data }) => {
   const {
-    site: {
-      siteMetadata: { title },
-    },
     stripeSku,
     markdownRemark: championship,
+    member: {
+      allMember: {
+        data: members,
+      }
+    },
   } = data
+
+  let eventsWithResults = 0
 
   const events = (championship.frontmatter.championshipEvents || [])
     .map(event => {
+      let results
+
+      if (event.frontmatter.results) {
+        eventsWithResults++
+        if (!event.frontmatter.resultsType) {
+          throw new Error("No resultsType specified")
+        }
+
+        if (event.frontmatter.resultsType === "Gendered") {
+          results = {
+            men: [],
+            women: [],
+          }
+
+          event.frontmatter.results.forEach(({urn, time}) => {
+            const runner = members.find(member => {
+              return member.urn === urn
+            })
+
+            if (!runner) {
+              throw new Error(`Member for URN ${urn} not found`)
+            }
+
+            const {gender} = runner
+
+            const result = {
+              urn: urn,
+              time: time,
+            }
+
+            if (gender === "F") {
+              results.women.push(result)
+            } else {
+              results.men.push(result)
+            }
+          })
+        }
+      }
+
       return {
+        results: results,
         startsAt: Moment.utc(event.frontmatter.startsAt),
         slug: event.fields.slug,
         title: event.frontmatter.eventKey,
@@ -389,6 +454,34 @@ const Championship = ({ data }) => {
     ? championship.frontmatter.heroImage.childImageSharp.fluid
     : null
 
+  let overallStandings
+  if (eventsWithResults > 0) {
+    overallStandings = {
+      men: Overall({
+        eventsInChampionship: events.length,
+        members,
+        results: events.map(({results}) => {
+          if (results && results.men) {
+            return results.men
+          }
+          return null
+        }).filter(val => val !== null),
+        qualificationCriteria: championship.frontmatter.qualificationCriteria,
+      }),
+      women: Overall({
+        eventsInChampionship: events.length,
+        members,
+        results: events.map(({results}) => {
+          if (results && results.women) {
+            return results.women
+          }
+          return null
+        }).filter(val => val !== null),
+        qualificationCriteria: championship.frontmatter.qualificationCriteria,
+      })
+    }
+  }
+
   return (
     <Layout path={championship.fields.slug}>
       <ChampionshipTemplate
@@ -396,6 +489,8 @@ const Championship = ({ data }) => {
         heroImage={heroImage}
         intro={championship.fields.intro}
         information={championship.html}
+        overallStandings={overallStandings}
+        standingsType={championship.frontmatter.championshipType}
         stripeSku={stripeSkuData}
         title={championship.frontmatter.championshipKey}
       />
@@ -445,6 +540,11 @@ export const championshipQuery = graphql`
           frontmatter {
             eventKey
             startsAt
+            results {
+              urn
+              time
+            }
+            resultsType
             venue {
               frontmatter {
                 venueKey
@@ -453,12 +553,27 @@ export const championshipQuery = graphql`
           }
         }
         championshipKey
+        championshipType
         heroImage {
           childImageSharp {
             ...HeroImage
           }
         }
+        qualificationCriteria {
+          numberOfRaces
+        }
         terrain
+      }
+    }
+    member {
+      allMember(_size: 1000) {
+        data {
+          urn
+          firstName
+          lastName
+          gender
+          dateOfBirth
+        }
       }
     }
   }
