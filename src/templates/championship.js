@@ -227,6 +227,16 @@ export class ChampionshipTemplate extends React.Component {
             </div>
           </PanelFullWidth>
         </Panels>
+        {information && (
+          <Panels>
+            <PanelFullWidth>
+              <div
+                className="content panel black-bottom"
+                dangerouslySetInnerHTML={{ __html: information }}
+              />
+            </PanelFullWidth>
+          </Panels>
+        )}
         {stripeSku && this.state.storageAvailable && (
           <Panels>
             <PanelFullWidth>
@@ -306,6 +316,21 @@ export class ChampionshipTemplate extends React.Component {
             </PanelFullWidth>
           </Panels>
         )}
+        {overallStandings && (
+          <Panels>
+            <PanelFullWidth>
+              <div className="panel red-bottom">
+                <h2 className="heading-2 mb-4">Overall Standings</h2>
+                {standingsType === "Gendered" && (
+                  <div className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
+                    <OverallStandings key={"overall-standings-men"} title={"Men"} standings={overallStandings.men} />
+                    <OverallStandings key={"overall-standings-women"} title={"Women"} standings={overallStandings.women} />
+                  </div>
+                )}
+              </div>
+            </PanelFullWidth>
+          </Panels>
+        )}
         <Panels>
           <PanelFullWidth>
             <div className="panel black-bottom">
@@ -322,31 +347,6 @@ export class ChampionshipTemplate extends React.Component {
             </div>
           </PanelFullWidth>
         </Panels>
-        {information && (
-          <Panels>
-            <PanelFullWidth>
-              <div
-                className="content panel black-bottom"
-                dangerouslySetInnerHTML={{ __html: information }}
-              />
-            </PanelFullWidth>
-          </Panels>
-        )}
-        {overallStandings && (
-          <Panels>
-            <PanelFullWidth>
-              <div className="panel red-bottom">
-                <h2 className="heading-2 mb-4">Overall Standings</h2>
-                {standingsType === "Gendered" && (
-                  <div className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
-                    <OverallStandings key={"overall-standings-men"} title={"Men"} standings={overallStandings.men} />
-                    <OverallStandings key={"overall-standings-women"} title={"Women"} standings={overallStandings.women} />
-                  </div>
-                )}
-              </div>
-            </PanelFullWidth>
-          </Panels>
-        )}
       </StandardContentContainer>
     )
   }
