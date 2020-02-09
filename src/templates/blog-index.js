@@ -1,7 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import Layout from '../components/Layout'
-import Moment from 'moment'
 import { graphql } from 'gatsby'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { Panel, PanelFullWidth, Panels } from '../components/Panels'

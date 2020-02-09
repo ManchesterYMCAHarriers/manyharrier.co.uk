@@ -63,23 +63,14 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
   // Re-map each result to include race times as a Moment, results sorted in ascending order
   const resultsWithAdditionalInfo = results.map(resultsForRace => {
     const resultsForRaceWithMoments = resultsForRace.map(({urn, time}) => {
-      let timeInSeconds = 0
-      const hms = time.split(":")
-      let multiplier = 1
-      for (let i = hms.length -1; i >= 0; i--) {
-        timeInSeconds += parseFloat(hms[i]) * multiplier
-        multiplier = 60
-      }
-
       return {
         urn,
         time,
-        timeInSeconds
       }
     })
 
     resultsForRaceWithMoments.sort((a, b) => {
-      return a.timeInSeconds < b.timeInSeconds ? -1 : 1
+      return a.time < b.time ? -1 : 1
     })
 
     return resultsForRaceWithMoments
@@ -141,34 +132,38 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
     let previousPoints = null
     let points = 1
 
-    return resultsForRace.map((result, idx) => {
-      const {urn, timeInSeconds} = result
+    if (resultsForRace) {
+      return resultsForRace.map((result) => {
+        const {urn, time} = result
 
-      let runnerCanQualify = false
-      for (let i = 0; i < qualificationRoutesByRunner[urn].length; i++) {
-        if (qualificationRoutesByRunner[urn][i] !== false) {
-          runnerCanQualify = true
-          break
+        let runnerCanQualify = false
+        for (let i = 0; i < qualificationRoutesByRunner[urn].length; i++) {
+          if (qualificationRoutesByRunner[urn][i] !== false) {
+            runnerCanQualify = true
+            break
+          }
         }
-      }
 
-      if (!runnerCanQualify) {
-        result.points = null
-        return result
-      }
+        if (!runnerCanQualify) {
+          result.points = null
+          return result
+        }
 
-      if (previousTime !== null && previousTime === timeInSeconds) {
-        result.points = previousPoints
+        if (previousTime !== null && previousTime === time) {
+          result.points = previousPoints
+          points++
+          return result
+        }
+
+        previousTime = time
+        result.points = points
+        previousPoints = points
         points++
         return result
-      }
+      })
+    }
 
-      previousTime = timeInSeconds
-      result.points = points
-      previousPoints = points
-      points++
-      return result
-    })
+    return null
   })
 
   const resultsByRunnerWithPoints = members.reduce((acc, {urn}) => {
@@ -272,10 +267,10 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
         continue
       }
 
-      if (aResult.timeInSeconds === bResult.timeInSeconds) {
+      if (aResult.time === bResult.time) {
         continue
       }
-      if (aResult.timeInSeconds < bResult.timeInSeconds) {
+      if (aResult.time < bResult.time) {
         aWins++
         continue
       }
@@ -306,7 +301,8 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
             if (h2h === 0) {
               return a.name < b.name
             }
-            return h2h          }
+            return h2h
+          }
         }
         return a.races > b.races ? -1 : 1
       }
@@ -344,16 +340,16 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
     }
 
     let tied = 0
-    for (let j = i+1; j < standings.length; j++) {
+    for (let j = i + 1; j < standings.length; j++) {
       if (standings[i].qualified === true && standings[i].qualified === standings[j].qualified && standings[i].points === standings[j].points && headToHead(resultsByRunnerWithPoints[standings[i].urn], resultsByRunnerWithPoints[standings[j].urn]) === 0) {
         tied++
-        standings[j].rank = `=${i+1}`
+        standings[j].rank = `=${i + 1}`
         continue
       }
 
       if (standings[i].qualified === null && standings[i].qualified === standings[j].qualified && standings[i].races === standings[j].races && standings[i].points === standings[j].points && headToHead(resultsByRunnerWithPoints[standings[i].urn], resultsByRunnerWithPoints[standings[j].urn]) === 0) {
         tied++
-        standings[j].rank = `=${i+1}`
+        standings[j].rank = `=${i + 1}`
         continue
       }
 
@@ -361,12 +357,12 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
     }
 
     if (tied > 0) {
-      standings[i].rank = `=${i+1}`
+      standings[i].rank = `=${i + 1}`
       i += tied
       continue
     }
 
-    standings[i].rank = `${i+1}`
+    standings[i].rank = `${i + 1}`
   }
 
   return standings
