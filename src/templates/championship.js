@@ -351,6 +351,16 @@ ChampionshipTemplate.propTypes = {
   intro: PropTypes.node.isRequired,
 }
 
+const VeteranCategory = (firstVeteranAgeCategory, veteranAgeCategorySize, championshipStartDate, dateOfBirth) => {
+  const ageAtChampionshipStart = championshipStartDate.diff(dateOfBirth, 'years')
+
+  if (ageAtChampionshipStart < firstVeteranAgeCategory) {
+    return null
+  }
+
+  return ageAtChampionshipStart - (ageAtChampionshipStart % veteranAgeCategorySize)
+}
+
 const Championship = ({ data }) => {
   const {
     site: {
@@ -360,9 +370,65 @@ const Championship = ({ data }) => {
     markdownRemark: championship,
   } = data
 
+  let eventsWithResults = 0
+
   const events = (championship.frontmatter.championshipEvents || [])
     .map(event => {
+      let results
+
+      if (event.frontmatter.results) {
+        eventsWithResults++
+
+        if (!event.frontmatter.resultsType) {
+          throw new Error("No resultsType specified")
+        }
+
+        if (event.frontmatter.resultsType === "Gendered") {
+          results = {
+            men: [],
+            women: [],
+          }
+
+          event.frontmatter.results.forEach(({urn, time}) => {
+            const timeMoment = Moment.utc(time)
+
+            const runner = members.find(member => {
+              return member.urn === urn
+            })
+
+            if (!runner) {
+              throw new Error(`Member for URN ${urn} not found`)
+            }
+
+            const {firstName, lastName, gender, dateOfBirth} = runner
+
+            const result = {
+              urn: urn,
+              name: `${firstName} ${lastName}`,
+              dateOfBirth: dateOfBirth,
+              time: time,
+              timeForSorting: timeMoment,
+            }
+
+            if (gender === "F") {
+              results.women.push(result)
+            } else {
+              results.men.push(result)
+            }
+          })
+
+          results.women.sort((a, b) => {
+            return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+          })
+
+          results.men.sort((a, b) => {
+            return a.timeForSorting.isBefore(b.timeForSorting) ? -1 : 1
+          })
+        }
+      }
+
       return {
+        results: results,
         startsAt: Moment.utc(event.frontmatter.startsAt),
         slug: event.fields.slug,
         title: event.frontmatter.eventKey,
@@ -396,6 +462,8 @@ const Championship = ({ data }) => {
         heroImage={heroImage}
         intro={championship.fields.intro}
         information={championship.html}
+        standings={standings}
+        standingsType={championship.fields.championshipType}
         stripeSku={stripeSkuData}
         title={championship.frontmatter.championshipKey}
       />
@@ -445,6 +513,10 @@ export const championshipQuery = graphql`
           frontmatter {
             eventKey
             startsAt
+            results {
+              urn
+              time
+            }
             venue {
               frontmatter {
                 venueKey
@@ -453,12 +525,25 @@ export const championshipQuery = graphql`
           }
         }
         championshipKey
+        championshipType
         heroImage {
           childImageSharp {
             ...HeroImage
           }
         }
+        qualificationCriteria
         terrain
+      }
+    }
+    member {
+      allMember(_size: 1000) {
+        data {
+          urn
+          firstName
+          lastName
+          gender
+          dateOfBirth
+        }
       }
     }
   }

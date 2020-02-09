@@ -27,7 +27,6 @@ import {
   StorageAvailable,
 } from '../components/Cart'
 import { CardCTA } from '../components/Card'
-import Result from "../components/Result";
 import Results from "../components/Results";
 
 export class EventTemplate extends React.Component {
