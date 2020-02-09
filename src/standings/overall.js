@@ -1,65 +1,6 @@
-/**
- * INPUTS
- * ======
- * Results array looks like:
- * [
- *   [
- *     {
- *       urn: 1234567,
- *       time: "30:00"
- *     },
- *     {
- *       urn: 2345678,
- *       time: "31:00"
- *     }
- *   ],
- *   [
- *     {
- *       urn: 1234567,
- *       time: "29:30"
- *     },
- *     {
- *       urn: 3245243,
- *       time: "30:04"
- *     }
- *   ]
- * ]
- *
- * Members array looks like:
- * [
- *   {
- *     urn: 1234567,
- *     firstName: "Joe",
- *     lastName: "Bloggs",
- *     dateOfBirth: "1980-01-01",
- *     gender: "M"
- *   }
- * ]
- *
- * Qualification criteria array looks like:
- * [
- *   {
- *     numberOfRaces: 5,
- *   }
- * ]
- *
- * OUTPUTS
- * =======
- * Returns a sorted array of participants
- *
- * [
- *   {
- *     urn: 1234567,
- *     name: "Joe Bloggs",
- *     points: 2,
- *     qualified: true,
- *     races: 2,
- *     rank: "1"
- *   }
- * ]
- */
+import * as Moment from "moment";
 
-const Overall = ({eventsInChampionship, results, members, qualificationCriteria}) => {
+const Overall = ({eventsInChampionship, results, members, qualificationCriteria, categoryKeyDate, veteranStartAge, veteranCategoryDuration}) => {
   // Re-map each result to include race times as a Moment, results sorted in ascending order
   const resultsWithAdditionalInfo = results.map(resultsForRace => {
     const resultsForRaceWithMoments = resultsForRace.map(({urn, time}) => {
@@ -186,7 +127,15 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
       return memberUrn === parseInt(urn, 10)
     })
 
-    const name = [member.firstName, member.lastName].join(" ")
+    const name = [member.firstName, member.lastName].join(' ')
+    let category = null
+    if (categoryKeyDate && veteranStartAge && veteranCategoryDuration) {
+
+      const ageOnKeyDate = categoryKeyDate.diff(Moment.utc(member.dateOfBirth), 'years')
+      if (ageOnKeyDate >= veteranStartAge) {
+        category = `V${ageOnKeyDate - (ageOnKeyDate % veteranCategoryDuration)}`
+      }
+    }
     const qualified = qualificationRoutesByRunner[urn].reduce((acc, val) => {
       if (acc === true) {
         return acc
@@ -250,6 +199,7 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
     standings.push({
       urn: parseInt(urn, 10),
       name,
+      category,
       points,
       qualified,
       races
@@ -368,4 +318,4 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria}
   return standings
 }
 
-module.exports = Overall
+export default Overall

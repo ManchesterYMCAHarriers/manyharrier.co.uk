@@ -12,6 +12,6 @@ terrain: Cross Country
 championshipType: Gendered
 qualificationCriteria:
   - numberOfRaces: 5
-veteranCategoryStart: 40
-veteranCategorySize: 5
+veteranStartAge: 40
+veteranCategoryDuration: 5
 ---

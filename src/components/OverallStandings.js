@@ -20,8 +20,8 @@ class OverallStandings extends React.Component {
               <div className={"w-12 flex-shrink-0 flex-grow-0 text-right font-bold"}>Qual.</div>
               <div className={"w-12 flex-shrink-0 flex-grow-0 text-right font-bold"}>Pts.</div>
             </div>
-            {standings.map(({name, points, qualified, races, rank, urn}) => (
-              <OverallStanding key={`standing-${urn}`} name={name} points={points} qualified={qualified} races={races} rank={rank} />
+            {standings.map(({name, category, points, qualified, races, rank, urn}) => (
+              <OverallStanding key={`standing-${urn}`} name={name} category={category} points={points} qualified={qualified} races={races} rank={rank} />
             ))}
           </div>
         )}
@@ -34,6 +34,7 @@ OverallStandings.propTypes = {
   title: PropTypes.string.isRequired,
   standings: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
+    category: PropTypes.string,
     points: PropTypes.number,
     qualified: PropTypes.bool,
     races: PropTypes.number,

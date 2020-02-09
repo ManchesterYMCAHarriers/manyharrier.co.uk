@@ -1,4 +1,5 @@
-const Overall = require("../Overall")
+import * as Moment from "moment";
+import Overall from "../overall"
 
 describe("Overall standings", () => {
   const eventsInChampionship = 4
@@ -8,42 +9,28 @@ describe("Overall standings", () => {
       urn: 1,
       firstName: "Alan",
       lastName: "Arnold",
-      dateOfBirth: "1980-01-01",
+      dateOfBirth: "1979-10-14",
       gender: "M"
     },
     {
       urn: 2,
       firstName: "Alexa",
       lastName: "Arnold",
-      dateOfBirth: "1980-01-01",
+      dateOfBirth: "1979-10-15",
       gender: "F"
     },
     {
       urn: 3,
       firstName: "Bob",
       lastName: "Braithwaite",
-      dateOfBirth: "1980-01-01",
+      dateOfBirth: "1974-10-14",
       gender: "M"
     },
     {
       urn: 4,
       firstName: "Babs",
       lastName: "Braithwaite",
-      dateOfBirth: "1980-01-01",
-      gender: "F"
-    },
-    {
-      urn: 5,
-      firstName: "Charlie",
-      lastName: "Chaser",
-      dateOfBirth: "1980-01-01",
-      gender: "M"
-    },
-    {
-      urn: 6,
-      firstName: "Ciara",
-      lastName: "Campbell",
-      dateOfBirth: "1980-01-01",
+      dateOfBirth: "1974-10-15",
       gender: "F"
     },
   ]
@@ -53,6 +40,10 @@ describe("Overall standings", () => {
       numberOfRaces: 3
     }
   ]
+
+  const categoryKeyDate = Moment.utc("2019-10-14")
+  const veteranStartAge = 40
+  const veteranCategoryDuration = 5
 
   it("returns an empty array if there are no results", () => {
     const results = []
@@ -95,13 +86,17 @@ describe("Overall standings", () => {
       eventsInChampionship,
       results,
       members,
-      qualificationCriteria
+      qualificationCriteria,
+      categoryKeyDate,
+      veteranCategoryDuration,
+      veteranStartAge
     })
 
     expect(res).toEqual([
       {
         urn: 1,
         name: "Alan Arnold",
+        category: "V40",
         points: 1,
         qualified: null,
         races: 1,
@@ -110,6 +105,7 @@ describe("Overall standings", () => {
       {
         urn: 2,
         name: "Alexa Arnold",
+        category: null,
         points: 1,
         qualified: null,
         races: 1,
@@ -118,6 +114,7 @@ describe("Overall standings", () => {
       {
         urn: 3,
         name: "Bob Braithwaite",
+        category: "V45",
         points: 1,
         qualified: null,
         races: 1,
@@ -126,6 +123,7 @@ describe("Overall standings", () => {
       {
         urn: 4,
         name: "Babs Braithwaite",
+        category: "V40",
         points: 4,
         qualified: null,
         races: 1,
@@ -172,13 +170,17 @@ describe("Overall standings", () => {
       eventsInChampionship,
       results,
       members,
-      qualificationCriteria
+      qualificationCriteria,
+      categoryKeyDate,
+      veteranCategoryDuration,
+      veteranStartAge
     })
 
     expect(res).toEqual([
       {
         urn: 1,
         name: "Alan Arnold",
+        category: "V40",
         points: 5,
         qualified: true,
         races: 3,
@@ -187,6 +189,7 @@ describe("Overall standings", () => {
       {
         urn: 2,
         name: "Alexa Arnold",
+        category: null,
         points: 2,
         qualified: null,
         races: 2,
@@ -195,6 +198,7 @@ describe("Overall standings", () => {
       {
         urn: 3,
         name: "Bob Braithwaite",
+        category: "V45",
         points: null,
         qualified: false,
         races: 1,
@@ -267,13 +271,17 @@ describe("Overall standings", () => {
       eventsInChampionship,
       results,
       members,
-      qualificationCriteria
+      qualificationCriteria,
+      categoryKeyDate,
+      veteranCategoryDuration,
+      veteranStartAge
     })
 
     expect(res).toEqual([
       {
         urn: 3,
         name: "Bob Braithwaite",
+        category: "V45",
         points: 3,
         qualified: true,
         races: 4,
@@ -282,6 +290,7 @@ describe("Overall standings", () => {
       {
         urn: 1,
         name: "Alan Arnold",
+        category: "V40",
         points: 5,
         qualified: true,
         races: 4,
@@ -290,6 +299,7 @@ describe("Overall standings", () => {
       {
         urn: 2,
         name: "Alexa Arnold",
+        category: null,
         points: 7,
         qualified: true,
         races: 4,

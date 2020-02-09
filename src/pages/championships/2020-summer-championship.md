@@ -16,4 +16,9 @@ intro: |
   Entry links for the other fixtures will be added as and when they are 
   available, so keep checking this page!
 terrain: Mixed
+championshipType: Gendered
+qualificationCriteria:
+  - numberOfRaces: 5
+veteranStartAge: 40
+veteranCategoryDuration: 5
 ---

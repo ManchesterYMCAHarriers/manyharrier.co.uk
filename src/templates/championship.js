@@ -213,6 +213,8 @@ export class ChampionshipTemplate extends React.Component {
       }
     }
 
+    console.log(overallStandings)
+
     return (
       <StandardContentContainer>
         {heroImage ? (
@@ -456,6 +458,9 @@ const Championship = ({ data }) => {
 
   let overallStandings
   if (eventsWithResults > 0) {
+    const {veteranStartAge, veteranCategoryDuration} = championship.frontmatter
+    const categoryKeyDate = events[0].startsAt
+
     overallStandings = {
       men: Overall({
         eventsInChampionship: events.length,
@@ -467,6 +472,9 @@ const Championship = ({ data }) => {
           return null
         }).filter(val => val !== null),
         qualificationCriteria: championship.frontmatter.qualificationCriteria,
+        categoryKeyDate,
+        veteranStartAge,
+        veteranCategoryDuration,
       }),
       women: Overall({
         eventsInChampionship: events.length,
@@ -478,6 +486,9 @@ const Championship = ({ data }) => {
           return null
         }).filter(val => val !== null),
         qualificationCriteria: championship.frontmatter.qualificationCriteria,
+        categoryKeyDate,
+        veteranStartAge,
+        veteranCategoryDuration,
       })
     }
   }
@@ -563,6 +574,8 @@ export const championshipQuery = graphql`
           numberOfRaces
         }
         terrain
+        veteranStartAge
+        veteranCategoryDuration
       }
     }
     member {
