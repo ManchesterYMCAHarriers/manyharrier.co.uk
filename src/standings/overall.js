@@ -1,25 +1,18 @@
 import * as Moment from "moment";
 
 const Overall = ({eventsInChampionship, results, members, qualificationCriteria, categoryKeyDate, veteranStartAge, veteranCategoryDuration}) => {
-  // Re-map each result to include race times as a Moment, results sorted in ascending order
-  const resultsWithAdditionalInfo = results.map(resultsForRace => {
-    const resultsForRaceWithMoments = resultsForRace.map(({urn, time}) => {
-      return {
-        urn,
-        time,
-      }
-    })
-
-    resultsForRaceWithMoments.sort((a, b) => {
+  // Sort results in ascending order
+  const sortedResults = results.map(resultsForRace => {
+    resultsForRace.sort((a, b) => {
       return a.time < b.time ? -1 : 1
     })
 
-    return resultsForRaceWithMoments
+    return resultsForRace
   })
 
   // Group results by runner
   const resultsByRunner = members.reduce((acc, {urn}) => {
-    acc[urn] = resultsWithAdditionalInfo.map(resultsForRace => {
+    acc[urn] = results.map(resultsForRace => {
       return resultsForRace.find(({urn: resultUrn}) => resultUrn === urn) || null
     })
 
@@ -68,7 +61,7 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria,
   }
 
   // Update results with points
-  const resultsWithPoints = resultsWithAdditionalInfo.map(resultsForRace => {
+  const resultsWithPoints = sortedResults.map(resultsForRace => {
     let previousTime = null
     let previousPoints = null
     let points = 1
