@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import {graphql} from 'gatsby'
 import Moment from 'moment'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
-import { get } from 'lodash'
+import {get} from 'lodash'
 import Address from '../components/Address'
-import GoogleMapsLocationAndRoute from '../components/GoogleMapsLocationAndRoute'
+import GoogleMapsLocationAndRoute
+  from '../components/GoogleMapsLocationAndRoute'
 import GoogleMapsLocation from '../components/GoogleMapsLocation'
 import EventTags from '../components/EventTags'
 import Hero from '../components/Hero'
-import { Panel, PanelFullWidth, Panels } from '../components/Panels'
+import {Panel, PanelFullWidth, Panels} from '../components/Panels'
 import {
   CallToActionBackButton,
   CallToActionLink,
@@ -26,8 +27,9 @@ import {
   RemoveFromCart,
   StorageAvailable,
 } from '../components/Cart'
-import { CardCTA } from '../components/Card'
+import {CardCTA} from '../components/Card'
 import Results from "../components/Results";
+import EventLDJSON from "../components/EventLDJSON";
 
 export class EventTemplate extends React.Component {
   constructor(props) {
@@ -157,7 +159,7 @@ export class EventTemplate extends React.Component {
     )
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -193,6 +195,7 @@ export class EventTemplate extends React.Component {
     const {
       championship,
       eventInfo,
+      eventType,
       googleMapsApiKey,
       infoForChampionship,
       infoForCompetition,
@@ -212,8 +215,41 @@ export class EventTemplate extends React.Component {
     } = this.props
     const track = route ? route.track : null
 
+    const includeStructuredData = ['Group Run', 'Speedwork', 'Marathon Training', 'Social'].indexOf(eventType) > -1 && venue.structuredLocation
+
+    let endsAt
+    let structuredDescription
+    const structuredImages = []
+
+    if (includeStructuredData) {
+      if (eventType === 'Marathon Training') {
+        endsAt = startsAt.clone().add(3, 'hours')
+      } else {
+        endsAt = startsAt.clone().add(1.5, 'hours')
+      }
+
+      if (eventType === 'Speedwork') {
+        structuredDescription = 'A coach-led speedwork session consisting of a warm-up, technique drills, hard efforts and finally a cool down'
+      }
+      if (eventType === 'Group Run') {
+        structuredDescription = 'Run in a group! Distances range from 3 miles up to 9 miles, pace from under 7:00/mile up to 9:30/mile'
+      }
+      if (eventType === 'Social') {
+        structuredDescription = 'Join us for food and drink after our group run'
+      }
+      if (eventType === 'Marathon Training') {
+        structuredDescription = 'Long-distance training runs in the build-up to the spring marathon season'
+      }
+    }
+
     return (
       <StandardContentContainer>
+        {includeStructuredData && (
+          <EventLDJSON name={title} startDate={startsAt}
+                       location={venue.structuredLocation} endDate={endsAt}
+                       description={structuredDescription}
+                       image={structuredImages} />
+        )}
         {heroImage ? (
           <Hero fluidImage={heroImage} title={title} />
         ) : (
@@ -236,7 +272,7 @@ export class EventTemplate extends React.Component {
         </Panels>
         <Panels>
           <PanelFullWidth>
-            <div className="w-full relative" style={{ height: '70vh' }}>
+            <div className="w-full relative" style={{height: '70vh'}}>
               {track && (
                 <GoogleMapsLocationAndRoute
                   googleMapsApiKey={googleMapsApiKey}
@@ -272,7 +308,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: eventInfo }}
+                dangerouslySetInnerHTML={{__html: eventInfo}}
               />
             </PanelFullWidth>
           </Panels>
@@ -283,7 +319,8 @@ export class EventTemplate extends React.Component {
               <div className="panel red-bottom">
                 <h2 className="heading-2 mb-4">Results</h2>
                 {resultsType === "Gendered" && (
-                  <div className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
+                  <div
+                    className="flex flex-wrap md:flex-no-wrap md:-ml-4 md:mb-8">
                     <Results title={"Men"} results={results.men} />
                     <Results title={"Women"} results={results.women} />
                   </div>
@@ -321,7 +358,7 @@ export class EventTemplate extends React.Component {
                       inputId={'firstName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{ required: true }}
+                      inputAttributes={{required: true}}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your first name',
@@ -332,7 +369,7 @@ export class EventTemplate extends React.Component {
                       inputId={'lastName'}
                       inputSizes={'w-full md:w-1/2'}
                       inputType={'text'}
-                      inputAttributes={{ required: true }}
+                      inputAttributes={{required: true}}
                       setFormValidationState={this.updateValidationIssues}
                       validationMessages={{
                         valueMissing: 'Enter your last name',
@@ -350,7 +387,8 @@ export class EventTemplate extends React.Component {
                         key={'subcheckout-' + item.id}
                         className="flex flex-wrap md:flex-no-wrap justify-around items-center pb-2 mb-2 border-b border-gray-400"
                       >
-                        <p className="w-full md:w-auto mb-2 flex-shrink flex-grow">
+                        <p
+                          className="w-full md:w-auto mb-2 flex-shrink flex-grow">
                           {item.description}
                         </p>
                         <p className="mb-2 flex-shrink-0 flex-grow-0 mx-4">
@@ -378,7 +416,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: session }}
+                dangerouslySetInnerHTML={{__html: session}}
               />
             </PanelFullWidth>
           </Panels>
@@ -388,7 +426,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: infoForTerrain }}
+                dangerouslySetInnerHTML={{__html: infoForTerrain}}
               />
             </PanelFullWidth>
           </Panels>
@@ -398,7 +436,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: infoForEventType }}
+                dangerouslySetInnerHTML={{__html: infoForEventType}}
               />
             </PanelFullWidth>
           </Panels>
@@ -408,7 +446,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: infoForCompetition }}
+                dangerouslySetInnerHTML={{__html: infoForCompetition}}
               />
             </PanelFullWidth>
           </Panels>
@@ -439,7 +477,7 @@ export class EventTemplate extends React.Component {
             <PanelFullWidth>
               <div
                 className="content panel red-bottom"
-                dangerouslySetInnerHTML={{ __html: infoForChampionship }}
+                dangerouslySetInnerHTML={{__html: infoForChampionship}}
               />
             </PanelFullWidth>
           </Panels>
@@ -456,6 +494,7 @@ EventTemplate.propTypes = {
   }),
   contentComponent: PropTypes.func,
   eventInfo: PropTypes.node,
+  eventType: PropTypes.string,
   googleMapsApiKey: PropTypes.string.isRequired,
   heroImage: PropTypes.object,
   infoForChampionship: PropTypes.node,
@@ -496,14 +535,24 @@ EventTemplate.propTypes = {
     }),
     slug: PropTypes.string,
     title: PropTypes.string,
+    structuredLocation: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      address: PropTypes.shape({
+        streetAddress: PropTypes.string,
+        addressLocality: PropTypes.string,
+        postalCode: PropTypes.string,
+        addressRegion: PropTypes.string,
+        addressCountry: PropTypes.string,
+      }).isRequired,
+    })
   }).isRequired,
 }
 
-const Event = ({ data, location }) => {
+const Event = ({data, location}) => {
   const {
     site: {
       siteMetadata: {
-        apiKey: { googleMaps: googleMapsApiKey },
+        apiKey: {googleMaps: googleMapsApiKey},
       },
     },
     stripeSku,
@@ -554,6 +603,26 @@ const Event = ({ data, location }) => {
       slug: event.frontmatter.venue.fields.slug,
       title: event.frontmatter.venue.frontmatter.venueKey,
     }
+
+    if (event.frontmatter.venue.frontmatter.streetAddress) {
+      venue.structuredLocation = {
+        name: event.frontmatter.venue.frontmatter.venueKey,
+        address: {
+          streetAddress: event.frontmatter.venue.frontmatter.streetAddress,
+          addressLocality: event.frontmatter.venue.frontmatter.addressLocality,
+          postalCode: event.frontmatter.venue.frontmatter.postalCode,
+          addressCountry: 'UK'
+        }
+      }
+    }
+
+    if (event.frontmatter.venue.frontmatter.addressRegion) {
+      venue.structuredLocation.address.addressRegion = event.frontmatter.venue.frontmatter.addressRegion
+    }
+
+    if (event.frontmatter.venue.frontmatter.addressCountry) {
+      venue.structuredLocation.address.addressCountry = event.frontmatter.venue.frontmatter.addressCountry
+    }
   }
 
   let results
@@ -578,7 +647,7 @@ const Event = ({ data, location }) => {
           throw new Error(`Member for URN ${urn} not found`)
         }
 
-        const { firstName, lastName, gender } = runner
+        const {firstName, lastName, gender} = runner
 
         const result = {
           name: `${firstName} ${lastName}`,
@@ -659,10 +728,12 @@ const Event = ({ data, location }) => {
     : null
 
   return (
-    <Layout title={event.frontmatter.eventKey} description={description} path={event.fields.slug} location={location}>
+    <Layout title={event.frontmatter.eventKey} description={description}
+            path={event.fields.slug} location={location}>
       <EventTemplate
         championship={championship}
         eventInfo={event.html}
+        eventType={event.frontmatter.eventType}
         googleMapsApiKey={googleMapsApiKey}
         heroImage={heroImage}
         infoForChampionship={get(event.frontmatter.infoForChampionship, [
@@ -781,6 +852,9 @@ export const eventQuery = graphql`
             address
             location
             venueKey
+            streetAddress
+            addressLocality
+            postalCode
           }
         }
       }

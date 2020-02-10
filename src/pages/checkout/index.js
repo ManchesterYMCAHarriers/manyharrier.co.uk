@@ -64,8 +64,8 @@ export default class CheckoutIndex extends React.Component {
           quantity,
         }
       }),
-      successUrl: this.state.baseUrl + `/checkout/success/`,
-      cancelUrl: this.state.baseUrl + `/checkout/cancel/`,
+      successUrl: this.state.siteUrl + `/checkout/success/`,
+      cancelUrl: this.state.siteUrl + `/checkout/cancel/`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
       submitType: 'pay',
@@ -376,7 +376,7 @@ export default class CheckoutIndex extends React.Component {
           query Checkout {
             site {
               siteMetadata {
-                baseUrl
+                siteUrl
                 apiKey {
                   stripe
                 }
@@ -385,13 +385,13 @@ export default class CheckoutIndex extends React.Component {
           }
         `}
         render={({ site: data }) => {
-          const { baseUrl } = data.siteMetadata
+          const { siteUrl } = data.siteMetadata
           const stripePublishableKey = data.siteMetadata.apiKey.stripe
 
           if (!this.state.stripePublishableKey) {
             this.setState(
               {
-                baseUrl: baseUrl,
+                siteUrl: siteUrl,
                 stripePublishableKey: stripePublishableKey,
               },
               () => {

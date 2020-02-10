@@ -7,6 +7,9 @@ address: |-
   Deansgate
   Manchester
   M3 2BW
+streetAddress: 14 Barton Arcade
+addressLocality: Manchester
+postalCode: M3 2BW
 location: '{"type":"Point","coordinates":[-2.246343,53.482756]}'
 ---
 - [Pot Kettle Black Barton Arcade](https://www.potkettleblackltd.co.uk/barton-arcade/about/)

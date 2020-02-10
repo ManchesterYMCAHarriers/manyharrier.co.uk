@@ -6,6 +6,9 @@ address: |-
   38 Charles Street
   Manchester
   M1 7BD
+streetAddress: 38 Charles Street
+addressLocality: Manchester
+postalCode: M1 7BD
 location: '{"type":"Point","coordinates":[-2.238155,53.474005]}'
 ---
 ## Food and drink

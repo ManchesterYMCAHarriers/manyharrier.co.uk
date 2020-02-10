@@ -24,7 +24,7 @@ export default class Form extends React.Component {
     this.state = {
       addressSelectorDisplayOptions: [],
       addressSelectorOptionsMap: [],
-      baseUrl: null,
+      siteUrl: null,
       data: {},
       externalError: null,
       formAction: '/join/form',
@@ -393,11 +393,11 @@ export default class Form extends React.Component {
         },
       ],
       successUrl:
-        this.state.baseUrl +
+        this.state.siteUrl +
         (this.state.data.membership === this.state.stripeSkus.firstClaim
           ? `/join/success-first-claim/`
           : `/join/success-second-claim`),
-      cancelUrl: this.state.baseUrl + `/join/cancel/`,
+      cancelUrl: this.state.siteUrl + `/join/cancel/`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
       submitType: 'pay',
@@ -453,7 +453,7 @@ export default class Form extends React.Component {
           query JoinForm {
             page: site {
               siteMetadata {
-                baseUrl
+                siteUrl
                 apiKey {
                   getAddress
                   stripe
@@ -487,7 +487,7 @@ export default class Form extends React.Component {
           }
         `}
         render={({ page, firstClaim, secondClaim }) => {
-          const { baseUrl } = page.siteMetadata
+          const { siteUrl } = page.siteMetadata
           const getAddressApiKey = page.siteMetadata.apiKey.getAddress
           const stripePublishableKey = page.siteMetadata.apiKey.stripe
           const firstClaimSku = firstClaim.id
@@ -500,7 +500,7 @@ export default class Form extends React.Component {
           if (!this.state.stripeSkus.firstClaim) {
             this.setState(
               {
-                baseUrl: baseUrl,
+                siteUrl: siteUrl,
                 getAddressApiKey: getAddressApiKey,
                 stripePublishableKey: stripePublishableKey,
                 stripeSkus: {

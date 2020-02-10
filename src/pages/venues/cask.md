@@ -6,6 +6,9 @@ address: |-
   29 Liverpool Road
   Manchester
   M3 4NQ
+streetAddress: 29 Liverpool Road
+addressLocality: Manchester
+postalCode: M3 4NQ
 location: '{"type":"Point","coordinates":[-2.252415,53.475920]}'
 ---
 ## Food and drink

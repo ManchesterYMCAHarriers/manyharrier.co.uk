@@ -7,17 +7,17 @@ import useSiteMetadata from './SiteMetadata'
 import Breadcrumbs from './Breadcrumbs'
 
 const TemplateWrapper = ({children, path, title, description, location}) => {
-  const {title: siteTitle, description: genericDescription, baseUrl, locale, openGraphImage: defaultOpenGraphImage, twitter} = useSiteMetadata()
+  const {title: siteTitle, description: genericDescription, siteUrl, locale, openGraphImage: defaultOpenGraphImage, twitter} = useSiteMetadata()
 
   let pageTitle = siteTitle
   if (title) {
     pageTitle += ` | ${title}`
   }
-  const url = new URL(location ? location.pathname : '', baseUrl)
+  const url = new URL(location ? location.pathname : '', siteUrl)
   let ogImage
   if (defaultOpenGraphImage) {
     ogImage = defaultOpenGraphImage
-    ogImage.path = new URL(defaultOpenGraphImage.path, baseUrl)
+    ogImage.path = new URL(defaultOpenGraphImage.path, siteUrl)
   }
 
   return (
