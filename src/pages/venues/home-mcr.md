@@ -6,6 +6,9 @@ address: |-
   2 Tony Wilson Place
   Manchester
   M15 4FN
+streetAddress: 2 Tony Wilson Place
+addressLocality: Manchester
+postalCode: M15 4FN
 location: '{"type":"Point","coordinates":[-2.246534,53.473570]}'
 ---
 ## Food and drink

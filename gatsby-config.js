@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: 'Manchester YMCA Harriers',
     description: 'A friendly running club based in Manchester city centre. Training on Tuesday and Thursday evenings. All abilities welcome!',
-    baseUrl: process.env.URL,
+    siteUrl: process.env.URL,
     locale: 'en_GB',
     openGraphImage: {
       path: '/og-image.png',
@@ -26,6 +26,7 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-stripe',
     'gatsby-plugin-sass',

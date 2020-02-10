@@ -6,6 +6,9 @@ address: |-
   Liverpool Road
   Manchester
   M3 4JR
+streetAddress: Liverpool Road
+addressLocality: Manchester
+postalCode: M3 4JR
 location: '{"type":"Point","coordinates":[-2.2566092,53.4764842]}'
 heroImage: /media/join-y-club.jpg
 ---

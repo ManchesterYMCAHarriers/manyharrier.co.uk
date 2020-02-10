@@ -7,6 +7,9 @@ address: |-
   Sportcity
   Manchester
   M11 3FF
+streetAddress: Rowsley Street
+addressLocality: Manchester
+postalCode: M11 3FF
 location: '{"type":"Point","coordinates":[-2.202528,53.484708]}'
 heroImage: /media/join-manchester-regional-arena.jpg
 ---

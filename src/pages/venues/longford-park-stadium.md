@@ -7,6 +7,9 @@ address: |-
   Stretford
   Manchester
   M21 9TA
+streetAddress: Ryebank Road
+addressLocality: Manchester
+postalCode: M21 9TA
 location: '{"type":"Point","coordinates":[-2.290575,53.445895]}'
 ---
 ## Cost
