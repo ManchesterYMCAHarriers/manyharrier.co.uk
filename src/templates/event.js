@@ -206,6 +206,7 @@ export class EventTemplate extends React.Component {
       resultsType,
       route,
       session,
+      siteUrl,
       startsAt,
       stripeSku,
       tags,
@@ -219,7 +220,11 @@ export class EventTemplate extends React.Component {
 
     let endsAt
     let structuredDescription
-    const structuredImages = []
+    const structuredImages = [
+      new URL('/1x1/badge.png', siteUrl),
+      new URL('/4x3/badge.png', siteUrl),
+      new URL('/16x9/badge.png', siteUrl),
+    ]
 
     if (includeStructuredData) {
       if (eventType === 'Marathon Training') {
@@ -514,6 +519,7 @@ EventTemplate.propTypes = {
     ),
   }),
   session: PropTypes.node,
+  siteUrl: PropTypes.string,
   startsAt: PropTypes.instanceOf(Moment).isRequired,
   stripeSku: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -552,6 +558,7 @@ const Event = ({data, location}) => {
   const {
     site: {
       siteMetadata: {
+        siteUrl,
         apiKey: {googleMaps: googleMapsApiKey},
       },
     },
@@ -747,6 +754,7 @@ const Event = ({data, location}) => {
         resultsType={event.frontmatter.resultsType}
         route={route}
         session={get(event.frontmatter.session, ['html'])}
+        siteUrl={siteUrl}
         startsAt={startsAt}
         stripeSku={stripeSkuData}
         tags={tags}
@@ -767,6 +775,7 @@ export const eventQuery = graphql`
   query EventByID($id: String!, $stripeSkuName: String!) {
     site {
       siteMetadata {
+        siteUrl
         apiKey {
           googleMaps
         }
