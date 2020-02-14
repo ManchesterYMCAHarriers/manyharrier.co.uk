@@ -5,6 +5,7 @@ description: The John Ruskin School is where the Coniston 14 race starts and end
 address: |-
   Lake Road
   Coniston
+  Cumbria
   LA21 8EW
 location: '{"type":"Point","coordinates":[-3.074191,54.367332]}'
 ---

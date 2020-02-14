@@ -1,12 +1,13 @@
 const _ = require('lodash')
 const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
-const { fmImagesToRelative } = require('gatsby-remark-relative-images')
+const {createFilePath} = require('gatsby-source-filesystem')
+const {fmImagesToRelative} = require('gatsby-remark-relative-images')
 const Moment = require('moment')
 const remark = require('remark')
 const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
-const { kebabCase } = require('lodash')
+const {kebabCase} = require('lodash')
+const updateStrava = require('./src/strava')
 
 const toMarkdown = input =>
   remark()
@@ -15,8 +16,8 @@ const toMarkdown = input =>
     .processSync(input)
     .toString()
 
-exports.createPages = async ({ actions, graphql }) => {
-  const { createPage } = actions
+exports.createPages = async ({actions, graphql}) => {
+  const {createPage} = actions
 
   const pages = await graphql(`
     {
@@ -63,8 +64,8 @@ exports.createPages = async ({ actions, graphql }) => {
 
   let blogPosts = 0
 
-  pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    const { templateKey } = node.frontmatter
+  pages.data.allMarkdownRemark.edges.forEach(({node}) => {
+    const {templateKey} = node.frontmatter
     if (templateKey === 'info') {
       return
     }
@@ -100,7 +101,7 @@ exports.createPages = async ({ actions, graphql }) => {
   // Event calendar pages
   let calendarPages = []
   // Iterate through each post, putting all found tags into `tags`
-  pages.data.allMarkdownRemark.edges.forEach(({ node }) => {
+  pages.data.allMarkdownRemark.edges.forEach(({node}) => {
     if (_.get(node, `frontmatter.calendarPage`)) {
       calendarPages = calendarPages.concat(node.frontmatter.calendarPage)
     }
@@ -145,9 +146,9 @@ exports.createPages = async ({ actions, graphql }) => {
   // Kit pages
   const kit = []
 
-  pages.data.allStripeSku.edges.forEach(({ node }) => {
+  pages.data.allStripeSku.edges.forEach(({node}) => {
     if (
-      kit.findIndex(({ productName, clearance }) => {
+      kit.findIndex(({productName, clearance}) => {
         return (
           productName === node.product.name &&
           clearance === node.attributes.clearance
@@ -161,7 +162,7 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   })
 
-  kit.forEach(({ productName, clearance }) => {
+  kit.forEach(({productName, clearance}) => {
     const slug =
       clearance === 'true'
         ? `/kit/clearance/${kebabCase(productName)}`
@@ -176,10 +177,122 @@ exports.createPages = async ({ actions, graphql }) => {
       },
     })
   })
+
+  // Populate Strava
+  const stravaData = await graphql(`
+    {
+      site {
+        siteMetadata {
+          siteUrl
+          strava {
+            loginUrl
+            clubUrl
+            accountEmail
+            accountPassword
+          }
+        }
+      }
+      allMarkdownRemark(
+        filter: {
+          frontmatter: { 
+            templateKey: { eq: "event" }
+          }
+        }
+      ) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              eventKey
+              startsAt
+              route {
+                frontmatter {
+                  routeKey
+                }
+              }
+              terrain
+              venue {
+                frontmatter {
+                  address
+                  venueKey
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const today = Moment.utc().startOf('day')
+
+  const {
+    data: {
+      site: {
+        siteMetadata: {
+          siteUrl,
+          strava
+        }
+      },
+      allMarkdownRemark: {
+        edges: events
+      }
+    }
+  } = stravaData
+
+  const masterEvents = events.map(({node}) => {
+    const {
+      fields: {
+        slug: slug,
+      },
+      frontmatter
+    } = node
+
+    const {
+      eventKey: title,
+      startsAt,
+      terrain,
+      venue: {
+        frontmatter: {
+          address,
+          venueKey,
+        }
+      }
+    } = frontmatter
+
+    let routeKey
+
+    if (frontmatter.route) {
+      routeKey = frontmatter.route.frontmatter.routeKey
+    }
+
+    const addressString = [venueKey].concat(address.split("\n")).join(", ")
+
+    const url = new URL(slug, siteUrl)
+
+    return {
+      title,
+      startsAt: Moment.utc(startsAt),
+      address: addressString,
+      description: `Full information on this event is available at ${url}`,
+      route: routeKey,
+      terrain,
+    }
+  }).filter(({startsAt}) => {
+    return startsAt.isSameOrAfter(today)
+  })
+
+  await updateStrava({
+    masterEvents,
+    strava
+  })
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+exports.createSchemaCustomization = ({actions}) => {
+  const {createTypes} = actions
   const typeDefs = [
     `type MarkdownRemark implements Node { 
       frontmatter: Frontmatter 
@@ -226,12 +339,12 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs)
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions
   fmImagesToRelative(node) // convert image paths for gatsby images
 
   if (node.internal.type === `MarkdownRemark`) {
-    const { templateKey } = node.frontmatter
+    const {templateKey} = node.frontmatter
 
     if (templateKey === 'info') {
       return
@@ -240,7 +353,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value: createFilePath({ node, getNode }),
+      value: createFilePath({node, getNode}),
     })
 
     if (templateKey === 'index-page') {
@@ -299,14 +412,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         name: `membershipBenefits`,
         node,
-        value: membershipBenefits.map(({ body }) => {
+        value: membershipBenefits.map(({body}) => {
           return toMarkdown(body)
         }),
       })
     }
 
     if (templateKey === 'committee-page') {
-      const { intro, members } = node.frontmatter
+      const {intro, members} = node.frontmatter
 
       createNodeField({
         name: `intro`,
@@ -317,14 +430,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         name: `memberDescriptions`,
         node,
-        value: members.map(({ description }) => {
+        value: members.map(({description}) => {
           return toMarkdown(description)
         }),
       })
     }
 
     if (templateKey === 'championship') {
-      const { intro } = node.frontmatter
+      const {intro} = node.frontmatter
 
       createNodeField({
         name: `intro`,

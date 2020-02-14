@@ -24,6 +24,12 @@ module.exports = {
       strava: 'https://strava.com/clubs/manyharrier',
       twitter: 'https://twitter.com/ManYMCAHarriers',
     },
+    strava: {
+      loginUrl: process.env.STRAVA_LOGIN_URL,
+      clubUrl: process.env.STRAVA_CLUB_URL,
+      accountEmail: process.env.STRAVA_EMAIL,
+      accountPassword: process.env.STRAVA_PASSWORD,
+    },
   },
   plugins: [
     'gatsby-plugin-sitemap',

@@ -58,7 +58,6 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js,stripe/**/*.js}\"",
-    "populate-strava": "node ./src/strava/index.js",
     "populate-stripe": "node ./stripe/index.js",
     "serve": "gatsby serve",
     "start": "run-p start:**",
