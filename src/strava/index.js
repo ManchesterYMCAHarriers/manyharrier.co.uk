@@ -154,7 +154,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
 
         // Wait for event on page
         await page.waitFor('.group-event-container', {
-          timeout: 5000,
+          timeout: 10000,
           visible: true,
         })
 
@@ -213,7 +213,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         console.log("Populating event...")
         // Wait for Save Club Event button in the form to be visible
         await page.waitFor('#submit-event-js', {
-          timeout: 5000,
+          timeout: 10000,
           visible: true,
         })
 
@@ -346,7 +346,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
       try {
         const [createEventResponse] = await Promise.all([
           page.waitForNavigation({
-            timeout: 5000,
+            timeout: 10000,
             waitUntil: 'domcontentloaded',
           }),
           page.click('#submit-event-js'),
