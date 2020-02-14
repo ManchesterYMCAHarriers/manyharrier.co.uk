@@ -180,7 +180,7 @@ exports.createPages = async ({actions, graphql}) => {
 
   // Populate Strava - but only do it during "working hours"
   const now = Moment.utc()
-  if (now.hours() > 7 && now.hours() < 22) {
+  if (now.hours() > 8 && now.hours() < 21) {
     const stravaData = await graphql(`
       {
         site {
@@ -208,6 +208,7 @@ exports.createPages = async ({actions, graphql}) => {
                 slug
               }
               frontmatter {
+                cancelled
                 eventKey
                 startsAt
                 route {
@@ -254,6 +255,7 @@ exports.createPages = async ({actions, graphql}) => {
       } = node
 
       const {
+        cancelled,
         eventKey: title,
         startsAt,
         terrain,
@@ -282,6 +284,7 @@ exports.createPages = async ({actions, graphql}) => {
         description: `Full information on this event is available at ${url}`,
         route: routeKey,
         terrain,
+        cancelled,
       }
     }).filter(({startsAt}) => {
       return startsAt.isSameOrAfter(today)

@@ -6,14 +6,16 @@ import { CallToActionText } from './CallToAction'
 
 class EventBox extends React.Component {
   render() {
-    const { startsAt, slug, title, venue } = this.props
+    const { cancelled, startsAt, slug, title, venue } = this.props
+
+    const fullTitle = cancelled ? `**CANCELLED** ${title}` : title
 
     return (
       <CardCTA
         to={slug}
         borderColorClassName={`border-gray-400`}
         borderColorHoverClassName={`border-red-manyharrier`}
-        title={title}
+        title={fullTitle}
         callToAction={<CallToActionText title={'Full details'} />}
       >
         <p className="text-sm font-medium">
@@ -26,6 +28,7 @@ class EventBox extends React.Component {
 }
 
 EventBox.propTypes = {
+  cancelled: PropTypes.bool,
   startsAt: PropTypes.instanceOf(Moment).isRequired,
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

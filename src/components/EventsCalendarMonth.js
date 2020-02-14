@@ -107,6 +107,7 @@ EventsCalendarMonth.propTypes = {
   showNextMonthLink: PropTypes.bool.isRequired,
   events: PropTypes.arrayOf(
     PropTypes.shape({
+      cancelled: PropTypes.boolean,
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       tags: PropTypes.arrayOf(

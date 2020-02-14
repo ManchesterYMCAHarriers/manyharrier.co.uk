@@ -51,9 +51,10 @@ export const IndexPageTemplate = ({
               />
             )}
             <Panels className="mt-4">
-              {nextEvents.map(({ title, startsAt, slug, venue }, i) => (
+              {nextEvents.map(({ cancelled, title, startsAt, slug, venue }, i) => (
                 <Panel key={'next-event-' + i}>
                   <EventBox
+                    cancelled={cancelled}
                     title={title}
                     startsAt={startsAt}
                     slug={slug}
@@ -153,6 +154,7 @@ IndexPageTemplate.propTypes = {
   intro: PropTypes.node.isRequired,
   nextEvents: PropTypes.arrayOf(
     PropTypes.shape({
+      cancelled: PropTypes.bool,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       slug: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
@@ -227,6 +229,7 @@ const IndexPage = ({ data, pageContext, location }) => {
   const nextEvents = []
   data.nextEvents.edges.forEach(({ node }, i) => {
     const event = {
+      cancelled: node.frontmatter.cancelled,
       entryAvailable:
         stripeSkus.findIndex(({ name, product }) => {
           return name === node.frontmatter.eventKey && (product === 'Race entry' || product === 'Social event')
@@ -417,6 +420,7 @@ export const indexPageQuery = graphql`
             slug
           }
           frontmatter {
+            cancelled
             eventKey
             eventType
             heroImage {

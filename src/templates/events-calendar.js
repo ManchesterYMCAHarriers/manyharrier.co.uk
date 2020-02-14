@@ -32,6 +32,7 @@ export class EventsCalendarTemplate extends React.Component {
 EventsCalendarTemplate.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
+      cancelled: PropTypes.boolean,
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       tags: PropTypes.arrayOf(
@@ -88,6 +89,7 @@ const EventsCalendar = ({ data, pageContext, location }) => {
     }
 
     return {
+      cancelled: node.frontmatter.cancelled,
       slug: node.fields.slug,
       startsAt: Moment.utc(node.frontmatter.startsAt),
       tags: tags,
@@ -132,6 +134,7 @@ EventsCalendar.propTypes = {
               slug: PropTypes.string.isRequired,
             }),
             frontmatter: PropTypes.shape({
+              cancelled: PropTypes.boolean,
               championshipForeignKey: PropTypes.string,
               competitionForeignKey: PropTypes.string,
               eventKey: PropTypes.string.isRequired,
@@ -186,6 +189,7 @@ export const eventsCalendarQuery = graphql`
             slug
           }
           frontmatter {
+            cancelled
             championshipForeignKey
             competitionForeignKey
             eventKey

@@ -193,6 +193,7 @@ export class EventTemplate extends React.Component {
 
   render() {
     const {
+      cancelled,
       championship,
       eventInfo,
       eventType,
@@ -253,12 +254,16 @@ export class EventTemplate extends React.Component {
           <EventLDJSON name={title} startDate={startsAt}
                        location={venue.structuredLocation} endDate={endsAt}
                        description={structuredDescription}
-                       image={structuredImages} />
+                       image={structuredImages} cancelled={cancelled} />
         )}
         {heroImage ? (
           <Hero fluidImage={heroImage} title={title} />
         ) : (
-          <h1 className="heading-1">{title}</h1>
+          <h1 className="heading-1">{cancelled && (
+            <span className="text-red-manyharrier pr-2">**CANCELLED**</span>
+          )}
+            {title}
+          </h1>
         )}
         <Panels>
           <Panel>
@@ -738,6 +743,7 @@ const Event = ({data, location}) => {
     <Layout title={event.frontmatter.eventKey} description={description}
             path={event.fields.slug} location={location}>
       <EventTemplate
+        cancelled={event.frontmatter.cancelled}
         championship={championship}
         eventInfo={event.html}
         eventType={event.frontmatter.eventType}
@@ -801,6 +807,7 @@ export const eventQuery = graphql`
         slug
       }
       frontmatter {
+        cancelled
         championship {
           fields {
             slug

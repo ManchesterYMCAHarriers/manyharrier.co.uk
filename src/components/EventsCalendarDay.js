@@ -14,8 +14,9 @@ class EventsCalendarDay extends React.Component {
           <H3 title={date.format('dddd D MMMM')} />
         </div>
         <div className="w-full md:w-1/2 flex-shrink-0 flex-grow">
-          {events.map(({ slug, startsAt, title, venue }) => (
+          {events.map(({ cancelled, slug, startsAt, title, venue }) => (
             <EventBox
+              cancelled={cancelled}
               key={slug}
               startsAt={startsAt}
               slug={slug}
@@ -33,6 +34,7 @@ EventsCalendarDay.propTypes = {
   date: PropTypes.instanceOf(Moment).isRequired,
   events: PropTypes.arrayOf(
     PropTypes.shape({
+      cancelled: PropTypes.boolean,
       slug: PropTypes.string.isRequired,
       startsAt: PropTypes.instanceOf(Moment).isRequired,
       title: PropTypes.string.isRequired,

@@ -5,7 +5,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 
 class EventLDJSON extends React.Component {
   render() {
-    const { name, startDate, endDate, description, location, image } = this.props
+    const { name, startDate, endDate, description, location, image, cancelled } = this.props
 
     location["@type"] = "place"
     location.address["@type"] = "PostalAddress"
@@ -16,6 +16,10 @@ class EventLDJSON extends React.Component {
       "name": name,
       "startDate": startDate.format('YYYY-MM-DD[T]HH:mm'),
       "location": location,
+    }
+
+    if (cancelled) {
+      event.eventStatus = "http://schema.org/EventCancelled"
     }
 
     if (endDate) {
@@ -56,7 +60,7 @@ EventLDJSON.propTypes = {
     }).isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-
+  cancelled: PropTypes.bool,
 }
 
 export default EventLDJSON

@@ -7,9 +7,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
   const toCreate = []
   const toDelete = []
 
-  const browser = await puppeteer.launch({
-    headless: false,
-  })
+  const browser = await puppeteer.launch()
   const page = await browser.newPage()
 
   try {
@@ -98,6 +96,12 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
       // Create events that are in master and not on Strava
       console.log(`Determining events to add to Strava`)
       masterEvents.forEach(masterEvent => {
+        if (masterEvent.cancelled) {
+          // Skip events that are cancelled - these will be deleted on Strava
+          // if they exist
+          return
+        }
+
         const existsOnStrava = stravaEvents.findIndex(stravaEvent => {
           return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address && stravaEvent.description === masterEvent.description
         })
