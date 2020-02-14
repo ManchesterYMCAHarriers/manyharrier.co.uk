@@ -178,117 +178,123 @@ exports.createPages = async ({actions, graphql}) => {
     })
   })
 
-  // Populate Strava
-  const stravaData = await graphql(`
-    {
-      site {
-        siteMetadata {
-          siteUrl
-          strava {
-            loginUrl
-            clubUrl
-            accountEmail
-            accountPassword
-          }
-        }
-      }
-      allMarkdownRemark(
-        filter: {
-          frontmatter: { 
-            templateKey: { eq: "event" }
-          }
-        }
-      ) {
-        edges {
-          node {
-            id
-            fields {
-              slug
-            }
-            frontmatter {
-              eventKey
-              startsAt
-              route {
-                frontmatter {
-                  routeKey
-                }
-              }
-              terrain
-              venue {
-                frontmatter {
-                  address
-                  venueKey
-                }
-              }
+  // Populate Strava - but only do it during "working hours"
+  const now = Moment.utc()
+  if (now.hours() > 7 && now.hours() < 22) {
+    const stravaData = await graphql(`
+      {
+        site {
+          siteMetadata {
+            siteUrl
+            strava {
+              loginUrl
+              clubUrl
+              accountEmail
+              accountPassword
             }
           }
         }
-      }
-    }
-  `)
-
-  const today = Moment.utc().startOf('day')
-
-  const {
-    data: {
-      site: {
-        siteMetadata: {
-          siteUrl,
-          strava
-        }
-      },
-      allMarkdownRemark: {
-        edges: events
-      }
-    }
-  } = stravaData
-
-  const masterEvents = events.map(({node}) => {
-    const {
-      fields: {
-        slug: slug,
-      },
-      frontmatter
-    } = node
-
-    const {
-      eventKey: title,
-      startsAt,
-      terrain,
-      venue: {
-        frontmatter: {
-          address,
-          venueKey,
+        allMarkdownRemark(
+          filter: {
+            frontmatter: { 
+              templateKey: { eq: "event" }
+            }
+          }
+        ) {
+          edges {
+            node {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                eventKey
+                startsAt
+                route {
+                  frontmatter {
+                    routeKey
+                  }
+                }
+                terrain
+                venue {
+                  frontmatter {
+                    address
+                    venueKey
+                  }
+                }
+              }
+            }
+          }
         }
       }
-    } = frontmatter
+    `)
 
-    let routeKey
+    const today = Moment.utc().startOf('day')
 
-    if (frontmatter.route) {
-      routeKey = frontmatter.route.frontmatter.routeKey
-    }
+    const {
+      data: {
+        site: {
+          siteMetadata: {
+            siteUrl,
+            strava
+          }
+        },
+        allMarkdownRemark: {
+          edges: events
+        }
+      }
+    } = stravaData
 
-    const addressString = [venueKey].concat(address.split("\n")).join(", ")
+    const masterEvents = events.map(({node}) => {
+      const {
+        fields: {
+          slug: slug,
+        },
+        frontmatter
+      } = node
 
-    const url = new URL(slug, siteUrl)
+      const {
+        eventKey: title,
+        startsAt,
+        terrain,
+        venue: {
+          frontmatter: {
+            address,
+            venueKey,
+          }
+        }
+      } = frontmatter
 
-    return {
-      title,
-      startsAt: Moment.utc(startsAt),
-      address: addressString,
-      description: `Full information on this event is available at ${url}`,
-      route: routeKey,
-      terrain,
-    }
-  }).filter(({startsAt}) => {
-    return startsAt.isSameOrAfter(today)
-  })
+      let routeKey
 
-  await updateStrava({
-    masterEvents,
-    strava
-  })
+      if (frontmatter.route) {
+        routeKey = frontmatter.route.frontmatter.routeKey
+      }
+
+      const addressString = [venueKey].concat(address.split("\n")).join(", ")
+
+      const url = new URL(slug, siteUrl)
+
+      return {
+        title,
+        startsAt: Moment.utc(startsAt),
+        address: addressString,
+        description: `Full information on this event is available at ${url}`,
+        route: routeKey,
+        terrain,
+      }
+    }).filter(({startsAt}) => {
+      return startsAt.isSameOrAfter(today)
+    })
+
+    await updateStrava({
+      masterEvents,
+      strava
+    })
+  } else {
+    console.log("Skipping Strava update as we don't want to disturb people with " +
+      "notifications at this time!")
+  }
 }
 
 exports.createSchemaCustomization = ({actions}) => {
