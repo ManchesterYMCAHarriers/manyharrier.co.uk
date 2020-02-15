@@ -8,6 +8,7 @@ const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
 const {kebabCase} = require('lodash')
 const updateStrava = require('./src/strava')
+const createCalendar = require('./src/ical')
 
 const toMarkdown = input =>
   remark()
@@ -182,7 +183,7 @@ exports.createPages = async ({actions, graphql}) => {
 exports.createPagesStatefully = async ({graphql}) => {
   // Populate Strava - but only do it during "working hours"
   const now = Moment.utc()
-  if (now.hours() > 8 && now.hours() < 21) {
+  if (now.hours() > 8 && now.hours() < 22) {
     const stravaData = await graphql(`
       {
         site {
@@ -300,6 +301,51 @@ exports.createPagesStatefully = async ({graphql}) => {
     console.log("Skipping Strava update as we don't want to disturb people with " +
       "notifications at this time!")
   }
+
+  const icalData = await graphql(`
+      {
+        site {
+          siteMetadata {
+            siteUrl
+          }
+        }
+        allMarkdownRemark(
+          filter: {
+            frontmatter: { 
+              templateKey: { eq: "event" }
+            }
+          }
+        ) {
+          edges {
+            node {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                cancelled
+                eventKey
+                eventType
+                startsAt
+                terrain
+                venue {
+                  frontmatter {
+                    address
+                    location
+                    venueKey
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `)
+
+  await createCalendar({
+    siteUrl: icalData.data.site.siteMetadata.siteUrl,
+    events: icalData.data.allMarkdownRemark.edges,
+  })
 }
 
 exports.createSchemaCustomization = ({actions}) => {
