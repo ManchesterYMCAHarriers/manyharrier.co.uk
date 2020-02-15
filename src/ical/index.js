@@ -41,6 +41,12 @@ const createCalendar = ({siteUrl, events}) => {
       }
     } = node
 
+    let summary = ``
+    if (cancelled) {
+      summary += `**CANCELLED** `
+    }
+    summary += eventKey
+
     const start = Moment.tz(startsAt, timezone)
 
     const end = Moment.tz(startsAt, timezone)
@@ -53,7 +59,12 @@ const createCalendar = ({siteUrl, events}) => {
 
     const eventUrl = new URL(slug, siteUrl)
 
-    let description = 'Manchester YMCA Harriers '
+    let description = ``
+    if (cancelled) {
+      description += `THIS EVENT HAS BEEN CANCELLED`
+    }
+    description += `Manchester YMCA Harriers `
+
     if (competitionForeignKey) {
       description += `and ${competitionForeignKey} `
     }
@@ -69,15 +80,35 @@ const createCalendar = ({siteUrl, events}) => {
       "\n" +
       `More information at ${eventUrl.toString()}`
 
+    let htmlDescription = ``
+    if (cancelled) {
+      htmlDescription += `<p><strong>THIS EVENT HAS BEEN CANCELLED</strong></p>`
+    }
+    htmlDescription += `<p>Manchester YMCA Harriers `
+    if (competitionForeignKey) {
+      description += `and ${competitionForeignKey} `
+    }
+    if (node.frontmatter.championship) {
+      description += `${node.frontmatter.championship.frontmatter.championshipKey} `
+    }
+    if (eventType) {
+      description += `${eventType.toLowerCase()} `
+    } else {
+      description += 'event '
+    }
+    description += `on ${start.format("Do MMMM YYYY")} at ${start.format("h:mma")} at ${node.frontmatter.venue.frontmatter.venueKey}</p>` +
+      `<p>More information at <a href="${eventUrl.toString()}">${eventUrl.toString()}</a></p>"}`
+
     let geo = JSON.parse(location)
 
     return {
       uid: slug,
-      start: start,
-      end: end,
-      timezone: timezone,
-      summary: eventKey,
+      start,
+      end,
+      timezone,
+      summary,
       description,
+      htmlDescription,
       location: [venueKey].concat(address.split("\n")).join(", "),
       geo: {
         lat: geo.coordinates[1],

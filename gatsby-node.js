@@ -324,6 +324,12 @@ exports.createPagesStatefully = async ({graphql}) => {
               }
               frontmatter {
                 cancelled
+                championship {
+                  frontmatter {
+                    championshipKey
+                  }
+                }
+                competitionForeignKey
                 eventKey
                 eventType
                 startsAt
