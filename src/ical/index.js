@@ -65,7 +65,9 @@ const createCalendar = ({siteUrl, events}) => {
     } else {
       description += 'event '
     }
-    description += `on ${start.format("Do MMMM YYYY")} at ${start.format("h:mma")} at ${node.frontmatter.venue.frontmatter.venueKey}`
+    description += `on ${start.format("Do MMMM YYYY")} at ${start.format("h:mma")} at ${node.frontmatter.venue.frontmatter.venueKey}` +
+      "\n" +
+      `More information at ${eventUrl.toString()}`
 
     let geo = JSON.parse(location)
 
