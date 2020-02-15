@@ -17,7 +17,7 @@ we had not received the correspondence from London that we were expecting.
 In spite of several desperate appeals to the London Marathon organisers - 
 including visiting their offices in person and explaining the implications 
 for the Club and on Ben Watson who the place had been awarded to - the London 
-Marathon chose not to award the Club a place.
+Marathon chose not to award the Club a place for 2020.
 
 We will apply for a place for the 2021 London Marathon, which we will award to
 Ben to make up for the disappointment of missing out in 2020. We expect normal

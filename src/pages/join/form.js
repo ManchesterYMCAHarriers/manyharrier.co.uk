@@ -995,8 +995,16 @@ export default class Form extends React.Component {
                               <dd>
                                 I hereby apply for membership of the Manchester
                                 YMCA Harriers Club and I agree to abide by the{' '}
-                                <a href="/rules" target="_blank">
+                                <a href="/about/rules/" target="_blank">
                                   rules of the Club
+                                </a>
+                                .
+                              </dd>
+                              <dt>Welfare and Safeguarding Policy</dt>
+                              <dd>
+                                I have read and understood the Club's
+                                <a href="/about/welfare-and-safeguarding-policy/" target="_blank">
+                                  Welfare and Safeguarding Policy
                                 </a>
                                 .
                               </dd>
