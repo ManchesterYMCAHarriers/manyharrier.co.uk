@@ -233,8 +233,6 @@ exports.createPagesStatefully = async ({graphql}) => {
       }
     `)
 
-    const now = Moment.utc()
-
     const {
       data: {
         site: {

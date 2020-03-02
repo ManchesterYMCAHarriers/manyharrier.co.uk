@@ -7,5 +7,7 @@ startsAt: '2020-03-27 19:30'
 ---
 Ticket price includes food and a ticket for the raffle.
 
+**Please buy your tickets before 15th March!**
+
 Donations of prizes for the raffle are most welcome!
 (e.g. wine, chocolates, sports equipment)
