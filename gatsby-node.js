@@ -233,7 +233,7 @@ exports.createPagesStatefully = async ({graphql}) => {
       }
     `)
 
-    const today = Moment.utc().startOf('day')
+    const now = Moment.utc()
 
     const {
       data: {
@@ -290,7 +290,7 @@ exports.createPagesStatefully = async ({graphql}) => {
         cancelled,
       }
     }).filter(({startsAt}) => {
-      return startsAt.isSameOrAfter(today)
+      return startsAt.isSameOrAfter(now)
     })
 
     await updateStrava({
