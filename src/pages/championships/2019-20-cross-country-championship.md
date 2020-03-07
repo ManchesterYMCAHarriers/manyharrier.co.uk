@@ -46,3 +46,8 @@ with on points is ranked highest.
 
 If runners cannot be separated by head-to-head performances, the result is
 adjudged to be a tie.
+
+## League standings
+
+* [Manchester Area Cross Country League](https://www.race-results.co.uk/results/2020/maccl195pts.htm)
+* [South East Lancs Cross Country League](https://www.race-results.co.uk/results/2020/sel194pts.htm)
