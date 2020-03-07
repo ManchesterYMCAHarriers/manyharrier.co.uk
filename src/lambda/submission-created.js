@@ -135,7 +135,6 @@ Thanks!
   // Send to recipients
   await sendMessageWithMailgun(
     `${recipientClubSecretary},${recipientTreasurer},${recipientWebmaster}`,
-    `${body.firstName} ${body.lastName} <${body.email}>`,
     `${
       action === 'join' ? 'New' : 'Renewal for'
     } ${membership.attributes.claim.toLowerCase()}-claim member: ${
@@ -155,7 +154,6 @@ Thanks!
 async function processContactForm(body) {
   await sendMessageWithMailgun(
     `${recipientHello},${recipientWebmaster}`,
-    `${body.name} <${body.email}>`,
     body.reason,
     body.message
   )
@@ -225,7 +223,6 @@ Thanks!
 `
   await sendMessageWithMailgun(
     `${recipientTreasurer},${recipientWebmaster}`,
-    `${body.firstName} ${body.lastName} <${body.email}>`,
     `Order received from ${body.firstName} ${body.lastName}`,
     message
   )
@@ -263,7 +260,6 @@ Thanks!
   if (kitItemCount > 0) {
     await sendMessageWithMailgun(
       `${recipientKit},${recipientWebmaster}`,
-      `${body.firstName} ${body.lastName} <${body.email}>`,
       `Order received from ${body.firstName} ${body.lastName}`,
       message
     )
@@ -302,17 +298,15 @@ Thanks!
   if (entryItemCount > 0) {
     await sendMessageWithMailgun(
       `${recipientEntriesSecretary},${recipientWebmaster}`,
-      `${body.firstName} ${body.lastName} <${body.email}>`,
       `Order received from ${body.firstName} ${body.lastName}`,
       message
     )
   }
 }
 
-async function sendMessageWithMailgun(to, from, subject, body) {
+async function sendMessageWithMailgun(to, subject, body) {
   let data = {
     to: to instanceof Array ? to.join(',') : to,
-    from: from,
     subject: subject,
     text: body,
   }
