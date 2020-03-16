@@ -36,6 +36,16 @@ export const IndexPageTemplate = ({
       <Hero title={title} fluidImage={heroImage} />
       <Panels>
         <PanelFullWidth>
+          <div className="content panel red-bottom">
+            <h2 className="heading-2">Coronavirus announcement, 16th March 2020</h2>
+            <p className="font-bold">In light of recent government guidelines, the committee have made the difficult but necessary decision to cancel all forthcoming club activities.</p>
+            <p>This includes all Tuesday track sessions, Thursday clubs runs and Sunday marathon training sessions for the foreseeable future.</p>
+            <p>We will continue to monitor the situation and guidelines, as the country does, and we hope to be running together as a group again as soon as we can.</p>
+            <p>The <a href="https://youtu.be/Y0oyfLjsKIk?t=94">announcements today still allow exercise outside</a> and if you feel like running, we encourage you to <a href="https://strava.com/clubs/manyharrier">keep us updated on your activities</a> - <strong>but please be sensible</strong>. Our members health is our main priority.</p>
+            <p>Keep safe - and we look forward to our next run together.</p>
+          </div>
+        </PanelFullWidth>
+        <PanelFullWidth>
           <div
             className="content panel black-bottom"
             dangerouslySetInnerHTML={{ __html: intro }}

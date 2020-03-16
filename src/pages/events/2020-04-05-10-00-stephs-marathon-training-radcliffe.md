@@ -6,11 +6,10 @@ eventType: Marathon Training
 terrain: Road
 routeForeignKey: Radcliffe
 startsAt: '2020-04-05 10:00'
+cancelled: true
 ---
-Steph's marathon training plan is a "get you round" schedule aimed at first-time
-Marathon runners. 
+## Cancelled due to the COVID-19 pandemic
 
-You should be able to run 10 miles comfortably before you start. 
-
-The weekend long run should be supplemented with faster mid-week running. 
-You should aim to do a minimum of three 20-milers and a maximum of five. 
+**16th March:** Following advice from the UK government to minimise social
+ contact due to the ongoing COVID-19 pandemic (coronavirus), Manchester YMCA 
+ Harriers track sessions and group runs are cancelled until further notice.

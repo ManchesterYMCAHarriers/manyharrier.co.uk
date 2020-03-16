@@ -120,7 +120,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
           return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address && stravaEvent.description === masterEvent.description
         })
 
-        if (existsInMaster === -1) {
+        if (existsInMaster === -1 || masterEvents[existsInMaster].cancelled) {
           console.log(`Event ${stravaEvent.title} on ${stravaEvent.startsAt.format('YYYY-MM-DD HH:mm')} at ${stravaEvent.address} does not exist in Master - queued for deletion`)
           toDelete.push(stravaEvent)
         } else {
