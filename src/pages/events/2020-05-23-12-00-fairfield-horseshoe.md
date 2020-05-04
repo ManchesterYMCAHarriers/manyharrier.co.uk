@@ -7,7 +7,10 @@ eventType: Race
 terrain: Fell
 routeForeignKey: Fairfield Horseshoe
 startsAt: '2020-05-23 12:00'
+cancelled: true
 ---
+## Cancelled due to the COVID-19 pandemic (coronavirus)
+
 This is the second race in our [2020 Summer Championship](/championships/2020-summer-championship/).
 
 Race information at the [Ambleside AC website](https://www.amblesideac.org.uk/races/our-races/fairfield/) 
@@ -20,5 +23,3 @@ Race parking is signposted from the A591 and costs £1 - **do not park at Rydal 
 lane leading up to it**.
 
 [Full FRA kit](https://www.peteblandsports.co.uk/dept/fra-kit-requirements_d01336.htm) is required.
-
-There is **no entry on the day** - [enter now for £11.00](https://resultsbase.net/event/5372) - entries close on 16th May.
