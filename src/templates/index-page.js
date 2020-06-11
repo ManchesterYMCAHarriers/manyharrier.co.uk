@@ -46,6 +46,15 @@ export const IndexPageTemplate = ({
           </div>
         </PanelFullWidth>
         <PanelFullWidth>
+          <div className="content panel red-bottom">
+            <h2 className="heading-2">Membership renewals open until 31st August 2020</h2>
+            <p className="font-bold">Membership renewals are now open!</p>
+            <p>We have frozen our fees at the same level as last year - membership until 31st March 2021 is just £28.00 for first claim members, or £11.00 for second claim members.</p>
+            <p><strong><Link to={"/renew"}>Click here to renew</Link></strong></p>
+            <p>If your financial situation has been adversely affected due to the Coronavirus pandemic and you cannot afford to renew - <Link to={"/contact"}>please get in touch</Link> - <strong>we will be able to help you!</strong></p>
+          </div>
+        </PanelFullWidth>
+        <PanelFullWidth>
           <div
             className="content panel black-bottom"
             dangerouslySetInnerHTML={{ __html: intro }}
