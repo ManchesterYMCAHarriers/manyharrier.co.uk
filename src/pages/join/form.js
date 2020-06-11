@@ -395,9 +395,9 @@ export default class Form extends React.Component {
       successUrl:
         this.state.siteUrl +
         (this.state.data.membership === this.state.stripeSkus.firstClaim
-          ? `/join/success-first-claim/`
+          ? `/join/success-first-claim`
           : `/join/success-second-claim`),
-      cancelUrl: this.state.siteUrl + `/join/cancel/`,
+      cancelUrl: this.state.siteUrl + `/join/cancel`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
       submitType: 'pay',
