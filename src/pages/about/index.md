@@ -15,6 +15,16 @@ Our club has been associated with YMCA Manchester throughout its history. YMCA M
 
 The Club is affiliated to England Athletics.
 
+## Sessions during the Coronavirus restrictions
+
+Following the relaxation of some restrictions, we now feel in the position
+to reintroduce limited group running activities. There will be advertised in the
+usual way, however, **participation in these sessions will be strictly limited 
+to a maximum of six people**, and **you must sign up in advance of each session
+via the Doodle poll link listed on the session**.
+
+* [Full information about group running sessions at this time](/about/coronavirus-group-running-guidance)
+
 ## Races and events
 
 We have various club championships, which cover cross-country, fell, road and track disciplines - there are plenty of trophies and medals to be won!

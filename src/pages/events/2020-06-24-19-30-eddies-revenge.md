@@ -7,7 +7,10 @@ eventType: Race
 terrain: Fell
 routeForeignKey: "Eddie's Revenge"
 startsAt: '2020-06-24 19:30'
+cancelled: true
 ---
+## Cancelled due to the COVID-19 pandemic (coronavirus)
+
 This is the fifth race in our [2020 Summer Championship](/championships/2020-summer-championship/).
 
 Race information at the [Middleton Harriers website](https://middletonharriers.jimdo.com/our-races-eddies-revenge/) 

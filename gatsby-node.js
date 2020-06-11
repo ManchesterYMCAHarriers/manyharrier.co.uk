@@ -183,7 +183,7 @@ exports.createPages = async ({actions, graphql}) => {
 exports.createPagesStatefully = async ({graphql}) => {
   // Populate Strava - but only do it during "working hours"
   const now = Moment.utc()
-  if (now.hours() > 8 && now.hours() < 22) {
+  if (now.hours() > 8 && now.hours() < 21) {
     const stravaData = await graphql(`
       {
         site {

@@ -179,7 +179,9 @@ export default class CheckoutIndex extends React.Component {
 
   render() {
     return (
-      <Layout title={'Contact us'} description={'Get in touch with the Manchester YMCA Harriers'} path={'/contact'} location={this.props.location}>
+      <Layout title={'Contact us'}
+              description={'Get in touch with the Manchester YMCA Harriers'}
+              path={'/contact'} location={this.props.location}>
         <StandardContentContainer>
           <h1 className="heading-1">Contact us</h1>
           <Panels>
@@ -256,6 +258,9 @@ export default class CheckoutIndex extends React.Component {
                     </option>
                     <option value="I am promoting an event">
                       I am promoting an event
+                    </option>
+                    <option value="I need to contact the Covid Coordinator">I
+                      need to contact the Covid Coordinator
                     </option>
                     <option value="Something else">Something else</option>
                   </FieldsetSelect>
