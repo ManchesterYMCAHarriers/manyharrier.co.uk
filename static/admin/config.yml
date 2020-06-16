@@ -158,7 +158,7 @@ collections:
           - {label: "How to join us", name: "howToJoinUs", widget: "markdown"}
           - {label: "Membership benefits", name: "membershipBenefits", widget: "markdown"}
           - {label: "Y Club facilities", name: "yClubFacilities", widget: "markdown"}
-      - file: "src/pages/join/success/index.md"
+      - file: "src/pages/join/success-first-claim/index.md"
         label: "Join - Success (First Claim)"
         name: "joinSuccessFirstClaim"
         fields:
@@ -178,6 +178,27 @@ collections:
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
           - {label: "Title", name: "title", widget: "string", default: "You did not pay for your membership"}
+          - {label: "Body", name: "body", widget: "markdown"}
+      - file: "src/pages/renew/success-first-claim/index.md"
+          label: "Renew - Success (First Claim)"
+          name: "renewSuccessFirstClaim"
+          fields:
+            - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+            - {label: "Title", name: "title", widget: "string", default: "Thanks for renewing your membership!"}
+            - {label: "Body", name: "body", widget: "markdown"}
+      - file: "src/pages/renew/success-second-claim/index.md"
+        label: "Renew - Success (Second Claim)"
+        name: "renewSuccessSecondClaim"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+          - {label: "Title", name: "title", widget: "string", default: "Thanks for renewing your membership!"}
+          - {label: "Body", name: "body", widget: "markdown"}
+      - file: "src/pages/renew/cancel/index.md"
+        label: "Renew - Cancel"
+        name: "renewCancel"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "standard-page"}
+          - {label: "Title", name: "title", widget: "string", default: "You did not pay for your membership renewal"}
           - {label: "Body", name: "body", widget: "markdown"}
       - file: "src/pages/checkout/success/index.md"
         label: "Checkout - Success"

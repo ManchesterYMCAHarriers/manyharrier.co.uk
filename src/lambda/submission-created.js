@@ -4,6 +4,8 @@ const recipientKit = process.env.RECIPIENT_KIT
 const recipientClubSecretary = process.env.RECIPIENT_CLUB_SECRETARY
 const recipientTreasurer = process.env.RECIPIENT_TREASURER
 const recipientEntriesSecretary = process.env.RECIPIENT_ENTRIES_SECRETARY
+const recipientCovidCoordinator = process.env.RECIPIENT_COVID_COORDINATOR
+const mailFrom = process.env.MAIL_FROM
 const mailgun = require('mailgun-js')({
   apiKey: process.env.MAILGUN_API_KEY,
   domain: process.env.MAILGUN_DOMAIN,
@@ -152,11 +154,19 @@ Thanks!
 }
 
 async function processContactForm(body) {
-  await sendMessageWithMailgun(
-    `${recipientHello},${recipientWebmaster}`,
-    body.reason,
-    body.message
-  )
+  if (body.reason == `I need to contact the Covid Coordinator`) {
+    await sendMessageWithMailgun(
+      `${recipientCovidCoordinator},${recipientWebmaster}`,
+      body.reason,
+      body.message
+    )
+  } else {
+    await sendMessageWithMailgun(
+      `${recipientHello},${recipientWebmaster}`,
+      body.reason,
+      body.message
+    )
+  }
 }
 
 async function processCheckout(body) {
@@ -307,6 +317,7 @@ Thanks!
 async function sendMessageWithMailgun(to, subject, body) {
   let data = {
     to: to instanceof Array ? to.join(',') : to,
+    from: mailFrom,
     subject: subject,
     text: body,
   }

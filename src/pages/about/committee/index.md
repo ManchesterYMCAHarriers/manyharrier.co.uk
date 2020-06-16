@@ -44,15 +44,11 @@ members:
    
      Both Craig and Sarah are excellent marathon runners; [Craig's marathon PB is 2:34](/blog/2019-11-21-buenos-aires-marathon/) and Sarah's is 3:27.
    singleImage: /media/committee-Sarah-Wilson-and-Craig-Jones.jpg
- - name: Jon Paramor
+ - name: Graeme Wilkinson
    role: Race Entries Secretary
    description: |
-     Jon's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships and applicable races in the club's Summer Championship. Jon also distributes race numbers when applicable.
-          
-     Jon attends the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings on the club's behalf.
-     
-     Jon has been a member of the Club and the Committee for many years; he has previously served as our Club Captain and was heavily involved in the organisation of our Blackleach Country Park race.
-   singleImage: /media/committee-Jon-Paramor.jpg
+     Graeme's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships.
+   singleImage: /media/committee-Graeme-Wilkinson.jpg
  - name: David Ashton
    role: Committee Member
    description: |
@@ -77,9 +73,4 @@ members:
   
      Chris' primary responsibility is to look after this website and any other techy stuff.
    singleImage: /media/committee-Chris-March.jpg
- - name: Graeme Wilkinson
-   role: Committee Member
-   description: |
-     Graeme is a general committee member. Graeme is new on the committee for 2019.
-   singleImage: /media/committee-Graeme-Wilkinson.jpg
 ---

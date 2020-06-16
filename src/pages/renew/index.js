@@ -10,14 +10,14 @@ import FieldsetText from '../../components/FieldsetText'
 import FieldsetCheckbox from '../../components/FieldsetCheckbox'
 import FieldsetPostcode from '../../components/FieldsetPostcode'
 import FieldsetSelect from '../../components/FieldsetSelect'
-import { graphql, StaticQuery } from 'gatsby'
+import {graphql, StaticQuery} from 'gatsby'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import { H1 } from '../../components/Headings'
+import {H1} from '../../components/Headings'
 import Currency from '../../components/Currency'
 import Encode from '../../components/Encode'
-import { PanelFullWidth, Panels } from '../../components/Panels'
+import {PanelFullWidth, Panels} from '../../components/Panels'
 
-export default class Form extends React.Component {
+export default class RenewIndex extends React.Component {
   constructor(props) {
     super(props)
 
@@ -27,7 +27,7 @@ export default class Form extends React.Component {
       siteUrl: null,
       data: {},
       externalError: null,
-      formAction: '/join/form',
+      formAction: '/renew',
       getAddressApiError: false,
       getAddressApiKey: null,
       stage: 1,
@@ -52,10 +52,10 @@ export default class Form extends React.Component {
       const response = await Promise.race([
         fetch(
           'https://api.getAddress.io/find/' +
-            postcodeForQuery +
-            '?api-key=' +
-            this.state.getAddressApiKey +
-            '&sort=true'
+          postcodeForQuery +
+          '?api-key=' +
+          this.state.getAddressApiKey +
+          '&sort=true'
         ),
         new Promise((_, reject) => {
           setTimeout(() => {
@@ -81,7 +81,7 @@ export default class Form extends React.Component {
         }
       }
 
-      const { latitude, longitude, addresses } = await response.json()
+      const {latitude, longitude, addresses} = await response.json()
 
       const optionsArray = addresses.map(option => {
         return option.split(',').map(line => line.trim())
@@ -268,7 +268,7 @@ export default class Form extends React.Component {
         data.addressLine4 = this.state.addressSelectorOptionsMap[idx].line4
         data.addressLocality = this.state.addressSelectorOptionsMap[
           idx
-        ].locality
+          ].locality
         data.addressTown = this.state.addressSelectorOptionsMap[idx].town
         data.addressCounty = this.state.addressSelectorOptionsMap[idx].county
       }
@@ -327,7 +327,7 @@ export default class Form extends React.Component {
             },
             async () => {
               try {
-                const { status, ok } = await this.submitFormData()
+                const {status, ok} = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -358,7 +358,7 @@ export default class Form extends React.Component {
                 return
               }
 
-              const { error } = await this.redirectToCheckout()
+              const {error} = await this.redirectToCheckout()
               if (error) {
                 this.setState({
                   externalError: true,
@@ -395,16 +395,16 @@ export default class Form extends React.Component {
       successUrl:
         this.state.siteUrl +
         (this.state.data.membership === this.state.stripeSkus.firstClaim
-          ? `/join/success-first-claim`
-          : `/join/success-second-claim`),
-      cancelUrl: this.state.siteUrl + `/join/cancel`,
+          ? `/renew/success-first-claim`
+          : `/renew/success-second-claim`),
+      cancelUrl: this.state.siteUrl + `/renew/cancel`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
       submitType: 'pay',
     })
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -438,7 +438,7 @@ export default class Form extends React.Component {
 
   componentDidMount() {
     document
-      .querySelector('form#join')
+      .querySelector('form#renew')
       .querySelector('fieldset:not(.hidden)')
       .querySelector('input:not([type="hidden"]), textarea, select')
       .focus({
@@ -450,7 +450,7 @@ export default class Form extends React.Component {
     return (
       <StaticQuery
         query={graphql`
-          query JoinForm {
+          query RenewForm {
             page: site {
               siteMetadata {
                 siteUrl
@@ -486,8 +486,8 @@ export default class Form extends React.Component {
             }
           }
         `}
-        render={({ page, firstClaim, secondClaim }) => {
-          const { siteUrl } = page.siteMetadata
+        render={({page, firstClaim, secondClaim}) => {
+          const {siteUrl} = page.siteMetadata
           const getAddressApiKey = page.siteMetadata.apiKey.getAddress
           const stripePublishableKey = page.siteMetadata.apiKey.stripe
           const firstClaimSku = firstClaim.id
@@ -515,15 +515,17 @@ export default class Form extends React.Component {
           }
 
           return (
-            <Layout title={'Membership form'} description={'Complete this form to become a member of the Manchester YMCA Harriers'} path={"/join"} location={this.props.location}>
+            <Layout title={'Membership renewal'}
+                    description={'Complete this form to renew your membership of the Manchester YMCA Harriers'}
+                    path={"/renew"} location={this.props.location}>
               <StandardContentContainer>
-                <H1 title={'Join us'} />
+                <H1 title={'Membership renewal'} />
                 <Panels>
                   <PanelFullWidth>
                     <div className="panel red-bottom">
                       <HTMLForm
                         netlify={true}
-                        formId={'join'}
+                        formId={'renew'}
                         method={'POST'}
                         backHandler={this.backHandler}
                         backValue={'Back'}
@@ -597,7 +599,7 @@ export default class Form extends React.Component {
                               beforeEarliestDate:
                                 "Come on... you can't be that old!",
                               afterLatestDate:
-                                'You must be 18 years old or over to join us',
+                                'You must be 18 years old or over to be a member of the club',
                             }}
                             latestDate={Moment.utc().subtract(18, 'years')}
                             earliestDate={Moment.utc().subtract(120, 'years')}
@@ -919,18 +921,18 @@ export default class Form extends React.Component {
                           hint={
                             'Our WhatsApp group is a place for announcements and informal chat between members.'
                           }
-                          legend={'Do you want to join our WhatsApp group?'}
+                          legend={'Do you want to join or remain a member of our WhatsApp group?'}
                           name={'whatsApp'}
                           options={[
                             {
                               id: 'whatsAppYes',
-                              label: 'Yes, add me to the WhatsApp group',
+                              label: 'Yes, add me to/keep me in the WhatsApp group',
                               value: 'Yes',
                             },
                             {
                               id: 'whatsAppNo',
                               label:
-                                "No, I don't want to join the WhatsApp group",
+                                "No, don't add me to the WhatsApp group or delete me if I'm already a member of it",
                               value: 'No',
                             },
                           ]}
@@ -994,7 +996,8 @@ export default class Form extends React.Component {
                               <dt>Club Rules</dt>
                               <dd>
                                 I hereby apply for membership of the Manchester
-                                YMCA Harriers Club and I agree to abide by the{' '}
+                                YMCA Harriers Club and I agree to abide by
+                                the{' '}
                                 <a href="/about/rules/" target="_blank">
                                   rules of the Club
                                 </a>
@@ -1003,7 +1006,9 @@ export default class Form extends React.Component {
                               <dt>Welfare and Safeguarding Policy</dt>
                               <dd>
                                 I have read and understood the Club's
-                                <a href="/about/welfare-and-safeguarding-policy/" target="_blank">
+                                <a
+                                  href="/about/welfare-and-safeguarding-policy/"
+                                  target="_blank">
                                   Welfare and Safeguarding Policy
                                 </a>
                                 .
@@ -1025,7 +1030,7 @@ export default class Form extends React.Component {
                                 member of the Y Club or not.
                               </dd>
                               {this.state.data.yClubMembership ===
-                                'Non-member' && (
+                              'Non-member' && (
                                 <dd>
                                   I am aware that as I am not a member of the Y
                                   Club, I should arrive at sessions starting
@@ -1033,7 +1038,7 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.yClubMembership ===
-                                'Non-member' && (
+                              'Non-member' && (
                                 <dd>
                                   I am aware that if I wish to use the Y Club's
                                   facilities, I need to become a member of the Y
@@ -1050,7 +1055,7 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.membership ===
-                                secondClaimSku && (
+                              secondClaimSku && (
                                 <dd>
                                   I understand that I am becoming a second claim
                                   member of the Manchester YMCA Harriers Club.
@@ -1071,7 +1076,7 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.membership ===
-                                secondClaimSku && (
+                              secondClaimSku && (
                                 <dd>
                                   I am aware that if I participate in any
                                   competitions, I will only be able to represent
@@ -1098,14 +1103,16 @@ export default class Form extends React.Component {
                                   which they will use to enable access to an
                                   online portal for you (called{' '}
                                   <em>myAthletics</em>). England Athletics will
-                                  contact you to invite you to sign into the{' '}
+                                  contact you to invite you to sign into
+                                  the{' '}
                                   <em>myAthletics</em> portal, where you can,
                                   amongst other things, set and amend your
                                   privacy settings. If you have any questions
                                   about the continuing privacy of your personal
                                   data when it is shared with England Athletics,
                                   please contact{' '}
-                                  <a href="mailto:dataprotection@englandathletics.org">
+                                  <a
+                                    href="mailto:dataprotection@englandathletics.org">
                                     dataprotetion@englandathletics.org
                                   </a>
                                   .
@@ -1172,13 +1179,13 @@ export default class Form extends React.Component {
                             <dd>
                               {this.state.data.membership === firstClaimSku
                                 ? 'First claim membership @ ' +
-                                  firstClaimPrice +
-                                  ', valid until ' +
-                                  firstClaimValidTo
+                                firstClaimPrice +
+                                ', valid until ' +
+                                firstClaimValidTo
                                 : 'Second claim membership @ ' +
-                                  secondClaimPrice +
-                                  ', valid until ' +
-                                  secondClaimValidTo}
+                                secondClaimPrice +
+                                ', valid until ' +
+                                secondClaimValidTo}
                             </dd>
                             {this.state.data.membership === secondClaimSku && (
                               <dt>First claim club</dt>
@@ -1232,15 +1239,15 @@ export default class Form extends React.Component {
                               <dd>
                                 You have opted
                                 {this.state.data.whatsApp === 'No' && ' not'} to
-                                join our WhatsApp group
+                                join/remain in our WhatsApp group
                               </dd>
                             )}
                             <dt>Emergency contact</dt>
                             <dd>
                               {this.state.data.emergencyContactName
                                 ? this.state.data.emergencyContactName +
-                                  ' - ' +
-                                  this.state.data.emergencyContactNumber
+                                ' - ' +
+                                this.state.data.emergencyContactNumber
                                 : 'No emergency contact details provided'}
                             </dd>
                             <dt>
@@ -1254,9 +1261,9 @@ export default class Form extends React.Component {
                             <dd>
                               You have opted to pay by
                               {this.state.data.paymentMethod === 'BACS' &&
-                                ' bank transfer'}
+                              ' bank transfer'}
                               {this.state.data.paymentMethod === 'Stripe' &&
-                                ' credit card, debit card or Apple Pay'}
+                              ' credit card, debit card or Apple Pay'}
                             </dd>
                           </dl>
                           {this.state.data.paymentMethod === 'Stripe' && (
@@ -1269,7 +1276,7 @@ export default class Form extends React.Component {
 
                         {/* Bank payment details */}
                         <FieldsetMulti
-                          legend={'Thanks for joining the club!'}
+                          legend={'Thanks for renewing your membership!'}
                           name={'paymentMethod'}
                           setFormValidationState={this.updateValidationIssues}
                           validationIssues={this.state.validationIssues}
@@ -1299,7 +1306,7 @@ export default class Form extends React.Component {
                             Use{' '}
                             <strong>
                               {this.state.data.firstName &&
-                                this.state.data.firstName.charAt(0)}{' '}
+                              this.state.data.firstName.charAt(0)}{' '}
                               {this.state.data.lastName}
                             </strong>{' '}
                             as your payment reference.
