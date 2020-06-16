@@ -993,6 +993,15 @@ export default class RenewIndex extends React.Component {
                           value={'Accepted'}
                           statements={
                             <dl>
+                              <dt>Fitness to run</dt>
+                              <dd>
+                                I declare that I will only take part in Manchester
+                                YMCA Harriers running activities when I am fit
+                                and well enough to do so.
+                              </dd>
+                              <dd>
+                                I understand that my health is my own responsibility.
+                              </dd>
                               <dt>Club Rules</dt>
                               <dd>
                                 I hereby apply for membership of the Manchester
