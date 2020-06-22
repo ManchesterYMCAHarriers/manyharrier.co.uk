@@ -183,7 +183,7 @@ exports.createPages = async ({actions, graphql}) => {
 exports.createPagesStatefully = async ({graphql}) => {
   // Populate Strava - but only do it during "working hours"
   const now = Moment.utc()
-  if (now.hours() > 8 && now.hours() < 22) {
+  if (now.hours() >= parseInt(process.env.STRAVA_EARLIEST_HOURS, 10) && now.hours() < parseInt(process.env.STRAVA_LATEST_HOURS, 10)) {
     const stravaData = await graphql(`
       {
         site {
@@ -296,8 +296,8 @@ exports.createPagesStatefully = async ({graphql}) => {
       strava
     })
   } else {
-    console.log("Skipping Strava update as we don't want to disturb people with " +
-      "notifications at this time!")
+    console.log(`Skipping Strava update as we don't want to disturb people with " +
+      "notifications at this time! Current time is ${now.format("HH:mm")}`)
   }
 
   const icalData = await graphql(`
