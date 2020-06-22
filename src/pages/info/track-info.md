@@ -5,12 +5,13 @@ forEventType: Track
 ---
 ## Session format
 
-We will start the formal session at 7:00pm with some dynamic stretches - do a 
-couple of warm up laps if you're ready before this. We will then do the main 
-session. Afterwards, we will do a couple of easy laps to cool down and then some 
-easy stretching.
+For these alternative speedwork sessions, you will need some sort of timing device
+and some landmarks to run between, such as trees, park benches, etc. The sessions 
+have times for which you should aim to run between these two markers. As part of 
+your warm up, make a mental note of your starting landmark then time yourself 
+doing an easyish run/jog for the stated time: whichever landmark you get when the
+time has elapsed is your end marker. Use these two markers for the rest of the 
+session.
 
-Speedwork sessions are meant to be hard; you will need to push yourself, but 
-you'll also get plenty of encouragement and support from everyone! We know that 
-some people are faster than others, so our speedwork sessions are designed to be 
-accessible to all abilities.
+As always, please remember to stay mindful of your health and safety and that of
+those around you.
