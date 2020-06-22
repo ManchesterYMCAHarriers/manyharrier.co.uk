@@ -42,7 +42,7 @@ export const IndexPageTemplate = ({
             <p>In line with the current guidance from England Athletics and Public Health England, these sessions will be strictly limited to a maximum of six participants, who must adhere to social distancing practices throughout.</p>
             <p>Groups will be led by individual members of the Club and runs will commence from venues across Manchester.</p>
             <p>These sessions will be listed on the <Link to={"/events"}>Events pages</Link> of this website. <span className="font-bold">You will need to sign up for each event in advance through the link on the event page</span>; places are allocated on a first-come, first-served basis.</p>
-            <p>Tuesday evening track sessions remain cancelled until further notice.</p>
+            <p>Tuesday evening track sessions remain cancelled until further notice, however Jen Delaney has kindly written up some speedwork sessions which you can try at a local park or other suitable location. Again, these will be listed on the <Link to={"/events"}>Events pages</Link>.</p>
           </div>
         </PanelFullWidth>
         <PanelFullWidth>
