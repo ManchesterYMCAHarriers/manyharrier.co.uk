@@ -1,7 +1,7 @@
 ---
 templateKey: info
 infoKey: Track Info
-forEventType: Track
+forEventType: Speedwork
 ---
 ## Session format
 

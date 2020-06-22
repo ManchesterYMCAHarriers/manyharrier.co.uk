@@ -21,8 +21,7 @@ your mind for exercise and set your intention.
 
 ## Main session
 
-Mark yourself a distance which takes around 3 minutes to easy run. (Maybe use 
-your markers from last week?)
+Mark yourself a distance which takes around 3 minutes to easy run.
 
 **Running at around your 5K pace**, complete one rep from your start marker to your 
 end marker.
