@@ -6,7 +6,10 @@ eventType: Race
 terrain: Mixed
 routeForeignKey: Quarry Bank Trail Race
 startsAt: '2020-08-05 19:00'
+cancelled: true
 ---
+## Cancelled due to the COVID-19 pandemic (coronavirus)
+
 A challenging 4.5-mile trail race that starts and finishes at Quarry Bank Mill.
 
 An interesting and varied course; running alongside Manchester Airport for a 
