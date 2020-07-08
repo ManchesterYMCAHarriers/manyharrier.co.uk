@@ -1,11 +1,3 @@
-const recipientHello = process.env.RECIPIENT_HELLO
-const recipientWebmaster = process.env.RECIPIENT_WEBMASTER
-const recipientKit = process.env.RECIPIENT_KIT
-const recipientClubSecretary = process.env.RECIPIENT_CLUB_SECRETARY
-const recipientTreasurer = process.env.RECIPIENT_TREASURER
-const recipientEntriesSecretary = process.env.RECIPIENT_ENTRIES_SECRETARY
-const recipientCovidCoordinator = process.env.RECIPIENT_COVID_COORDINATOR
-const mailFrom = process.env.MAIL_FROM
 const mailgun = require('mailgun-js')({
   apiKey: process.env.MAILGUN_API_KEY,
   domain: process.env.MAILGUN_DOMAIN,
@@ -15,10 +7,27 @@ const mailchimpApiKey = process.env.MAILCHIMP_API_KEY
 const mailchimpSubscribeURL = process.env.MAILCHIMP_SUBSCRIBE_URL
 const fetch = require('node-fetch').default
 const crypto = require('crypto')
+const promiseRetry = require('promise-retry')
+
+const recipientHello = process.env.RECIPIENT_HELLO
+const recipientWebmaster = process.env.RECIPIENT_WEBMASTER
+const recipientKit = process.env.RECIPIENT_KIT
+const recipientClubSecretary = process.env.RECIPIENT_CLUB_SECRETARY
+const recipientTreasurer = process.env.RECIPIENT_TREASURER
+const recipientEntriesSecretary = process.env.RECIPIENT_ENTRIES_SECRETARY
+const recipientCovidCoordinator = process.env.RECIPIENT_COVID_COORDINATOR
+const mailFrom = process.env.MAIL_FROM
+
 const lineCharLength = 72
 
-exports.handler = async ({ body }) => {
-  const { form_name, data } = JSON.parse(body).payload
+const retryOpts = {
+  retries: 5,
+  minTimeout: 100,
+  maxTimeout: 1000
+}
+
+exports.handler = async ({body}) => {
+  const {form_name, data} = JSON.parse(body).payload
 
   // Join form
   if (form_name === 'join') {
@@ -63,10 +72,10 @@ async function processJoinOrRenewalForm(action, body) {
   const message = `Hello!
   
 ${
-  action === `join`
-    ? `A new member has joined the club!`
-    : `We've had a membership renewal!`
-}
+    action === `join`
+      ? `A new member has joined the club!`
+      : `We've had a membership renewal!`
+  }
 
 PERSONAL DETAILS
 ================
@@ -217,7 +226,7 @@ ORDER
 =====
 `
 
-  items.forEach(({ line }) => {
+  items.forEach(({line}) => {
     message += line + '\n'
   })
 
@@ -255,7 +264,7 @@ ORDER
 =====
 `
 
-  items.forEach(({ category, line }) => {
+  items.forEach(({category, line}) => {
     if (category === 'Kit') {
       message += line + '\n'
       kitItemCount++
@@ -293,7 +302,7 @@ ORDER
 =====
 `
 
-  items.forEach(({ category, line }) => {
+  items.forEach(({category, line}) => {
     if (category === 'Race' || category === 'Presentation') {
       message += line + '\n'
       entryItemCount++
@@ -322,10 +331,20 @@ async function sendMessageWithMailgun(to, subject, body) {
     text: body,
   }
 
-  return mailgun.messages().send(data)
+  return promiseRetry((retry, retryOpts) => {
+    return mailgun.messages().send(data)
+      .catch(retry)
+  })
 }
 
 async function getStripeSku(id) {
+  return promiseRetry((retry, retryOpts) => {
+    return getStripeSkuPromise(id)
+      .catch(retry)
+  })
+}
+
+async function getStripeSkuPromise(id) {
   return new Promise((resolve, reject) => {
     stripe.skus.retrieve(id, (err, sku) => {
       if (err) {
