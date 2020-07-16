@@ -10,33 +10,8 @@ pro athlete Lauren Fleshman. So by completing this session you will basically be
 
 The session in full:
 
-* **400m effort** (one lap of the track)
-* 60 seconds recovery
-* **400m effort** (one lap of the track)
-* 60 seconds recovery
-* **400m effort** (one lap of the track)
-* 60 seconds recovery
-* **400m effort** (one lap of the track)
-* 60 seconds recovery
-
-400m easy recovery (one lap of the track in 3-5 minutes)
-
-* **300m effort** (three-quarter lap of the track)
-* 45 seconds recovery
-* **300m effort** (three-quarter lap of the track)
-* 45 seconds recovery
-* **300m effort** (three-quarter lap of the track)
-* 45 seconds recovery
-* **300m effort** (three-quarter lap of the track)
-* 45 seconds recovery
-
-400m easy recovery (one lap of the track in 3-5 minutes)
-
-* **200m effort** (half a lap of the track)
-* 30 seconds recovery
-* **200m effort** (half a lap of the track)
-* 30 seconds recovery
-* **200m effort** (half a lap of the track)
-* 30 seconds recovery
-* **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* **4 &times; 400m efforts** (one lap of the track) with 60-seconds recovery between efforts
+* 400m easy recovery (one lap of the track in 3-5 minutes)
+* **4 &times; 300m efforts** (three-quarter lap of the track) with 45-seconds recovery between efforts
+* 400m easy recovery (one lap of the track in 3-5 minutes)
+* **4 &times; 200m efforts** (half a lap of the track) with 30-seconds recovery between efforts

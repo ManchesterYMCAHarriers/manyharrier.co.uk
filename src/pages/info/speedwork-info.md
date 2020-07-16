@@ -3,7 +3,7 @@ templateKey: info
 infoKey: Speedwork Info
 forEventType: Speedwork
 ---
-## Track speedwork sessions during COVID-19
+## Information for sessions taking place at the track
 
 There will be two sessions, both at the time of **6.15pm**. In keeping with Government, England 
 Athletics and Longford Park guidelines, these sessions can hold a **maximum of 6 people**. To join a session, it is 
@@ -17,9 +17,9 @@ with current guidelines, and members are expected to follow social distancing me
 Entry is **£3 cash only** on the door. If you sign up and are unable to attend please let us know. We do not want the 
 place to go to waste, and we do not want Longford Park track to lose out on takings, especially in the current climate.
 
-## Non-track speedwork sessions
+## Information for non-track speedwork sessions
 
-For these alternative non-track speedwork sessions, you will need some sort of timing device
+For the alternative non-track speedwork sessions, you will need some sort of timing device
 and some landmarks to run between, such as trees, park benches, etc. The sessions 
 have times for which you should aim to run between these two markers. As part of 
 your warm up, make a mental note of your starting landmark then time yourself 
