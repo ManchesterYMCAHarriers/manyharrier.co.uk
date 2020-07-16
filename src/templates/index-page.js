@@ -37,12 +37,13 @@ export const IndexPageTemplate = ({
       <Panels>
         <PanelFullWidth>
           <div className="content panel red-bottom">
-            <h2 className="heading-2">Coronavirus update, 11th June 2020</h2>
-            <p className="font-bold">Following the relaxation of social distancing restrictions, we are now able offer limited group running sessions.</p>
+            <h2 className="heading-2">Coronavirus update, 16th July 2020</h2>
+            <p className="font-bold">We are still only able to offer limited group running sessions, however, track is back from Tuesday 4th August!</p>
             <p>In line with the current guidance from England Athletics and Public Health England, these sessions will be strictly limited to a maximum of six participants, who must adhere to social distancing practices throughout.</p>
-            <p>Groups will be led by individual members of the Club and runs will commence from venues across Manchester.</p>
+            <p>Groups will be led by individual members of the Club. Group runs will commence from venues across Manchester; track sessions will be held at Longford Park.</p>
             <p>These sessions will be listed on the <Link to={"/events"}>Events pages</Link> of this website. <span className="font-bold">You will need to sign up for each event in advance through the link on the event page</span>; places are allocated on a first-come, first-served basis.</p>
-            <p>Tuesday evening track sessions remain cancelled until further notice, however Jen Delaney has kindly written up some speedwork sessions which you can try at a local park or other suitable location. Again, these will be listed on the <Link to={"/events"}>Events pages</Link>.</p>
+            <p><strong>Track is back!</strong> Starting on Tuesday 4th August, we will hold two track sessions for groups of up to six people at Longford Park. <Link to={"/blog/2020-07-16-track-is-back/"}>Check out this blog post for more information</Link>.</p>
+            <p><Link to={"/blog/2020-06-16-alternative-speedwork-sessions"}>Coach Jen has also come up with some non-track speedwork sessions</Link> which you can try at a local park or other suitable location.</p>
           </div>
         </PanelFullWidth>
         <PanelFullWidth>
