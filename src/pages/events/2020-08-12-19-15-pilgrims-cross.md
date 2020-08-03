@@ -7,7 +7,10 @@ eventType: Race
 terrain: Fell
 routeForeignKey: Pilgrims Cross
 startsAt: '2020-08-12 19:15'
+cancelled: true
 ---
+## Cancelled due to the COVID-19 pandemic (coronavirus)
+
 This is the seventh race in our [2020 Summer Championship](/championships/2020-summer-championship/).
 
 Race information at the [Rossendale Harriers website](https://rossendaleharriers.co.uk/races/pilgrims-cross-race/) 

@@ -5,7 +5,7 @@ title: Coronavirus Group Running Guidance
 description: Rules and guidance that applies to Manchester YMCA Harriers activities during the current coronavirus pandemic
 ---
 ## Introduction
-In accordance with [England Athletics guidance issued on the 10th June 2020](https://www.englandathletics.org/athletics-and-running/news/guidance-update-step-2/),
+In accordance with [England Athletics guidance issued on 17th July 2020](https://www.englandathletics.org/athletics-and-running/news/guidance-update-for-restricted-return-to-activity-for-coaches-leaders-athletes-runners-and-facilities-step-3/),
 running club group road running activities can re-commence providing that any 
 relevant UK government policy and Public Health England (PHE) guidance on social 
 distancing can be observed.  This document sets out how Manchester YMCA Harriers' 
@@ -24,7 +24,7 @@ consider whether they believe it is safe to do so when making such decision.
 1. Anyone who develops symptoms after a session should immediately inform the 
     [Manchester YMCA Harriers' "Covid Coordinator"](/contact) so that other 
     participants to the session may be informed.
-1. Attendees at a group training session shall be **limited to groups of 6**
+1. Attendees at a group training session shall be **limited to groups of 12**
     (including one group leader).
 1. The groups shall be made up of specific named attendees which must be 
     recorded and fixed in advance of the session, on a first come, first served 
@@ -39,9 +39,6 @@ consider whether they believe it is safe to do so when making such decision.
     individual event listings.
 1. The meeting points for each location shall provide ample space for Public
     Health England guidance on social distancing to be observed.  
-1. There will be no changing facilities or toilet facilities available at any 
-    of the locations. Members should arrive changed and ready to run without 
-    delay.
 1. Members should not congregate before or after the session, promptly returning 
     home after the run is completed.
 1. The Public Health England guidance on social distancing should be observed, 
@@ -51,10 +48,6 @@ consider whether they believe it is safe to do so when making such decision.
     be temporarily suspended to reduce the risk of social contact. Runners 
     should instead arrive prepared and ready to run without delay. 
 1. If more than one session is scheduled at the same location on the same day, 
-    the departure time of each session shall be staggered by at least 15 minutes.
-1. Running routes which are known to be busy areas for pedestrians (e.g. canal 
-    sections) shall not be selected for the training sessions, and so routes 
-    which are likely to be clear from congestion will be preferred to reduce 
-    the risk of social contact.  
+    the departure time of each session shall be staggered by at least 15 minutes. 
 1. Members are reminded of the need to exercise vigilance when on runs to 
     avoid contact with other runners and members of the public, at all times.

@@ -17,10 +17,9 @@ The Club is affiliated to England Athletics.
 
 ## Sessions during the Coronavirus restrictions
 
-Following the relaxation of some restrictions, we now feel in the position
-to reintroduce limited group running activities. There will be advertised in the
-usual way, however, **participation in these sessions will be strictly limited 
-to a maximum of six people**, and **you must sign up in advance of each session
+Following the relaxation of some restrictions, we have reintroduced group training sessions. 
+These will be advertised in the usual way, however, **participation in these sessions is currently
+limited to a maximum of twelve people**, and **you must sign up in advance of each session
 via the Doodle poll link listed on the session**.
 
 * [Full information about group running sessions at this time](/about/coronavirus-group-running-guidance)
