@@ -7,21 +7,21 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
   const toCreate = []
   const toDelete = []
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
 
   try {
     // Login to Strava
     console.log(`Logging in to Strava`)
     await page.goto(loginUrl, {
-      waitUntil: 'domcontentloaded'
+      waitUntil: 'networkidle0'
     }),
       await page.type('#email', accountEmail)
     await page.type('#password', accountPassword)
     const [loginResponse] = await Promise.all([
       page.waitForNavigation({
         timeout: 10000,
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'networkidle0',
       }),
       page.click('#login-button'),
     ]);
@@ -49,7 +49,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         const url = new URL(href, 'https://strava.com')
         console.log(`Retrieving data for event at ${url}`)
         await page.goto(url, {
-          waitUntil: 'domcontentloaded'
+          waitUntil: 'networkidle0'
         })
 
         // Get data from Strava club events
@@ -82,7 +82,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         }
         console.log(`Event time we're going to process is ${eventHourInt}:${eventMinute}`)
         const startsAt = Moment.utc().year(eventYear).month(eventMonth).date(eventDay).hour(eventHourInt).minute(parseInt(eventMinute, 10)).startOf('minute')
-        console.log(`Event retrieved from ${url}: ${title}; ${startsAt.format('YYYY-MM-DD HH:mm')}; ${address}; ${description}`)
+        console.log(`Event retrieved from ${url}: ${title}; ${startsAt.format('YYYY-MM-DD HH:mm')}; ${address}`)
 
         stravaEvents.push({
           url,
@@ -103,7 +103,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         }
 
         const existsOnStrava = stravaEvents.findIndex(stravaEvent => {
-          return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address && stravaEvent.description === masterEvent.description
+          return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address
         })
 
         if (existsOnStrava === -1) {
@@ -117,7 +117,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
       // Delete events that are on Strava and not in master
       stravaEvents.forEach(stravaEvent => {
         const existsInMaster = masterEvents.findIndex(masterEvent => {
-          return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address && stravaEvent.description === masterEvent.description
+          return stravaEvent.title === masterEvent.title && stravaEvent.startsAt.isSame(masterEvent.startsAt) && stravaEvent.address === masterEvent.address
         })
 
         if (existsInMaster === -1 || masterEvents[existsInMaster].cancelled) {
@@ -149,7 +149,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         console.log(`Deleting event ${url}...`)
         // Go to event page
         await page.goto(url, {
-          waitUntil: 'domcontentloaded'
+          waitUntil: 'networkidle0'
         })
 
         // Wait for event on page
@@ -173,7 +173,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
         // Wait for page to navigate away
         const [deleteEventResponse] = await Promise.all([
           page.waitForNavigation({
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'networkidle0',
             timeout: 10000,
           }),
           page.click('#delete-event-js'),
@@ -203,7 +203,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
 
         // Go to Strava club page
         await page.goto(clubUrl, {
-          waitUntil: 'domcontentloaded'
+          waitUntil: 'networkidle0'
         })
 
         console.log("Now on Strava Club page")
@@ -344,10 +344,11 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
       // Save
       console.log("Saving event...")
       try {
+        await page.waitFor(500)
         const [createEventResponse] = await Promise.all([
           page.waitForNavigation({
             timeout: 10000,
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'networkidle0',
           }),
           page.click('#submit-event-js'),
         ]);

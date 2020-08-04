@@ -282,7 +282,7 @@ exports.createPagesStatefully = async ({graphql}) => {
         title,
         startsAt: Moment.utc(startsAt),
         address: addressString,
-        description: `Full information on this event is available at ${url}`,
+        description: `Full information and sign up for this event is available at ${url} - please note that during COVID-19 restrictions, you MUST sign up for events through our website - it is not sufficient to click on "I'm in".`,
         route: routeKey,
         terrain,
         cancelled,
