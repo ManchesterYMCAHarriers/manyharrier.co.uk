@@ -1,6 +1,6 @@
 const mailgun = require('mailgun-js')({
-  apiKey: process.env.MAILGUN_API_KEY,
-  domain: process.env.MAILGUN_DOMAIN,
+    apiKey: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN,
 })
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const mailchimpApiKey = process.env.MAILCHIMP_API_KEY
@@ -21,61 +21,61 @@ const mailFrom = process.env.MAIL_FROM
 const lineCharLength = 72
 
 const retryOpts = {
-  retries: 5,
-  minTimeout: 100,
-  maxTimeout: 1000
+    retries: 5,
+    minTimeout: 100,
+    maxTimeout: 1000
 }
 
 exports.handler = async ({body}) => {
-  const {form_name, data} = JSON.parse(body).payload
+    const {form_name, data} = JSON.parse(body).payload
 
-  // Join form
-  if (form_name === 'join') {
-    await processJoinOrRenewalForm('join', data)
-    return {
-      statusCode: 200,
+    // Join form
+    if (form_name === 'join') {
+        await processJoinOrRenewalForm('join', data)
+        return {
+            statusCode: 200,
+        }
     }
-  }
 
-  // Renewal form
-  if (form_name === 'renew') {
-    await processJoinOrRenewalForm('renew', data)
-    return {
-      statusCode: 200,
+    // Renewal form
+    if (form_name === 'renew') {
+        await processJoinOrRenewalForm('renew', data)
+        return {
+            statusCode: 200,
+        }
     }
-  }
 
-  // Contact form
-  if (form_name === 'contact') {
-    await processContactForm(data)
-    return {
-      statusCode: 200,
+    // Contact form
+    if (form_name === 'contact') {
+        await processContactForm(data)
+        return {
+            statusCode: 200,
+        }
     }
-  }
 
-  // Cart checkout
-  if (form_name === 'checkout') {
-    await processCheckout(data)
-    return {
-      statusCode: 200,
+    // Cart checkout
+    if (form_name === 'checkout') {
+        await processCheckout(data)
+        return {
+            statusCode: 200,
+        }
     }
-  }
 
-  throw new Error(`Unhandled form submission for ${form_name}`)
+    throw new Error(`Unhandled form submission for ${form_name}`)
 }
 
 async function processJoinOrRenewalForm(action, body) {
-  // Get data for Stripe SKU
-  const membership = await getStripeSku(body.membership)
+    // Get data for Stripe SKU
+    const membership = await getStripeSku(body.membership)
 
-  // Create email body
-  const message = `Hello!
+    // Create email body
+    const message = `Hello!
   
 ${
-    action === `join`
-      ? `A new member has joined the club!`
-      : `We've had a membership renewal!`
-  }
+        action === `join`
+            ? `A new member has joined the club!`
+            : `We've had a membership renewal!`
+    }
 
 PERSONAL DETAILS
 ================
@@ -107,24 +107,24 @@ WhatsApp:         ${body.telephone !== '' ? body.whatsApp : 'No'}
 EMERGENCY CONTACT
 =================
 Name:             ${
-    body.emergencyContactName !== ''
-      ? body.emergencyContactName
-      : 'Not provided'
-  }
+        body.emergencyContactName !== ''
+            ? body.emergencyContactName
+            : 'Not provided'
+    }
 Telephone:        ${
-    body.emergencyContactNumber !== ''
-      ? body.emergencyContactNumber
-      : 'Not provided'
-  }
+        body.emergencyContactNumber !== ''
+            ? body.emergencyContactNumber
+            : 'Not provided'
+    }
 
 MEMBERSHIP INFO
 ===============
 Claim:            ${membership.attributes.claim}
 First claim club: ${
-    membership.attributes.claim === 'First'
-      ? 'Manchester YMCA Harriers'
-      : body.firstClaimClub
-  }
+        membership.attributes.claim === 'First'
+            ? 'Manchester YMCA Harriers'
+            : body.firstClaimClub
+    }
 Valid until:      ${membership.attributes.valid_to}
 
 Y CLUB MEMBERSHIP
@@ -143,75 +143,95 @@ Payment method:   ${body.paymentMethod}
 Thanks!
 `
 
-  // Send to recipients
-  await sendMessageWithMailgun(
-    `${recipientClubSecretary},${recipientTreasurer},${recipientWebmaster}`,
-    `${
-      action === 'join' ? 'New' : 'Renewal for'
-    } ${membership.attributes.claim.toLowerCase()}-claim member: ${
-      body.firstName
-    } ${body.lastName}`,
-    message
-  )
+    // Send to recipients
+    await sendMessageWithMailgun({
+        to: `${recipientClubSecretary},${recipientTreasurer},${recipientWebmaster}`,
+        subject: `${
+            action === 'join' ? 'New' : 'Renewal for'
+        } ${membership.attributes.claim.toLowerCase()}-claim member: ${
+            body.firstName
+        } ${body.lastName}`,
+        body: message
+    })
 
-  // Sign-up for Newsletter (if opted in)
-  if (body.newsletter.toLowerCase() === 'yes') {
-    await subscribeToMailingList(body.email, body.firstName, body.lastName)
-  } else {
-    await unsubscribeFromMailingList(body.email)
-  }
+    // Sign-up for Newsletter (if opted in)
+    if (body.newsletter.toLowerCase() === 'yes') {
+        await subscribeToMailingList(body.email, body.firstName, body.lastName)
+    } else {
+        await unsubscribeFromMailingList(body.email)
+    }
 }
 
 async function processContactForm(body) {
-  if (body.reason == `I need to contact the Covid Coordinator`) {
-    await sendMessageWithMailgun(
-      `${recipientCovidCoordinator},${recipientWebmaster}`,
-      body.reason,
-      body.message
-    )
-  } else {
-    await sendMessageWithMailgun(
-      `${recipientHello},${recipientWebmaster}`,
-      body.reason,
-      body.message
-    )
-  }
+    // Create email body
+    const message = `Hello!
+
+We have received a message through the website:
+
+DETAILS
+=======
+
+Name:               ${body.name}
+Email address:      ${body.email}
+Reason for message: ${body.reason}
+
+MESSAGE
+=======
+
+${body.message}
+`
+
+    if (body.reason === `I need to contact the Covid Coordinator`) {
+        await sendMessageWithMailgun({
+            to: `${recipientCovidCoordinator},${recipientWebmaster}`,
+            subject: body.reason,
+            body: message,
+            replyTo: body.email
+        })
+    } else {
+        await sendMessageWithMailgun({
+            to: `${recipientHello},${recipientWebmaster}`,
+            subject: body.reason,
+            body: message,
+            replyTo: body.email
+        })
+    }
 }
 
 async function processCheckout(body) {
-  // Get data for Stripe SKUs
-  let total = 0
+    // Get data for Stripe SKUs
+    let total = 0
 
-  const items = []
+    const items = []
 
-  const submittedItems = JSON.parse(body.items)
+    const submittedItems = JSON.parse(body.items)
 
-  for (let item of submittedItems) {
-    const stripeSku = await getStripeSku(item.sku)
-    item.price = stripeSku.price
-    total += item.price * item.quantity
-    const line = `${item.quantity} x ${item.description} @ ${toCurrency(
-      item.price
-    )}`
-    item.category = stripeSku.attributes.category
-    const subtotal = `${toCurrency(item.quantity * item.price)}`
-    const spaces = lineCharLength - (line.length + subtotal.length)
-    items.push({
-      sortKey: item.description,
-      category: item.category,
-      line: `${line}${' '.repeat(Math.max(spaces, 1))}${subtotal}`,
+    for (let item of submittedItems) {
+        const stripeSku = await getStripeSku(item.sku)
+        item.price = stripeSku.price
+        total += item.price * item.quantity
+        const line = `${item.quantity} x ${item.description} @ ${toCurrency(
+            item.price
+        )}`
+        item.category = stripeSku.attributes.category
+        const subtotal = `${toCurrency(item.quantity * item.price)}`
+        const spaces = lineCharLength - (line.length + subtotal.length)
+        items.push({
+            sortKey: item.description,
+            category: item.category,
+            line: `${line}${' '.repeat(Math.max(spaces, 1))}${subtotal}`,
+        })
+    }
+
+    items.sort((a, b) => {
+        return a.sortKey < b.sortKey ? -1 : 1
     })
-  }
 
-  items.sort((a, b) => {
-    return a.sortKey < b.sortKey ? -1 : 1
-  })
+    total = `Total: ${toCurrency(total)}`
+    const totalLine = ' '.repeat(lineCharLength - total.length) + total
 
-  total = `Total: ${toCurrency(total)}`
-  const totalLine = ' '.repeat(lineCharLength - total.length) + total
-
-  // Create email body for whole order
-  let message = `Hello!
+    // Create email body for whole order
+    let message = `Hello!
   
 An order has been placed through the website:
 
@@ -226,30 +246,30 @@ ORDER
 =====
 `
 
-  items.forEach(({line}) => {
-    message += line + '\n'
-  })
+    items.forEach(({line}) => {
+        message += line + '\n'
+    })
 
-  message += `${'-'.repeat(lineCharLength)}` + '\n'
-  message += `${totalLine}` + '\n'
-  message += `${'-'.repeat(lineCharLength)}` + '\n'
+    message += `${'-'.repeat(lineCharLength)}` + '\n'
+    message += `${totalLine}` + '\n'
+    message += `${'-'.repeat(lineCharLength)}` + '\n'
 
-  message += `
+    message += `
 
 Payment method: ${body.paymentMethod}
 
 Thanks!
 `
-  await sendMessageWithMailgun(
-    `${recipientTreasurer},${recipientWebmaster}`,
-    `Order received from ${body.firstName} ${body.lastName}`,
-    message
-  )
+    await sendMessageWithMailgun({
+        to: `${recipientTreasurer},${recipientWebmaster}`,
+        subject: `Order received from ${body.firstName} ${body.lastName}`,
+        body: message
+    })
 
-  // Create email body for kit
-  let kitItemCount = 0
+    // Create email body for kit
+    let kitItemCount = 0
 
-  message = `Hello!
+    message = `Hello!
   
 An order has been placed through the website:
 
@@ -264,30 +284,30 @@ ORDER
 =====
 `
 
-  items.forEach(({category, line}) => {
-    if (category === 'Kit') {
-      message += line + '\n'
-      kitItemCount++
-    }
-  })
+    items.forEach(({category, line}) => {
+        if (category === 'Kit') {
+            message += line + '\n'
+            kitItemCount++
+        }
+    })
 
-  message += `
+    message += `
 
 Thanks!
 `
 
-  if (kitItemCount > 0) {
-    await sendMessageWithMailgun(
-      `${recipientKit},${recipientWebmaster}`,
-      `Order received from ${body.firstName} ${body.lastName}`,
-      message
-    )
-  }
+    if (kitItemCount > 0) {
+        await sendMessageWithMailgun({
+            to: `${recipientKit},${recipientWebmaster}`,
+            subject: `Order received from ${body.firstName} ${body.lastName}`,
+            body: message
+        })
+    }
 
-  // Create email body for kit
-  let entryItemCount = 0
+    // Create email body for kit
+    let entryItemCount = 0
 
-  message = `Hello!
+    message = `Hello!
   
 An order has been placed through the website:
 
@@ -302,154 +322,158 @@ ORDER
 =====
 `
 
-  items.forEach(({category, line}) => {
-    if (category === 'Race' || category === 'Presentation') {
-      message += line + '\n'
-      entryItemCount++
-    }
-  })
+    items.forEach(({category, line}) => {
+        if (category === 'Race' || category === 'Presentation') {
+            message += line + '\n'
+            entryItemCount++
+        }
+    })
 
-  message += `
+    message += `
 
 Thanks!
 `
 
-  if (entryItemCount > 0) {
-    await sendMessageWithMailgun(
-      `${recipientEntriesSecretary},${recipientWebmaster}`,
-      `Order received from ${body.firstName} ${body.lastName}`,
-      message
-    )
-  }
+    if (entryItemCount > 0) {
+        await sendMessageWithMailgun({
+            to: `${recipientEntriesSecretary},${recipientWebmaster}`,
+            subject: `Order received from ${body.firstName} ${body.lastName}`,
+            body: message
+        })
+    }
 }
 
-async function sendMessageWithMailgun(to, subject, body) {
-  let data = {
-    to: to instanceof Array ? to.join(',') : to,
-    from: mailFrom,
-    subject: subject,
-    text: body,
-  }
+async function sendMessageWithMailgun({to, subject, body, replyTo}) {
+    let data = {
+        to: to instanceof Array ? to.join(',') : to,
+        from: mailFrom,
+        subject: subject,
+        text: body,
+    }
 
-  return promiseRetry((retry, retryOpts) => {
-    return mailgun.messages().send(data)
-      .catch(retry)
-  })
+    if (replyTo) {
+        data["h:Reply-To"] = replyTo
+    }
+
+    return promiseRetry((retry) => {
+        return mailgun.messages().send(data)
+            .catch(retry)
+    }, retryOpts)
 }
 
 async function getStripeSku(id) {
-  return promiseRetry((retry, retryOpts) => {
-    return getStripeSkuPromise(id)
-      .catch(retry)
-  })
+    return promiseRetry((retry) => {
+        return getStripeSkuPromise(id)
+            .catch(retry)
+    }, retryOpts)
 }
 
 async function getStripeSkuPromise(id) {
-  return new Promise((resolve, reject) => {
-    stripe.skus.retrieve(id, (err, sku) => {
-      if (err) {
-        reject(err)
-        return
-      }
-      resolve(sku)
+    return new Promise((resolve, reject) => {
+        stripe.skus.retrieve(id, (err, sku) => {
+            if (err) {
+                reject(err)
+                return
+            }
+            resolve(sku)
+        })
     })
-  })
 }
 
 async function subscribeToMailingList(email, firstName, lastName) {
-  const emailHash = crypto
-    .createHash('md5')
-    .update(email.toLowerCase())
-    .digest('hex')
+    const emailHash = crypto
+        .createHash('md5')
+        .update(email.toLowerCase())
+        .digest('hex')
 
-  const isAlreadySubscribed = await fetch(mailchimpSubscribeURL + emailHash, {
-    headers: {
-      Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
-        'base64'
-      )}`,
-    },
-  })
+    const isAlreadySubscribed = await fetch(mailchimpSubscribeURL + emailHash, {
+        headers: {
+            Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
+                'base64'
+            )}`,
+        },
+    })
 
-  if (isAlreadySubscribed.ok) {
-    return
-  }
+    if (isAlreadySubscribed.ok) {
+        return
+    }
 
-  if (isAlreadySubscribed.status !== 404) {
-    throw new Error(
-      `response from Mailchimp API was ${isAlreadySubscribed.status}`
-    )
-  }
+    if (isAlreadySubscribed.status !== 404) {
+        throw new Error(
+            `response from Mailchimp API was ${isAlreadySubscribed.status}`
+        )
+    }
 
-  const data = {
-    email_address: email.toLowerCase(),
-    status: 'pending',
-    merge_fields: {
-      FNAME: firstName,
-      LNAME: lastName,
-    },
-  }
+    const data = {
+        email_address: email.toLowerCase(),
+        status: 'pending',
+        merge_fields: {
+            FNAME: firstName,
+            LNAME: lastName,
+        },
+    }
 
-  const createSubscription = await fetch(mailchimpSubscribeURL, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
-        'base64'
-      )}`,
-      'Content-Type': 'application/json',
-    },
-  })
+    const createSubscription = await fetch(mailchimpSubscribeURL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
+                'base64'
+            )}`,
+            'Content-Type': 'application/json',
+        },
+    })
 
-  if (!createSubscription.ok) {
-    throw new Error(
-      `response from Mailchimp API was ${createSubscription.status}`
-    )
-  }
+    if (!createSubscription.ok) {
+        throw new Error(
+            `response from Mailchimp API was ${createSubscription.status}`
+        )
+    }
 }
 
 async function unsubscribeFromMailingList(email) {
-  const emailHash = crypto
-    .createHash('md5')
-    .update(email.toLowerCase())
-    .digest('hex')
+    const emailHash = crypto
+        .createHash('md5')
+        .update(email.toLowerCase())
+        .digest('hex')
 
-  const isSubscribed = await fetch(mailchimpSubscribeURL + emailHash, {
-    headers: {
-      Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
-        'base64'
-      )}`,
-    },
-  })
+    const isSubscribed = await fetch(mailchimpSubscribeURL + emailHash, {
+        headers: {
+            Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
+                'base64'
+            )}`,
+        },
+    })
 
-  if (!isSubscribed.ok) {
-    if (isSubscribed.status !== 404) {
-      return
+    if (!isSubscribed.ok) {
+        if (isSubscribed.status !== 404) {
+            return
+        }
+        throw new Error(`response from Mailchimp API was ${isSubscribed.status}`)
     }
-    throw new Error(`response from Mailchimp API was ${isSubscribed.status}`)
-  }
 
-  const data = {
-    status: 'unsubscribed',
-  }
+    const data = {
+        status: 'unsubscribed',
+    }
 
-  const unsubscribe = await fetch(mailchimpSubscribeURL + emailHash, {
-    method: 'PATCH',
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
-        'base64'
-      )}`,
-      'Content-Type': 'application/json',
-    },
-  })
+    const unsubscribe = await fetch(mailchimpSubscribeURL + emailHash, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: `Basic ${Buffer.from('user:' + mailchimpApiKey).toString(
+                'base64'
+            )}`,
+            'Content-Type': 'application/json',
+        },
+    })
 
-  if (!unsubscribe.ok) {
-    throw new Error(
-      `cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}`
-    )
-  }
+    if (!unsubscribe.ok) {
+        throw new Error(
+            `cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}`
+        )
+    }
 }
 
 function toCurrency(val) {
-  return '£' + (parseInt(val, 10) / 100).toFixed(2)
+    return '£' + (parseInt(val, 10) / 100).toFixed(2)
 }
