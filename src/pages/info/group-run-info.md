@@ -11,7 +11,7 @@ by England Athletics and Public Health England.
 
 At present, this means:
 
-* **groups are strictly limited to a maximum of six participants**; 
+* **groups are strictly limited to a maximum of twelve participants**; 
 * **you must sign up for the run in advance using the Doodle poll link above**; and
 * **you agree to abide by the instructions on our [coronavirus group running guidance](/about/coronavirus-group-running-guidance) page.**
 
