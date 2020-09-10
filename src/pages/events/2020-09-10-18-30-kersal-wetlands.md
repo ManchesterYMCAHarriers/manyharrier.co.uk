@@ -17,7 +17,8 @@ we can now remove the limit on attendees as long as we have
 enough group leaders available, with each leader able to 
 lead sub-groups of 12.
 
-**Please sign up in advance** using the Doodle poll link below:
+**Please sign up in advance - with your full name** - using the 
+Doodle poll link below:
 
 * [Sign up for this group run](https://doodle.com/poll/pt3wes7mangzv239)
 
