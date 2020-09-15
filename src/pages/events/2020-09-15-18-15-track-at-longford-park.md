@@ -6,7 +6,10 @@ eventType: Speedwork
 #sessionForeignKey: Taylor Swift
 terrain: Track
 startsAt: '2020-09-15 18:15'
+cancelled: true
 ---
+## Cancelled due to an event at Longford Park Stadium
+
 Craig and Sarah are organising a track session for up to 24 people at Longford Park track. We will start with a few 
 warm up laps at 6:15pm prompt and some dynamic stretches, before going in to the main session - details of the session 
 to be announced on the night!
