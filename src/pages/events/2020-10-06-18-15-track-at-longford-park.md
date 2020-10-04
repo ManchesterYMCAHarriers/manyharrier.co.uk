@@ -4,7 +4,7 @@ eventKey: Track at Longford Park
 venueForeignKey: Longford Park Stadium
 eventType: Speedwork
 terrain: Track
-startsAt: '2020-09-29 18:15'
+startsAt: '2020-10-06 18:15'
 ---
 Sarah is organising a track session for up to 24 people at Longford Park track. We will start with a few 
 warm up laps at 6:15pm prompt and some dynamic stretches, before going in to the main session - details of the session 
