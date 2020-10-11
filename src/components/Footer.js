@@ -88,7 +88,6 @@ const Footer = class extends React.Component {
                 <FooterMenuLink title={'Events calendar'} to={'/events'} />
                 <FooterMenuLink title={'Championships'} to={'/championships'} />
                 <FooterMenuLink title={'Blog'} to={'/blog'} />
-                <FooterMenuLink title={'Kit'} to={'/kit'} />
                 <FooterMenuLink title={'Contact'} to={'/contact'} />
                 <FooterMenuLink title={'About'} to={'/about'} />
                 <FooterMenuLink title={'Join'} to={'/join'} />

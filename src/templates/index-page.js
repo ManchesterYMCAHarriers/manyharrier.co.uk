@@ -37,22 +37,11 @@ export const IndexPageTemplate = ({
       <Panels>
         <PanelFullWidth>
           <div className="content panel red-bottom">
-            <h2 className="heading-2">Coronavirus update, 3rd August 2020</h2>
-            <p className="font-bold">We are still only able to offer limited group running sessions, however, track is back from Tuesday 4th August!</p>
-            <p>In line with the current guidance from England Athletics, Public Health England and limitations imposed on us by host venues, these sessions will be for a limited number of people. You must sign up in advance for each session and must adhere to social distancing practices throughout.</p>
-            <p>Groups will be led by individual members of the Club. Group runs will commence from venues across Manchester; track sessions will be held at Longford Park.</p>
-            <p>These sessions will be listed on the <Link to={"/events"}>Events pages</Link> of this website. <span className="font-bold">You will need to sign up for each event in advance through the link on the event page</span>; places are allocated on a first-come, first-served basis.</p>
-            <p><strong>Track is back!</strong> Starting on Tuesday 4th August, we will hold two track sessions for groups of up to six people at Longford Park. <Link to={"/blog/2020-07-16-track-is-back/"}>Check out this blog post for more information</Link>.</p>
-            <p><Link to={"/blog/2020-06-16-alternative-speedwork-sessions"}>Coach Jen has also come up with some non-track speedwork sessions</Link> which you can try at a local park or other suitable location.</p>
-          </div>
-        </PanelFullWidth>
-        <PanelFullWidth>
-          <div className="content panel red-bottom">
-            <h2 className="heading-2">Membership renewals open until 31st August 2020</h2>
-            <p className="font-bold">Membership renewals are now open!</p>
-            <p>We have frozen our fees at the same level as last year - membership until 31st March 2021 is just £28.00 for first claim members, or £11.00 for second claim members.</p>
-            <p><strong><Link to={"/renew"}>Click here to renew</Link></strong></p>
-            <p>If your financial situation has been adversely affected due to the Coronavirus pandemic and you cannot afford to renew - <Link to={"/contact"}>please get in touch</Link> - <strong>we will be able to help you!</strong></p>
+            <h2 className="heading-2">Coronavirus update, 10th October 2020</h2>
+            <p>We are holding regular track sessions at Longford Park Stadium on Tuesday evenings starting at 6:15pm, and Thursday evening group run sessions from the Y Club starting at 6:30pm.</p>
+            <p>All sessions will be listed a few days in advance on the <Link to={"/events"}>Events pages</Link> of this website. <span className="font-bold">You still need to sign up for each event in advance through the Doodle poll link on the event page</span>.</p>
+            <p>Please make sure you are familiar with our <Link to={"/about/coronavirus-group-running-guidance"}>coronavirus group running guidance</Link> before coming along to a session.</p>
+            <p>We are looking for volunteers to lead group run sessions on Thursday evenings; if you are interested, please let your Captains know!</p>
           </div>
         </PanelFullWidth>
         <PanelFullWidth>

@@ -25,13 +25,15 @@ export default class RenewIndex extends React.Component {
       addressSelectorDisplayOptions: [],
       addressSelectorOptionsMap: [],
       siteUrl: null,
-      data: {},
+      data: {
+        paymentMethod: 'BACS',
+      },
       externalError: null,
       formAction: '/renew',
       getAddressApiError: false,
       getAddressApiKey: null,
       stage: 1,
-      stages: 17,
+      stages: 16,
       stripePublishableKey: null,
       stripeSkus: {
         firstClaim: null,
@@ -1131,38 +1133,6 @@ export default class RenewIndex extends React.Component {
                           }
                         />
 
-                        {/* Payment */}
-                        <FieldsetRadios
-                          inputAttributes={{
-                            required: true,
-                          }}
-                          legend={
-                            'How would you like to pay for your membership?'
-                          }
-                          hint={
-                            'It saves the club some money if you pay by bank transfer'
-                          }
-                          name={'paymentMethod'}
-                          options={[
-                            {
-                              id: 'paymentMethodBankTransfer',
-                              label: 'Bank transfer',
-                              value: 'BACS',
-                            },
-                            {
-                              id: 'paymentMethodStripe',
-                              label: 'Debit card, credit card or Apple Pay',
-                              value: 'Stripe',
-                            },
-                          ]}
-                          setFormValidationState={this.updateValidationIssues}
-                          validationMessages={{
-                            valueMissing: 'Select a payment method',
-                          }}
-                          validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 16}
-                        />
-
                         {/* Review */}
                         <FieldsetMulti
                           legend={'Is all of your information correct?'}
@@ -1170,7 +1140,7 @@ export default class RenewIndex extends React.Component {
                             'If not, please use the back button to go back and correct it.'
                           }
                           validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 17}
+                          visible={this.state.stage === 16}
                         >
                           <dl>
                             <dt>Name</dt>
@@ -1268,19 +1238,9 @@ export default class RenewIndex extends React.Component {
                             </dd>
                             <dt>Payment method</dt>
                             <dd>
-                              You have opted to pay by
-                              {this.state.data.paymentMethod === 'BACS' &&
-                              ' bank transfer'}
-                              {this.state.data.paymentMethod === 'Stripe' &&
-                              ' credit card, debit card or Apple Pay'}
+                              Please pay by BACS bank transfer
                             </dd>
                           </dl>
-                          {this.state.data.paymentMethod === 'Stripe' && (
-                            <p>
-                              When you click the "Make payment" button, you will
-                              be transferred to our Stripe checkout page.
-                            </p>
-                          )}
                         </FieldsetMulti>
 
                         {/* Bank payment details */}
@@ -1289,7 +1249,7 @@ export default class RenewIndex extends React.Component {
                           name={'paymentMethod'}
                           setFormValidationState={this.updateValidationIssues}
                           validationIssues={this.state.validationIssues}
-                          visible={this.state.stage === 18}
+                          visible={this.state.stage === 17}
                         >
                           <p>
                             You have opted to pay for your membership by{' '}

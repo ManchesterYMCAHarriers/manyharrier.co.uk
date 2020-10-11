@@ -19,11 +19,13 @@ members:
      
      Steph is a keen fell and ultra-distance runner.
    singleImage: /media/committee-Steph-Goodchild.jpg
- - name: Sarah Donohoe
+ - name: Chris March
    role: Club Secretary
    description: |
-     Sarah's role as Club Secretary involves registering club members with England Athletics and managing the membership of the club. The Club Secretary is also responsible for administrative tasks around committee meetings and the Club's Annual General Meeting, including the collation of agendas, the recording of minutes and distributing these as required.
-   singleImage: /media/committee-Sarah-Donohoe.jpg
+     Chris's role as Club Secretary involves registering club members with England Athletics and managing the membership of the club. The Club Secretary is also responsible for administrative tasks around committee meetings and the Club's Annual General Meeting, including the collation of agendas, the recording of minutes and distributing these as required.
+     
+     Chris also keeps this website up to date!
+   singleImage: /media/committee-Chris-March.jpg
  - name: Heather Hughes
    role: Club Treasurer
    description: |
@@ -45,32 +47,18 @@ members:
      Both Craig and Sarah are excellent marathon runners; [Craig's marathon PB is 2:34](/blog/2019-11-21-buenos-aires-marathon/) and Sarah's is 3:27.
    singleImage: /media/committee-Sarah-Wilson-and-Craig-Jones.jpg
  - name: Graeme Wilkinson
-   role: Race Entries Secretary
+   role: Committee Member
    description: |
      Graeme's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships.
    singleImage: /media/committee-Graeme-Wilkinson.jpg
- - name: David Ashton
+ - name: Marlow Upton
    role: Committee Member
    description: |
-     David is a veteran runner who is particularly passionate and knowledgeable about fell running.
-     
-     Beyond general committee business, David represents the club at the Manchester Area Cross Country League and South East Lancs Cross Country League Annual General Meetings. He was heavily involved in the organisation of our Blackleach Country Park race.
-   singleImage: /media/committee-David-Ashton.jpg
- - name: Hannah Brierley
+     Marlow is new on the committee for 2020.
+   singleImage: /media/committee-Marlow-Upton.jpg
+ - name: Phil Tomkinson
    role: Committee Member
    description: |
-     Hannah is a general committee member. She has previously served as a Club Captain for five years, alongside Mark Griffiths.
-   singleImage: /media/committee-Hannah-Brierley.jpg
- - name: Emma Elmerhebi
-   role: Committee Member
-   description: |
-     Emma is a general committee member. She has previously served as the Club Secretary for two years.
-   singleImage: /media/committee-Emma-Elmerhebi.jpg
- - name: Chris March
-   role: Committee Member
-   description: |
-     Chris is a general committee member. He has previously served as the Club President for two years, from 2017 until 2019.
-  
-     Chris' primary responsibility is to look after this website and any other techy stuff.
-   singleImage: /media/committee-Chris-March.jpg
+     Phil is new on the committee for 2020.
+   singleImage: /media/committee-Phil-Tomkinson.jpg
 ---
