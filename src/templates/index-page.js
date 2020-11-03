@@ -38,8 +38,7 @@ export const IndexPageTemplate = ({
         <PanelFullWidth>
           <div className="content panel red-bottom">
             <h2 className="heading-2">Coronavirus update, 3rd November 2020</h2>
-            <p>Following the announcement of
-              <a href="https://www.gov.uk/guidance/new-national-restrictions-from-5-november">new national restrictions commencing at midnight on 5th November</a>,
+            <p>Following the announcement of <a href="https://www.gov.uk/guidance/new-national-restrictions-from-5-november">new national restrictions commencing at midnight on 5th November</a>,
               we have suspended all of our group running activities until further notice. We will look to resume our track
               sessions and group runs as soon as we're allowed to!
             </p>
