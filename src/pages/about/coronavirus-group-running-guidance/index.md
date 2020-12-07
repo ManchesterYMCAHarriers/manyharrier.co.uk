@@ -1,7 +1,8 @@
 ---
-templateKey: standard-page path: /about/coronavirus-group-running-guidance title: Coronavirus Group Running Guidance
-description: Rules and guidance that applies to Manchester YMCA Harriers activities during the current coronavirus
-pandemic
+templateKey: standard-page 
+path: /about/coronavirus-group-running-guidance 
+title: Coronavirus Group Running Guidance
+description: Rules and guidance that applies to Manchester YMCA Harriers activities during the current coronavirus pandemic
 ---
 
 ## Introduction
