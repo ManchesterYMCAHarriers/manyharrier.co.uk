@@ -9,7 +9,7 @@ async function updateStrava({masterEvents, strava: {loginUrl, clubUrl, accountEm
     const toCreate = []
     const toDelete = []
 
-    const browser = await puppeteer.launch({headless: false})
+    const browser = await puppeteer.launch({headless: true})
     const page = await browser.newPage()
 
     // Set cookies to stop
