@@ -1,0 +1,13 @@
+[
+  {
+    "name": "_strava_cbv2",
+    "value": "true",
+    "domain": ".strava.com",
+    "path": "/",
+    "expires": 2147483647,
+    "size": 16,
+    "httpOnly": false,
+    "secure": false,
+    "session": false
+  }
+]
