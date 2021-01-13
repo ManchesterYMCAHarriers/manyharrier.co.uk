@@ -37,14 +37,13 @@ export const IndexPageTemplate = ({
             <Panels>
                 <PanelFullWidth>
                     <div className="content panel red-bottom">
-                        <h2 className="heading-2">Coronavirus update, 7th December 2020</h2>
+                        <h2 className="heading-2">Coronavirus update, January 2020</h2>
                         <p>
-                            Our track sessions and group runs are now back up and running, following the end of the
-                            national lockdown restrictions. Please see our <Link to={"/events"}>event
-                            listings</Link> for details of each session.
-                            As before the lockdown, you will need to sign up for each event in advance and adhere to
-                            our <Link to={"/about/coronavirus-group-running-guidance/"}>coronavirus
-                            guidelines</Link>.
+                            Following the announcement of national lockdown measures, all group running activities
+                            have been suspended until further notice.
+                        </p>
+                        <p>
+                            We hope to resume group running activities once these measures are relaxed.
                         </p>
                     </div>
                 </PanelFullWidth>
