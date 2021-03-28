@@ -5,7 +5,7 @@ venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: Kersal Wetlands
-startsAt: '2020-10-01 18:30'
+startsAt: '2021-04-01 18:30'
 ---
 This week's group run will be the Kersal Wetlands route starting from 
 outside the Y Club at 6:30pm on 1st April.
