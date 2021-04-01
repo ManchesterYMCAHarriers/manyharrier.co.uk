@@ -37,14 +37,18 @@ export const IndexPageTemplate = ({
             <Panels>
                 <PanelFullWidth>
                     <div className="content panel red-bottom">
-                        <h2 className="heading-2">Coronavirus update, March 2021</h2>
+                        <h2 className="heading-2">Coronavirus update, April 2021</h2>
                         <p>
                             Following the relaxation of national lockdown measures, our group running activities will
                             resume from Thursday 1st April. <Link to="/events/2021-04-01-18-30-kersal-wetlands/">Our first
                             run back is heading to the Kersal Wetlands.</Link>
                         </p>
                         <p>
-                            We hope to resume our track sessions ASAP.
+                            Our track sessions will resume <Link to="/events/2021-04-06-18-15-track-at-longford-park/">on 6th April at Longford Park</Link>.
+                        </p>
+                        <h2 className="heading-2">Membership renewals open!</h2>
+                        <p>
+                            It's membership renewal time! <Link to="/renew">Please click here to renew your membership.</Link>
                         </p>
                     </div>
                 </PanelFullWidth>
