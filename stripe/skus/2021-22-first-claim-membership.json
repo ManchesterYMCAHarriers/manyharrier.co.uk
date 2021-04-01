@@ -1,0 +1,14 @@
+{
+  "activeFrom": "2021-04-01T00:00:00",
+  "activeUntil": "2022-03-31T23:59:59",
+  "productName": "Membership",
+  "sku": {
+    "attributes": {
+      "name": "2021-22 First Claim Membership",
+      "claim": "First",
+      "valid_to": "31 March 2022",
+      "category": "Membership"
+    },
+    "price": 2800
+  }
+}
