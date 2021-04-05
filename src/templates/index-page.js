@@ -39,12 +39,8 @@ export const IndexPageTemplate = ({
                     <div className="content panel red-bottom">
                         <h2 className="heading-2">Coronavirus update, April 2021</h2>
                         <p>
-                            Following the relaxation of national lockdown measures, our group running activities will
-                            resume from Thursday 1st April. <Link to="/events/2021-04-01-18-30-kersal-wetlands/">Our first
-                            run back is heading to the Kersal Wetlands.</Link>
-                        </p>
-                        <p>
-                            Our track sessions will resume <Link to="/events/2021-04-06-18-15-track-at-longford-park/">on 6th April at Longford Park</Link>.
+                            Following the relaxation of national lockdown measures, our track sessions and group running activities have now resumed.
+                            Please check out <Link to="/events">our Events pages</Link> for more information.
                         </p>
                         <h2 className="heading-2">Membership renewals open!</h2>
                         <p>
