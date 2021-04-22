@@ -1,7 +1,7 @@
 ---
 templateKey: event
 eventKey: Southern Parkruns
-venueForeignKey: Y Club
+venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: Southern Parkruns
