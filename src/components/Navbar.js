@@ -115,6 +115,7 @@ export default class Navbar extends React.Component {
             <NavbarSpacer />
             <NavbarLink to={eventsCalendarSlug} title={'Events'} />
             <NavbarLink to={'/championships'} title={'Championships'} />
+            <NavbarLink to={'/kit'} title={'Kit'} />
             <NavbarLink to={'/blog'} title={'Blog'} />
             <NavbarLink to={'/contact'} title={'Contact'} />
             <NavbarLink to={'/about'} title={'About'} />
