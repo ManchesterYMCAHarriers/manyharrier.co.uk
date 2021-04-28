@@ -27,7 +27,9 @@ export default class CheckoutIndex extends React.Component {
       checkoutAvailable: false,
       storageAvailable: null,
       checkingStorageAvailable: true,
-      data: {},
+      data: {
+        paymentMethod: 'BACS'
+      },
       cart: {
         items: [],
         total: 0,
@@ -41,7 +43,7 @@ export default class CheckoutIndex extends React.Component {
       numberOfLines: 0,
       submitValue: 'Next',
       stage: 1,
-      stages: 5,
+      stages: 4,
       validationIssues: [],
     }
   }
@@ -124,8 +126,7 @@ export default class CheckoutIndex extends React.Component {
         if (this.state.stage < this.state.stages) {
           let submitValue = 'Next'
           if (this.state.stage === this.state.stages - 1) {
-            submitValue =
-              data.paymentMethod === 'Stripe' ? 'Make payment' : 'Place order'
+            submitValue = 'Place order'
           }
           this.setState(
             {
@@ -569,38 +570,6 @@ export default class CheckoutIndex extends React.Component {
                             }}
                           />
 
-                          {/* Payment */}
-                          <FieldsetRadios
-                            inputAttributes={{
-                              required: true,
-                            }}
-                            legend={
-                              'How would you like to pay for your membership?'
-                            }
-                            hint={
-                              'It saves the club some money if you pay by bank transfer'
-                            }
-                            name={'paymentMethod'}
-                            options={[
-                              {
-                                id: 'paymentMethodBankTransfer',
-                                label: 'Bank transfer',
-                                value: 'BACS',
-                              },
-                              {
-                                id: 'paymentMethodStripe',
-                                label: 'Debit card, credit card or Apple Pay',
-                                value: 'Stripe',
-                              },
-                            ]}
-                            setFormValidationState={this.updateValidationIssues}
-                            validationMessages={{
-                              valueMissing: 'Select a payment method',
-                            }}
-                            validationIssues={this.state.validationIssues}
-                            visible={this.state.stage === 4}
-                          />
-
                           {/* Review */}
                           <FieldsetMulti
                             legend={'Is everything correct?'}
@@ -608,7 +577,7 @@ export default class CheckoutIndex extends React.Component {
                               'If not, please use the back button to go back and change it.'
                             }
                             validationIssues={this.state.validationIssues}
-                            visible={this.state.stage === 5}
+                            visible={this.state.stage === 4}
                           >
                             <p className="font-semibold">Order</p>
                             {this.state.cart.items.map(item => (
@@ -649,19 +618,9 @@ export default class CheckoutIndex extends React.Component {
                               <dd>{this.state.data.email}</dd>
                               <dt>Payment method</dt>
                               <dd>
-                                You have opted to pay by
-                                {this.state.data.paymentMethod === 'BACS' &&
-                                  ' bank transfer'}
-                                {this.state.data.paymentMethod === 'Stripe' &&
-                                  ' credit card, debit card or Apple Pay'}
+                                Please pay by bank transfer - our bank details will be shown after you click 'Place order'
                               </dd>
                             </dl>
-                            {this.state.data.paymentMethod === 'Stripe' && (
-                              <p>
-                                When you click the "Make payment" button, you
-                                will be transferred to our Stripe checkout page.
-                              </p>
-                            )}
                           </FieldsetMulti>
 
                           {/* Bank payment details */}
@@ -670,7 +629,7 @@ export default class CheckoutIndex extends React.Component {
                             name={'paymentMethod'}
                             setFormValidationState={this.updateValidationIssues}
                             validationIssues={this.state.validationIssues}
-                            visible={this.state.stage === 6}
+                            visible={this.state.stage === 5}
                           >
                             <p>
                               You have opted to pay for your order by{' '}
