@@ -122,3 +122,9 @@ Strava is now kept up-to-date with any new, changed or removed events using the
 data in this repository as the "source of truth". Strava will get updated each
 time the site is built during "working hours". (We don't want to ping a load of
 notifications to our members in the middle of the night!)
+
+### GPX loads of irrelevant decimals replacement regexp
+
+```regexp
+([-\d]+\.[\d]{5})[\d]+([\n,\]]) => $1$2
+```
