@@ -20,4 +20,4 @@ guidance from England Athletics](/about/coronavirus-group-running-guidance/).
 Doodle poll links below:
 
 * [Sign up for the longer 16-mile Worsley Wiggle route](https://doodle.com/poll/e5iumhrbqi3s4qvs)
-* [Sign up for the shorter 12-mile Worsley Little Wiggle route](https://doodle.com/poll/yq4mxswpmp58xas4)
+* [Sign up for the shorter 12-mile Worsley Little Wiggle route](https://doodle.com/poll/9cc93b9c7qbmwecf)
