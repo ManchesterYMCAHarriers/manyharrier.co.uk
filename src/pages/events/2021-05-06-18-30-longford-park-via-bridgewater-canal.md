@@ -5,7 +5,7 @@ venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: Longford Park via Bridgewater Canal
-startsAt: '2021-04-08 18:30'
+startsAt: '2021-05-06 18:30'
 ---
 This week's group run will be the Longford Park via Bridgewater Canal route starting from 
 outside the Y Club at 6:30pm.
