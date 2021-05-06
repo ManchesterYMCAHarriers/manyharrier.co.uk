@@ -128,3 +128,8 @@ notifications to our members in the middle of the night!)
 ```regexp
 ([-\d]+\.[\d]{5})[\d]+([\n,\]]) => $1$2
 ```
+
+### Convert Strava Streams output to geoJson
+```regexp
+\[([-\d\.]+),([-\d\.]+)\] => [$2,$1,0]
+```
