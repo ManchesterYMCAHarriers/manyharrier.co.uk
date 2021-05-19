@@ -5,9 +5,9 @@ venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: MediaCityUK via Bridgewater Canal
-startsAt: '2021-04-22 18:30'
+startsAt: '2021-05-20 18:30'
 ---
-This week's group run will be the MediaCityUK via Bridgewayer Canal route starting from
+This week's group run will be the MediaCityUK via Bridgewater Canal route starting from
 outside the Y Club at 6:30pm.
 
 Different pace and distance groups will be available depending on
@@ -15,11 +15,10 @@ numbers of attendees. The run will take place in accordance with [current COVID-
 guidance from England Athletics](/about/coronavirus-group-running-guidance/).
 
 The full route is approximately 5.5 miles. There is an option to do
-an extended route to take the distance to 8 miles for those who wish to. The
-shorter route is around 5K.
+an extended route to take the distance to 8 miles for those who wish to. There will also be a
+shorter 5K route if there is demand.
 
 **Please sign up in advance - with your full name** - using the
 Doodle poll links below:
 
-* [Sign up for the full 5.5 mile / extended 8 mile MediaCityUK route](https://doodle.com/poll/ewhugcz8t7nwx77a)
-* [Sign up for the shorter 5K route](https://doodle.com/poll/6bcvkkduieazxbx8)
+* [Sign up for this group run](https://doodle.com/poll/mfv7p8v4sb5n8fre)
