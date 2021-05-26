@@ -5,10 +5,10 @@ venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: Kersal Wetlands
-startsAt: '2021-04-29 18:30'
+startsAt: '2021-05-27 18:30'
 ---
 This week's group run will be the Kersal Wetlands route starting from 
-outside the Y Club at 6:30pm.
+outside the Y Club at 6:30pm on 1st April.
 
 Different pace and distance groups will be available depending on 
 numbers of attendees. The run will take place in accordance with [current COVID-19 
@@ -22,4 +22,4 @@ A shorter 4-5 mile alternative route will also be available.
 **Please sign up in advance - with your full name** - using the 
 Doodle poll links below:
 
-* [Sign up for the Kersal Wetlands group run](https://doodle.com/poll/nay78uhqzxzrty7q)
+* [Sign up for the Kersal Wetlands group run](https://doodle.com/poll/53eat4haef4bw2id)
