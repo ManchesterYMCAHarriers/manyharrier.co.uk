@@ -20,4 +20,4 @@ short by only doing one lap of the Wetlands, which will be around 7-miles.
 **Please sign up in advance - with your full name** - using the 
 Doodle poll links below:
 
-* [Sign up for the Kersal Wetlands group run](https://doodle.com/poll/sqfi9h3iz8k3dv95)
+* [Sign up for the Kersal Wetlands group run](https://doodle.com/poll/fg6su8csmz8qxvht)
