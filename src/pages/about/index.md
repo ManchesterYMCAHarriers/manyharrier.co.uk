@@ -63,8 +63,7 @@ Each group will run at a different pace and will be led by a club member, so the
 
 If you’re not sure which group to go in on your first visit, we'd advise starting off in Group 4 and try to work your way up to the next one!
 
-Our routes are generally 6 - 8 miles (10 - 13km) but if you don't fancy running that far, we'll always offer a shorter alternative route of approximately 3 miles (5km).
-
+Our routes are generally 6 - 8 miles (10 - 13km).
 * [Events calendar](/events)
 * [The Y Club](/venues/the-y-club)
 
