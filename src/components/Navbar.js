@@ -111,7 +111,6 @@ export default class Navbar extends React.Component {
             }
           >
             <NavbarLink to={'/join'} title={'Join'} />
-            <NavbarLink to={'/renew'} title={'Renew'} />
             <NavbarSpacer />
             <NavbarLink to={eventsCalendarSlug} title={'Events'} />
             <NavbarLink to={'/championships'} title={'Championships'} />

@@ -91,7 +91,6 @@ const Footer = class extends React.Component {
                 <FooterMenuLink title={'Contact'} to={'/contact'} />
                 <FooterMenuLink title={'About'} to={'/about'} />
                 <FooterMenuLink title={'Join'} to={'/join'} />
-                <FooterMenuLink title={'Renew'} to={'/renew'} />
               </div>
               <div className="w-full my-8 px-2flex-shrink-0 flex-grow-0 text-center">
                 <span className="whitespace-no-wrap">

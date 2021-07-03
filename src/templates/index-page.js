@@ -42,10 +42,6 @@ export const IndexPageTemplate = ({
                             Following the relaxation of national lockdown measures, our track sessions and group running activities have now resumed.
                             Please check out <Link to="/events">our Events pages</Link> for more information.
                         </p>
-                        <h2 className="heading-2">Membership renewals open!</h2>
-                        <p>
-                            It's membership renewal time! <Link to="/renew">Please click here to renew your membership.</Link>
-                        </p>
                     </div>
                 </PanelFullWidth>
                 <PanelFullWidth>
