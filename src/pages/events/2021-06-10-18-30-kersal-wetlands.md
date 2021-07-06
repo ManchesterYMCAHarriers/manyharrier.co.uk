@@ -8,7 +8,7 @@ routeForeignKey: Kersal Wetlands
 startsAt: '2021-06-10 18:30'
 ---
 This week's group run will be the Kersal Wetlands route starting from 
-outside the Y Club at 6:30pm on 1st April.
+outside the Y Club at 6:30pm.
 
 Different pace and distance groups will be available depending on 
 numbers of attendees. The run will take place in accordance with [current COVID-19 
