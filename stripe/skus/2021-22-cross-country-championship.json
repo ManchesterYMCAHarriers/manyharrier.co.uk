@@ -1,0 +1,11 @@
+{
+  "activeUntil": "2021-09-30T23:59:59",
+  "productName": "Championship entry",
+  "sku": {
+    "attributes": {
+      "name": "2021-22 Cross Country Championship",
+      "category": "Championship"
+    },
+    "price": 2000
+  }
+}
