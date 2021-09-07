@@ -19,7 +19,7 @@ veteranCategoryDuration: 5
 ## Entries open!
 You can now enter the 2021-22 cross country championship! The cost for all nine races is just £20!
 
-Enter using the form at the bottom of this page - **the deadline for entries is 30th September**.
+Enter using the form lower down this page - **the deadline for entries is 30th September**.
 
 ## Race numbers
 You will be issued with two race numbers; one for the Manchester Area League and
