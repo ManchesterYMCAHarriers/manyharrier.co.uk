@@ -12,6 +12,10 @@ forCompetitionKey: South East Lancs Cross Country League
 
 **Please keep your race number once it is issued to you!** You will need to re-use the same race number for each of the South East Lancs Cross Country League races.
 
+Note that the race numbers for the South East Lancs League and Manchester Area League are different - make sure you wear the correct number when you run. **You will be disqualified if you wear the wrong number!**
+
+If you lose your South East Lancs League number, you will be charged £1 for a replacement.
+
 ## Kit
 
 You **must** wear club colours when competing in the South East Lancs Cross Country League. If you do not have a club vest or t-shirt, please [get in touch](/contact)!

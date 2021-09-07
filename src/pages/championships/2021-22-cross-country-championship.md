@@ -16,8 +16,27 @@ qualificationCriteria:
 veteranStartAge: 40
 veteranCategoryDuration: 5
 ---
-## How standings are calculated
-When calculating the standings, the first consideration is an individual's
+## Entries open!
+You can now enter the 2021-22 cross country championship! The cost for all nine races is just £20!
+
+Enter using the form at the bottom of this page - **the deadline for entries is 30th September**.
+
+## Race numbers
+You will be issued with two race numbers; one for the Manchester Area League and
+one for the South East Lancs League.
+
+Please note the following important points:
+
+* You will reuse the same number for every fixture in each league, so don't throw
+  them away!
+* The numbers for the Manchester Area and South East Lancs leagues are different - ensure
+  you wear the correct number for the race you are taking part in! **You will be disqualified
+  if you wear the wrong number for a race.**
+* If you lose your number, you will be charged for a replacement. The cost is £3 for a replacement
+  Manchester Area League number, and £1 for a replacement South East Lancs league number.
+
+## How championship standings are calculated
+When calculating the club championship standings, the first consideration is an individual's
 qualification status: 
 
 1) Those who have fulfilled the qualification criteria are ranked highest;

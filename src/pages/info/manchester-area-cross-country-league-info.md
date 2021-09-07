@@ -12,6 +12,10 @@ forCompetitionKey: Manchester Area Cross Country League
 
 **Please keep your race number once it is issued to you!** You will need to re-use the same race number for each of the Manchester Area Cross Country League races.
 
+Note that the race numbers for the Manchester Area League and the South East Lancs League are different - make sure you wear the correct number when you run. **You will be disqualified if you wear the wrong number!**
+
+If you lose your Manchester Area League number, you will be charged £3 for a replacement.
+
 ## Kit
 
 You **must** wear club colours when competing in the Manchester Area Cross Country League. If you do not have a club vest or t-shirt, please [get in touch](/contact)!
