@@ -323,7 +323,7 @@ ORDER
 `
 
     items.forEach(({category, line}) => {
-        if (category === 'Race' || category === 'Presentation') {
+        if (category === "Championship" || category === 'Race' || category === 'Presentation') {
             message += line + '\n'
             entryItemCount++
         }
