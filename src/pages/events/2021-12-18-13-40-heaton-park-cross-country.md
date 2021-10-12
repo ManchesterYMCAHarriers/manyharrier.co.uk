@@ -1,7 +1,7 @@
 ---
 templateKey: event
-eventKey: Tandle Hill Cross Country
-venueForeignKey: Tandle Hill
+eventKey: Heaton Park Cross Country
+venueForeignKey: Heaton Park
 eventType: Race
 terrain: Cross Country
 championshipForeignKey: 2021-22 Cross Country Championship
@@ -11,4 +11,4 @@ startsAt: '2021-12-18 13:40'
 The third of this season's South East Lancs Cross Country League and
 the fifth fixture of our club's cross country championship. 
 
-Please note that the race venue is tentative at this stage and will be confirmed at a later date.
+Please note that the race venue is now confirmed as Heaton Park, not Tandle Hill as previously advertised.

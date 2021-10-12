@@ -2,17 +2,17 @@ import React from 'react'
 import * as PropTypes from 'prop-types'
 import Layout from '../../components/Layout'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import { graphql } from 'gatsby'
-import { Panel, PanelFullWidth, Panels } from '../../components/Panels'
-import { CardCTA } from '../../components/Card'
-import { CallToActionText } from '../../components/CallToAction'
-import { kebabCase } from 'lodash'
+import {graphql} from 'gatsby'
+import {Panel, PanelFullWidth, Panels} from '../../components/Panels'
+import {CardCTA} from '../../components/Card'
+import {CallToActionText} from '../../components/CallToAction'
+import {kebabCase} from 'lodash'
 import Currency from '../../components/Currency'
 
-const KitIndex = ({ data, location }) => {
+const KitIndex = ({data, location}) => {
   const regularKit = data.regular.edges
-    .reduce((acc, { node }) => {
-      const productIdx = acc.findIndex(({ title }) => {
+    .reduce((acc, {node}) => {
+      const productIdx = acc.findIndex(({title}) => {
         return title === node.product.name
       })
       if (productIdx === -1) {
@@ -35,8 +35,8 @@ const KitIndex = ({ data, location }) => {
     })
 
   const clearanceKit = data.clearance.edges
-    .reduce((acc, { node }) => {
-      const productIdx = acc.findIndex(({ title }) => {
+    .reduce((acc, {node}) => {
+      const productIdx = acc.findIndex(({title}) => {
         return title === node.product.name
       })
       if (productIdx === -1) {
@@ -59,7 +59,9 @@ const KitIndex = ({ data, location }) => {
     })
 
   return (
-    <Layout title={'Kit'} description={'Order your Manchester YMCA Harriers club kit here. We have vests, T-shirts, hoodies and bobble hats in stock.'} path={'/kit'} location={location}>
+    <Layout title={'Kit'}
+            description={'Order your Manchester YMCA Harriers club kit here. We have vests, T-shirts, hoodies and bobble hats in stock.'}
+            path={'/kit'} location={location}>
       <StandardContentContainer>
         <h1 className="heading-1">Kit</h1>
         <Panels>
@@ -67,11 +69,13 @@ const KitIndex = ({ data, location }) => {
             <div className="content panel black-bottom">
               <h2>Current kit</h2>
               <p>The pinnacle of running fashion!</p>
+              <p>If you are a new member, your first club vest or club T-shirt is free! Please speak to a member
+                of the Committee about getting your first vest.</p>
             </div>
           </PanelFullWidth>
         </Panels>
         <Panels>
-          {regularKit.map(({ title, image, price, slug }) => (
+          {regularKit.map(({title, image, price, slug}) => (
             <Panel key={slug}>
               <CardCTA
                 to={slug}
@@ -79,7 +83,7 @@ const KitIndex = ({ data, location }) => {
                 image={image}
                 borderColorClassName={`border-gray-400`}
                 borderColorHoverClassName={`border-red-manyharrier`}
-                callToAction={<CallToActionText title={'Order now'} />}
+                callToAction={<CallToActionText title={'Order now'}/>}
               >
                 {Currency(price)}
               </CardCTA>
@@ -101,7 +105,7 @@ const KitIndex = ({ data, location }) => {
               </PanelFullWidth>
             </Panels>
             <Panels>
-              {clearanceKit.map(({ title, image, price, slug }) => (
+              {clearanceKit.map(({title, image, price, slug}) => (
                 <Panel key={slug}>
                   <CardCTA
                     to={slug}
@@ -109,7 +113,7 @@ const KitIndex = ({ data, location }) => {
                     image={image}
                     borderColorClassName={`border-gray-400`}
                     borderColorHoverClassName={`border-red-manyharrier`}
-                    callToAction={<CallToActionText title={'Buy now'} />}
+                    callToAction={<CallToActionText title={'Buy now'}/>}
                   >
                     Priced to clear -{' '}
                     <span className="font-semibold text-red-manyharrier">
