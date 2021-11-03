@@ -38,21 +38,6 @@ membershipBenefits:
     
     For full details of the benefits of being a registered
     athlete, please visit [England Athletics](https://www.englandathletics.org)
-- title: Manchester Athletics Scheme
-  image: /media/join-manchester-regional-arena.jpg
-  body: |
-    Manchester YMCA Harriers members have the opportunity to join
-    the Manchester Athletics Scheme, which provides discounted
-    entry to our track training sessions held at the Manchester Regional Arena.
-  callToActionLink: /venues/manchester-regional-arena
-  callToActionTitle: Manchester Regional Arena
-- title: Complimentary club clobber
-  image: /media/join-kit.jpg
-  body: |
-    We love to see our members representing the Club in races,
-    both close to home and far away. We give every new member
-    their first Manchester YMCA Harriers club vest or T-shirt for
-    free!
 - title: Race as part of a team
   image: /media/join-team.jpg
   body: |

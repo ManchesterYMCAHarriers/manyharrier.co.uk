@@ -15,15 +15,6 @@ Our club has been associated with YMCA Manchester throughout its history. YMCA M
 
 The Club is affiliated to England Athletics.
 
-## Sessions during the Coronavirus restrictions
-
-Following the relaxation of some restrictions, we have reintroduced group training sessions. 
-These will be advertised in the usual way, however, **participation in these sessions is currently
-limited to a maximum of twelve people**, and **you must sign up in advance of each session
-via the Doodle poll link listed on the session**.
-
-* [Full information about group running sessions at this time](/about/coronavirus-group-running-guidance)
-
 ## Races and events
 
 We have various club championships, which cover cross-country, fell, road and track disciplines - there are plenty of trophies and medals to be won!
@@ -34,7 +25,7 @@ Beyond that, our members take part in all manner of races, both at home and abro
 * [Events calendar](/events)
 * [London Marathon place](/about/london-marathon-place)
 
-The Club has organised a number of races over its time, including the Manchester YMCA 10K and 20K road races and the [Blackleach Country Park 5-mile Trail Race](/blackleach).
+The Club has previously organised a number of races, including the Manchester YMCA 10K and 20K road races and the [Blackleach Country Park 5-mile Trail Race](/blackleach).
 
 ## Training
 
@@ -42,12 +33,11 @@ We hold speedwork sessions every Tuesday evening and group runs every Thursday e
 
 ### Speedwork
 
-Our speedwork sessions take place on Tuesday evenings at 7:00pm, usually on the track at the Manchester Regional Arena, but currently at the Longford Park Stadium while the track at the Regional Arena is being relaid.
+Our speedwork sessions take place on Tuesday evenings at 6:15pm at the Longford Park Stadium.
 
 Speedwork sessions are meant to be hard; you will need to push yourself, but you'll also get plenty of encouragement and support from everyone! We know that some people are faster than others, so our speed sessions are designed to be accessible to all abilities.
 
 * [Events calendar](/events)
-* [Manchester Regional Arena](/venues/manchester-regional-arena)
 * [Longford Park Stadium](/venues/longford-park-stadium)
 
 ### Group runs

@@ -36,15 +36,6 @@ export const IndexPageTemplate = ({
             <Hero title={title} fluidImage={heroImage}/>
             <Panels>
                 <PanelFullWidth>
-                    <div className="content panel red-bottom">
-                        <h2 className="heading-2">Coronavirus update, April 2021</h2>
-                        <p>
-                            Following the relaxation of national lockdown measures, our track sessions and group running activities have now resumed.
-                            Please check out <Link to="/events">our Events pages</Link> for more information.
-                        </p>
-                    </div>
-                </PanelFullWidth>
-                <PanelFullWidth>
                     <div
                         className="content panel black-bottom"
                         dangerouslySetInnerHTML={{__html: intro}}
