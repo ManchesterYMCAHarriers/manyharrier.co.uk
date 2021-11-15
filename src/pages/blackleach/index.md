@@ -2,17 +2,14 @@
 templateKey: 'standard-page'
 path: /blackleach
 title: Blackleach Country Park 5-mile Race
-description: The last Manchester YMCA Harriers Blackleach Country Park 5-mile Race was held in 2019. The Club will not be holding the race in 2020.
+description: The final Manchester YMCA Harriers Blackleach Country Park 5-mile Race was held in 2019. The Club no longer organises the race.
 ---
-## 2020
-After 10 years of organising the Blackleach Country Park 5-mile race, the
-Manchester YMCA Harriers have decided not to hold the race in 2020.
+The Manchester YMCA Harriers no longer organises the Blackleach Country Park 5-mile race.
 
-The Manchester YMCA Harriers thanks everybody who has participated in the race 
-over those ten years and those who have helped out with organising and
-marshaling the race. We would like to pay special thanks to Richard Marshal 
-(the Blackleach Country Park Ranger), Salford City Council and the Friends of 
-Blackleach for their help over this time.
+The Manchester YMCA Harriers thanks everybody who has participated in the race and those 
+who have helped out with organising and marshaling the race over the years. We would like 
+to pay special thanks to Richard Marshal (the Blackleach Country Park Ranger), 
+Salford City Council and the Friends of Blackleach for their help over this time.
 
 ## Past results
 Historic results for the Blackleach Country Park 5-mile trail race are available
