@@ -7,11 +7,19 @@ terrain: Road
 routeForeignKey: Christmas Handicap
 startsAt: '2021-12-02 18:30'
 ---
-We are delighted to be bringing you our annual Christmas Handicap race again this year!
+We are thrilled to be able to hold our annual Christmas Handicap 5K race, followed by our [Harriers Christmas Party](/events/2021-12-02-20-00-christmas-party/) again this year!
 
-The race works like this: you give Craig and Sarah your anticipated finish time (roughly 5k) when you sign up, and the 
-person closest to their time wins! We have had people within **one second** of their predicted time - can you beat that?!! 
+The evening will start with our Handicap Race at 6.30pm (Sharp!) from the Y Club. 
 
-The only rules are that you must provide your time before the race, and **STRICTLY NO WATCHES ALLOWED!**
+The race will be a 3 lap course and we will hold a recce the week before for members who have not run this course before. 
 
-The 5K route remains the same as the last two years and it is three laps.
+To enter the race, please complete [this Doodle poll](https://doodle.com/poll/gh26g9ctet9ur4ep) and let Craig and Sarah know what time you anticipate finishing the race. The runner with the most accurate predicted time will win! 
+
+**No watches will be allowed**, so leave your watch at home or prepare for the Christmas Grinch to look after it while you run! 
+
+Christmas fancy dress is encouraged!
+
+Immediately after the race, we'll head over to Porta Tapas in Salford for our Christmas Party. The cost is £25 per person and includes a tapas buffet. Check out the [Christmas Party event page](/events/2021-12-02-20-00-christmas-party/) for more information and to pay for food!
+
+- [Christmas Handicap Doodle Poll](https://doodle.com/poll/gh26g9ctet9ur4ep)
+- [Christmas Party at Porta Tapas](/events/2021-12-02-20-00-christmas-party/)
