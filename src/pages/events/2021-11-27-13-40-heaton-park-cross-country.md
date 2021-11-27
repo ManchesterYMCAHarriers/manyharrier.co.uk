@@ -7,8 +7,12 @@ terrain: Cross Country
 championshipForeignKey: 2021-22 Cross Country Championship
 competitionForeignKey: South East Lancs Cross Country League
 startsAt: '2021-11-27 13:40'
+cancelled: true
 ---
-The second of this season's South East Lancs Cross Country League and
-the fourth fixture of our club's cross country championship. 
+## Cancelled due to fallen trees in the park
 
-Note: Fixture date is now confirmed as 27th November.
+A number of trees have fallen in Heaton Park due to strong winds - this fixture has been cancelled.
+
+
+The second of this season's South East Lancs Cross Country League and
+the fourth fixture of our club's cross country championship.
