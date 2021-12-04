@@ -49,7 +49,7 @@ members:
  - name: Graeme Wilkinson
    role: Committee Member
    description: |
-     Graeme's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League, the South East Lancs Cross Country League, the Greater Manchester, Northern and National Cross Country Championships.
+     Graeme's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League and the South East Lancs Cross Country League.
    singleImage: /media/committee-Graeme-Wilkinson.jpg
  - name: Marlow Upton
    role: Committee Member
@@ -60,5 +60,10 @@ members:
    role: Committee Member
    description: |
      Phil is new on the committee for 2020.
-   singleImage: /media/committee-Phil-Tomkinson.jpg
+   singleImage: /media/committee-Phil-Tomkinson.jpg 
+ - name: Sandra Robinson
+   role: Committee Member
+   description: |
+     Sandra is new on the committee for 2021.
+   singleImage: /media/committee-Sandra-Robinson.jpg
 ---
