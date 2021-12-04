@@ -203,7 +203,66 @@ describe("Overall standings", () => {
         qualified: false,
         races: 1,
         rank: null
+      }
+    ])
+  })
+
+  it("returns standings with equal qualification status in ascending points order", () => {
+    const results = [
+      [
+        {
+          urn: 1,
+          time: 1802
+        },
+        {
+          urn: 2,
+          time: 1801
+        },
+        {
+          urn: 3,
+          time: 1800
+        }
+      ]
+    ]
+
+    const res = Overall({
+      eventsInChampionship,
+      results,
+      members,
+      qualificationCriteria,
+      categoryKeyDate,
+      veteranCategoryDuration,
+      veteranStartAge
+    })
+
+    expect(res).toEqual([
+      {
+        urn: 3,
+        name: "Bob Braithwaite",
+        category: "V45",
+        points: 1,
+        qualified: null,
+        races: 1,
+        rank: "1"
       },
+      {
+        urn: 2,
+        name: "Alexa Arnold",
+        category: null,
+        points: 2,
+        qualified: null,
+        races: 1,
+        rank: "2"
+      },
+      {
+        urn: 1,
+        name: "Alan Arnold",
+        category: "V40",
+        points: 3,
+        qualified: null,
+        races: 1,
+        rank: "3"
+      }
     ])
   })
 

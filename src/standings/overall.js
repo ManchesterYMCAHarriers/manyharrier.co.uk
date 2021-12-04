@@ -246,6 +246,7 @@ const Overall = ({eventsInChampionship, results, members, qualificationCriteria,
             }
             return h2h
           }
+          return a.points < b.points ? -1 : 1
         }
         return a.races > b.races ? -1 : 1
       }
