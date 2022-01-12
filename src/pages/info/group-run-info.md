@@ -3,17 +3,26 @@ templateKey: info
 infoKey: Group Run Info
 forEventType: Group Run
 ---
-## Important information for group runs during COVID-19 restrictions
+## Session format
 
-While we remain under social distancing restrictions designed to reduce the
-transmission of coronavirus, groups runs must adhere to the guidance published
-by England Athletics and Public Health England.
+We meet at the Y Club reception at 6:30pm. After a quick warm up, the Captains
+will gather the group together for club notices, after which we’ll split into
+sub-groups before we head off on the run.
 
-At present, this means:
+Each group will run at a different pace and will be led by a club member, so
+there should always be a pace group suited to you. The number of groups is
+flexible depending on the number of runners down on any particular night and
+the availability of people to lead a group, however we will try and provide
+the following pace groups:
 
-* **you must sign up for the run in advance using the Doodle poll link above**; and
-* **you agree to abide by the instructions on our [coronavirus group running guidance](/about/coronavirus-group-running-guidance) page.**
+* **Group 1:** 7.00 min / mile (4.20 min / km) +/- 30 secs
+* **Group 2:** 7.30 min / mile (4.40 min / km) +/- 30 secs
+* **Group 3:** 8.30 min / mile (5.20 min / km) +/- 30 secs
+* **Group 4:** 9.30 min / mile (5.50 min / km) +/- 30 secs
 
-The sessions are intended to be "social" - it is a chance to meet and chat with 
-your club mates who you may not have seen for ages! Therefore, the sessions 
-will be run at a pace that is comfortable for everyone in the group.
+If you’re not sure which group to go in on your first visit, we'd advise
+starting off in Group 4 and try to work your way up to the next one!
+
+Our routes are generally 6 - 8 miles (10 - 13km) but if you don't fancy running
+that far, we'll always offer a shorter alternative route of approximately
+3 miles (5km).
