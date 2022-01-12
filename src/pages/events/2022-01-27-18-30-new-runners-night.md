@@ -1,6 +1,6 @@
 ---
 templateKey: event
-eventKey: Hill Reps
+eventKey: New Runners Night
 venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
