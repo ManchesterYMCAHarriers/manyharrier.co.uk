@@ -6,7 +6,7 @@ eventType: Race
 terrain: Cross Country
 championshipForeignKey: 2021-22 Cross Country Championship
 competitionForeignKey: South East Lancs Cross Country League
-startsAt: '2021-11-27 13:40'
+startsAt: '2022-03-05 13:40'
 ---
 The final fixture for the South East Lancs Cross Country League and the ninth and final fixture of our club's cross 
 country championship.
