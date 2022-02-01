@@ -14,7 +14,7 @@ location: '{"type":"Point","coordinates":[-2.290575,53.445895]}'
 ---
 ## Cost
 
-You will need to pay to enter the track; it costs £3.00 and **only cash payment
+You will need to pay to enter the track; it costs £4.00 and **only cash payment
 is accepted**.
 
 ## Car parking

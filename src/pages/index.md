@@ -7,8 +7,6 @@ intro: |
   We are a friendly running club based at the Y Club in Castlefield, right in the
    heart of Manchester city centre. If you're looking for a central Manchester
    running club, then we might just be the one for you!
-
-  Why not come along to our next [New Runners' Night on Thursday 27th January](/events/2022-01-27-18-30-new-runners-night)?
 nextEventDefault: |
   We currently have two regular training sessions each week:
   
