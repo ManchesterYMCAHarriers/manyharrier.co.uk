@@ -13,10 +13,8 @@ intro: |
   advance in previous years, so you are advised to enter now to avoid missing 
   out.
 
-  You will also notice that there is currently one missing fixture - this will
-  be one of the Sale Sizzler 5K road races at Wythenshawe Park - we are waiting
-  on information being published about these races and we will provide an update
-  ASAP!
+  The Sale Sizzler fixture list has now been released and the fixture on Thursday 28th July has been selected for
+  our championship. This race also sells out in advance.
 terrain: Mixed
 championshipType: Gendered
 qualificationCriteria:
