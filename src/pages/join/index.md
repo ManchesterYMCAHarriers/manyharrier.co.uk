@@ -29,7 +29,7 @@ membershipBenefits:
 - title: England Athletics Registration
   image: /media/join-england-athletics.jpg
   body: |
-    All membership packages include registration with England
+    First claim membership includes registration with England
     Athletics. Some of the key benefits of being an England
     Athletics registered athlete are:
   

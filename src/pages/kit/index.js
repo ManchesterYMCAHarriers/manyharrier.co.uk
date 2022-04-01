@@ -34,30 +34,6 @@ const KitIndex = ({data, location}) => {
       return a.variants > b.variants ? -1 : 1
     })
 
-  const clearanceKit = data.clearance.edges
-    .reduce((acc, {node}) => {
-      const productIdx = acc.findIndex(({title}) => {
-        return title === node.product.name
-      })
-      if (productIdx === -1) {
-        acc.push({
-          title: node.product.name,
-          slug: `/kit/clearance/${kebabCase(node.product.name)}`,
-          price: node.price,
-          variants: 1,
-        })
-      } else {
-        acc[productIdx].variants += 1
-      }
-      return acc
-    }, [])
-    .sort((a, b) => {
-      if (a.variants === b.variants) {
-        return a.title < b.title ? -1 : 1
-      }
-      return a.variants > b.variants ? -1 : 1
-    })
-
   return (
     <Layout title={'Kit'}
             description={'Order your Manchester YMCA Harriers club kit here. We have vests, T-shirts, hoodies and bobble hats in stock.'}
@@ -69,7 +45,7 @@ const KitIndex = ({data, location}) => {
             <div className="content panel black-bottom">
               <h2>Current kit</h2>
               <p>The pinnacle of running fashion!</p>
-              <p>If you are a new member, your first club vest or club T-shirt is free! Please speak to a member
+              <p>If you are a new first-claim member, you get a £5 discount off your first vest! Please speak to a member
                 of the Committee about getting your first vest.</p>
             </div>
           </PanelFullWidth>
@@ -90,41 +66,6 @@ const KitIndex = ({data, location}) => {
             </Panel>
           ))}
         </Panels>
-        {clearanceKit.length > 0 && (
-          <>
-            <Panels>
-              <PanelFullWidth>
-                <div className="content panel black-bottom">
-                  <h2>Retro kit</h2>
-                  <p>
-                    Kit that has stood the test of time in our store
-                    cupboard...!
-                  </p>
-                  <p>All items are decent quality - grab yourself a bargain!</p>
-                </div>
-              </PanelFullWidth>
-            </Panels>
-            <Panels>
-              {clearanceKit.map(({title, image, price, slug}) => (
-                <Panel key={slug}>
-                  <CardCTA
-                    to={slug}
-                    title={title}
-                    image={image}
-                    borderColorClassName={`border-gray-400`}
-                    borderColorHoverClassName={`border-red-manyharrier`}
-                    callToAction={<CallToActionText title={'Buy now'}/>}
-                  >
-                    Priced to clear -{' '}
-                    <span className="font-semibold text-red-manyharrier">
-                      {Currency(price)}
-                    </span>
-                  </CardCTA>
-                </Panel>
-              ))}
-            </Panels>
-          </>
-        )}
       </StandardContentContainer>
     </Layout>
   )
@@ -142,27 +83,6 @@ export const kitIndexQuery = graphql`
       filter: {
         active: { eq: true }
         attributes: { category: { eq: "Kit" }, clearance: { eq: "false" } }
-      }
-      sort: { order: ASC, fields: product___name }
-    ) {
-      edges {
-        node {
-          attributes {
-            name
-            gender
-            clearance
-          }
-          price
-          product {
-            name
-          }
-        }
-      }
-    }
-    clearance: allStripeSku(
-      filter: {
-        active: { eq: true }
-        attributes: { category: { eq: "Kit" }, clearance: { eq: "true" } }
       }
       sort: { order: ASC, fields: product___name }
     ) {
