@@ -1204,7 +1204,7 @@ export default class Form extends React.Component {
                             <dd>
                               {this.state.data.membership === firstClaimSku && (`First claim membership @ ${firstClaimPrice}, valid until ${firstClaimValidTo}`)}
                               {this.state.data.membership === secondClaimSku && (`Second claim membership @ ${secondClaimPrice}, valid until ${secondClaimValidTo}`)}
-                              {this.state.data.membership === unaffiliatedSku && (`First claim membership @ ${unaffiliatedPrice}, valid until ${unaffiliatedValidTo}`)}
+                              {this.state.data.membership === unaffiliatedSku && (`Unaffiliated membership @ ${unaffiliatedPrice}, valid until ${unaffiliatedValidTo}`)}
                             </dd>
                             {this.state.data.membership === secondClaimSku && (
                               <dt>First claim club</dt>
