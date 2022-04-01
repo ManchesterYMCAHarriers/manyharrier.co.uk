@@ -42,10 +42,6 @@ const Breadcrumbs = ({ path }) => {
       title: 'Kit',
     },
     {
-      path: '/renew',
-      title: 'Renew',
-    },
-    {
       path: '/routes',
       title: 'Routes',
     },
