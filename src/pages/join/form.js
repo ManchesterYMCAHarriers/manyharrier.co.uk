@@ -10,12 +10,12 @@ import FieldsetText from '../../components/FieldsetText'
 import FieldsetCheckbox from '../../components/FieldsetCheckbox'
 import FieldsetPostcode from '../../components/FieldsetPostcode'
 import FieldsetSelect from '../../components/FieldsetSelect'
-import { graphql, StaticQuery } from 'gatsby'
+import {graphql, StaticQuery} from 'gatsby'
 import StandardContentContainer from '../../components/StandardContentContainer'
-import { H1 } from '../../components/Headings'
+import {H1} from '../../components/Headings'
 import Currency from '../../components/Currency'
 import Encode from '../../components/Encode'
-import { PanelFullWidth, Panels } from '../../components/Panels'
+import {PanelFullWidth, Panels} from '../../components/Panels'
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -38,6 +38,7 @@ export default class Form extends React.Component {
       stripeSkus: {
         firstClaim: null,
         secondClaim: null,
+        unaffiliated: null,
       },
       submitValue: 'Next',
       validationIssues: [],
@@ -54,10 +55,10 @@ export default class Form extends React.Component {
       const response = await Promise.race([
         fetch(
           'https://api.getAddress.io/find/' +
-            postcodeForQuery +
-            '?api-key=' +
-            this.state.getAddressApiKey +
-            '&sort=true'
+          postcodeForQuery +
+          '?api-key=' +
+          this.state.getAddressApiKey +
+          '&sort=true'
         ),
         new Promise((_, reject) => {
           setTimeout(() => {
@@ -83,7 +84,7 @@ export default class Form extends React.Component {
         }
       }
 
-      const { latitude, longitude, addresses } = await response.json()
+      const {latitude, longitude, addresses} = await response.json()
 
       const optionsArray = addresses.map(option => {
         return option.split(',').map(line => line.trim())
@@ -127,9 +128,9 @@ export default class Form extends React.Component {
       const data = this.state.data
       if (
         this.state.stage === 6 &&
-        data.membership === this.state.stripeSkus.firstClaim
+        data.membership !== this.state.stripeSkus.secondClaim
       ) {
-        // Skip first claim club question if membership type is first claim
+        // Skip first claim club question if membership type is not second claim
         prevStage -= 1
       } else if (this.state.stage === 9 && this.state.getAddressApiError) {
         // Skip address selection if there has been an API error
@@ -270,7 +271,7 @@ export default class Form extends React.Component {
         data.addressLine4 = this.state.addressSelectorOptionsMap[idx].line4
         data.addressLocality = this.state.addressSelectorOptionsMap[
           idx
-        ].locality
+          ].locality
         data.addressTown = this.state.addressSelectorOptionsMap[idx].town
         data.addressCounty = this.state.addressSelectorOptionsMap[idx].county
       }
@@ -285,7 +286,7 @@ export default class Form extends React.Component {
         // Exceptions
         if (
           this.state.stage === 4 &&
-          data.membership === this.state.stripeSkus.firstClaim
+          data.membership !== this.state.stripeSkus.secondClaim
         ) {
           nextStage += 1
         } else if (this.state.stage === 8 && data.selectedAddress !== 'none') {
@@ -329,7 +330,7 @@ export default class Form extends React.Component {
             },
             async () => {
               try {
-                const { status, ok } = await this.submitFormData()
+                const {status, ok} = await this.submitFormData()
 
                 if (!ok) {
                   console.error('Submit form data error', status)
@@ -360,7 +361,7 @@ export default class Form extends React.Component {
                 return
               }
 
-              const { error } = await this.redirectToCheckout()
+              const {error} = await this.redirectToCheckout()
               if (error) {
                 this.setState({
                   externalError: true,
@@ -394,11 +395,7 @@ export default class Form extends React.Component {
           quantity: 1,
         },
       ],
-      successUrl:
-        this.state.siteUrl +
-        (this.state.data.membership === this.state.stripeSkus.firstClaim
-          ? `/join/success-first-claim`
-          : `/join/success-second-claim`),
+      successUrl: this.getSuccessUrl(this.state.data.membership),
       cancelUrl: this.state.siteUrl + `/join/cancel`,
       customerEmail: this.state.data.email,
       billingAddressCollection: 'auto',
@@ -406,7 +403,19 @@ export default class Form extends React.Component {
     })
   }
 
-  updateValidationIssues = ({ id, message }) => {
+  getSuccessUrl = membershipType => {
+    if (membershipType === this.state.stripeSkus.firstClaim) {
+      return this.state.siteUrl + `/join/success-first-claim`;
+    }
+
+    if (membershipType === this.state.stripeSkus.secondClaim) {
+      return this.state.siteUrl + `/join/success-second-claim`;
+    }
+
+    return this.state.siteUrl + `/join/success-unaffiliated`;
+  }
+
+  updateValidationIssues = ({id, message}) => {
     const validationIssues = this.state.validationIssues
     for (let i = 0; i < validationIssues.length; i++) {
       if (validationIssues[i].id === id) {
@@ -486,10 +495,22 @@ export default class Form extends React.Component {
                 valid_to
               }
             }
+            unaffiliated: stripeSku(
+              product: { name: { eq: "Membership" } }
+              attributes: { claim: { eq: "Unaffiliated" } }
+              active: { eq: true }
+            ) {
+              id
+              price
+              attributes {
+                name
+                valid_to
+              }
+            }
           }
         `}
-        render={({ page, firstClaim, secondClaim }) => {
-          const { siteUrl } = page.siteMetadata
+        render={({page, firstClaim, secondClaim, unaffiliated}) => {
+          const {siteUrl} = page.siteMetadata
           const getAddressApiKey = page.siteMetadata.apiKey.getAddress
           const stripePublishableKey = page.siteMetadata.apiKey.stripe
           const firstClaimSku = firstClaim.id
@@ -497,7 +518,10 @@ export default class Form extends React.Component {
           const firstClaimValidTo = firstClaim.attributes.valid_to
           const secondClaimSku = secondClaim.id
           const secondClaimPrice = Currency(secondClaim.price)
-          const secondClaimValidTo = firstClaim.attributes.valid_to
+          const secondClaimValidTo = secondClaim.attributes.valid_to
+          const unaffiliatedSku = unaffiliated.id
+          const unaffiliatedPrice = Currency(unaffiliated.price)
+          const unaffiliatedValidTo = unaffiliated.attributes.valid_to
 
           if (!this.state.stripeSkus.firstClaim) {
             this.setState(
@@ -508,6 +532,7 @@ export default class Form extends React.Component {
                 stripeSkus: {
                   firstClaim: firstClaimSku,
                   secondClaim: secondClaimSku,
+                  unaffiliated: unaffiliatedSku,
                 },
               },
               () => {
@@ -517,9 +542,11 @@ export default class Form extends React.Component {
           }
 
           return (
-            <Layout title={'Membership form'} description={'Complete this form to become a member of the Manchester YMCA Harriers'} path={"/join"} location={this.props.location}>
+            <Layout title={'Membership form'}
+                    description={'Complete this form to become a member of the Manchester YMCA Harriers'} path={"/join"}
+                    location={this.props.location}>
               <StandardContentContainer>
-                <H1 title={'Join us'} />
+                <H1 title={'Join us'}/>
                 <Panels>
                   <PanelFullWidth>
                     <div className="panel red-bottom">
@@ -642,7 +669,7 @@ export default class Form extends React.Component {
                             required: true,
                           }}
                           hint={
-                            'For most people, first claim membership is the correct option. Second claim membership is only available if you are already a member of another UK Athletics affiliated club.'
+                            'If you want to represent the club in UK Athletics competitions, you need t'
                           }
                           legend={'What type of membership do you need?'}
                           name={'membership'}
@@ -650,7 +677,7 @@ export default class Form extends React.Component {
                             {
                               id: 'membershipFirstClaim',
                               label:
-                                'First claim membership @ ' +
+                                'England Athletics first claim membership @ ' +
                                 firstClaimPrice +
                                 ', valid until ' +
                                 firstClaimValidTo,
@@ -659,11 +686,20 @@ export default class Form extends React.Component {
                             {
                               id: 'membershipSecondClaim',
                               label:
-                                'Second claim membership @ ' +
+                                'England Athletics second claim membership @ ' +
                                 secondClaimPrice +
                                 ', valid until ' +
                                 secondClaimValidTo,
                               value: secondClaimSku,
+                            },
+                            {
+                              id: 'membershipUnaffiliated',
+                              label:
+                                'Unaffiliated membership @ ' +
+                                unaffiliatedPrice +
+                                ', valid until ' +
+                                unaffiliatedValidTo,
+                              value: unaffiliatedSku,
                             },
                           ]}
                           setFormValidationState={this.updateValidationIssues}
@@ -1036,7 +1072,7 @@ export default class Form extends React.Component {
                                 member of the Y Club or not.
                               </dd>
                               {this.state.data.yClubMembership ===
-                                'Non-member' && (
+                              'Non-member' && (
                                 <dd>
                                   I am aware that as I am not a member of the Y
                                   Club, I should arrive at sessions starting
@@ -1044,7 +1080,7 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.yClubMembership ===
-                                'Non-member' && (
+                              'Non-member' && (
                                 <dd>
                                   I am aware that if I wish to use the Y Club's
                                   facilities, I need to become a member of the Y
@@ -1061,18 +1097,27 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.membership ===
-                                secondClaimSku && (
+                              secondClaimSku && (
                                 <dd>
                                   I understand that I am becoming a second claim
                                   member of the Manchester YMCA Harriers Club.
                                 </dd>
                               )}
-                              <dd>
-                                I am aware that the Manchester YMCA Harriers
-                                Club is a registered club in the disciplines of
-                                road running, fell running, cross country
-                                running and trail running.
-                              </dd>
+                              {this.state.data.membership ===
+                              unaffiliatedSku && (
+                                <dd>
+                                  I understand that I am joining as an unaffiliated member. This means I will not be
+                                  registered with England Athletics.
+                                </dd>
+                              )}
+                              {this.state.data.membership !== unaffiliatedSku && (
+                                <dd>
+                                  I am aware that the Manchester YMCA Harriers
+                                  Club is a registered club in the disciplines of
+                                  road running, fell running, cross country
+                                  running and trail running.
+                                </dd>
+                              )}
                               {this.state.data.membership === firstClaimSku && (
                                 <dd>
                                   I am aware that if I participate in any
@@ -1082,13 +1127,21 @@ export default class Form extends React.Component {
                                 </dd>
                               )}
                               {this.state.data.membership ===
-                                secondClaimSku && (
+                              secondClaimSku && (
                                 <dd>
                                   I am aware that if I participate in any
                                   competitions, I will only be able to represent
                                   the Manchester YMCA Harriers Club if my first
                                   claim club ({this.state.data.firstClaimClub})
                                   is not registered for that discipline.
+                                </dd>
+                              )}
+                              {this.state.data.membership ===
+                              unaffiliatedSku && (
+                                <dd>
+                                  I am aware that as an unaffiliated member, I will not be able to represent the
+                                  Manchester YMCA Harriers club in certain England Athletics affiliated competitions
+                                  (such as cross country).
                                 </dd>
                               )}
                               <dt>Data protection</dt>
@@ -1103,7 +1156,7 @@ export default class Form extends React.Component {
                                 <dd>
                                   I understand that on becoming a member of the
                                   Manchester YMCA Harriers Club I will
-                                  automatically be registered as a member of
+                                  be registered as a member of
                                   England Athletics. The Club will provide
                                   England Athletics with your personal data
                                   which they will use to enable access to an
@@ -1149,15 +1202,9 @@ export default class Form extends React.Component {
                               Manchester YMCA Harriers Club membership type
                             </dt>
                             <dd>
-                              {this.state.data.membership === firstClaimSku
-                                ? 'First claim membership @ ' +
-                                  firstClaimPrice +
-                                  ', valid until ' +
-                                  firstClaimValidTo
-                                : 'Second claim membership @ ' +
-                                  secondClaimPrice +
-                                  ', valid until ' +
-                                  secondClaimValidTo}
+                              {this.state.data.membership === firstClaimSku && (`First claim membership @ ${firstClaimPrice}, valid until ${firstClaimValidTo}`)}
+                              {this.state.data.membership === secondClaimSku && (`Second claim membership @ ${secondClaimPrice}, valid until ${secondClaimValidTo}`)}
+                              {this.state.data.membership === unaffiliatedSku && (`First claim membership @ ${unaffiliatedPrice}, valid until ${unaffiliatedValidTo}`)}
                             </dd>
                             {this.state.data.membership === secondClaimSku && (
                               <dt>First claim club</dt>
@@ -1218,8 +1265,8 @@ export default class Form extends React.Component {
                             <dd>
                               {this.state.data.emergencyContactName
                                 ? this.state.data.emergencyContactName +
-                                  ' - ' +
-                                  this.state.data.emergencyContactNumber
+                                ' - ' +
+                                this.state.data.emergencyContactNumber
                                 : 'No emergency contact details provided'}
                             </dd>
                             <dt>
@@ -1233,9 +1280,9 @@ export default class Form extends React.Component {
                             <dd>
                               Please pay by
                               {this.state.data.paymentMethod === 'BACS' &&
-                                ' bank transfer'}
+                              ' bank transfer'}
                               {this.state.data.paymentMethod === 'Stripe' &&
-                                ' credit card, debit card or Apple Pay'}
+                              ' credit card, debit card or Apple Pay'}
                             </dd>
                           </dl>
                           {this.state.data.paymentMethod === 'Stripe' && (
@@ -1261,9 +1308,9 @@ export default class Form extends React.Component {
                           <p>
                             Now, please send payment your membership fee of{' '}
                             <strong>
-                              {this.state.data.membership === firstClaimSku
-                                ? firstClaimPrice
-                                : secondClaimPrice}
+                              {this.state.data.membership === firstClaimSku && (firstClaimPrice)}
+                              {this.state.data.membership === secondClaimSku && (secondClaimPrice)}
+                              {this.state.data.membership === unaffiliatedSku && (unaffiliatedPrice)}
                             </strong>{' '}
                             from your bank account to our account.
                           </p>
@@ -1278,7 +1325,7 @@ export default class Form extends React.Component {
                             Use{' '}
                             <strong>
                               {this.state.data.firstName &&
-                                this.state.data.firstName.charAt(0)}{' '}
+                              this.state.data.firstName.charAt(0)}{' '}
                               {this.state.data.lastName}
                             </strong>{' '}
                             as your payment reference.

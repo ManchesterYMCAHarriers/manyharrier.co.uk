@@ -15,5 +15,4 @@ Athletics registration number on it, which you may need to provide
 when entering races to receive a discount.
 
 If you are looking to represent the Manchester YMCA Harriers in any races, 
-please pick up a club vest or T-shirt at any Thursday evening group run.
-Remember - your first vest or T-shirt is free of charge!
+please purchase a club vest or T-shirt at any Thursday evening group run.
