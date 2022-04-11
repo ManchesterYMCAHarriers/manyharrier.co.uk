@@ -669,7 +669,7 @@ export default class Form extends React.Component {
                             required: true,
                           }}
                           hint={
-                            'If you want to represent the club in UK Athletics competitions, you need t'
+                            'Choose "England Athletics first claim membership" if you want to represent the Club in competitions and wish to enjoy the benefits of England Athletics affiliation, such as discounts on race entry fees. Select "England Athletics second claim membership" if you\'re a member of another running club and you are already affiliated with England Athletics. Or, if you just want to be a part of the Club but don\'t want to run competitively, choose "Unaffiliated membership".'
                           }
                           legend={'What type of membership do you need?'}
                           name={'membership'}
