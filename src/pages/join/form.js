@@ -1049,7 +1049,7 @@ export default class Form extends React.Component {
                               </dd>
                               <dt>Welfare and Safeguarding Policy</dt>
                               <dd>
-                                I have read and understood the Club's
+                                I have read and understood the Club's{' '}
                                 <a href="/about/welfare-and-safeguarding-policy/" target="_blank">
                                   Welfare and Safeguarding Policy
                                 </a>
