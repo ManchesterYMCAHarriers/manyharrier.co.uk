@@ -9,13 +9,9 @@ const fetch = require('node-fetch').default
 const crypto = require('crypto')
 const promiseRetry = require('promise-retry')
 
-const recipientHello = process.env.RECIPIENT_HELLO
-const recipientWebmaster = process.env.RECIPIENT_WEBMASTER
-const recipientKit = process.env.RECIPIENT_KIT
-const recipientClubSecretary = process.env.RECIPIENT_CLUB_SECRETARY
-const recipientTreasurer = process.env.RECIPIENT_TREASURER
-const recipientEntriesSecretary = process.env.RECIPIENT_ENTRIES_SECRETARY
-const recipientCovidCoordinator = process.env.RECIPIENT_COVID_COORDINATOR
+const recipientCheckout = process.env.RECIPIENT_CHECKOUT
+const recipientJoin = process.env.RECIPIENT_JOIN
+const recipientContact = process.env.RECIPIENT_CONTACT
 const mailFrom = process.env.MAIL_FROM
 
 const lineCharLength = 72
@@ -145,7 +141,7 @@ Thanks!
 
     // Send to recipients
     await sendMessageWithMailgun({
-        to: `${recipientClubSecretary},${recipientTreasurer},${recipientWebmaster}`,
+        to: `${recipientJoin}`,
         subject: `${
             action === 'join' ? 'New' : 'Renewal for'
         } ${membership.attributes.claim.toLowerCase()}-claim member: ${
@@ -180,22 +176,12 @@ MESSAGE
 
 ${body.message}
 `
-
-    if (body.reason === `I need to contact the Covid Coordinator`) {
-        await sendMessageWithMailgun({
-            to: `${recipientCovidCoordinator},${recipientWebmaster}`,
-            subject: body.reason,
-            body: message,
-            replyTo: body.email
-        })
-    } else {
-        await sendMessageWithMailgun({
-            to: `${recipientHello},${recipientWebmaster}`,
-            subject: body.reason,
-            body: message,
-            replyTo: body.email
-        })
-    }
+    await sendMessageWithMailgun({
+        to: `${recipientContact}`,
+        subject: body.reason,
+        body: message,
+        replyTo: body.email
+    })
 }
 
 async function processCheckout(body) {
@@ -261,86 +247,10 @@ Payment method: ${body.paymentMethod}
 Thanks!
 `
     await sendMessageWithMailgun({
-        to: `${recipientTreasurer},${recipientWebmaster}`,
+        to: `${recipientCheckout}`,
         subject: `Order received from ${body.firstName} ${body.lastName}`,
         body: message
     })
-
-    // Create email body for kit
-    let kitItemCount = 0
-
-    message = `Hello!
-  
-An order has been placed through the website:
-
-CUSTOMER DETAILS
-================
-
-First name:       ${body.firstName}
-Last name:        ${body.lastName}
-Email:            ${body.email}
-
-ORDER
-=====
-`
-
-    items.forEach(({category, line}) => {
-        if (category === 'Kit') {
-            message += line + '\n'
-            kitItemCount++
-        }
-    })
-
-    message += `
-
-Thanks!
-`
-
-    if (kitItemCount > 0) {
-        await sendMessageWithMailgun({
-            to: `${recipientKit},${recipientWebmaster}`,
-            subject: `Order received from ${body.firstName} ${body.lastName}`,
-            body: message
-        })
-    }
-
-    // Create email body for kit
-    let entryItemCount = 0
-
-    message = `Hello!
-  
-An order has been placed through the website:
-
-CUSTOMER DETAILS
-================
-
-First name:       ${body.firstName}
-Last name:        ${body.lastName}
-Email:            ${body.email}
-
-ORDER
-=====
-`
-
-    items.forEach(({category, line}) => {
-        if (category === "Championship" || category === 'Race' || category === 'Presentation') {
-            message += line + '\n'
-            entryItemCount++
-        }
-    })
-
-    message += `
-
-Thanks!
-`
-
-    if (entryItemCount > 0) {
-        await sendMessageWithMailgun({
-            to: `${recipientEntriesSecretary},${recipientWebmaster}`,
-            subject: `Order received from ${body.firstName} ${body.lastName}`,
-            body: message
-        })
-    }
 }
 
 async function sendMessageWithMailgun({to, subject, body, replyTo}) {
