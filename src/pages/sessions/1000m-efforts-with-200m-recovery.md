@@ -1,6 +1,6 @@
 ---
 templateKey: session
-sessionKey: 1000m efforts with 400m recovery
+sessionKey: 1000m efforts with 200m recovery
 description: A track training session
 ---
 In this session we repeat the following pattern:

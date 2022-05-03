@@ -3,4 +3,33 @@ templateKey: info
 infoKey: Speedwork Info
 forEventType: Speedwork
 ---
-Entry is **£4 cash only** on the door.
+Track sessions are organised by Phil and Katie at the Manchester Regional Arena. We will start with a few warm up laps and dynamic stretches at 6:45pm, before going in to the main session.
+
+Entry is discounted to £2.70 for running club members, and there is a further discount to £2.50 for those who live in the Manchester City Council area.
+
+## Better UK app
+
+You can [download the Better UK app](https://www.better.org.uk/booking) to book and pay for track sessions in advance.
+
+### Set up the Better UK app
+
+- Select **National Squash Centre & Regional Arena** as your home venue.
+
+If you are using the app for the first time you will need to create an account with Better UK to make a booking.
+
+### Set up Manchester Resident pricing
+
+- From the app home page, scroll down and select **Buy membership** in the bottom right.
+- On Choose Your Membership select **Pay & Play** from the drop down list.
+- Select payment type of **Single Payment**.
+- Scroll down the list and select **Better Adult Resident** (cost £0.00).
+- Enter all the details and checkout at zero cost.
+
+The account created can now be used to book track at £2.50 instead of £4!
+
+### Booking a track session
+
+- Book other activities
+- Athletics
+- Athletics Outdoor (17:00 - 20:00)
+

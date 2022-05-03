@@ -9,23 +9,23 @@ four 200m efforts.
 The session in full:
 
 * **1 mile effort** (four laps of the track)
-* 400m jog recovery (one lap of the track)
+* 1 minute 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 400m jog recovery (one lap of the track)
+* 30 seconds standing recovery
 
 * **1 mile effort** (four laps of the track)
-* 400m jog recovery (one lap of the track)
+* 1 minute 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 30 seconds recovery
+* 30 seconds standing recovery
 * **200m effort** (half a lap of the track)
-* 400m jog recovery (one lap of the track)
+* 30 seconds standing recovery
