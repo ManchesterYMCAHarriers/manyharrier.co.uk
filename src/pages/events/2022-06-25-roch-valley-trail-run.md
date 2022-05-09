@@ -2,7 +2,7 @@
 templateKey: event
 eventKey: Roch Valley Trail Run
 venueForeignKey: Littleborough
-eventType: Group Run
+eventType: Group Trail Run
 terrain: Trail
 startsAt: '2022-06-25 10:00'
 ---

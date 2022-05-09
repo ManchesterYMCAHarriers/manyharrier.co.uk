@@ -2,7 +2,7 @@
 templateKey: event
 eventKey: Lyme Park Trail Run
 venueForeignKey: Disley
-eventType: Group Run
+eventType: Group Trail Run
 terrain: Trail
 startsAt: '2022-07-23 10:00'
 ---

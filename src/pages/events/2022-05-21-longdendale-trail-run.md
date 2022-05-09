@@ -2,7 +2,7 @@
 templateKey: event
 eventKey: Longdendale Trail Run
 venueForeignKey: Hadfield
-eventType: Group Run
+eventType: Group Trail Run
 terrain: Trail
 startsAt: '2022-05-21 10:00'
 ---

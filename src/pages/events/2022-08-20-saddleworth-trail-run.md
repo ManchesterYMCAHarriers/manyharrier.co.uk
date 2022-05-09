@@ -2,7 +2,7 @@
 templateKey: event
 eventKey: Saddleworth Trail Run
 venueForeignKey: Greenfield
-eventType: Group Run
+eventType: Group Trail Run
 terrain: Trail
 startsAt: '2022-08-20 10:00'
 ---
