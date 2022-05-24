@@ -33,12 +33,12 @@ We hold speedwork sessions every Tuesday evening and group runs every Thursday e
 
 ### Speedwork
 
-Our speedwork sessions take place on Tuesday evenings at 6:15pm at the Longford Park Stadium.
+Our speedwork sessions take place on Tuesday evenings at 6:45pm at the Manchester Regional Arena.
 
 Speedwork sessions are meant to be hard; you will need to push yourself, but you'll also get plenty of encouragement and support from everyone! We know that some people are faster than others, so our speed sessions are designed to be accessible to all abilities.
 
 * [Events calendar](/events)
-* [Longford Park Stadium](/venues/longford-park-stadium)
+* [Manchester Regional Arena](/venues/manchester-regional-arena)
 
 ### Group runs
 
