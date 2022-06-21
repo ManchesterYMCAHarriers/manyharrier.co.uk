@@ -1,14 +1,14 @@
 ---
 templateKey: event
-eventKey: Roch Valley Trail Run
-venueForeignKey: Littleborough
+eventKey: Ramsbottom Holcombe Moor Trail Run
+venueForeignKey: Ramsbottom
 eventType: Group Trail Run
 terrain: Trail
 startsAt: '2022-06-25 10:00'
 ---
-Join us for a series of trail runs around Greater Manchester over the summer!
+**Important note: change of venue and public transport due to rail strike!**
 
-For this trail run, we will meet at Manchester Victoria, head out to Littleborough and go for a run!
+For this trail run, we will meet at **bus stop EZ on Chorlton Street** to catch the **10:10 X41 bus service**, then head out to Ramsbottom and go for a run!
 
 We will finish with pints at a nearby pub before heading back to Manchester. We'll aim to be back by mid-afternoon.
 
