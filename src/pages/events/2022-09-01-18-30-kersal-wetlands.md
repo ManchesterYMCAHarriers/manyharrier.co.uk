@@ -1,16 +1,14 @@
 ---
 templateKey: event
-eventKey: Kersal Wetlands
+eventKey: Kersal Wetlands Summer Handicap
 venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road
 routeForeignKey: Kersal Wetlands
 startsAt: '2022-09-01 18:30'
 ---
-This week's group run will be the Kersal Wetlands route,
-starting from outside the Y Club at 6:30pm.
+Instead of the normal club run, we're going to do a handicap race around Kersal Wetlands. We'll meet at the Y Club at 6:30 as usual, then do a warm up jog to the Wetlands (about 4k). 
 
-Different pace and distance groups will be available depending on
-numbers of attendees.
+We'll then run 5k (two laps) around the Wetlands, but we'll start you all off at different times, so hopefully, if we get it right, everyone will finish at around the same time. The first person over the line will be the winner of our Summer Handicap.
 
-The full route is approximately 8 miles.
+Should be fun. Hopefully see lots of you there!
