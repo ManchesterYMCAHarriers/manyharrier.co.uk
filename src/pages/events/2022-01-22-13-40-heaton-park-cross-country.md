@@ -35,5 +35,5 @@ results:
 - urn: 3876293
   time: 48:06
 ---
-The fourth of this season's South East Lancs Cross Country League and
+The fourth of the 2021-22 South East Lancs Cross Country League and
 the eighth fixture of our club's cross country championship.

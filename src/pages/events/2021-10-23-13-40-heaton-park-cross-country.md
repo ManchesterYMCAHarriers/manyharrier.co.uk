@@ -33,7 +33,5 @@ results:
 - urn: 3832480
   time: 47:47
 ---
-The first of this season's South East Lancs Cross Country League and
+The first of the 2021-22 South East Lancs Cross Country League and
 the second fixture of our club's cross country championship. 
-
-Venue is now confirmed as Heaton Park.

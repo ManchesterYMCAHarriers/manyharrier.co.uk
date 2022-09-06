@@ -27,5 +27,5 @@ results:
 - urn: 3876293
   time: 51:23
 ---
-The fifth of this season's Manchester Area Cross Country League fixtures and
+The fifth of the 2021-22 Manchester Area Cross Country League fixtures and
 the ninth fixture of our club's cross country championship.

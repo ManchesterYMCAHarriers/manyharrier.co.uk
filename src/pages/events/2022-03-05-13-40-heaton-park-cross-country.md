@@ -23,7 +23,7 @@ results:
 - urn: 3866507
   time: 47:34
 ---
-The final fixture for the South East Lancs Cross Country League and the ninth and final fixture of our club's cross 
+The final fixture for the 2021-22 South East Lancs Cross Country League and the ninth and final fixture of our club's cross 
 country championship.
 
 Note that this fixture is a re-arrangement of the 27 November fixture that was cancelled due to fellen trees in the

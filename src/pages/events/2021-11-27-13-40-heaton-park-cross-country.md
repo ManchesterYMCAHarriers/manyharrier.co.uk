@@ -12,6 +12,5 @@ cancelled: true
 
 A number of trees have fallen in Heaton Park due to strong winds - this fixture has been cancelled.
 
-
-The second of this season's South East Lancs Cross Country League and
+The second of the 2021-22 South East Lancs Cross Country League and
 the fourth fixture of our club's cross country championship.

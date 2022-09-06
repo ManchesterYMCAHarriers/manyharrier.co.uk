@@ -37,7 +37,5 @@ results:
 - urn: 3831984
   time: 45:33
 ---
-The fourth of this season's Manchester Area Cross Country League fixtures and
+The fourth of the 2021-22 Manchester Area Cross Country League fixtures and
 the seventh fixture of our club's cross country championship.
-
-Please note that the race venue is tentative at this stage and will be confirmed at a later date.
