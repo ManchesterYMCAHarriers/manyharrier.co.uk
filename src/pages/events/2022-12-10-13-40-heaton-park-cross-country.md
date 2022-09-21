@@ -8,5 +8,5 @@ championshipForeignKey: 2022-23 Cross Country Championship
 competitionForeignKey: South East Lancs Cross Country League
 startsAt: '2022-12-10 13:40'
 ---
-The third of this season's South East Lancs Cross Country League and
-the sixth fixture of our club's cross country championship. 
+The second of this season's South East Lancs Cross Country League and
+the fifth fixture of our club's cross country championship. 
