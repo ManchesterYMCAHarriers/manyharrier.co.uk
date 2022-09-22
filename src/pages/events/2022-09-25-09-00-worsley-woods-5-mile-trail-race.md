@@ -6,7 +6,7 @@ championshipForeignKey: 2022 Summer Championship
 eventType: Race
 terrain: Trail
 routeForeignKey: Worsley Woods 5 mile Trail
-startsAt: '2022-09-25 09:30'
+startsAt: '2022-09-25 09:00'
 ---
 This is the seventh race in our [2022 Summer Championship](/championships/2022-summer-championship/).
 
