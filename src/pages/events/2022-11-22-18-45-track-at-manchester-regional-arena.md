@@ -5,5 +5,5 @@ venueForeignKey: Manchester Regional Arena
 eventType: Speedwork
 sessionForeignKey: Freddie Kruger
 terrain: Track
-startsAt: '2022-09-20 18:45'
+startsAt: '2022-11-22 18:45'
 ---
