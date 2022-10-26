@@ -1,0 +1,11 @@
+{
+  "activeUntil": "2022-11-30T23:59:59",
+  "productName": "Social event",
+  "sku": {
+    "attributes": {
+      "name": "2022 Christmas Party",
+      "category": "Social"
+    },
+    "price": 2000
+  }
+}
