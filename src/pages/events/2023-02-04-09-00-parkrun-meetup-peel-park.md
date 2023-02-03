@@ -4,7 +4,6 @@ eventKey: Parkrun meetup @ Peel Park
 venueForeignKey: Peel Park
 eventType: Race
 terrain: Road
-routeForeignKey: Peel Parkrun
 startsAt: '2023-02-04 09:00'
 ---
 Our “parkrun meetup” this month is at Peel Park. This time we’re volunteering as well as spreading the word about our 
