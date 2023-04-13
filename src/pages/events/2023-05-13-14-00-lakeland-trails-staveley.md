@@ -1,6 +1,6 @@
 ---
 templateKey: event
-eventKey: Lakeland Trails Staveley: Kentmere Trail Race 18K
+eventKey: "Lakeland Trails Staveley: Kentmere Trail Race 18K"
 venueForeignKey: Staveley Recreation Ground
 championshipForeignKey: 2023 Summer Championship
 eventType: Race
