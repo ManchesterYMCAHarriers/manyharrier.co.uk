@@ -3,6 +3,7 @@ templateKey: "blog-post"
 blogKey: "Cybi Coastal Marathon"
 description: "Joseph Hayes ran the Cybi Coastal Marathon on Anglesey"
 publishedAt: "2022-09-21T16:00:00.000Z"
+heroImage: "/media/2022-09-cybi-04.jpg"
 ---
 The Cybi Coastal Marathon is a race I had wanted to do for a while, Anglesey and Holy Island is where I spent a lot of 
 childhood holidays and I’m very fond of the place. I had run a couple of Marathons before, and I enjoy trail running, 
@@ -14,12 +15,12 @@ kind for a trail marathon, but looming on the northern tip of the Island is Holy
 'official' Mountain, coming in at just 220m, yet those of us who have scrambled up it after running 22 miles will 
 have no trouble calling it one.
 
-![Views](/media/2022-09-cybi-01.jpg)
-
 I signed up for the race in December and had hoped by the time August came around I would be running well, with lots 
 of miles under my belt. Unfortunately early 2022 had not gone to plan fitness wise and I turned up having not managed 
 any real long running since February. On the plus side I was injury free and had a made a bit of progress in the 
 previous couple of months. The only goal I set myself was to make it around.
+
+![Views](/media/2022-09-cybi-01.jpg)
 
 The plan was to break the race down in my head and run from checkpoint to checkpoint, I tried to trick myself into 
 seeing the first 5 mile section as the warm up, and that seemed to work pretty well. I avoided getting carried 
@@ -27,12 +28,12 @@ away by all the excitement at the start and behaved myself when it came to pace.
 the clear skies meant we’d have the full force of the August sunshine to contend with, thankfully the early part 
 of the race offered a lot of shade as we passed through Penrhos Coastal Park and then the Woodland near Bodior.
 
-![Beach](/media/2022-09-cybi-02.jpg)
-
 Silver Bay was a glorious sight as we made our way across the beach to the second checkpoint. At 10 miles in I was 
 feeling surprisingly good, and it was around this point I started to run with a bit more intent. The terrain was what 
 I like best, undulating with plenty of runnable downhill sections, I was also getting a boost from moving up through 
 the field.
+
+![Beach](/media/2022-09-cybi-02.jpg)
 
 It was the next part of the race I was most looking forward to as it took in the stretch from Rhoscolyn to Treaddur Bay, 
 which is where my family spent most of our holidays when I was a kid. I was surprised at how good I still felt, I knew 
@@ -41,12 +42,12 @@ beachfront at Treaddur Bay was a highlight and the Lifeboat Station there was ou
 volunteers warned that we should enjoy the next short section as from there on the race gets much tougher, they were 
 right.
 
-![Spooky house](/media/2022-09-cybi-03.jpg)
-
 There was another nostalgic moment for me as we ran along Lon Isallt passing the grand but spooky looking house that 
 sits on the headland there. The next stop was the water station at Porth Dafarch, just around the corner from where 
 I was staying. I felt it was a good sign that, 17 miles deep into the race, I wasn’t at all tempted to call it a day 
 and slip off back to the hotel.
+
+![Spooky house](/media/2022-09-cybi-03.jpg)
 
 The run up to South Stack was where it began to get tough, but I was still enjoying the undulating coastal paths and 
 was steadily making my way through the field. At this stage Holyhead Mountain looms menacingly, a big craggy lump 
@@ -55,8 +56,6 @@ standing between you and the finish. The run uphill on South Stack Road was a to
 to show. With the field stretched out I had to rely more on my sense of direction, which is not one of my strong suits, 
 and I was struggling to spot the way markers. I ended up going slightly wrong on a few occasions, which probably didn’t 
 add too much distance, but it did lead to a little frustration, a sign that the miles were catching up with me.
-
-![Undulating coastal paths](/media/2022-09-cybi-04.jpg)
 
 The final water station at South Stack precedes the near vertical climb up the Mountain, even if I’d not already been 
 running for three and a half hours I think my little legs would struggle to get up the rocky steps to the summit. 
@@ -87,3 +86,5 @@ The Cybi Coastal Marathon definitely goes down as one of my favourite running ex
 lucky enough to run this beautiful and challenging course again next year. 
 
 ![Finishers T-shirt](/media/2022-09-cybi-06-post-finish.jpg)
+
+&mdash; Joseph Hayes

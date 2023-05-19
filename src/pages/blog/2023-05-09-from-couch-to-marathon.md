@@ -1,8 +1,9 @@
 ---
 templateKey: "blog-post"
 blogKey: "From Couch to Marathon: taking bold strides with Manchester YMCA Harriers"
-description: "Liam Ward"
+description: "Liam Ward describes his Harriers journey so far"
 publishedAt: "2023-05-09T16:00:00.000Z"
+heroImage: "/media/2023-05-harriers-at-bundobust.jpg"
 ---
 I am among the [estimated seven million people](https://www.theguardian.com/lifeandstyle/2021/feb/08/it-lifts-your-mood-lockdowns-army-of-novice-runners) 
 who turned to running during the Covid pandemic. Armed with an old pair of trainers, a coat and scarf, and my phone in 
@@ -71,9 +72,6 @@ I have grumbled, I have limped, and my partner has questioned quite how much tim
 cannot say I have ever looked back since. I pushed myself harder than ever before and reaped the rewards of 
 improved speed and endurance.
 
-![Team Manchester YMCA Harriers enjoying a deserved drink and feast at Bundobust following the 2023 Manchester Marathon 
-— I’m the bald one on the left](/media/2023-05-harriers-at-bundobust.jpg)
-
 Regular Tuesday track sessions, Thursday night club runs, Cross Country season and the support of my fellow runners 
 all culminated last month in my first-ever marathon — a distance and event I could scarcely imagine entering before 
 I joined the club. And, as I said, I am not particularly competitive nor did I join the club with the intention of 
@@ -95,3 +93,5 @@ expensive and specialist trainers — at a time.
 But, if you think after a year of club running I have dispensed with the coat and scarf, you would only be half 
 right — despite having more of the "proper gear", I am still known to wear far too many layers and turn up 
 overdressed for every occasion. 
+
+&mdash; Liam Ward
