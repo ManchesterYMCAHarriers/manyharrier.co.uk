@@ -1,7 +1,7 @@
 ---
 templateKey: "blog-post"
 blogKey: "Reflections from my first ultra"
-description: "Liam Ward describes his Harriers journey so far"
+description: "Sam Gilmore shares some tips after his first ultra-marathon"
 publishedAt: "2023-07-12T16:00:00.000Z"
 ---
 Reading race reports of how others have got on with their goal races can be a bit like feigning interest in a distant 
