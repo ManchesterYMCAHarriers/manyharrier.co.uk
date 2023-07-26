@@ -4,7 +4,7 @@ eventKey: Parkrun meetup @ Philips Park
 venueForeignKey: Philips Park
 eventType: Race
 terrain: Road
-startsAt: '2023-08-26 09:00'
+startsAt: '2023-07-29 09:00'
 ---
 Our "parkrun meetup" this month is at Philips Park, and this time we're volunteering!
 
