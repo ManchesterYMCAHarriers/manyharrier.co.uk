@@ -875,16 +875,16 @@ export const eventQuery = graphql`
         }
       }
     }
-    member {
-      allMember(_size: 1000) {
-        data {
-          urn
-          firstName
-          lastName
-          gender
-          dateOfBirth
-        }
-      }
-    }
+#    member {
+#      allMember(_size: 1000) {
+#        data {
+#          urn
+#          firstName
+#          lastName
+#          gender
+#          dateOfBirth
+#        }
+#      }
+#    }
   }
 `

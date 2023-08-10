@@ -572,16 +572,16 @@ export const championshipQuery = graphql`
         veteranCategoryDuration
       }
     }
-    member {
-      allMember(_size: 1000) {
-        data {
-          urn
-          firstName
-          lastName
-          gender
-          dateOfBirth
-        }
-      }
-    }
+#    member {
+#      allMember(_size: 1000) {
+#        data {
+#          urn
+#          firstName
+#          lastName
+#          gender
+#          dateOfBirth
+#        }
+#      }
+#    }
   }
 `
