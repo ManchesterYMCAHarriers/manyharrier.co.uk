@@ -376,11 +376,11 @@ const Championship = ({ data, location }) => {
   const {
     stripeSku,
     markdownRemark: championship,
-    member: {
-      allMember: {
-        data: members,
-      }
-    },
+    // member: {
+    //   allMember: {
+    //     data: members,
+    //   }
+    // },
   } = data
 
   let eventsWithResults = 0
@@ -389,42 +389,42 @@ const Championship = ({ data, location }) => {
     .map(event => {
       let results
 
-      if (event.frontmatter.results) {
-        eventsWithResults++
-        if (!event.frontmatter.resultsType) {
-          throw new Error("No resultsType specified")
-        }
-
-        if (event.frontmatter.resultsType === "Gendered") {
-          results = {
-            men: [],
-            women: [],
-          }
-
-          event.frontmatter.results.forEach(({urn, time}) => {
-            const runner = members.find(member => {
-              return member.urn === urn
-            })
-
-            if (!runner) {
-              throw new Error(`Member for URN ${urn} not found`)
-            }
-
-            const {gender} = runner
-
-            const result = {
-              urn: urn,
-              time: time,
-            }
-
-            if (gender === "F") {
-              results.women.push(result)
-            } else {
-              results.men.push(result)
-            }
-          })
-        }
-      }
+      // if (event.frontmatter.results) {
+      //   eventsWithResults++
+      //   if (!event.frontmatter.resultsType) {
+      //     throw new Error("No resultsType specified")
+      //   }
+      //
+      //   if (event.frontmatter.resultsType === "Gendered") {
+      //     results = {
+      //       men: [],
+      //       women: [],
+      //     }
+      //
+      //     event.frontmatter.results.forEach(({urn, time}) => {
+      //       const runner = members.find(member => {
+      //         return member.urn === urn
+      //       })
+      //
+      //       if (!runner) {
+      //         throw new Error(`Member for URN ${urn} not found`)
+      //       }
+      //
+      //       const {gender} = runner
+      //
+      //       const result = {
+      //         urn: urn,
+      //         time: time,
+      //       }
+      //
+      //       if (gender === "F") {
+      //         results.women.push(result)
+      //       } else {
+      //         results.men.push(result)
+      //       }
+      //     })
+      //   }
+      // }
 
       return {
         results: results,

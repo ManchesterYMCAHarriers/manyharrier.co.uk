@@ -568,12 +568,12 @@ const Event = ({data, location}) => {
       },
     },
     stripeSku,
-    markdownRemark: event,
-    member: {
-      allMember: {
-        data: members,
-      }
-    }
+    markdownRemark: event
+    // member: {
+    //   allMember: {
+    //     data: members,
+    //   }
+    // }
   } = data
 
   const startsAt = Moment.utc(event.frontmatter.startsAt)
@@ -638,50 +638,50 @@ const Event = ({data, location}) => {
   }
 
   let results
-
-  if (event.frontmatter.results) {
-    if (!event.frontmatter.resultsType) {
-      throw new Error("No resultsType specified")
-    }
-
-    if (event.frontmatter.resultsType === "Gendered") {
-      results = {
-        men: [],
-        women: []
-      }
-
-      event.frontmatter.results.forEach(({urn, time}) => {
-        const runner = members.find(member => {
-          return member.urn === urn
-        })
-
-        if (!runner) {
-          throw new Error(`Member for URN ${urn} not found`)
-        }
-
-        const {firstName, lastName, gender} = runner
-
-        const result = {
-          name: `${firstName} ${lastName}`,
-          time: time,
-        }
-
-        if (gender === "F") {
-          results.women.push(result)
-        } else {
-          results.men.push(result)
-        }
-      })
-
-      results.women.sort((a, b) => {
-        return a.time < b.time ? -1 : 1
-      })
-
-      results.men.sort((a, b) => {
-        return a.time < b.time ? -1 : 1
-      })
-    }
-  }
+  //
+  // if (event.frontmatter.results) {
+  //   if (!event.frontmatter.resultsType) {
+  //     throw new Error("No resultsType specified")
+  //   }
+  //
+  //   if (event.frontmatter.resultsType === "Gendered") {
+  //     results = {
+  //       men: [],
+  //       women: []
+  //     }
+  //
+  //     event.frontmatter.results.forEach(({urn, time}) => {
+  //       const runner = members.find(member => {
+  //         return member.urn === urn
+  //       })
+  //
+  //       if (!runner) {
+  //         throw new Error(`Member for URN ${urn} not found`)
+  //       }
+  //
+  //       const {firstName, lastName, gender} = runner
+  //
+  //       const result = {
+  //         name: `${firstName} ${lastName}`,
+  //         time: time,
+  //       }
+  //
+  //       if (gender === "F") {
+  //         results.women.push(result)
+  //       } else {
+  //         results.men.push(result)
+  //       }
+  //     })
+  //
+  //     results.women.sort((a, b) => {
+  //       return a.time < b.time ? -1 : 1
+  //     })
+  //
+  //     results.men.sort((a, b) => {
+  //       return a.time < b.time ? -1 : 1
+  //     })
+  //   }
+  // }
 
   const tags = []
   let description = 'Manchester YMCA Harriers '
