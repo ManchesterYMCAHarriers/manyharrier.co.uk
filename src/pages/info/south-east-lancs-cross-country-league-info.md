@@ -5,8 +5,8 @@ forCompetitionKey: South East Lancs Cross Country League
 ---
 ## Start times
 
-* The women's race starts at **1:40pm**.
-* The men's race starts at **2:20pm**.
+* The women's race starts at **13:20**.
+* The men's race starts at **14:00**.
 
 ## Race numbers
 

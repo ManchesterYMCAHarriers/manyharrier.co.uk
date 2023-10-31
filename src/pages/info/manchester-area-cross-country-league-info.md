@@ -5,8 +5,8 @@ forCompetitionKey: Manchester Area Cross Country League
 ---
 ## Start times
 
-* The women's race starts at **1:30pm**.
-* The men's race starts at **2:30pm**.
+* The women's race starts at **13:30**.
+* The men's race starts at **14:30**.
 
 ## Race numbers
 
