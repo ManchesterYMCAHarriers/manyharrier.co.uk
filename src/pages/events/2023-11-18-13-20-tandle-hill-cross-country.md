@@ -7,7 +7,10 @@ terrain: Cross Country
 championshipForeignKey: 2023-24 Cross Country Championship
 competitionForeignKey: South East Lancs Cross Country League
 startsAt: '2023-11-18 13:20'
+cancelled: true
 ---
+## Cancelled - new fixture date TBC
+
 **NOTE: The venue for this fixture has been changed to Tandle Hill.**
 
 The second of this season's South East Lancs Cross Country League and
