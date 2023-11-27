@@ -7,6 +7,9 @@ terrain: Cross Country
 championshipForeignKey: 2023-24 Cross Country Championship
 competitionForeignKey: Manchester Area Cross Country League
 startsAt: '2023-12-02 13:30'
+cancelled: true
 ---
+## Cancelled - new fixture date TBC
+
 The third of this season's Manchester Area Cross Country League fixtures and
 the fifth fixture of our club's cross country championship.
