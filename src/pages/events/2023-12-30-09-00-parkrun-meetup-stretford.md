@@ -1,7 +1,7 @@
 ---
 templateKey: event
 eventKey: Parkrun meetup @ Stretford
-venueForeignKey: Longford Park
+venueForeignKey: Longford Park Stadium
 eventType: Race
 terrain: Road
 startsAt: '2023-12-30 09:00'
