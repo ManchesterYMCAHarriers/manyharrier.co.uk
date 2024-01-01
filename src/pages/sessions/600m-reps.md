@@ -1,6 +1,6 @@
 ---
 templateKey: session
-sessionKey: 600m reeps
+sessionKey: 600m reps
 description: A track training session
 ---
 In this session we repeat the following pattern for 25 minutes:
