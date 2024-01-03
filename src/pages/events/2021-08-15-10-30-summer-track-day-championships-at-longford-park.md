@@ -9,7 +9,7 @@ heroImage: /media/track-day.jpg
 ---
 We are delighted to be able to hold our annual Track Day Championships again this Summer on Sunday 15th August. This is 
 a chance to race among your fellow Harriers over a variety of track distances, whilst having some fun together. If 
-you’ve not been to track or fear this is for 'serious' runners only – don’t be fooled! The emphasis is definitely on 
+you've not been to track or fear this is for 'serious' runners only – don't be fooled! The emphasis is definitely on 
 having some fun and a long overdue get together, whilst also running and being in with the chance of a trophy!
 
 **Please sign up at the following link to enter:**

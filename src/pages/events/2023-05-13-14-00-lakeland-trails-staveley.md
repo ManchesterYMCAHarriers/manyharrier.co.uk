@@ -13,6 +13,6 @@ Starting and finishing at Staveley Recreation Ground, the 18k Kentmere Trail Rac
 
 Expect a carnival atmosphere with live music, race commentary, food and drink all available at the start and finish.
 
-Please note: there are various race distances available but you’ll need to run the 18k for your result to be included in our club champs.
+Please note: there are various race distances available but you'll need to run the 18k for your result to be included in our club champs.
 
 Entries are £36 and close on Sunday 16th April. Enter at the [Lakeland Trails website](https://www.lakelandtrails.org/staveley).

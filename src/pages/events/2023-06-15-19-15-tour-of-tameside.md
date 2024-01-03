@@ -11,4 +11,4 @@ a 10k trail race, a fell race, a half marathon and a 7 mile road race.
 
 Several members of the club will be tackling the event and entries are still open here:
 [https://www.letsdothis.com/gb/e/tour-of-tameside-188167](https://www.letsdothis.com/gb/e/tour-of-tameside-188167). 
-If you don’t fancy the full tour, why not enter one or two of the individual races to see what it's all about.
+If you don't fancy the full tour, why not enter one or two of the individual races to see what it's all about.

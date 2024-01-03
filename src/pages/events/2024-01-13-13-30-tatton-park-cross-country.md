@@ -9,4 +9,4 @@ competitionForeignKey: Manchester Area Cross Country League
 startsAt: '2024-01-13 13:30'
 ---
 The fourth of this season's Manchester Area Cross Country League fixtures and
-the seventh fixture of our club's cross country championship.
+the fifth fixture of our club's cross country championship.

@@ -9,9 +9,4 @@ competitionForeignKey: South East Lancs Cross Country League
 startsAt: '2023-11-18 13:20'
 cancelled: true
 ---
-## Cancelled - new fixture date TBC
-
-**NOTE: The venue for this fixture has been changed to Tandle Hill.**
-
-The second of this season's South East Lancs Cross Country League and
-the fourth fixture of our club's cross country championship. 
+## Cancelled - new fixture date 20th January 2024 at Marl Pits

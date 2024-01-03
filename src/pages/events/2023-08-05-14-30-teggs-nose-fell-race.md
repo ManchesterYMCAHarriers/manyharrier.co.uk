@@ -9,7 +9,7 @@ startsAt: '2023-08-05 14:30'
 ---
 This is the sixth race in our [2023 Summer Championship](/championships/2023-summer-championship/).
 
-Organised by Macclesfield Harriers this ‘BM’ category fell race has 525m of ascent over the 8 mile course. 
+Organised by Macclesfield Harriers this ‘BM' category fell race has 525m of ascent over the 8 mile course. 
 The race forms part of the annual Macclesfield Sheepdog Trials weekend.
 
 **PLEASE SEE THE RACE WEBSITE FOR DETAILS ON REQUIRED KIT:** [http://www.macclesfieldsheepdogtrials.co.uk/teggs_nose_fell_race.htm](http://www.macclesfieldsheepdogtrials.co.uk/teggs_nose_fell_race.htm)
