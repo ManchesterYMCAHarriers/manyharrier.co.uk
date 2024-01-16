@@ -6,4 +6,8 @@ eventType: Speedwork
 sessionForeignKey: 1200m efforts with 400m recovery
 terrain: Track
 startsAt: '2024-01-16 18:45'
+cancelled: true
 ---
+## Cancelled
+
+The track is closed today due to snow.
