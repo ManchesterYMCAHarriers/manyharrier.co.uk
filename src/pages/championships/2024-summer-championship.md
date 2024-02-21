@@ -1,7 +1,7 @@
 ---
 templateKey: championship
 championshipKey: 2024 Summer Championship
-description: Our 2024 Summer Championship consists of nine races that take place between April and October 2023
+description: Our 2024 Summer Championship consists of nine races that take place between April and October 2024
 intro: |
   The 2024 Summer Championship consists of three road, three trail and three
   fell races, with a short, medium and long distance race for each terrain.
