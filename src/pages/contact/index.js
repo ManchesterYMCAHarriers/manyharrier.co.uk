@@ -259,9 +259,6 @@ export default class CheckoutIndex extends React.Component {
                     <option value="I am promoting an event">
                       I am promoting an event
                     </option>
-                    <option value="I need to contact the Covid Coordinator">I
-                      need to contact the Covid Coordinator
-                    </option>
                     <option value="Something else">Something else</option>
                   </FieldsetSelect>
 
