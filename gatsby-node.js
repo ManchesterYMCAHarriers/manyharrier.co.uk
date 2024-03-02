@@ -7,7 +7,6 @@ const remark = require('remark')
 const recommended = require('remark-preset-lint-recommended')
 const remarkHtml = require('remark-html')
 const {kebabCase} = require('lodash')
-const updateStrava = require('./src/strava')
 const createCalendar = require('./src/ical')
 
 const toMarkdown = input =>
@@ -181,125 +180,6 @@ exports.createPages = async ({actions, graphql}) => {
 }
 
 exports.createPagesStatefully = async ({graphql}) => {
-  // Populate Strava - but only do it during "working hours"
-  const now = Moment.utc()
-  if (now.hours() >= parseInt(process.env.STRAVA_EARLIEST_HOURS, 10) && now.hours() < parseInt(process.env.STRAVA_LATEST_HOURS, 10)) {
-    const stravaData = await graphql(`
-      {
-        site {
-          siteMetadata {
-            siteUrl
-            strava {
-              loginUrl
-              clubUrl
-              accountEmail
-              accountPassword
-            }
-          }
-        }
-        allMarkdownRemark(
-          filter: {
-            frontmatter: { 
-              templateKey: { eq: "event" }
-            }
-          }
-        ) {
-          edges {
-            node {
-              id
-              fields {
-                slug
-              }
-              frontmatter {
-                cancelled
-                eventKey
-                startsAt
-                route {
-                  frontmatter {
-                    routeKey
-                  }
-                }
-                terrain
-                venue {
-                  frontmatter {
-                    address
-                    venueKey
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `)
-
-    const {
-      data: {
-        site: {
-          siteMetadata: {
-            siteUrl,
-            strava
-          }
-        },
-        allMarkdownRemark: {
-          edges: events
-        }
-      }
-    } = stravaData
-
-    const masterEvents = events.map(({node}) => {
-      const {
-        fields: {
-          slug: slug,
-        },
-        frontmatter
-      } = node
-
-      const {
-        cancelled,
-        eventKey: title,
-        startsAt,
-        terrain,
-        venue: {
-          frontmatter: {
-            address,
-            venueKey,
-          }
-        }
-      } = frontmatter
-
-      let routeKey
-
-      if (frontmatter.route) {
-        routeKey = frontmatter.route.frontmatter.routeKey
-      }
-
-      const addressString = [venueKey].concat(address.split("\n")).join(", ")
-
-      const url = new URL(slug, siteUrl)
-
-      return {
-        title,
-        startsAt: Moment.utc(startsAt),
-        address: addressString,
-        description: `Full information and sign up for this event is available at ${url}`,
-        route: routeKey,
-        terrain,
-        cancelled,
-      }
-    }).filter(({startsAt}) => {
-      return startsAt.isSameOrAfter(now)
-    })
-
-    await updateStrava({
-      masterEvents,
-      strava
-    })
-  } else {
-    console.log(`Skipping Strava update as we don't want to disturb people with " +
-      "notifications at this time! Current time is ${now.format("HH:mm")}`)
-  }
-
   const icalData = await graphql(`
       {
         site {
