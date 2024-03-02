@@ -52,6 +52,8 @@ was super choppy. The swim is east to west; we struggled against a very strong c
 made land at Beck Wythop. I was very relieved to have finished my leg, very happy to hand over to Mark for Leg 2, 
 and delighted to see the support crew with camper van.
 
+![Steph's swim](/media/2024-02_03-steph-swim.jpg)
+
 ## Leg 2 - Mark - Beck Wythop to Low Ling Crag
 
 After abandoning the kayak on the shores of Bassenthwaite and a Clark Kent-style costume change in a layby on the A66, 
@@ -184,6 +186,8 @@ the third island to the final swim section. Now it was almost pitch black but fo
 torches of my teammates on the shore which I could aim for. After a slightly unsettling incidence of cramp in my calf 
 I got close to dry land and was cheered back onto land by the awaiting team.
 
+![Going dark...](/media/2024-02_12-andy-swim-2.jpg)
+
 But I was not finished there, I had a bonus mile and a half run to complete the round and finish back at Moot Hall. 
 I was handed my shoes and basically told to get on with it and everyone would see me at the end. I was not prepared 
 for this as I was half expecting a team victory lap to the finish, however at this point everyone else was dry and 
@@ -197,7 +201,7 @@ with a borrowed jumper to fit in with the normal folk.
 
 **Finish Time 22:40**
 
-![The finish](/media/2024-02_12-finish.jpg)
+![The finish](/media/2024-02_13-finish.jpg)
 
 ## Phil
 
@@ -227,4 +231,4 @@ planned out the logistics and was an exceptional leader who helped ensure the da
 solo effort. This was my first Frog Graham, but I will make sure it isn't my last and look forward to completing or 
 supporting another attempt in the future.
 
-![The pub](/media/2024-02_13-pub.jpg)
+![The pub](/media/2024-02_14-pub.jpg)
