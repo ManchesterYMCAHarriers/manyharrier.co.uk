@@ -6,7 +6,7 @@ publishedAt: "2016-12-13T19:54:07.000Z"
 ---
 ![](/media/2016-12-dashton3_01.jpg)
 
-_If you haven't done so already, be sure to checkout [part one](/david-ashton-a-lifetime-in-athletics-part-1) and [part two](/david-ashton-a-lifetime-in-athletics-part-2) of David's memoir._
+_If you haven't done so already, be sure to checkout [part one](/blog/david-ashton-a-lifetime-in-athletics-part-1) and [part two](/blog/david-ashton-a-lifetime-in-athletics-part-2) of David's memoir._
 
 Manx Mountain Marathon 1995.  2nd placed finish and 1st over 40.  The pinnacle of my running career.  All downhill from here performance wise but certainly no loss of motivation and enjoyment.
 

@@ -1,7 +1,7 @@
 ---
 templateKey: "blog-post"
 blogKey: "Blog Graham"
-description: "An account of the Manchester YMCA Harriers' Leapfrog Relay"
+description: "An account of the Manchester YMCA Harriers Leapfrog Relay"
 heroImage: "/media/2024-02_01-moot-hall.jpg"
 publishedAt: "2024-02-05T16:00:00.000Z"
 ---
