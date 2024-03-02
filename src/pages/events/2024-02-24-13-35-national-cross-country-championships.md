@@ -5,10 +5,7 @@ venueForeignKey: Weston Park
 eventType: Race
 terrain: Cross Country
 startsAt: '2024-02-24 13:35'
-cancelled: true
 ---
-## Cancelled due to heavy rain and flooding
-
 Thousands of runners from clubs across the country will descend on Weston Park near Telford for this year's National C
 ross Country Championships.
 
