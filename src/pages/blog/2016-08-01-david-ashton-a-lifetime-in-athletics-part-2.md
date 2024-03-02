@@ -4,7 +4,7 @@ blogKey: "David Ashton – A Lifetime in Athletics (Part 2)"
 description: "null"
 publishedAt: "2016-08-01T13:19:00.000Z"
 ---
-_If you haven’t done so already, be sure to read [part one of David’s memoir](/blog/david-ashton-a-lifetime-in-athletics-part-1)_
+_If you haven’t done so already, be sure to read [part one of David’s memoir](/david-ashton-a-lifetime-in-athletics-part-1)_
 
 September 1964 I’d taken the option of staying on at my secondary modern school. Great for academic possibilities but a real problem for a sports lover because school teams were under-15’s and age barred me from these.
 
