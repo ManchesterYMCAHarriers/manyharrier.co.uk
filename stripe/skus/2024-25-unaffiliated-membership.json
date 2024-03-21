@@ -1,6 +1,6 @@
 {
-  "activeFrom": "2023-04-01T00:00:00",
-  "activeUntil": "2024-03-31T23:59:59",
+  "activeFrom": "2024-03-21T00:00:00",
+  "activeUntil": "2025-03-31T23:59:59",
   "productName": "Membership",
   "sku": {
     "attributes": {
