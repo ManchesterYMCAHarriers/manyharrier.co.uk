@@ -310,7 +310,7 @@ async function subscribeToMailingList(email, firstName, lastName) {
 
     if (isAlreadySubscribed.status !== 404) {
         throw new Error(
-            `response from Mailchimp API was ${isAlreadySubscribed.status}`
+            `error checking isAlreadySubscribed: response from Mailchimp API was ${isAlreadySubscribed.status}: ${isAlreadySubscribed.body}`
         )
     }
 
@@ -336,7 +336,7 @@ async function subscribeToMailingList(email, firstName, lastName) {
 
     if (!createSubscription.ok) {
         throw new Error(
-            `response from Mailchimp API was ${createSubscription.status}`
+            `error creating subscription: response from Mailchimp API was ${createSubscription.status}: ${createSubscription.body}`
         )
     }
 }
@@ -359,7 +359,7 @@ async function unsubscribeFromMailingList(email) {
         if (isSubscribed.status !== 404) {
             return
         }
-        throw new Error(`response from Mailchimp API was ${isSubscribed.status}`)
+        `error checking isSubscribed: response from Mailchimp API was ${isSubscribed.status}: ${isSubscribed.body}`
     }
 
     const data = {
@@ -379,7 +379,7 @@ async function unsubscribeFromMailingList(email) {
 
     if (!unsubscribe.ok) {
         throw new Error(
-            `cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}`
+            `cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}: ${unsubscribe.body}`
         )
     }
 }
