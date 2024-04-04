@@ -3,9 +3,11 @@ templateKey: info
 infoKey: Speedwork Info
 forEventType: Speedwork
 ---
-Track sessions are organised by Phil and Katie at the Manchester Regional Arena. We will start with a few warm up laps and dynamic stretches at 6:45pm, before going in to the main session.
+Track sessions are at the Manchester Regional Arena. We will start with a few warm up laps and dynamic stretches 
+at 6:45pm, before going in to the main session.
 
-Entry is discounted to £2.70 for running club members, and there is a further discount to £2.50 for those who live in the Manchester City Council area.
+Entry is discounted to £3.20 for running club members, and there is a further discount to £2.85 for those who live 
+in the Manchester City Council area.
 
 ## Better UK app
 
@@ -25,7 +27,7 @@ If you are using the app for the first time you will need to create an account w
 - Scroll down the list and select **Better Adult Resident** (cost £0.00).
 - Enter all the details and checkout at zero cost.
 
-The account created can now be used to book track at £2.50 instead of £4!
+The account created can now be used to book track at the discounted rate.
 
 ### Booking a track session
 
