@@ -34,7 +34,7 @@ export const JoinPageTemplate = ({
               dangerouslySetInnerHTML={{ __html: howToJoinUs }}
             />
             <div className="text-right my-8">
-              <CallToActionLink to={'/join/form'} title={'Join now!'} />
+              <CallToActionLink to={'/join/form'} title={'Join / Renew now!'} />
             </div>
           </div>
         </PanelFullWidth>
