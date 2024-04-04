@@ -546,7 +546,7 @@ export default class Form extends React.Component {
                     description={'Complete this form to become a member of the Manchester YMCA Harriers'} path={"/join"}
                     location={this.props.location}>
               <StandardContentContainer>
-                <H1 title={'Join us'}/>
+                <H1 title={'Join us / Renew your membership'}/>
                 <Panels>
                   <PanelFullWidth>
                     <div className="panel red-bottom">
