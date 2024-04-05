@@ -305,6 +305,7 @@ async function subscribeToMailingList(email, firstName, lastName) {
     })
 
     if (isAlreadySubscribed.ok) {
+        console.log(`email is already subscribed to newsletter`);
         return
     }
 
@@ -323,6 +324,7 @@ async function subscribeToMailingList(email, firstName, lastName) {
         },
     }
 
+    console.log('subscribing to newsletter');
     const createSubscription = await fetch(mailchimpSubscribeURL, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -339,6 +341,7 @@ async function subscribeToMailingList(email, firstName, lastName) {
             `error creating subscription: response from Mailchimp API was ${createSubscription.status}: ${createSubscription.body}`
         )
     }
+    console.log('subscribed email to newsletter')
 }
 
 async function unsubscribeFromMailingList(email) {
@@ -357,10 +360,15 @@ async function unsubscribeFromMailingList(email) {
 
     if (!isSubscribed.ok) {
         if (isSubscribed.status !== 404) {
+            console.log('email was already not subscribed to newsletter');
             return
         }
-        `error checking isSubscribed: response from Mailchimp API was ${isSubscribed.status}: ${isSubscribed.body}`
+        throw new Error(
+            `error checking isSubscribed: response from Mailchimp API was ${isSubscribed.status}: ${isSubscribed.body}`
+        )
     }
+
+    console.log('unsubscribing email from newsletter');
 
     const data = {
         status: 'unsubscribed',
@@ -382,6 +390,8 @@ async function unsubscribeFromMailingList(email) {
             `cannot unsubscribe ${email}: response from Mailchimp API was ${unsubscribe.status}: ${unsubscribe.body}`
         )
     }
+
+    console.log('unsubscribed email from newsletter');
 }
 
 function toCurrency(val) {
