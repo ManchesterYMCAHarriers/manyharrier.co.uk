@@ -2,7 +2,7 @@
 templateKey: "blog-post"
 blogKey: "A Volunteer's Day"
 description: "David Ashton details what's involved in marshalling the Manx Mountain Marathon"
-heroImage: "/media/2024-02-06-david-at-race-hq.jpg"
+heroImage: "/media/2024-05-06-david-at-race-hq.jpg"
 publishedAt: "2024-05-01T16:00:00.000Z"
 ---
 Having experienced a running career from 1964 until 2020 one can appreciate that, like work retirement, it is essential 
