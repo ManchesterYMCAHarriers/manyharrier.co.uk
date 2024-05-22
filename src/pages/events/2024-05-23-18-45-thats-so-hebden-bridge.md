@@ -6,7 +6,11 @@ championshipForeignKey: 2024 Summer Championship
 eventType: Race
 terrain: Fell
 startsAt: '2024-05-23 18:45'
+cancelled: true
 ---
+## Race postponed
+**Future date TBC**
+
 This is the second race in our [2024 Summer Championship](/championships/2024-summer-championship/).
 
 Making a return to our Summer Championship this year, this is a 10K fell race run over trail and open moorland starting 
