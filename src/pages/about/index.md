@@ -25,7 +25,7 @@ Beyond that, our members take part in all manner of races, both at home and abro
 * [Events calendar](/events)
 * [London Marathon place](/about/london-marathon-place)
 
-The Club has previously organised a number of races, including the Manchester YMCA 10K and 20K road races and the [Blackleach Country Park 5-mile Trail Race](/blackleach).
+The Club has previously organised a number of races and events. Our most recent endeavor was organising a multiday Manchester Ringway Challenge, which raised money for charity.
 
 ## Training
 
@@ -37,25 +37,38 @@ Our speedwork sessions take place on Tuesday evenings at 6:45pm at the Mancheste
 
 Speedwork sessions are meant to be hard; you will need to push yourself, but you'll also get plenty of encouragement and support from everyone! We know that some people are faster than others, so our speed sessions are designed to be accessible to all abilities.
 
-* [Events calendar](/events)
-* [Manchester Regional Arena](/venues/manchester-regional-arena)
+See the next speedwork session we have planned here: [Events calendar](/events)
+Find us on Tuesday, 6.45pm at [Manchester Regional Arena](/venues/manchester-regional-arena)
 
 ### Group runs
 
-Our group runs take place every Thursday, starting at the Y Club at 6:30pm. After a quick warm up, the Captains will gather the group together for Club Notices, after which we’ll split into sub-groups before we head off on the run.
+Our group runs take place every Thursday, starting at the Y Club at 6:30pm. After a quick warm up, the Captains will gather the group together for Club Notices, after which we split into sub-groups before heading off on one of our many routes.
 
-Each group will run at a different pace and will be led by a club member, so there should always be a pace group suited to you. The number of groups is flexible depending on the number of runners down on any particular night, but we’ll generally have the following four pace groups:
+Each group will run at a different pace and will be led by a club member, so there should always be a pace group suited to you. The number of groups is flexible depending on the number of runners down on any particular night, but we’ll generally have the following six groups:
 
-* Group 1: 7.00 min / mile (4.20 min / km) +/- 30 secs
-* Group 2: 7.30 min / mile (4.40 min / km) +/- 30 secs
-* Group 3: 8.30 min / mile (5.20 min / km) +/- 30 secs
-* Group 4: 9.30 min / mile (5.50 min / km) +/- 30 secs
+* **Group 1:**
+    8 miles (13 km)
+    7.00 min / mile (4.20 min / km) +/- 30 secs
+* **Group 2:**
+    8 miles (13 km)
+    7.30 min / mile (4.40 min / km) +/- 30 secs
+* **Group 3:**
+    8 miles (13 km)
+    8.30 min / mile (5.20 min / km) +/- 30 secs
+* **Group 4:**
+    8 miles (13 km)
+    9.30 min / mile (5.50 min / km) +/- 30 secs
+* **Group 5:**
+    6 miles (10 km)
+    10.00 min / mile (6.15 min / km) +/- 30 secs
+* **Group 6:**
+    3 miles (5 km)
+    This group will run at whatever pace is comfortable for everyone
 
 If you’re not sure which group to go in on your first visit, we'd advise starting off in Group 4 and try to work your way up to the next one!
 
-Our routes are generally 6 - 8 miles (10 - 13km).
-* [Events calendar](/events)
-* [The Y Club](/venues/the-y-club)
+See the next group run we have planned here: [Events calendar](/events)
+Find us on Thursday, 6.30pm at [The Y Club](/venues/the-y-club)
 
 ## Committee
 

@@ -48,4 +48,8 @@ Any proposed alterations to the Club Constitution may only be considered at an A
 
 **Approved by Manchester YMCA Board of Trustees on 26th June 2008**
 
+**Last reviewed by the standing committee on 25/08/2024.**
+
 *NB: Rule 15 added following member approval at the 2017 AGM. Approval and confirmation of the addition by the Manchester YMCA Board of Trustees is pending.*
+
+

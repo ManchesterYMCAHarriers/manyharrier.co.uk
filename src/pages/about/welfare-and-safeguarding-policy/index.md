@@ -75,4 +75,4 @@ or training sessions.
 ## General complaints
 If you have a complaint about the behaviour of another member of the Club, 
 please raise this with the Committee. It will then be investigated in 
-accordance with the [UK Athletics Club Discipline and Appeals Process](https://www.englandathletics.org/clubs-and-facilities/club-support-services/compliance-wellbeing/club-safeguarding-and-disciplinary-processes/).
+accordance with the [England Athletics Welfare Policy](https://www.englandathletics.org/welfare/).
