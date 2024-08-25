@@ -13,7 +13,7 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
             <p className="font-semibold text-red-manyharrier">Favourite Race:</p>
             <p>{favouriteRace}</p>
             </div>
-            <Img fixed={image} alt={'Photo of ' + name} className="absolute inset-0 h-full w-full z-20 hover:opacity-0 duration-300"} />
+            <Img fixed={image} alt={'Photo of ' + name} className="absolute inset-0 h-full w-full z-20 hover:opacity-0 duration-300"/>
         </div>
         <div className="text-center text-base text-black font-semibold self-center py-1">{name}</div>
         <div className="text-center text-base font-semibold self-center text-red-manyharrier mb-2">{role}</div>
