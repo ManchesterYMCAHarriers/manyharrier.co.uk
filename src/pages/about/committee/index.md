@@ -6,64 +6,92 @@ description: The Manchester YMCA Harriers Committee consists of 11 volunteers wh
 intro: |
   The Manchester YMCA Harriers Committee is responsible for the day-to-day running of the club and making decisions that will affect the future of the club.
   
-  Everybody on the committee is a volunteer who gives their time freely for the benefit of the club and its members.
-  
-  Committee members are elected at the Club's Annual General Meeting.
+  The committee is made up of volunteers elected at the Club's Annual General Meeting. They give their time freely for the benefit of the club and its members.
+
+  Learn more about the committee members below...
 members:
- - name: Steph Goodchild
-   role: Club President
-   description: |
-     Steph's role as Club President involves chairing committee and general meetings, making a speech at the club's Annual General Meeting and generally being a good egg!
-     
-     Steph has been a member of the Manchester YMCA Harriers since 1990; she has served on the Committee for fifteen years and has previously been the Club Treasurer for ten years. She is the first woman to hold the role of Club President in our history!
-     
-     Steph is a keen fell and ultra-distance runner.
-   singleImage: /media/committee-Steph-Goodchild.jpg
- - name: Chris March
-   role: Club Secretary
-   description: |
-     Chris's role as Club Secretary involves registering club members with England Athletics and managing the membership of the club. The Club Secretary is also responsible for administrative tasks around committee meetings and the Club's Annual General Meeting, including the collation of agendas, the recording of minutes and distributing these as required.
-     
-     Chris also keeps this website up to date!
-   singleImage: /media/committee-Chris-March.jpg
- - name: Heather Hughes
-   role: Club Treasurer
-   description: |
-     Heather's role as Club Treasurer involves managing the club's bank account, maintaining a cash book and producing income and expenditure reports for general club activities. Her role also involves producing and delivering an annual statement and report for the club's Annual General Meeting.
-     
-     Heather has been fundamental in bringing the Club's banking into the 21st century, allowing us to take payment by BACS transfer.
-   singleImage: /media/committee-Heather-Hughes.jpg
- - name: Sarah Wilson and Craig Jones
-   role: Captains
-   description: |
-     Sarah and Craig are our leaders "on the pitch".
-   
-     Their role as captains also involves planning the Thursday evening group run and acting as leaders for the session, as well as organising marathon training sessions and routes.
-   
-     They deliver a monthly "Captain's Report" which is provided to the committee and an annual report at the Annual General Meeting.
-   
-     The captains present awards at presentation evenings and decide upon the annual award for our "most improved runner" as well as the weightings for our Christmas handicap race.
-   
-     Both Craig and Sarah are excellent marathon runners; [Craig's marathon PB is 2:34](/blog/2019-11-21-buenos-aires-marathon/) and Sarah's is 3:27.
-   singleImage: /media/committee-Sarah-Wilson-and-Craig-Jones.jpg
- - name: Graeme Wilkinson
-   role: Committee Member
-   description: |
-     Graeme's role as Race Entries Secretary involves collating the club's entry for the Manchester Area Cross Country League and the South East Lancs Cross Country League.
-   singleImage: /media/committee-Graeme-Wilkinson.jpg
- - name: Marlow Upton
-   role: Committee Member
-   description: |
-     Marlow is new on the committee for 2020.
-   singleImage: /media/committee-Marlow-Upton.jpg
- - name: Phil Tomkinson
-   role: Committee Member
-   description: |
-     Phil is new on the committee for 2020.
-   singleImage: /media/committee-Phil-Tomkinson.jpg 
- - name: Sandra Robinson
-   role: Committee Member
-   description: |
-     Sandra is new on the committee for 2021.
-   singleImage: /media/committee-Sandra-Robinson.jpg
+  - name: Phil Tomkinson
+    role: President
+    description: |
+      Phil helps plan and lead the our weekly sessions, and he keeps members informed about upcoming events. He also organises the trophies and medals for our club championships.
+    keySkill: Excessively detailed and enthusiastic answers.
+    favouriteRace: It's a Piece of Cake 10k. My first in a harrier vest.
+    singleImage: /media/committee-phil.jpg
+  - name: David Kearney
+    role: Secretary
+    description: |
+      David manages club membership and our relationship with England Athletics, ensuring club administration aligns with our rules.
+    keySkill: Living a successful life while not being on WhatsApp.
+    favouriteRace: Hamburg Marathon.
+    singleImage: /media/committee-david.jpg
+  - name: Sam Gilmore
+    role: Treasurer
+    description: |
+      Sam manages the club’s finances and provides monthly reports on income and spending.
+    keySkill: Crafting the perfect Strava caption for maximum Kudos.
+    favouriteRace: Lakeland Trails Ultra (Did I mention, by the way, that I did an ultra???).
+    singleImage: /media/committee-sam.jpg
+  - name: Dan Bailey
+    role: Men's Captain
+    description: |
+      Dan coordinates our Tuesday Track sessions and Thursday runs, and he organizes our cross-country teams.
+    keySkill: Making hill sprints sound fun.
+    favouriteRace: Manchester half marathon, or anything out in the hills.
+    singleImage: /media/committee-dan.jpg
+  - name: Josie Clough
+    role: Women's Captain
+    description: |
+      Josie helps plan and run our weekly Tuesday Track sessions and Thursday runs. She assists with event planning and promotes the club.
+    keySkill: Finding deals in the Sainsbury's reduced section.
+    favouriteRace: London Landmarks Half Marathon.
+    singleImage: /media/committee-dan.jpg
+  - name: Marlow Upton
+    role: Committee Member
+    description: |
+      Marlow provides administrative support to the committee and unofficial advice on marathon training.
+    keySkill: Beating Keith on a semi-regular basis.
+    favouriteRace: Heaton Parkrun (though technically not a race) and Marple Trail Run.
+    singleImage: /media/committee-marlow.jpg
+  - name: Andy Bowler
+    role: Committee Member
+    description: |
+      Andy provides general support to the committee and helps organize the club kit.
+    keySkill: Enthusiastic hill run companion.
+    favouriteRace: Manchester half marathon (as it was my first race) or any race that involves a holiday.
+    singleImage: /media/committee-andy.jpg
+  - name: Joseph Hayes
+    role: Committee Member
+    description: |
+      Joseph has provided support to the committee so long ago we don't remember, but luckily someone asked him to write [a blog about it.](https://manyharrier.co.uk/blog/2018-09-21-my-first-year-with-the-manchester-ymca-harriers/)
+    keySkill: Encyclopedic knowledge of local races and cross country.
+    favouriteRace: Coniston 14.
+    singleImage: /media/committee-joseph.jpg
+  - name: Chloe Quinn
+    role: Committee Member
+    description: |
+      Chloe assists with planning club events such as New Runners Week and our GM Ringway Relay challenge and supports new runners with their goals.
+    keySkill: Making solo runners feel at ease in a group setting.
+    favouriteRace: Round Sheffield Run.
+    singleImage: /media/committee-chloe.jpg
+  - name: Katie Baker
+    role: Committee Member
+    description: |
+      Katie helps promote club events and initiatives by managing the club's social media accounts and serves as one of the welfare officers.
+    keySkill: Adding a frisson of danger to any run she leads.
+    favouriteRace: The Manchester Half Marathon as it's so well supported.
+    singleImage: /media/committee-katie.jpg
+  - name: Ben Watson
+    role: Committee Member
+    description: |
+      Ben provides general support to the committee. He's happy to take any queries people have, and dole out running support and advice.
+    keySkill: Eurovision expertise and commentary.
+    favouriteRace: The Great North Run.
+    singleImage: /media/committee-ben.jpg
+  - name: Nathaniel Stanton
+    role: Committee Member
+    description: |
+      Initially providing general support to the committee, Nathaniel mentioned his coding skills and now manages the website.
+    keySkill: Getting volunteered for things by accident.
+    favouriteRace: Windgather. "I love a fell race and hurling myself down hills."
+    singleImage: /media/committee-nathaniel.jpg
 ---
