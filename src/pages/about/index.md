@@ -38,7 +38,8 @@ Our speedwork sessions take place on Tuesday evenings at 6:45pm at the Mancheste
 Speedwork sessions are meant to be hard; you will need to push yourself, but you'll also get plenty of encouragement and support from everyone! We know that some people are faster than others, so our speed sessions are designed to be accessible to all abilities.
 
 See the next speedwork session we have planned here: [Events calendar](/events)
-Find us on Tuesday, 6.45pm at [Manchester Regional Arena](/venues/manchester-regional-arena)
+
+Find us on Tuesday, 6.45pm at: [Manchester Regional Arena](/venues/manchester-regional-arena)
 
 ### Group runs
 
@@ -47,28 +48,34 @@ Our group runs take place every Thursday, starting at the Y Club at 6:30pm. Afte
 Each group will run at a different pace and will be led by a club member, so there should always be a pace group suited to you. The number of groups is flexible depending on the number of runners down on any particular night, but we’ll generally have the following six groups:
 
 * **Group 1:**
-    8 miles (13 km)
-    7.00 min / mile (4.20 min / km) +/- 30 secs
-* **Group 2:**
-    8 miles (13 km)
-    7.30 min / mile (4.40 min / km) +/- 30 secs
-* **Group 3:**
-    8 miles (13 km)
-    8.30 min / mile (5.20 min / km) +/- 30 secs
-* **Group 4:**
-    8 miles (13 km)
-    9.30 min / mile (5.50 min / km) +/- 30 secs
-* **Group 5:**
-    6 miles (10 km)
-    10.00 min / mile (6.15 min / km) +/- 30 secs
-* **Group 6:**
-    3 miles (5 km)
-    This group will run at whatever pace is comfortable for everyone
+    * 8 miles (13 km)
+    * 7.00 min / mile (4.20 min / km) +/- 30 secs
 
-If you’re not sure which group to go in on your first visit, we'd advise starting off in Group 4 and try to work your way up to the next one!
+* **Group 2:**
+    * 8 miles (13 km)
+    * 7.30 min / mile (4.40 min / km) +/- 30 secs
+
+* **Group 3:**
+    * 8 miles (13 km)
+    *  8.30 min / mile (5.20 min / km) +/- 30 secs
+
+* **Group 4:**
+    * 8 miles (13 km)
+    * 9.30 min / mile (5.50 min / km) +/- 30 secs
+
+* **Group 5:**
+    * 6 miles (10 km)
+    * 10.00 min / mile (6.15 min / km) +/- 30 secs
+
+* **Group 6:**
+    * 3 miles (5 km)
+    * This group will run at whatever pace is comfortable for everyone
+
+If you’re not sure which group to go in on your first visit, we'd advise starting off in Group 6 and try to work your way up to the next one!
 
 See the next group run we have planned here: [Events calendar](/events)
-Find us on Thursday, 6.30pm at [The Y Club](/venues/the-y-club)
+
+Find us on Thursday, 6.30pm at: [The Y Club](/venues/the-y-club)
 
 ## Committee
 
@@ -76,7 +83,7 @@ The Manchester YMCA Harriers Committee is responsible for the day-to-day running
 
 Everybody on the committee is a volunteer who gives their time freely for the benefit of the club and its members.
 
-* [Manchester YMCA Harriers Committee members](/about/committee)
+[Meet the Committee members here](/about/committee)
 
 ## Club rules
 
@@ -86,9 +93,7 @@ Our club rules can be summarised as follows:
 * Our club exists to further the development of running, at all levels, and to provide opportunities for recreation and competition; and
 * Our club operates fairly, transparently and on a democratic basis.
 
-The full club rules can be viewed below:
-
-* [Club rules](/about/rules)
+The full club rules can be viewed here: [Club rules](/about/rules)
 
 ## Welfare and safeguarding policy
 
@@ -100,6 +105,4 @@ Our welfare and safeguarding policy describes:-
 * How you should report a welfare or safeguarding issue; and
 * The process the Club will follow in handling a welfare or safeguarding issue.
 
-The Club's welfare and safeguarding policy can be viewed below:
-
-* [Welfare and Safeguarding Policy](/about/welfare-and-safeguarding-policy)
+The Club's welfare and safeguarding policy can be viewed here: [Welfare and Safeguarding Policy](/about/welfare-and-safeguarding-policy)
