@@ -15,11 +15,11 @@ dd {
 }
 
 .content ol {
-    @apply space-y-4 list-inside
+    @apply mt-4 list-inside
 }
 
 .content ul {
-    @apply space-y-1 list-inside
+    @apply mt-1 list-inside
 }
 
 .content ul li {
