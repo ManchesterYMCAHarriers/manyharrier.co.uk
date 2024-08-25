@@ -7,11 +7,11 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
         <div className="relative h-96">
             <Img fixed={image} alt={'Photo of ' + name} className="absolute inset-0 h-full w-full z-0 opacity-10" />
             <div className="absolute inset-0 z-10 content-center m-3 text-base text-black">
-            <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
-            <p className="font-semibold text-red-manyharrier"><br/>Key Skill:</p>
-            <p>{keySkill}</p>
-            <p className="font-semibold text-red-manyharrier">Favourite Race:</p>
-            <p>{favouriteRace}</p>
+                <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
+                <p className="font-semibold text-red-manyharrier"><br/>Key Skill:</p>
+                <p>{keySkill}</p>
+                <p className="font-semibold text-red-manyharrier">Favourite Race:</p>
+                <p>{favouriteRace}</p>
             </div>
             <Img fixed={image} alt={'Photo of ' + name} className="absolute inset-0 h-full w-full z-20 hover:opacity-0 duration-300"/>
         </div>
