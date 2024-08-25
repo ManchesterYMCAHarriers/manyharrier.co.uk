@@ -4,7 +4,6 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import StandardContentContainer from '../components/StandardContentContainer'
 import { PanelFullWidth, Panels } from '../components/Panels'
-import Img from 'gatsby-image'
 import Hero from '../components/Hero'
 import { CommitteePanel } from '../components/CommitteePanel'
 
@@ -33,7 +32,7 @@ export const CommitteePageTemplate = ({
       </Panels>
       <div className="grid grid-cols-4 gap-4 max-w-6xl pt-9">
         {members.map(({ name, role, description, keySkill, favouriteRace, image }, i) => (
-          <CommitteePage 
+          <CommitteePanel
             key={"committee-member-" + i}
             name={name}
             role={role}
