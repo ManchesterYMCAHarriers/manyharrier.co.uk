@@ -44,7 +44,7 @@ members:
       Josie helps plan and run our weekly Tuesday Track sessions and Thursday runs. She assists with event planning and promotes the club.
     keySkill: Finding deals in the Sainsbury's reduced section.
     favouriteRace: London Landmarks Half Marathon.
-    singleImage: /media/committee-dan.jpg
+    singleImage: /media/committee-josie.jpg
   - name: Marlow Upton
     role: Committee Member
     description: |
