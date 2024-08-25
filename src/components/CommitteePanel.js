@@ -4,7 +4,7 @@ import Img from 'gatsby-image'
 
 export const CommitteePanel = ({ name, role, description, keySkill, favouriteRace, image}) => (
     <div className="flex flex-col w-64 bg-white-manyharrier">
-        <div className="relative h-96">
+        <div className="relative w-full h-96">
             <Img 
                 fixed={image}
                 alt={'Photo of ' + name} 
@@ -13,7 +13,6 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
                     height: '100%',
                     width: '100%',
                     inset: 0,
-                    objectFit: 'cover',
                     opacity: 0.1,
                 }}
                 className="z-0" 
@@ -33,7 +32,6 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
                     height: '100%',
                     width: '100%',
                     inset: 0,
-                    objectFit: 'cover',
                     opacity: 1,
                 }}
                 className="z-20 hover:opacity-0 duration-300"
