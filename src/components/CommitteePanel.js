@@ -3,8 +3,8 @@ import * as PropTypes from 'prop-types'
 import Img from 'gatsby-image'
 
 export const CommitteePanel = ({ name, role, description, keySkill, favouriteRace, image}) => (
-    <div className="flex flex-col w-64 bg-white-manyharrier">
-        <div className="relative h-96">
+    <div className="flex flex-col w-full bg-white-manyharrier">
+        <div className="relative w-64 h-96">
             <div className='absolute inset-0 h-full w-full z-0 opacity-10'>
                 <Img fixed={image} alt={'Photo of ' + name}/>
             </div>
