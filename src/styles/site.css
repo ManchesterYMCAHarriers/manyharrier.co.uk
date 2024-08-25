@@ -12,24 +12,28 @@ dd {
     @apply my-2 ml-2
 }
 
-.content ol, .content ul {
-    @apply my-4 ml-6
+.content ol {
+    @apply space-y-4 list-inside
+}
+
+.content ul {
+    @apply space-y-1 list-inside
 }
 
 .content ul li {
-    @apply list-disc mb-2
+    @apply list-disc
 }
 
 .content ol li {
-    @apply list-decimal mb-2
+    @apply list-decimal
 }
 
 .content ol ul li {
-    @apply list-disc mb-2
+    @apply list-disc
 }
 
 .content ul ol li {
-    @apply list-decimal mb-2
+    @apply list-decimal
 }
 
 .content a {
