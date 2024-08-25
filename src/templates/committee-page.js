@@ -6,6 +6,7 @@ import StandardContentContainer from '../components/StandardContentContainer'
 import { PanelFullWidth, Panels } from '../components/Panels'
 import Img from 'gatsby-image'
 import Hero from '../components/Hero'
+import { CommitteePanel } from '../components/CommitteePanel'
 
 export const CommitteePageTemplate = ({
   title,
@@ -30,33 +31,19 @@ export const CommitteePageTemplate = ({
           </div>
         </PanelFullWidth>
       </Panels>
-      <Panels>
-        {members.map(({ name, role, description, image }, i) => (
-          <PanelFullWidth key={'committee-member-' + i}>
-            <div className={`flex flex-col md:flex-row panel black-bottom`}>
-              <div
-                className={`mx-auto mb-4 md:ml-4 md:mb-0 flex-shrink-0 flex-grow-0 md:order-2`}
-              >
-                <Img
-                  fixed={image}
-                  alt={'Photo of ' + name}
-                  className={`border-2 border-black-manyharrier`}
-                />
-              </div>
-              <div className="flex-shrink flex-grow md:order-1">
-                <h3 className="heading-3 mb-4 text-center md:text-left">
-                  <span>{name}</span> -{' '}
-                  <span className="text-gray-700">{role}</span>
-                </h3>
-                <div
-                  className="content"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </div>
-            </div>
-          </PanelFullWidth>
+      <div className="grid grid-cols-4 gap-4 max-w-6xl pt-9">
+        {members.map(({ name, role, description, keySkill, favouriteRace, image }, i) => (
+          <CommitteePage 
+            key={"committee-member-" + i}
+            name={name}
+            role={role}
+            description={description}
+            keySkill={keySkill}
+            favouriteRace={favouriteRace}
+            image={image}
+          />
         ))}
-      </Panels>
+      </div>
     </StandardContentContainer>
   )
 }
@@ -70,7 +57,9 @@ CommitteePageTemplate.propTypes = {
       name: PropTypes.string.isRequired,
       role: PropTypes.string.isRequired,
       description: PropTypes.node.isRequired,
-      image: PropTypes.object,
+      keySkill: PropTypes.string,
+      favouriteRace: PropTypes.string,
+      image: PropTypes.object.isRequired,
     })
   ),
 }
@@ -128,9 +117,12 @@ export const committeePageQuery = graphql`
         members {
           name
           role
+          description
+          keySkill
+          favouriteRace
           singleImage {
             childImageSharp {
-              fixed(width: 200, height: 250) {
+              fixed(width: 256, height: 384) {
                 ...GatsbyImageSharpFixed_withWebp_tracedSVG
               }
             }
