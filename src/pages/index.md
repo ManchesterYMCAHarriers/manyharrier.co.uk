@@ -2,7 +2,7 @@
 templateKey: index-page
 title: Welcome to the Manchester YMCA Harriers
 description: The Manchester YMCA Harriers are a friendly running club based at the Y Club in Castlefield, Manchester city centre.
-heroImage: /media/2019-sale-sizzler-2.jpg
+heroImage: /media/home-page-hero.jpg
 intro: |
   We are a friendly running club based at the Y Club in Castlefield, right in the
    heart of Manchester city centre. If you're looking for a central Manchester
@@ -14,7 +14,7 @@ nextEventDefault: |
    - **Group run:** Thursday, 6:30pm from [the Y Club](/venues/the-y-club)
   
    Come along and join us for a run!
-firstPanelImage: /media/2019-london-finishers.jpeg
+firstPanelImage: /media/about-us-group.jpg
 firstPanelTitle: About us
 firstPanelBody: |
   We are affiliated to England Athletics and we frequently take
@@ -28,7 +28,7 @@ firstPanelBody: |
   afield for weekend breaks or longer holidays.
 firstPanelLink: /about
 firstPanelCTA: Read on
-secondPanelImage: /media/2019-the-wharf-social.jpg
+secondPanelImage: /media/join-us.jpg
 secondPanelTitle: Join us
 secondPanelBody: |
   We run and we do lots of fun stuff besides running. What's not
