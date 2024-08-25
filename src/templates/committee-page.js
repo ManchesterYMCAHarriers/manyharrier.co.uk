@@ -30,7 +30,7 @@ export const CommitteePageTemplate = ({
           </div>
         </PanelFullWidth>
       </Panels>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-6xl mt-9">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mt-8">
         {members.map(({ name, role, description, keySkill, favouriteRace, image }, i) => (
           <CommitteePanel
             key={"committee-member-" + i}
