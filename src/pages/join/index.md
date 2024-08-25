@@ -45,7 +45,7 @@ membershipBenefits:
     to be - there are many brilliant team running events which we
     take part in.
 - title: Regular jaunts, both at home and abroad
-  image: /media/join-copenhagen-marathon.jpg
+  image: /media/join-travel.jpg
   body: |
     Many of our members use running as a way of seeing the wider
     world. Groups of us will regularly travel to places near and
