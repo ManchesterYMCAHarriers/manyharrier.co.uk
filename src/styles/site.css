@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 dl {
     @apply mb-4
@@ -43,8 +45,6 @@ dd {
 .content a:hover, .content a:focus {
     @apply opacity-100 underline
 }
-
-@tailwind components;
 
 .heading-1, .content h1 {
     @apply text-2xl font-extrabold
@@ -211,5 +211,3 @@ dd {
 .validation-message {
     @apply font-bold my-1 text-red-600
 }
-
-@tailwind utilities;
