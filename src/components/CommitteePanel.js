@@ -8,9 +8,9 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
             <Img fixed={image} alt={'Photo of ' + name}/>
             <div className="flex flex-col content-center m-3 h-full w-1/2 text-base text-black">
                 <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
-                <p className="font-semibold text-red-manyharrier">Key Skill:</p>
+                <p className="font-semibold mt-2 text-red-manyharrier">Key Skill:</p>
                 <p>{keySkill}</p>
-                <p className="font-semibold text-red-manyharrier">Favourite Race:</p>
+                <p className="font-semibold mt-2 text-red-manyharrier">Favourite Race:</p>
                 <p>{favouriteRace}</p>
             </div>
         </div>
