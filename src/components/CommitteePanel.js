@@ -6,7 +6,7 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
     <div className="flex flex-col w-full bg-white-manyharrier">
         <div className='flex flex-col md:flex-row w-full'>
             <Img fixed={image} alt={'Photo of ' + name}/>
-            <div className="flex content-center m-3 text-base text-black">
+            <div className="flex flex-col content-center m-3 w-1/2 text-base text-black">
                 <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
                 <p className="font-semibold text-red-manyharrier">Key Skill:</p>
                 <p>{keySkill}</p>
@@ -14,7 +14,7 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
                 <p>{favouriteRace}</p>
             </div>
         </div>
-        <div className="text-center text-base text-black font-semibold self-center py-1">{name + "\t\t" + role}</div>
+        <div className="text-center text-base text-black font-semibold self-center py-1"><pre>{name + "\t\t"}</pre> <span className='text-red-manyharrier'>{role}</span></div>
     </div>
 )
 
