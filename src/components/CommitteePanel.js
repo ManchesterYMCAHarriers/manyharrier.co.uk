@@ -10,7 +10,7 @@ export const CommitteePanel = ({ name, role, description, keySkill, favouriteRac
                 <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
                 <div className="w-full font-semibold mt-2 text-red-manyharrier">Key Skill:</div>
                 <div className='w-full'>{keySkill}</div>
-                <div className="w-full font-semibold mt-2 text-red-manyharrier">Favourite Race:</p>
+                <div className="w-full font-semibold mt-2 text-red-manyharrier">Favourite Race:</div>
                 <div className='w-full'>{favouriteRace}</div>
             </div>
         </div>
