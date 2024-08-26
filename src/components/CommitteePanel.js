@@ -4,9 +4,9 @@ import Img from 'gatsby-image'
 
 export const CommitteePanel = ({ name, role, description, keySkill, favouriteRace, image}) => (
     <div className="flex flex-col w-full bg-white-manyharrier">
-        <div className='flex flex-col md:flex-row w-full'>
+        <div className='flex flex-col justify-center md:justify-items-auto md:flex-row w-full'>
             <Img fixed={image} alt={'Photo of ' + name}/>
-            <div className="flex flex-col content-center m-3 h-full w-1/2 text-base text-black">
+            <div className="flex flex-col content-center m-3 md:h-full w-full md:w-1/2 text-base text-black">
                 <div className='content' dangerouslySetInnerHTML={{__html: description}}/>
                 <p className="font-semibold mt-2 text-red-manyharrier">Key Skill:</p>
                 <p>{keySkill}</p>
