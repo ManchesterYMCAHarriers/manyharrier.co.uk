@@ -1,7 +1,7 @@
 ---
 templateKey: event
-eventKey: Summer Track Day Championships at Longford Park
-venueForeignKey: Longford Park Stadium
+eventKey: Summer Track Day Championships at Manchester Regional Arena
+venueForeignKey: Manchester Regional Arena
 championshipForeignKey: 2024 Track Championship
 eventType: Race
 terrain: Track
