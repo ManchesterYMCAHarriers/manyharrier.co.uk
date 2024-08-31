@@ -14,6 +14,6 @@ a lot shorter than the races we might normally be running in.
 You won't need any prior experience of track running or any specific footwear that's 
 different to that which you would usually run in.
 
-You'll need to pay £4 cash on the door to use the track.
+You'll need to pay the entrance fee to use the track (usually £3-4).
 
 After the running is finished, we'll go somewhere nearby for food and drinks. Hope to see you there!
