@@ -8,7 +8,7 @@ address: |-
   Old Glossop
   Glossop
   SK13 7SS
-location: '{"type":"Point","coordinates":[-1.9352609282805056,53.45173888772964]}', 
+location: '{"type":"Point","coordinates":[-1.9352609282805056,53.45173888772964]}'
 ---
 ## Car Parking
 
