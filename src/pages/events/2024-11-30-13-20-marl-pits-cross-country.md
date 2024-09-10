@@ -1,7 +1,7 @@
 ---
 templateKey: event
 eventKey: Marl Pits Cross Country
-venueForeignKey: Heaton Park
+venueForeignKey: Marl Pits
 eventType: Race
 terrain: Cross Country
 championshipForeignKey: 2024-25 Cross Country Championship
