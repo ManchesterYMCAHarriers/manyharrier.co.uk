@@ -147,13 +147,13 @@ const ChampionshipsIndex = ({ data, location }) => {
                   starting in October and finishing in February.
                 </p>
                 <p>
-                  The championship normally consists of nine races; five from
-                  the Manchester Area Cross Country League and four from the
-                  South East Lancs Cross Country League.
-                </p>
-                <p>
+                  The championship normally consists of nine races. 
                   Participants need to complete any five of the nine races in
                   order to qualify for the championship.
+                </p>
+                <p>
+                  To join the cross country championship, talk to Dan (Men's Captain)
+                  or another member of teh committee.
                 </p>
               </div>
             </Card>

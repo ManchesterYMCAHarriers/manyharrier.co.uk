@@ -20,13 +20,10 @@ veteranCategoryDuration: 5
 When calculating the club championship standings, the first consideration is an individual's qualification status: 
 
 1) Those who have completed 5 races are ranked highest;
-1) Those who have completed 5 races but could do so with the remaining number of races are ranked next;
+1) Those who have completed less than 5 races but could do so with the remaining number of races are ranked next;
 1) Those who have completed less than 5 and do not have enough races left to finish 5 by the end of the season.
   
-The second consideration is the number of points that an individual has, with
-a **lower number of points being better**. Points are awarded based on your race position relative to other Harrier runners. 1 point is awarded for a first-place
-finish, 2 points are awarded for a second-place finish, 3 points for third and
-so on. Points are only awarded to those who have finished at least 5 races, and those who could do so by the end of the championship.
+The second consideration is the number of points that an individual has, with a **lower number of points being better**. Points are awarded based on your race position relative to other Harrier runners. 1 point is awarded for a first-place finish, 2 points are awarded for a second-place finish, 3 points for third and so on. Points are only awarded to those who have finished at least 5 races, and those who could do so by the end of the championship.
 
 The points awarded will be recalculated as the championship progresses. So, if
 an individual wins a race but then does not complete enough races to qualify,
