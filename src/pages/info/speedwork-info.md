@@ -3,11 +3,17 @@ templateKey: info
 infoKey: Speedwork Info
 forEventType: Speedwork
 ---
-Track sessions are at the Manchester Regional Arena. We will start with a few warm up laps and dynamic stretches 
-at 6:45pm, before going in to the main session.
+## Session Format
 
-Entry is discounted to £3.20 for running club members, and there is a further discount to £2.85 for those who live 
-in the Manchester City Council area.
+Our track sessions are always on Tuesday, 6:45pm at Manchester Regional Arena. We will start with a few warm up laps and dynamic stretches before going in to the main session.
+
+Entry is discounted to £3.20 for running club members, and there is a further discount to £2.85 for those who live in the Manchester City Council area.
+
+## Joining a Tuesday Speedwork Session
+
+Just turn up, that's all you need. You don't have to be a member. You don't have to have run with us before. You only need to pay entry to the arena.
+
+Meet us inside Manchester Regional ARena at 6:45pm ready to run and you will be welcome to join us. When inside the arena, **look for the people in our black kit, with white and red stripes.**
 
 ## Better UK app
 
