@@ -5,7 +5,7 @@ venueForeignKey: The Y Club
 eventType: Group Run
 terrain: Road 
 routeForeignKey: Peel Park Hill Reps or Progression Run
-startsAt: '2024-08-29 18:30'
+startsAt: '2024-09-26 18:30'
 ---
 On the last Thursday of every month, we will be holding a 5k to 10k progression runaround Peel Park. If you've just
 completed couch to 5k and you want to keep increasing your distance, this is the session for you. Don't worry about
