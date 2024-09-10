@@ -40,3 +40,8 @@ with on points is ranked highest.
 
 If runners cannot be separated by head-to-head performances, the result is
 given as a tie.
+
+### How to join the Cross COuntry Championship
+To join our cross country championship talk to Dan Bailey or another committee member.
+
+Final date to join is 20th September. After this date, if you are interested, talk to Dan and we will see what we can do.

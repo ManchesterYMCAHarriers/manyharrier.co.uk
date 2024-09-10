@@ -153,7 +153,7 @@ const ChampionshipsIndex = ({ data, location }) => {
                 </p>
                 <p>
                   To join the cross country championship, talk to Dan (Men's Captain)
-                  or another member of teh committee.
+                  or another member of the committee.
                 </p>
               </div>
             </Card>

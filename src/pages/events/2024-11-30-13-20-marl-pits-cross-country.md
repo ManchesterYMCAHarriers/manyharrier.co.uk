@@ -1,6 +1,6 @@
 ---
 templateKey: event
-eventKey: Marl Pitts Cross Country
+eventKey: Marl Pits Cross Country
 venueForeignKey: Heaton Park
 eventType: Race
 terrain: Cross Country
