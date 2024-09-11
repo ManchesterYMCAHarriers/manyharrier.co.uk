@@ -35,14 +35,14 @@ members:
     role: Men's Captain
     description: |
       Dan coordinates our Tuesday Track sessions and Thursday runs, and he organizes our cross-country teams.
-    keySkill: Making hill sprints sound fun.
+    keySkill: Spelling Nathananeil's name correctly.
     favouriteRace: Manchester half marathon, or anything out in the hills.
     singleImage: /media/committee-dan.jpg
   - name: Josie Clough
     role: Women's Captain
     description: |
       Josie helps plan and run our weekly Tuesday Track sessions and Thursday runs. She assists with event planning and promotes the club.
-    keySkill: Finding deals in the Sainsbury's reduced section.
+    keySkill: Really enthusiastic track warm-ups.
     favouriteRace: London Landmarks Half Marathon.
     singleImage: /media/committee-josie.jpg
   - name: Marlow Upton
@@ -56,7 +56,7 @@ members:
     role: Committee Member
     description: |
       Andy provides general support to the committee and helps organize the club kit.
-    keySkill: Enthusiastic hill run companion.
+    keySkill: Running ultra's that are so long, we are slightly concerned for him.
     favouriteRace: Manchester half marathon (as it was my first race) or any race that involves a holiday.
     singleImage: /media/committee-andy.jpg
   - name: Joseph Hayes
@@ -70,7 +70,7 @@ members:
     role: Committee Member
     description: |
       Chloe assists with planning club events such as New Runners Week and our GM Ringway Relay challenge and supports new runners with their goals.
-    keySkill: Making solo runners feel at ease in a group setting.
+    keySkill: Getting lost even when her watch tells her where to go.
     favouriteRace: Round Sheffield Run.
     singleImage: /media/committee-chloe.jpg
   - name: Katie Baker
