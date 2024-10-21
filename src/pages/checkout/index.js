@@ -656,6 +656,12 @@ export default class CheckoutIndex extends React.Component {
                               </strong>{' '}
                               as your payment reference.
                             </p>
+                            <p>
+                              <strong>Getting your kit:</strong> <br/>
+                              To retrieve the kit you purchased, please attend a social run where access to the club's kit locker is available.<br/>
+                              Our social runs are at the Y Club, 6.30pm every Thursday. <br/>
+                              Should you not be able to attend a social run, please contact a member of committee to arrange pick up.
+                            </p>
                           </FieldsetMulti>
                         </Form>
                       )}
