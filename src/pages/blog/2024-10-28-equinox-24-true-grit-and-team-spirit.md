@@ -3,7 +3,7 @@ templateKey: "blog-post"
 blogKey: "Equinox 24: True Grit and Team Spirit"
 description: "What it takes to run the Equinox 24 hour race."
 heroImage: "/media/equinox-blog-post/hero-image.jpg"
-publishedAt: "2024-05-01T16:00:00.000Z"
+publishedAt: "2024-10-28T16:00:00.000Z"
 ---
 Equinox 2024 we had it all. Satnav errors, sunshine, unicorns, torrential rain, sprained ankles and more! 
 
