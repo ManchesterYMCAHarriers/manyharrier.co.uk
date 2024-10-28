@@ -63,21 +63,15 @@ The weekend started off with a rather long drive, as we put the wrong postcode i
 
 We then woke up to glorious sunshine in the morning, and some of the team set off for the park run (I was definitely saving my legs for later). After drawing our names out of a hat to decide the order, we got into our harriers kit, Chloe braided my hair, and we set off to the start line. James was up first and sped round his first lap, setting a quick precedent for the rest of the team to follow. I was up next, and feeling slightly nervous from having no experience of the course or knowing what really to expect, apart from some whispers of *that hill*. Wow, hills, hills and more hills, and what felt like not much downhill. The course was a lot more brutal than expected, but was fairly happy with coming in at around 52 minutes. I then joined the cheer squad, where I was amazed to see Andy Bowler cheering every single participant on by their name, over and over again – what a guy!
 
-![Andy the hero](/media/equinox-blog-post/Andy-the-hero.jpg)
-
 ![Chloe helping Josie with hair](/media/equinox-blog-post/Chloe-helping-Josie-with-hair.jpg)
 
 ![Josie running](/media/equinox-blog-post/Josie-running.jpg)
 
 ![Start of race](/media/equinox-blog-post/Start-of-race.jpg)
 
-![Grace running](/media/equinox-blog-post/Grace-running.jpg)
-
 ![Dan running](/media/equinox-blog-post/Dan-running.jpg)
 
 My second lap then came around at about 7pm, and the cooler temperatures allowed for a more comfortable run, but unfortunately the hills felt just as hard. Near the end of my lap, it started to drizzle, little did I know that the end of my runs in dry weather had come to an end. Before my third lap, I was lying in my tent, with extremely heavy rain battering down on the tent. Reluctant to get out of my warm sleeping bag, I got changed and went to the start line, to see a limping and grimacing James, pointing at his swollen ankle. *Gulp*. I set off on my first night run in the torrential rain, darkness and terrified I was going to do the same thing. Kudos to James for carrying on despite spraining his ankle on the first km, a true team player! However, it meant James had to retire from the team. Recognising the impact this had on the team, Dan stepped up and ran a double lap in the rain and darkness, Dan you are a hero!
-
-![James struggling](/media/equinox-blog-post/James-struggling.jpg)
 
 ![James ankle](/media/equinox-blog-post/James-ankle.jpg)
 
