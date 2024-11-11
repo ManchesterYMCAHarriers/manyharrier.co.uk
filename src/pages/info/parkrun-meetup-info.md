@@ -7,7 +7,7 @@ forEventType: Parkrun Meetup
 
 Our club holds a parkrun meetup about once a month. We meet at the start of a parkrun and run however people feel like running. Some may run as a group, some may want to run fast, it is entirely up to you.
 
-At the end of the parkrun, there will be an agreed pub to convene at, where we share a drink and a chat.
+At the end of the parkrun, there will be an agreed cafe to convene at, where we share a drink and a chat.
 
 Should you not want to race, we encourage our members to volunteer for the parkrun. The volunteers are important and valuable to rhe parkrun community. 
 
