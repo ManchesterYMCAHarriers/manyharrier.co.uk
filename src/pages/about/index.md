@@ -53,15 +53,15 @@ Each group will run at a different pace and will be led by a club member, so the
 
 **Group 2:**
 - 8 miles (13 km)
-- 7.30 min / mile (4.40 min / km) +/- 30 secs
+- 8.00 min / mile (5.00 min / km) +/- 30 secs
 
 **Group 3:**
 - 8 miles (13 km)
-- 8.30 min / mile (5.20 min / km) +/- 30 secs
+- 8.30-9.00 min / mile (5.20-5.40 min / km) +/- 30 secs
 
 **Group 4:**
 - 8 miles (13 km)
-- 9.30 min / mile (5.50 min / km) +/- 30 secs
+- 9.30-10.00 min / mile (5.50-6.15 min / km) +/- 30 secs
 
 **Group 5:**
 - 6 miles (10 km)
