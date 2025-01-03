@@ -1,5 +1,6 @@
 ---
-templateKey: NEW RUNNERS NIGHT
+templateKey: event
+eventKey: NEW RUNNERS NIGHT
 venueForeignKey: The Y Club 
 eventType: Group Run
 terrain: Road 
