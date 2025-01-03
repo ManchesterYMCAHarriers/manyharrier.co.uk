@@ -42,6 +42,14 @@ export const IndexPageTemplate = ({
                     />
                 </PanelFullWidth>
                 <PanelFullWidth>
+                    <div className='content panel black-bottom'>
+                        <h2 className="heading-2">New Runners Night</h2>
+                        <p>Thinking of joining a running club? Why not come and try out Manchester YMCA Harriers on our New Runners Night!</p>
+                        <p>Don't worry about pace, this session is all about having a good run with the aim of introducing you to our club and meeting new people. With the bonus of our monthly social at a local pub.</p>
+                        <CallToActionLink to="/events/2025-01-30-18-30-new-runners-night" title={secondPanelCTA}/>
+                    </div>
+                </PanelFullWidth>
+                <PanelFullWidth>
                     <div className="panel red-bottom">
                         <h2 className="heading-2">Coming up...</h2>
                         {nextEvents.length === 0 && (
