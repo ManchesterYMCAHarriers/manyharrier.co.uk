@@ -4,7 +4,7 @@ eventKey: Alexandra Parkrun Meetup
 venueForeignKey: Alexandra Park
 eventType: Parkrun Meetup
 terrain: Road
-startsAt: '2025-02-15 09:00'
+startsAt: '2025-04-26 09:00'
 ---
 This parkrun meetup will be at Alexandra Park.
 
