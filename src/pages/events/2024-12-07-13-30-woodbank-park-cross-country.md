@@ -13,3 +13,5 @@ The third of this season's Manchester Area Cross Country League fixtures and the
 
 ## CANCELLED
 This race was unfortunately cancelled. It will be rearranged and this page will be updated once we know the new date.
+
+Nothing official is yet confirmed and we are awaiting confirmation from both Stockport Council and host Club SHAC. The provisional date is Saturday 1st March, but is dependant on the above confirming.
