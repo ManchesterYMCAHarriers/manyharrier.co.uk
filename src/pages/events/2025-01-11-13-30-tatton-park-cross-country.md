@@ -12,4 +12,4 @@ cancelled: true
 The fourth of this season's Manchester Area Cross Country League fixtures and the seventh fixture of our club's cross country championship.
 
 ## CANCELLED
-This race was unfortunately cancelled. It will be rearranged and this page will be updated once we know the new date.
+This race was unfortunately cancelled. It will **not** be rearranged.
